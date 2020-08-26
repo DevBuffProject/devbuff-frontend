@@ -1,0 +1,57 @@
+<template>
+  <div
+    :class="[
+      'card'
+    ]"
+  >
+    <div
+      v-if="$slots.header"
+      class="card__header"
+    >
+      <slot name="header" />
+    </div>
+    <slot />
+    <div
+      v-if="$slots.footer"
+      class="card__footer"
+    >
+      <slot name="footer" />
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'v-card',
+}
+</script>
+
+<style lang="scss" scoped>
+  .card {
+    background-color: var(--color-background-contrast);
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--color-muted-2);
+    border-bottom: 1px solid var(--color-muted);
+    // box-shadow: 0 1px 1px 0 var(--color-muted);
+    margin-bottom: 1.5rem;
+
+    &__header {
+      display: flex;
+      align-items: center;
+      margin: -1rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      border-bottom: 1px solid var(--color-muted-2);
+    }
+    &__footer {
+      display: flex;
+      align-items: center;
+      margin: -1rem;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-top: 1px solid var(--color-muted-2);
+    }
+  }
+</style>

@@ -1,0 +1,19 @@
+$base-transition: cubic-bezier(.28,.98,.43,.99);
+
+.fade-enter-active, .fade-leave-active {
+  transition: .3s var(--base-transition);
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.top-enter-active,
+.top-leave-active { transition: all .3s var(--base-transition); }
+.top-enter {
+  opacity: 0;
+  transform: translate3d(0, -100px, 0);
+}
+.top-leave-to {
+  opacity: 0;
+  transform: translate3d(0, 0px, 0);
+}

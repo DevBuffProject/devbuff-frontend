@@ -1,0 +1,28 @@
+@import 'themes';
+@import 'typography';
+@import 'transitions';
+
+:root {
+  --header-height: 60px;
+  --font-family: #{$font-family};
+  --base-transition: #{$base-transition};
+  --box-shadow: 0 3px 4px -3px rgba(0, 0, 0, .1);
+}
+
+body {
+  margin: 0;
+  user-select: none;
+  font-family: var(--font-family);
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 400;
+  font-variant: no-common-ligatures slashed-zero;
+  -webkit-font-smoothing: antialiased;
+  color: var(--text-color);
+}
+
+.colors--light {
+  @each $name, $color in $light-colors {
+    --color-#{$name}: #{$color};
+  }
+}
