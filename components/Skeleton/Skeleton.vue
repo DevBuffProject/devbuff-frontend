@@ -47,11 +47,13 @@ export default {
   &--figure-circle {
     border-radius: 50%;
   }
+  &--figure-tile {
+    border-radius: 4px;
+  }
   &--figure-line {
     height: 10px;
     width: 100%;
     flex: initial;
-    margin: .5rem 0;
   }
 }
 

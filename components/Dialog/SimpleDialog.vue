@@ -1,34 +1,8 @@
 <template>
-  <section>
+  <div class="team-feedback-dialog">
+    <h3 class="mt-0 mb-3"> Отклик </h3>
+
     <v-card style="width: 500px;">
-      <template #header>
-        <div class="d-flex align-items-center w-100">
-          <v-skeleton
-            class="w-50"
-            figure="line"
-          />
-        </div>
-      </template>
-
-      <div class="d-flex w-100">
-        <v-skeleton
-          class="mr-3"
-          figure="tile"
-        />
-        <v-skeleton-paragraph class="w-100" />
-      </div>
-
-      <template #footer>
-        <div class="d-flex justify-content-end w-100">
-          <v-skeleton
-            class="w-25"
-            figure="line"
-          />
-        </div>
-      </template>
-    </v-card>
-
-    <v-card v-for="i in 10" :key="i" style="width: 500px;">
       <template #header>
         <div class="d-flex align-items-center justify-content-between w-100">
           <div class="d-flex align-items-center">
@@ -41,14 +15,6 @@
               <span class="d-block"> Разработка платформы DevBuff </span>
             </div>
           </div>
-
-          <v-button
-            @click="join"
-            rounded
-            :icon="['fas', 'user-plus']"
-            type="dark"
-          >
-          </v-button>
         </div>
       </template>
 
@@ -76,29 +42,39 @@
         </span>
       </div>
     </v-card>
-  </section>
+
+    <div class="d-flex justify-content-end mt-3">
+      <div>
+        <v-button
+          class="mr-3"
+          type="flat"
+          @click="$root.dialog.close"
+        >
+          отменить
+        </v-button>
+        <v-button
+          class="mr-3"
+          type="primary"
+          @click="join"
+        >
+          откликнуться
+        </v-button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-const SimpleDialog = () => import('~/components/Dialog/SimpleDialog')
+const d2 = () => import('~/components/Dialog/d2')
 
 export default {
-  async middleware({ store }) {
-    return new Promise(resolve => {
-      setTimeout(() => resolve() || store.commit('setPageName', 'Идеи'), 1000)
-    })
-  },
   methods: {
     join() {
-      this.$root.dialog.push(SimpleDialog, new Promise(resolve => {
-        setTimeout(() => resolve({
-          header: 'data'
-        }), 1000)
-      }))
+      this.$root.dialog.push(d2)
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 </style>

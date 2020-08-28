@@ -7,12 +7,15 @@
     ]"
     @click="focus"
   >
-    <input
+    <component
+      :is="type === 'textarea' ? 'textarea' : 'input'"
       ref="field"
       :class="[
         'input__field',
-        this.muted && 'input__field--muted',
-        this.icon && 'input__field--icon'
+        /* focused && 'input__field--focused', */
+        muted && 'input__field--muted',
+        icon && 'input__field--icon',
+        (type === 'textarea') && 'input__field--type-textarea'
       ]"
       :type="type"
       v-model="model"
@@ -133,12 +136,24 @@ export default {
     font-family: inherit;
     font-size: 1rem;
     padding: .3rem 1rem;
+    width: 100%;
+    resize: none;
+    box-sizing: border-box;
+    border: 1px solid var(--color-muted);
+    box-shadow: 0 1px 1px rgba(211,218,230,.3);
+    transition: border-color .3s var(--base-transition);
     &--icon {
       padding-left: 2rem;
     }
     &--muted {
       background-color: var(--color-muted);
       border: 0;
+    }
+    &:focus {
+      border-color: var(--color-primary) !important
+    }
+    &--type-textarea {
+      padding: 1rem;
     }
   }
 }

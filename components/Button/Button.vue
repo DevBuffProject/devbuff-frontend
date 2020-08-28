@@ -55,7 +55,6 @@ export default {
     type: {
       type: String,
       default: 'primary',
-      validate: (v) => TYPES.includes(v)
     },
     icon: {
       type: [ Array, String ],
@@ -118,6 +117,7 @@ export default {
 
 <style lang="scss" scoped>
 .btn {
+  background: none;
   font-family: inherit;
   font-size: .9rem;
   padding: .35rem 1.5rem;
@@ -130,6 +130,7 @@ export default {
   position: relative;
   cursor: pointer;
   font-weight: 400;
+  line-height: 1.5;
   text-shadow: 0 1px 0 rgba(0,0,0,.07);
   transition-property: background-color, box-shadow;
   transition: .3s var(--base-transition);
@@ -138,25 +139,28 @@ export default {
     opacity: .5;
   }
 
-  &--type {
-    &-primary {
-      border: 1px solid var(--color-primary);
-      background-color: var(--color-primary);
-      box-shadow: 0 2px 4px var(--color-primary-lighten);
-      color: #fff;
-      &:active {
-        background-color: var(--color-primary-darken);
-        border: 1px solid var(--color-primary-darken);
-        box-shadow: none;
-      }
+  &--type-primary {
+    background-color: var(--color-primary);
+    box-shadow: 0 2px 4px var(--color-primary-lighten);
+    color: #fff;
+    &:active {
+      background-color: var(--color-primary-darken);
+      box-shadow: none;
     }
-    &-muted {
+  }
+  &--type-muted {
+    background-color: var(--color-muted);
+    color: #000;
+  }
+  &--type-dark {
+    background-color: #000;
+    color: #fff;
+  }
+  &--type-flat {
+    color: var(--color-text);
+    transition: background-color .3s var(--base-transition);
+    &:hover {
       background-color: var(--color-muted);
-      color: #000;
-    }
-    &-dark {
-      background-color: #000;
-      color: #fff;
     }
   }
 

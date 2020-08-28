@@ -8,6 +8,7 @@
         width: '75%',
         marginBottom: 0
       }"
+      class="skeleton-paragraph__line"
     />
   </div>
 </template>
@@ -25,5 +26,10 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
+.skeleton-paragraph {
+  &__line:not(:last-of-type) {
+    margin-bottom: .5rem;
+  }
+}
 </style>

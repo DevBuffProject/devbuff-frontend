@@ -5,18 +5,22 @@
       type && 'chip--type-' + type
     ]"
     :style="type === 'auto' && {
-      backgroundColor: bgColor,
-      color: textColor
+      backgroundColor: lightenColor,
+      color: darkenColor,
     }"
   >
     {{ text }}
+    <span
+      class="chip__hole"
+      :style="{ border: '1px solid ' + darkenColor.alpha(.5) }"
+    />
   </span>
 </template>
 
 <script>
-import { colorString } from '~/kernel/UI/colors.js'
+import Color from '~/kernel/UI/colors.js'
 
-const color = require("color")
+console.log(Color.generateFromString)
 
 export default {
   name: 'v-badge',
@@ -33,17 +37,13 @@ export default {
   },
   computed: {
     textSourceColor() {
-      return color(colorString(this.text))
+      return Color(Color.generateFromString(this.text))
     },
-    textColor() {
-      const color = this.textSourceColor.darken(.5)
-
-      const lumenDiff = this.bgColor.luminosity() - color.luminosity()
-
-      return lumenDiff > 0.4 ? this.textSourceColor.darken(.3) : '#fff'
+    darkenColor() {
+      return this.textSourceColor.luminate(.15)
     },
-    bgColor() {
-      return this.textSourceColor.lighten(.8)
+    lightenColor() {
+      return this.textSourceColor.luminate(.85)
     },
   }
 }
@@ -59,8 +59,7 @@ export default {
   line-height: 1;
   height: 1.5rem;
   border-radius: 10rem;
-  &:after {
-    content: "";
+  &__hole {
     display: inline-block;
     background-color: var(--color-background);
     width: .5rem;

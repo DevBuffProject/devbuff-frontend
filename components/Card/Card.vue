@@ -41,16 +41,16 @@ export default {
       display: flex;
       align-items: center;
       margin: -1rem;
-      margin-bottom: 1.5rem;
-      padding: 1rem;
+      margin-bottom: 1rem;
+      padding: .8rem 1rem;
       border-bottom: 1px solid var(--color-muted-2);
     }
     &__footer {
       display: flex;
       align-items: center;
       margin: -1rem;
-      margin-top: 1.5rem;
-      padding: 1rem;
+      margin-top: 1rem;
+      padding: .8rem 1rem;
       border-top: 1px solid var(--color-muted-2);
     }
   }

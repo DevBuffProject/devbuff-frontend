@@ -7,7 +7,8 @@
     :style="{
       backgroundImage: 'url(' + avatar + ')',
       width: size,
-      height: size
+      height: size,
+      flex: `0 0 ${size}`
     }"
   >
     <v-icon

@@ -4,17 +4,19 @@
       <template #header>
         <div class="d-flex align-items-center w-100">
           <v-skeleton
-            class="mr-3"
-            figure="circle"
-          />
-          <v-skeleton
             class="w-50"
             figure="line"
           />
         </div>
       </template>
 
-      <v-skeleton-paragraph />
+      <div class="d-flex w-100">
+        <v-skeleton
+          class="mr-3"
+          figure="tile"
+        />
+        <v-skeleton-paragraph class="w-100" />
+      </div>
 
       <template #footer>
         <div class="d-flex justify-content-end w-100">
