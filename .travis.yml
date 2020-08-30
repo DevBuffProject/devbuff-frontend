@@ -8,13 +8,13 @@ cache:
 
 install:
   - npm install
-  
+
 script:
   - npm run build
 
 script:
   - echo "Skipping tests"
-  
+
 notifications:
   email:
     recipients:
@@ -23,5 +23,5 @@ notifications:
     on_failure: always # default: always
   webhooks:
     urls:
-      - https://api.vercel.com/v1/integrations/deploy/QmcBquWyrCKfyaEy7KnjPZedNRxQQZ9ndz69fti6GCKj42/Yosxbr64Zs
+      - https://api.vercel.com/v1/integrations/deploy/QmcBquWyrCKfyaEy7KnjPZedNRxQQZ9ndz69fti6GCKj42/Z9dhq7Xteh
     on_success: always # default: always
