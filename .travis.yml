@@ -12,9 +12,6 @@ install:
 script:
   - npm run build
 
-script:
-  - echo "Skipping tests"
-
 notifications:
   email:
     recipients:
