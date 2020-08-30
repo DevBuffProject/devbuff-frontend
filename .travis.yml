@@ -27,7 +27,7 @@ notifications:
     on_success: always # default: always
 
 before_script:
-  - sh ./post-build.sh
+  - sh ./ci-post-build.sh
 
 after_script:
-  - sh ./post-build.sh
+  - sh ./ci-post-build.sh
