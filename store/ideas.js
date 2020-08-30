@@ -1,5 +1,3 @@
-import api from '~/kernel/api'
-
 export const state = () => ({
   list: []
 })
