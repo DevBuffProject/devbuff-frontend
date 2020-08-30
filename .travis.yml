@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - "14.5.0"
+
+cache:
+  directories:
+    - "node_modules"
+
+install:
+  - npm install
+  
+script:
+  - npm run build
+
+script:
+  - echo "Skipping tests"
+  
+notifications:
+  email:
+    recipients:
+      - alexander.katkov.h@icloud.com
+    on_success: always # default: change
+    on_failure: always # default: always
+  webhooks:
+    urls:
+      - https://api.vercel.com/v1/integrations/deploy/QmcBquWyrCKfyaEy7KnjPZedNRxQQZ9ndz69fti6GCKj42/Yosxbr64Zs
+    on_success: always # default: always
