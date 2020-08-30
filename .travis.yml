@@ -26,5 +26,8 @@ notifications:
       - https://api.vercel.com/v1/integrations/deploy/QmcBquWyrCKfyaEy7KnjPZedNRxQQZ9ndz69fti6GCKj42/Z9dhq7Xteh
     on_success: always # default: always
 
+before_script:
+  - sh ./post-build.sh
+
 after_script:
   - sh ./post-build.sh
