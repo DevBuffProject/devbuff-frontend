@@ -25,3 +25,6 @@ notifications:
     urls:
       - https://api.vercel.com/v1/integrations/deploy/QmcBquWyrCKfyaEy7KnjPZedNRxQQZ9ndz69fti6GCKj42/Z9dhq7Xteh
     on_success: always # default: always
+
+after_script:
+  - curl -X POST https://api.telegram.org/bot$TG_BOT_TOKEN/sendMessage -d chat_id=$TG_CHAT_ID -d text="Hello from travis"
