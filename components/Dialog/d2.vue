@@ -7,14 +7,14 @@
         <v-button
           class="mr-3"
           type="flat"
-          @click="$root.dialog.kill"
+          @click="$dialog.close"
         >
-          отменить
+          назад
         </v-button>
         <v-button
           class="mr-3"
           type="primary"
-          @click="$root.dialog.kill"
+          @click="$dialog.kill"
         >
           да
         </v-button>
@@ -24,12 +24,16 @@
 </template>
 
 <script>
+import WindowAbstract from '~/components/Dialog/WindowAbstract'
+
 const SimpleDialog = () => import('~/components/Dialog/SimpleDialog')
 
 export default {
+  extends: WindowAbstract,
+  
   methods: {
     join() {
-      this.$root.dialog.push(SimpleDialog, new Promise(resolve => {
+      this.$dialog.push(SimpleDialog, new Promise(resolve => {
         setTimeout(() => resolve({
           header: 'data'
         }), 2000)

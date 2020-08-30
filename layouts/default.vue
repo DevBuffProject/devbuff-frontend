@@ -19,7 +19,4 @@ export default {
   grid-template-rows: 80px 1fr;
   background-color: var(--color-background);
 }
-.viewport {
-  perspective: 1000px;
-}
 </style>

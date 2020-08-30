@@ -1,49 +1,46 @@
 <template>
-  <transition name="fade">
+  <transition name="top">
     <div
       v-if="queue.length > 0"
-      :class="[
-        'dialog',
-      ]"
+      class="dialog"
     >
-      <v-card
-        class="dialog__window"
-        ref="window"
-      >
+      <div class="dialog__window">
         <div
           class="dialog__content"
           ref="content"
         >
           <component
-            v-if="dialog"
-            :is="dialog.component"
-            v-bind="dialog.data"
-            class="dialog__component"
+            :is="component"
+            v-bind="component.data"
+            :class="dialog ? 'dialog__component' : 'dialog__loader'"
             ref="component"
           />
-          <div v-else class="dialog__loader">
-            <v-loading />
-          </div>
         </div>
-      </v-card>
+      </div>
     </div>
   </transition>
 </template>
 
 <script>
-import loading from '~/components/Loading/Loading.vue'
+import Loader from '~/components/Loading/Loading.vue'
+import Bus from './EventBus'
 
 export default {
   name: 'v-dialog',
 
   data() {
     return {
+      Loader,
       dialog: null,
-      queue: []
+      queue: [],
+      opened: false
     }
   },
 
   computed: {
+    component() {
+      return this.dialog ? this.dialog.component : this.Loader
+    },
     lastDialog() {
       return this.queue[0]
     }
@@ -51,9 +48,11 @@ export default {
 
   methods: {
     init() {
-      this.$root.$on('dialog:push', this.push)
-      this.$root.$on('dialog:close', this.close)
-      this.$root.$on('dialog:kill', this.kill)
+      Bus.$on('dialog:push', this.push)
+      Bus.$on('dialog:close', this.close)
+      Bus.$on('dialog:kill', this.kill)
+
+      Bus.$on('dialog:ready', this.setSize)
     },
 
     push(dialog) {
@@ -65,57 +64,55 @@ export default {
     close() {
       this.dialog = null
       this.queue.shift()
-      this.resolveDialog()
+
+      if (this.queue.length > 0) {
+        this.resolveDialog()
+      } else this.opened = false
     },
 
     kill() {
       this.dialog = null
+      this.opened = false
       this.queue = []
     },
 
     resolveDialog() {
       if (!this.lastDialog) return
 
-      const { component, props } = this.lastDialog
 
-      Promise.all([
-        Promise.resolve(props),
-        Promise.resolve(component)
-      ])
-      .then(resolved => {
-        const [ data, dialog ] = resolved
+      const _resolve = () => {
+        const { component, props } = this.lastDialog
 
-        this.dialog = {
-          data,
-          component: () => ({
-            component: dialog.apply(),
-            loading,
-          })
-        }
-      })
+        Promise.all([
+          Promise.resolve(props),
+          Promise.resolve(component)
+        ])
+        .then(resolved => {
+          const [ data, dialog ] = resolved
+
+          this.dialog = {
+            data,
+            component: () => ({ component: dialog.apply(), loading: this.Loader })
+          }
+        })
+        .then(() => this.opened = true)
+      }
+
+      // FIX window blink
+      !this.opened
+        ? setTimeout(_resolve, 100)
+        : _resolve()
     },
 
-    observeContent() {
-      if (this.$refs && this.$refs.content && this.$refs.component) {
-        const children = this.$refs.content.children
+    setSize({ offsetHeight, offsetWidth }) {
+      this.$refs.content.style.height = offsetHeight + 'px'
+      this.$refs.content.style.width = offsetWidth + 'px'
 
-        if (children.length > 0) {
-          const { offsetHeight, offsetWidth } = children[0]
-
-          this.$refs.content.style.height = offsetHeight + 'px'
-          this.$refs.content.style.width = offsetWidth + 'px'
-
-          this.$refs.component.$el.classList.add('dialog__component--show')
-        }
-      }
+      this.$refs.component.$el.classList.add('dialog__component--show')
     }
   },
 
-  updated() {
-    this.observeContent()
-  },
-
-  mounted() {
+  created() {
     this.init()
   }
 }
@@ -135,7 +132,8 @@ export default {
   align-items: center;
   transition: opacity .3s var(--base-transition);
 
-  &__window {;
+  &__window {
+    background-color: var(--color-background);
     padding: 1.5rem;
     border-radius: 4px;
   }
@@ -143,25 +141,25 @@ export default {
   &__content {
     width: 30px;
     height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
-    transition: .5s var(--base-transition);
+    transition: .3s var(--base-transition);
     transition-property: width, height;
   }
 
   &__loader {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    font-size: 1.5rem;
+    width: 25px;
+    height: 25px;
+    font-size: .1rem;
   }
 
   &__component {
     position: fixed;
     opacity: 0;
     transition: opacity .3s var(--base-transition);
-    transition-delay: .5s;
+    transition-delay: .3s;
     &--show {
       position: static;
       opacity: 1;

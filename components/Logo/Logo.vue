@@ -1,4 +1,4 @@
-<template>
+<template functional>
   <div class="logo">
     <div class="logo__circle" />
     <div class="logo__text"> DevBuff </div>

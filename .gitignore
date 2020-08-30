@@ -11,3 +11,9 @@ npm-debug.log
 dist
 
 .vercel
+
+.env
+
+.DS_Store
+
+static/sw.js

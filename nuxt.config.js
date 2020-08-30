@@ -24,36 +24,33 @@ module.exports = {
 
   pageTransition: 'top',
 
-  /*
-  ** Customize the progress bar color
-  */
   loading: '~/components/Loading/PageLoading.vue',
-  /*
-  ** Components Discovery
-  */
+
   components: [{
     path: '~/components/',
     prefix: 'v'
   }],
+
   plugins: [
-    '~/plugins/fontawesome.js'
+    '~/plugins/fontawesome.js',
+    '~/plugins/ui-installer.js',
+    '~/plugins/api.js'
   ],
-  /*
-   * Modules
-   */
+
    modules: [
     ['nuxt-vuex-localstorage', {
       localStorage: ['shared'],
       sessionStorage: ['session']
-    }]
+    }],
+    '@nuxtjs/pwa',
+    '@nuxt/http'
   ],
-  /*
-   * Build configuration
-   */
+
+  publicRuntimeConfig: {
+    API_BASE_URL: process.env.API_BASE_URL
+  },
+
   build: {
-    /*
-    ** Run ESLint on save
-    */
     extend (config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({

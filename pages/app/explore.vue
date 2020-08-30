@@ -1,101 +1,33 @@
 <template>
   <section>
-    <v-card style="width: 500px;">
-      <template #header>
-        <div class="d-flex align-items-center w-100">
-          <v-skeleton
-            class="w-50"
-            figure="line"
-          />
-        </div>
-      </template>
-
-      <div class="d-flex w-100">
-        <v-skeleton
-          class="mr-3"
-          figure="tile"
-        />
-        <v-skeleton-paragraph class="w-100" />
-      </div>
-
-      <template #footer>
-        <div class="d-flex justify-content-end w-100">
-          <v-skeleton
-            class="w-25"
-            figure="line"
-          />
-        </div>
-      </template>
-    </v-card>
-
-    <v-card v-for="i in 10" :key="i" style="width: 500px;">
-      <template #header>
-        <div class="d-flex align-items-center justify-content-between w-100">
-          <div class="d-flex align-items-center">
-            <div class="d-flex align-items-center">
-              <v-link to="/" class="text"> DevBuff </v-link>
-              <v-icon
-                class="mx-2"
-                :icon="['fas', 'chevron-right']"
-              />
-              <span class="d-block"> Разработка платформы DevBuff </span>
-            </div>
-          </div>
-
-          <v-button
-            @click="join"
-            rounded
-            :icon="['fas', 'user-plus']"
-            type="dark"
-          >
-          </v-button>
-        </div>
-      </template>
-
-      <template #footer>
-        <div class="d-flex justify-content-between w-100">
-          <div>
-            <v-chip class="mr-2" text="frontend" type="auto" />
-            <v-chip class="mr-2" text="backend" type="auto" />
-            <v-chip class="mr-2" text="C++" type="auto" />
-          </div>
-
-        </div>
-      </template>
-
-      <div class="d-flex">
-        <div class="d-flex flex-column align-items-center mr-3">
-          <v-avatar
-            class="mb-3"
-            size="60px"
-            avatar="//source.unsplash.com/random"
-          />
-        </div>
-        <span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin egestas aliquam nulla, vel commodo est consectetur nec. Maecenas molestie libero urna, ut fermentum arcu interdum et. Proin ultricies ultricies diam sed iaculis. Vestibulum fermentum mi ac venenatis consectetur.
-        </span>
-      </div>
-    </v-card>
+    <v-ideas-list
+      :ideas="ideas"
+      style="width: 500px;"
+    />
   </section>
 </template>
 
 <script>
-const SimpleDialog = () => import('~/components/Dialog/SimpleDialog')
+import { mapGetters } from 'vuex'
 
 export default {
   async middleware({ store }) {
-    return new Promise(resolve => {
-      setTimeout(() => resolve() || store.commit('setPageName', 'Идеи'), 1000)
+    store.commit('setPageName', 'Идеи')
+    process.server && await store.dispatch('ideas/getIdeas')
+  },
+
+  computed: {
+    ...mapGetters({
+      ideas: 'ideas/list'
     })
   },
+
   methods: {
-    join() {
-      this.$root.dialog.push(SimpleDialog, new Promise(resolve => {
-        setTimeout(() => resolve({
-          header: 'data'
-        }), 1000)
-      }))
-    }
+
+  },
+
+  mounted() {
+    this.$store.dispatch('ideas/getIdeas')
   }
 }
 </script>

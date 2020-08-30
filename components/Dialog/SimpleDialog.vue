@@ -48,7 +48,7 @@
         <v-button
           class="mr-3"
           type="flat"
-          @click="$root.dialog.close"
+          @click="$dialog.close"
         >
           отменить
         </v-button>
@@ -65,12 +65,16 @@
 </template>
 
 <script>
+import WindowAbstract from '~/components/Dialog/WindowAbstract'
+
 const d2 = () => import('~/components/Dialog/d2')
 
 export default {
+  extends: WindowAbstract,
+
   methods: {
     join() {
-      this.$root.dialog.push(d2)
+      this.$dialog.push(d2)
     }
   }
 }

@@ -148,6 +148,7 @@ export default {
     &--muted {
       background-color: var(--color-muted);
       border: 0;
+      box-shadow: none;
     }
     &:focus {
       border-color: var(--color-primary) !important

@@ -1,29 +1,26 @@
-<template>
-  <span
-    :class="[
-      'chip',
-      type && 'chip--type-' + type
-    ]"
-    :style="type === 'auto' && {
-      backgroundColor: lightenColor,
-      color: darkenColor,
-    }"
-  >
-    {{ text }}
-    <span
-      class="chip__hole"
-      :style="{ border: '1px solid ' + darkenColor.alpha(.5) }"
-    />
-  </span>
-</template>
-
 <script>
 import Color from '~/kernel/UI/colors.js'
 
-console.log(Color.generateFromString)
+const cachedColors = {}
+const getTextBasedColors = text => {
+  if (cachedColors[text]) {
+    console.log('from cache')
+    return cachedColors[text]
+  }
+
+  const colorInstance = Color(Color.generateFromString(text))
+  const colors = {
+    text: colorInstance.luminate(.15),
+    bg: colorInstance.luminate(.85)
+  }
+
+  return cachedColors[text] = colors
+}
 
 export default {
-  name: 'v-badge',
+  name: 'v-chip',
+
+  functional: true,
 
   props: {
     text: {
@@ -36,15 +33,23 @@ export default {
     }
   },
   computed: {
-    textSourceColor() {
-      return Color(Color.generateFromString(this.text))
-    },
-    darkenColor() {
-      return this.textSourceColor.luminate(.15)
-    },
-    lightenColor() {
-      return this.textSourceColor.luminate(.85)
-    },
+    colors() {
+      return getTextBasedColors(this.text)
+    }
+  },
+
+  render(h, { props }) {
+    const colors = getTextBasedColors(props.text)
+
+    return h('span', {
+        class: ['chip', (props.type && 'chip--type-' + props.type)],
+        style: props.type === 'auto' && {
+          backgroundColor: colors.bg,
+          color: colors.text
+        }
+      },
+      [props.text, h('span', { staticClass: 'chip__hole' })]
+    )
   }
 }
 </script>
