@@ -1,0 +1,32 @@
+[
+  {
+    "name": "app",
+    "path": "/app",
+    "component": "/Users/aleksandr/code/devbuff/pages/app.vue",
+    "chunkName": "pages/app",
+    "children": [
+      {
+        "name": "app-dashboard",
+        "path": "dashboard",
+        "component": "/Users/aleksandr/code/devbuff/pages/app/dashboard.vue",
+        "chunkName": "pages/app/dashboard",
+        "_name": "_00f9203c"
+      },
+      {
+        "name": "app-explore",
+        "path": "explore",
+        "component": "/Users/aleksandr/code/devbuff/pages/app/explore.vue",
+        "chunkName": "pages/app/explore",
+        "_name": "_776fc68a"
+      }
+    ],
+    "_name": "_ca0b5392"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/aleksandr/code/devbuff/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_7b2abce8"
+  }
+]
