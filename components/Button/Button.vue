@@ -6,7 +6,7 @@
     :class="[
       'btn',
       'btn--type-' + type,
-      small && 'btn--small',
+      small && 'btn--size-small',
       rounded && 'btn--rounded',
       disabled && 'btn--disabled',
     ]"
@@ -164,7 +164,7 @@ export default {
     }
   }
 
-  &--small {
+  &--size-small {
     font-size: .8rem;
     padding: .2rem 1rem;
   }
@@ -183,8 +183,8 @@ export default {
 
   &__icon {
     margin-left: 1rem;
-    width: 1.1em;
-    height: 1.1em;
+    width: 1em !important;
+    height: 1em !important;
     &--nomargin {
       margin: 0;
     }

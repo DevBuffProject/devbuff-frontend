@@ -2,14 +2,17 @@
   <span
     :class="[
       'image',
+      tile && 'image--tile'
     ]"
-    :style="cover && styles"
   >
+    <img
+      v-if="ready"
+      :src="src"
+      class="image__img"
+    />
     <v-loading
-      v-show="!ready"
-      :class="[
-        'image__loading'
-      ]"
+      v-else
+      class="image__loading"
     />
   </span>
 </template>
@@ -24,6 +27,14 @@ export default {
       default: null,
       required: true
     },
+    cover: {
+      type: String,
+      default: null,
+    },
+    tile: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -37,9 +48,6 @@ export default {
       buffer.onload = () => resolve(this.ready = true)
       buffer.src = this.src
     })
-  },
-  computed: {
-
   }
 }
 </script>
@@ -54,6 +62,12 @@ export default {
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  border-radius: 4px;
+  overflow: hidden;
+
+  &--tile {
+    border-radius: 0;
+  }
 
   &__loading {
     opacity: .5;

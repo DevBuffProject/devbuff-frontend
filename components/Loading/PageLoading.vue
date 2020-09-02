@@ -17,7 +17,7 @@ export default {
 
   data() {
     return {
-      show: false
+      show: true
     }
   },
   methods: {
@@ -44,7 +44,7 @@ export default {
     height: 3px;
     width: 30%;
     background-color: #3051ff;
-    animation: 1s ease snake infinite;
+    animation: 1.5s ease snake infinite;
     position: relative;
   }
 

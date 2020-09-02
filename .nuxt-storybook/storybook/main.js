@@ -3,4 +3,5 @@ module.exports = {
     return options.nuxtStorybookConfig.webpackFinal(config, options)
   },
   stories: ['../../components/**/*.stories.@(ts|js)'],
+  addons: ["@storybook\u002Faddon-knobs"],
 }

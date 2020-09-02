@@ -10,7 +10,8 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "storybook": "npx nuxt storybook"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@babel/runtime-corejs3": "^7.11.2",
     "@nuxtjs/storybook": "^2.2.0",
+    "@storybook/addon-knobs": "^6.0.21",
     "babel-eslint": "^10.0.1",
     "core-js": "^3.6.5",
     "eslint": "^4.19.1",

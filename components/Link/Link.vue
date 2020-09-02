@@ -70,6 +70,7 @@ export default {
 
   &__icon {
     margin-left: 10px;
+    transition: translateY(1px);
   }
 }
 </style>

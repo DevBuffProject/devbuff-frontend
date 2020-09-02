@@ -11,7 +11,7 @@
         >
           <component
             :is="component"
-            v-bind="component.data"
+            v-bind="data"
             :class="dialog ? 'dialog__component' : 'dialog__loader'"
             ref="component"
           />
@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       Loader,
-      dialog: null,
+      dialog: {},
       queue: [],
       opened: false
     }
@@ -40,6 +40,9 @@ export default {
   computed: {
     component() {
       return this.dialog ? this.dialog.component : this.Loader
+    },
+    data() {
+      return this.dialog ? this.dialog.data : {}
     },
     lastDialog() {
       return this.queue[0]
@@ -105,6 +108,8 @@ export default {
     },
 
     setSize({ offsetHeight, offsetWidth }) {
+      if (!this.$refs.content) return
+
       this.$refs.content.style.height = offsetHeight + 'px'
       this.$refs.content.style.width = offsetWidth + 'px'
 

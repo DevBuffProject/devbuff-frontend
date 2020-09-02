@@ -46,6 +46,12 @@ module.exports = {
     '@nuxt/http'
   ],
 
+  storybook: {
+    addons: [
+      '@storybook/addon-knobs'
+    ]
+  },
+
   publicRuntimeConfig: {
     API_BASE_URL: process.env.API_BASE_URL
   },
