@@ -4,16 +4,20 @@ node_modules
 # logs
 npm-debug.log
 
-# Nuxt build
+# Nuxt
 .nuxt
+.nuxt-storybook
 
 # Nuxt generate
 dist
 
+# Zeit files
 .vercel
 
 .env
 
+# OS specific
 .DS_Store
 
+# PWA
 static/sw.js

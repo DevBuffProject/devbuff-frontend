@@ -43,7 +43,7 @@ module.exports = {
       sessionStorage: ['session']
     }],
     '@nuxtjs/pwa',
-    '@nuxt/http'
+    '@nuxt/http',
   ],
 
   storybook: {
@@ -53,7 +53,7 @@ module.exports = {
   },
 
   publicRuntimeConfig: {
-    API_BASE_URL: process.env.API_BASE_URL
+    API_BASE_URL: process.env.API_BASE_URL,
   },
 
   build: {
