@@ -13,19 +13,21 @@
           type="dark"
           :icon="['fab', 'github']"
           rounded
-          pulse
         >
           Войти через Github
         </v-button>
+
         <v-delimiter />
-        <v-button
-          to="/app/explore"
-          type="muted"
-          :icon="['fas', 'long-arrow-alt-right']"
-          rounded
-        >
-          Посмотреть проекты
-        </v-button>
+
+        <nuxt-link to="/app/explore">
+          <v-button
+            type="muted"
+            :icon="['fas', 'long-arrow-alt-right']"
+            rounded
+          >
+            Посмотреть проекты
+          </v-button>
+        </nuxt-link>
       </div>
     </div>
   </section>
@@ -55,6 +57,7 @@ export default {
     flex-direction: column;
     justify-content: center;
   }
+
   &__heading {
     font-family: 'Rubik Mono One', sans-serif;
     font-size: 4rem;
@@ -62,33 +65,33 @@ export default {
     color: #000;
     text-align: center;
   }
-  &__app {
-    &-name {
-      font-size: 1.5rem;
-      font-weight: bold;
-      transform: translateY(3px);
-      display: inline-block;
-      color: #000;
-    }
-    &-desc {
-      position: relative;
-      padding-left: 1rem;
 
-      &:before,
-      &:after {
-        font-weight: bold;
-        font-size: 1.5rem;
-        transform: translateY(3px);
-        color: #000;
-        display: inline-block;
-      }
-      &:before {
-        content: "<"
-      }
-      &:after {
-        content: "/>";
-        margin-left: 5px;
-      }
+  &__app-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    transform: translateY(3px);
+    display: inline-block;
+    color: #000;
+  }
+
+  &__app-desc {
+    position: relative;
+    padding-left: 1rem;
+
+    &:before,
+    &:after {
+      font-weight: bold;
+      font-size: 1.5rem;
+      transform: translateY(3px);
+      color: #000;
+      display: inline-block;
+    }
+    &:before {
+      content: "<"
+    }
+    &:after {
+      content: "/>";
+      margin-left: 5px;
     }
   }
 }

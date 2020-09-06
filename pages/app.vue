@@ -3,16 +3,14 @@
     <v-toolbar class="mb-4">
       <div class="container toolbar__grid">
         <div class="d-flex">
-          <h3 class="m-0">{{ pageName }}</h3>
+          <h3 class="m-0"> {{ pageName }} </h3>
         </div>
         <div>
-          <v-button
-            :icon="['fas', 'plus']"
-            to="/"
-            small
-          >
-            Создать
-          </v-button>
+          <nuxt-link to="/">
+            <v-button :icon="['fas', 'plus']">
+              Создать
+            </v-button>
+          </nuxt-link>
         </div>
       </div>
     </v-toolbar>
@@ -28,7 +26,9 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters(['pageName'])
-  }
+  },
+
+  middleware: ['auth-guard']
 }
 </script>
 
