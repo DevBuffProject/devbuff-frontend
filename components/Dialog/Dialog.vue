@@ -149,7 +149,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
     transition: .3s var(--base-transition);
     transition-property: width, height;
   }

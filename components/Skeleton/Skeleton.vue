@@ -32,9 +32,11 @@ export default {
   overflow: hidden;
 
   &:after {
-    background-image: linear-gradient(90deg, hsla(0,0%,100%,0), hsla(0,0%,100%,.3), hsla(0,0%,100%,0));
+    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0));
     content: "";
     height: 100%;
+    min-width: 200px;
+    width: 100%;
     left: 0;
     position: absolute;
     right: 0;
@@ -59,7 +61,7 @@ export default {
 
 @keyframes loading {
   to {
-    transform: translateX(100%)
+    transform: translateX(100%);
   }
 }
 </style>

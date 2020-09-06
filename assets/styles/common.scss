@@ -1,4 +1,4 @@
-@import 'themes';
+@import 'variables';
 @import 'typography';
 @import 'transitions';
 
@@ -7,6 +7,17 @@
   --font-family: #{$font-family};
   --base-transition: #{$base-transition};
   --box-shadow: 0 3px 4px -3px rgba(0, 0, 0, .1);
+
+  @each $name, $color in map-get($default-colors, 'static' ) {
+    --color-#{$name}: #{$color};
+  }
+
+  @each $name, $color in map-get($default-colors, 'scheme' ) {
+    --color-#{$name}: #{$color};
+    --color-#{$name}-darken: #{darken($color, 6%)};
+    --color-#{$name}-tint: #{lighten($color, 6%)};
+    --color-#{$name}-fade: #{transparentize($color, 0.9)};
+  }
 }
 
 body {
@@ -19,10 +30,4 @@ body {
   font-variant: no-common-ligatures slashed-zero;
   -webkit-font-smoothing: antialiased;
   color: var(--text-color);
-}
-
-.colors--light {
-  @each $name, $color in $light-colors {
-    --color-#{$name}: #{$color};
-  }
 }
