@@ -1,3 +1,5 @@
+@import 'bootstrap.loader';
+
 @import 'variables';
 @import 'typography';
 @import 'transitions';
@@ -16,7 +18,6 @@
     --color-#{$name}: #{$color};
     --color-#{$name}-darken: #{darken($color, 6%)};
     --color-#{$name}-tint: #{lighten($color, 6%)};
-    --color-#{$name}-fade: #{transparentize($color, 0.9)};
   }
 }
 

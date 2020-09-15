@@ -1,10 +1,5 @@
 <template>
-  <div
-    :class="[
-      'app',
-      'colors--light'
-    ]"
-  >
+  <div class="app">
     <v-dialog />
 
     <transition name="scale">
@@ -21,5 +16,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 80px 1fr;
+  background-color: var(--color-background);
+}
 </style>

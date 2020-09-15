@@ -1,7 +1,6 @@
 module.exports = {
-  /*
-  ** Headers of the page
-  */
+  host: '0.0.0.0',
+  port: 3000,
   head: {
     title: 'devbuff-front',
     meta: [
@@ -17,12 +16,8 @@ module.exports = {
     ]
   },
   css: [
-    { src: '~/assets/styles/common.scss', lang: 'sass' },
-    { src: '~/assets/styles/bulma.loader.scss', lang: 'sass' },
-    '@fortawesome/fontawesome-svg-core/styles.css'
+    { src: '~/assets/styles/common.scss', lang: 'sass' }
   ],
-
-  pageTransition: 'top',
 
   loading: '~/components/Loading/PageLoading.vue',
 
@@ -38,13 +33,23 @@ module.exports = {
   ],
 
    modules: [
-    ['nuxt-vuex-localstorage', {
-      localStorage: ['shared'],
-      sessionStorage: ['session']
-    }],
     '@nuxtjs/pwa',
-    '@nuxt/http',
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
   ],
+
+  proxy: {
+    '/api/v1': {
+      target: process.env.API_BASE_URL,
+      pathRewrite: { '^/api/v1' : '/' },
+    }
+  },
+
+  router: {
+    middleware: [
+      'auth-refresh'
+    ],
+  },
 
   storybook: {
     addons: [
@@ -54,6 +59,8 @@ module.exports = {
 
   publicRuntimeConfig: {
     API_BASE_URL: process.env.API_BASE_URL,
+    APP_KEY: process.env.APP_KEY,
+    API_BASE_PROXY_URL: '/api',
   },
 
   build: {

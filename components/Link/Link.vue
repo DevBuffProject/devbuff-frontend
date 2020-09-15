@@ -10,9 +10,9 @@
     >
       <slot />
       <v-icon
-        v-if="this.href || this.icon"
+        v-if="icon"
+        :icon="icon"
         class="link__icon"
-        :icon="iconDefinition"
       />
     </component>
 </template>

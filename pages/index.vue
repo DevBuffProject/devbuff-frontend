@@ -13,6 +13,7 @@
           type="dark"
           :icon="['fab', 'github']"
           rounded
+          @click="authorize"
         >
           Войти через Github
         </v-button>
@@ -35,7 +36,13 @@
 
 <script>
 export default {
-  transition: 'top',
+  layout: 'white-screen',
+
+  methods: {
+    authorize() {
+      this.$store.dispatch('auth/authorize')
+    }
+  },
 }
 </script>
 

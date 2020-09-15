@@ -42,7 +42,7 @@ export default {
       align-items: center;
       margin: -1rem;
       margin-bottom: 1rem;
-      padding: .8rem 1rem;
+      padding: .5rem 1rem;
       border-bottom: 1px solid var(--color-muted-accent);
     }
     &__footer {

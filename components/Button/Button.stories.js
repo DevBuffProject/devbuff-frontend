@@ -24,9 +24,6 @@ export const Default = () => ({
     loading: {
       default: boolean('Loading', false)
     },
-    small: {
-      default: boolean('Small', false)
-    },
     rounded: {
       default: boolean('Rounded', false)
     },

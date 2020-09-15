@@ -4,7 +4,6 @@ import Color from '~/kernel/UI/colors.js'
 const cachedColors = {}
 const getTextBasedColors = text => {
   if (cachedColors[text]) {
-    console.log('from cache')
     return cachedColors[text]
   }
 
@@ -30,6 +29,10 @@ export default {
     type: {
       type: String,
       default: null
+    },
+    mixClass: {
+      type: [String, Array, Object],
+      default: null
     }
   },
   computed: {
@@ -40,9 +43,13 @@ export default {
 
   render(h, { props }) {
     const colors = getTextBasedColors(props.text)
-
+    console.log(props);
     return h('span', {
-        class: ['chip', (props.type && 'chip--type-' + props.type)],
+        class: [
+          'chip',
+          (props.type && 'chip--type-' + props.type),
+          props.mixClass
+        ],
         style: props.type === 'auto' && {
           backgroundColor: colors.bg,
           color: colors.text

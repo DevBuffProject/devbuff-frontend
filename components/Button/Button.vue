@@ -4,7 +4,6 @@
     :class="[
       'btn',
       'btn--type-' + type,
-      small && 'btn--size-small',
       rounded && 'btn--rounded',
       disabled && 'btn--disabled',
     ]"
@@ -24,13 +23,6 @@
         !$slots.default && 'btn__icon--nomargin'
       ]"
     />
-    <!-- <v-loading
-      v-if="icon && (loading || internalLoading)"
-      :class="[
-        'btn__icon',
-        !$slots.default && 'btn__icon--nomargin'
-      ]"
-    /> -->
   </button>
 </template>
 
