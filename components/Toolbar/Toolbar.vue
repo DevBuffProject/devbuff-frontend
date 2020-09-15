@@ -15,10 +15,12 @@ export default {
   background-color: var(--color-background);
   position: sticky;
   top: 0;
-  z-index: 9999999;
-  height: 50px;
+  z-index: 999;
+  min-height: 55px;
+  padding: .5rem 0rem;
+  box-sizing: border-box;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   border-bottom: 1px solid var(--color-muted);
 
   @supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) {
@@ -31,6 +33,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
   }
 }
 </style>

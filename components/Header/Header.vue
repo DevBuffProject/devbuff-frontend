@@ -24,7 +24,7 @@
             class="text header__link"
             active-class="header__link--active"
             type="muted"
-            to="/app/explore"
+            :to="{ name: 'explore' }"
             :icon="['fas', 'lightbulb']"
           >
             Идеи
@@ -33,12 +33,14 @@
             class="mr-4 text header__link"
             active-class="header__link--active"
             type="muted"
-            to="/app/dashboard"
+            :to="{ name: 's-dashboard' }"
             :icon="['fas', 'project-diagram']"
           >
             Ваши проекты
           </v-link>
-          <v-avatar />
+          <nuxt-link :to="{ name: 's-profile' }">
+            <v-avatar />
+          </nuxt-link>
         </div>
       </v-anim>
     </div>
