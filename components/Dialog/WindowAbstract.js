@@ -3,6 +3,7 @@ import Bus from './EventBus'
 export default {
   methods: {
     postSizes() {
+      console.log(this.$el);
       Bus.$emit('dialog:ready', {
         offsetHeight: this.$el.offsetHeight,
         offsetWidth: this.$el.offsetWidth

@@ -12,6 +12,7 @@
           <component
             :is="component"
             v-bind="data"
+            v-on="listeners"
             :class="dialog ? 'dialog__component' : 'dialog__loader'"
             ref="component"
           />
@@ -43,6 +44,9 @@ export default {
     },
     data() {
       return this.dialog ? this.dialog.data : {}
+    },
+    listeners() {
+      return this.dialog ? this.dialog.listeners : {}
     },
     lastDialog() {
       return this.queue[0]

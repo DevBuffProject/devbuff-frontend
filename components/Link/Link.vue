@@ -50,7 +50,7 @@ export default {
     props() {
       const targetAttr = (this.to && {to: this.to}) || (this.href && {href: this.href})
       const props = {
-        is: (this.to && 'NuxtLink') || (this.href && 'a'),
+        is: (this.to && 'NuxtLink') || (this.href && 'a') || 'a',
         ...targetAttr
       }
 
@@ -69,7 +69,7 @@ export default {
   align-items: center;
 
   &__icon {
-    margin-left: 10px;
+    margin-left: 8px;
     transition: translateY(1px);
   }
 }

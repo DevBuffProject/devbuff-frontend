@@ -128,7 +128,7 @@ export default {
   }
 
   &__icon {
-    margin-left: 1rem;
+    margin-left: 8px;
     width: 1em !important;
     height: 1em !important;
     &--nomargin {
