@@ -2,8 +2,8 @@
   <div
     :class="[
       'input',
-      (autocomplete && focused) && 'input--island',
-      (autocomplete && focused && icon) && 'input--island-icon'
+      /* (autocomplete && focused) && 'input--island', */
+      /* (autocomplete && focused && icon) && 'input--island-icon' */
     ]"
     @click="focus"
   >
@@ -12,7 +12,6 @@
       ref="field"
       :class="[
         'input__field',
-        /* focused && 'input__field--focused', */
         muted && 'input__field--muted',
         icon && 'input__field--icon',
         (type === 'textarea') && 'input__field--type-textarea'
@@ -23,13 +22,7 @@
       @focus="focus"
       @blur="blur"
     />
-    <div
-      :class="[
-        'input__placeholder',
-        (placeholderCentered && !focused && !model) && 'input__placeholder--centered'
-      ]"
-
-    >
+    <div class="input__placeholder">
       <v-icon v-if="icon" :icon="icon" class="input__placeholder-icon" />
       <span
         v-if="placeholder && !model"

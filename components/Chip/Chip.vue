@@ -43,7 +43,6 @@ export default {
 
   render(h, { props }) {
     const colors = getTextBasedColors(props.text)
-    console.log(props);
     return h('span', {
         class: [
           'chip',
@@ -64,13 +63,14 @@ export default {
 <style lang="scss" scoped>
 .chip {
   background-color: var(--color-muted);
-  padding: 0 .5rem 0 1rem;
   display: inline-flex;
   align-items: center;
-  font-size: .8rem;
   line-height: 1;
-  height: 1.5rem;
+  font-size: .7rem;
+  padding: 0 .5rem 0 1rem;
+  height: 1.2rem;
   border-radius: 10rem;
+  transition: background-color .3s var(--base-transition);
   &__hole {
     display: inline-block;
     background-color: var(--color-background);

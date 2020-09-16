@@ -2,13 +2,18 @@
   <div class="profile">
     <v-toolbar class="profile__toolbar">
       <div class="container toolbar__grid">
-        <div class="profile__name pt-4 pl-4">
-          <span> {{ profile.firstName }} {{ profile.lastName }} </span>
+        <div class="profile__name d-flex align-items-end pt-4 pl-4">
+          <v-shadow-input
+            type="text" :value="profile.firstName"
+          />
+          <v-shadow-input
+            type="text" :value="profile.lastName"
+          />
           <span class="text-muted profile__username"> @{{ profile.userName }} </span>
         </div>
 
         <div>
-          <v-button type="flat">
+          <v-button type="muted">
             редактировать
           </v-button>
         </div>
@@ -22,18 +27,15 @@
           :avatar="profile.image"
           size="6rem"
         />
-
         <v-button
-          type="muted"
+          type="black"
           :icon="['fas', 'edit']"
           rounded
-        >
-          ред
-        </v-button>
+        />
       </div>
       <div class="container pt-3 pl-4">
         <div class="profile__container">
-          <div class="mb-4 pb-1">
+          <div class="mb-3">
             <v-link href="/">
               <v-icon
                 :icon="['fab', 'vk']"
@@ -61,7 +63,7 @@
           </div>
 
           <div class="profile__bio mb-4">
-            {{ profile.bio }}
+            <v-shadow-input type="textarea" :value="profile.bio.replace(/^\s+|\s+$/g, '')" />
           </div>
 
           <div class="profile__skills">
@@ -159,23 +161,20 @@ export default {
   }
 
   &__skill {
-    flex: 0 0 200px;
+    flex: 0 0 180px;
     border-radius: 4px;
-    margin: 0 1rem .5rem 0;
+    margin: 0 2rem .5rem 0;
   }
 
   &__skill-name {
-    font-size: 1rem;
+    font-size: .85rem;
     border-bottom: 1px solid var(--color-muted);
     margin-bottom: 1rem;
     font-weight: 300;
   }
 
-  /deep/ &__skill-technology {
-    font-size: .7rem !important;
-    padding: 0 .5rem 0 1rem !important;
-    height: 1.2rem !important;
-    margin: 0 .5rem .5rem 0;
+  &__skill-technology {
+    margin: 0 .5rem .3rem 0;
   }
 
 }

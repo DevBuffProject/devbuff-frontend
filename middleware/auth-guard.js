@@ -5,19 +5,16 @@ export default async ({ store, req, $api, $config, error }) => {
   const token = cookies.get('remix_token')
   const refreshToken = cookies.get('remix_refresh_token')
 
-  if (token && refreshToken) {
-    const { API_BASE_URL } = $config
+  if (!(token && refreshToken))
+    return error({ statusCode: 401, message: 'Unauthorized' })
 
-    const credentails = new URLSearchParams()
-    credentails.set('token', token)
+  const { API_BASE_URL } = $config
 
-    return $api.v1
-      .post(`oAuth/check`, credentails)
-      .then(async ({ active }) => {
-        if (!active) error({ statusCode: 401, message: 'Unauthorized' })
-      })
-      .catch(err => error({ statusCode: 500, message: err }))
-  } else {
-    error({ statusCode: 401, message: 'Unauthorized' })
-  }
+  const credentails = new URLSearchParams()
+  credentails.set('token', token)
+
+  return $api.v1
+    .post(`oAuth/check`, credentails)
+    .then(async ({ active }) => !active && error({ statusCode: 401, message: 'Unauthorized' }))
+    .catch(err => error({ statusCode: 500, message: err }))
 }

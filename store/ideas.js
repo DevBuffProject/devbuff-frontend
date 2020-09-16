@@ -4,12 +4,8 @@ export const state = () => ({
 
 export const actions = {
   async getIdeas({ commit }) {
-    const response = await this.$api.v1.get('posts')
-    const list = await response.json()
-
-    commit('setIdeas', list)
-
-    return list
+    return this.$api.v1.get('idea')
+      .then(r => console.log(r))
   }
 }
 
