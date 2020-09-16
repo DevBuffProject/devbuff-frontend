@@ -17,6 +17,7 @@
 
     <div class="container">
       <v-ideas-list
+        v-if="ideas"
         :ideas="ideas"
         style="width: 500px;"
       />
@@ -30,12 +31,12 @@ import { mapGetters } from 'vuex'
 export default {
   async middleware({ store }) {
     store.commit('setPageName', 'Идеи')
-    // process.server && await store.dispatch('ideas/getIdeas')
+    process.server && await store.dispatch('ideas/getIdeas')
   },
 
   computed: {
     ...mapGetters({
-      // ideas: 'ideas/list'
+      ideas: 'ideas/list'
     })
   },
 
