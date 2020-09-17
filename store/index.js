@@ -28,7 +28,6 @@ export const actions = {
       commit('auth/setRefreshToken', refreshToken)
 
       dispatch('user/getProfile')
-        .catch(error => error({ statusCode: 500, message: error }))
     }
 
     // Promise.all([
