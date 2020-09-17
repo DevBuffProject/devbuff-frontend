@@ -4,38 +4,41 @@
       <div class="container toolbar__grid">
         <div class="profile__name d-flex align-items-end pt-4 pl-4">
           <v-shadow-input
+            label="enter чтобы сохранить"
+            @keyup.enter="changeFirstName($event.target.value)"
             type="text" :value="profile.firstName"
           />
           <v-shadow-input
+            label="enter чтобы сохранить"
+            @keyup.enter="changeLastName($event.target.value)"
             type="text" :value="profile.lastName"
           />
           <span class="text-muted profile__username"> @{{ profile.userName }} </span>
         </div>
 
         <div>
-          <v-button type="muted">
-            редактировать
-          </v-button>
         </div>
       </div>
     </v-toolbar>
 
     <div class="container d-flex">
-      <div class="profile__sidebar d-flex flex-column align-content-center">
-        <v-avatar
-          class="profile__avatar mb-3"
-          :avatar="profile.image"
-          size="6rem"
-        />
-        <v-button
-          type="black"
-          :icon="['fas', 'edit']"
-          rounded
-        />
+      <div class="profile__sidebar">
+        <div class="profile__sidebar-content d-flex flex-column align-content-center">
+          <v-avatar
+            class="profile__avatar mb-3"
+            :avatar="profile.image"
+            size="6rem"
+          />
+          <v-button
+            type="black"
+            :icon="['fas', 'edit']"
+            rounded
+          />
+        </div>
       </div>
       <div class="container pt-3 pl-4">
         <div class="profile__container">
-          <div class="mb-3">
+          <div class="mb-4 d-flex align-items-baseline">
             <v-link href="/">
               <v-icon
                 :icon="['fab', 'vk']"
@@ -60,13 +63,34 @@
                 class="profile__social-icon mr-2"
               />
             </v-link>
+            <v-button
+              type="flat"
+              :icon="['fas', 'edit']"
+              class="profile__socials-edit ml-2"
+              @click="openSkillsEditor"
+            >
+              изменить
+            </v-button>
           </div>
 
           <div class="profile__bio mb-4">
-            <v-shadow-input type="textarea" :value="profile.bio.replace(/^\s+|\s+$/g, '')" />
+            <v-shadow-input
+              type="textarea"
+              label="alt + shift чтобы сохранить"
+              :value="profile.bio.replace(/^\s+|\s+$/g, '')"
+              @keyup.alt.enter="changeBio($event.target.value)"
+            />
           </div>
 
           <div class="profile__skills">
+            <v-button
+              type="flat"
+              :icon="['fas', 'edit']"
+              class="profile__skills-edit"
+            >
+              изменить
+            </v-button>
+
             <div
               v-for="skill in profile.skills"
               :key="skill.name"
@@ -109,6 +133,35 @@ export default {
     ...mapGetters({
       profile: 'user/profile'
     })
+  },
+
+  methods: {
+    changeBio(bio) {
+      this.$store.dispatch('user/update', { bio })
+    },
+    changeFirstName(firstName) {
+      this.$store.dispatch('user/update', { firstName })
+    },
+    changeLastName(lastName) {
+      this.$store.dispatch('user/update', { lastName })
+    },
+    async openSkillsEditor() {
+      const editor = () => import('~/components/Profile/SkillsEditor.vue')
+      const skills = await this.$store.dispatch('skills/getSkills')
+
+      this.$dialog.push(
+        editor,
+        {
+          skills,
+          userSkills: this.profile.skills,
+        },
+        {
+          updateSkills() {
+            console.log('skill-update');
+          }
+        }
+      )
+    }
   }
 }
 </script>
@@ -133,9 +186,13 @@ export default {
     margin-top: -3rem;
   }
 
-  &__avatar {
+  &__sidebar-content {
     position: sticky;
     top: 5px;
+  }
+
+  &__avatar {
+
   }
 
   &__name {
@@ -151,29 +208,52 @@ export default {
 
   }
 
+  &__socials-edit {
+    font-size: .75rem;
+    font-weight: 300;
+    padding: 0;
+    color: var(--color-muted-darken);
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   &__social-icon {
     font-size: 1.2rem;
     color: var(--color-muted-darken);
   }
 
   &__skills {
-    display: flex;
+    // display: flex;
+    position: relative;
+    padding: 1rem;
+    margin: -1rem;
+    border-radius: 4px;
+    transition: background-color .3s var(--base-transition);
+    &:hover {
+      background-color: var(--color-muted-accent);
+    }
+  }
+
+  &__skills-edit {
+    position: absolute;
+    top: 10px;
+    right: 0;
   }
 
   &__skill {
-    flex: 0 0 180px;
-    border-radius: 4px;
-    margin: 0 2rem .5rem 0;
+    // flex: 0 0 180px;
+    margin-bottom: 1.5rem;
   }
 
   &__skill-name {
     font-size: .85rem;
     border-bottom: 1px solid var(--color-muted);
-    margin-bottom: 1rem;
+    margin-bottom: .8rem;
     font-weight: 300;
   }
 
-  &__skill-technology {
+  /deep/ &__skill-technology {
     margin: 0 .5rem .3rem 0;
   }
 
