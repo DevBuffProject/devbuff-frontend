@@ -16,8 +16,9 @@
           v-if="mountedCard + 1 >= index"
           @idea:mounted="incMountedCards"
           :key="idea.id"
-          :title="idea.title"
-          :description="idea.body"
+          :title="idea.name"
+          :description="idea.description"
+          :specialists="idea.specialists"
           avatar="//source.unsplash.com/random"
         />
       </transition-group>

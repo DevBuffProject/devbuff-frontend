@@ -24,7 +24,7 @@
             class="text header__link"
             active-class="header__link--active"
             type="muted"
-            :to="{ name: 'explore' }"
+            :to="{ name: 's-explore' }"
             :icon="['fas', 'lightbulb']"
           >
             Идеи

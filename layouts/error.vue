@@ -3,8 +3,15 @@
     <div v-if="screen">
       <div class="d-flex align-items-baseline">
         <span class="error-page__emoji mr-3"> {{ screen.emoji }} </span>
-        <span class="error-page__message"> {{ screen.message }} </span>
+        <span class="error-page__message">
+          <span> {{ screen.message }} </span>
+          <div
+            v-if="isDev"
+            class="mb-3 error-page__status-text"
+          >{{ error.message }}</div>
+        </span>
       </div>
+
       <v-button
         v-if="error.statusCode === 401"
         :icon="['fab', 'github']"
@@ -15,14 +22,11 @@
       >
         войти через github
       </v-button>
-    </div>
 
-    <div v-else>
-      <div class="d-flex align-items-baseline">
-        <span class="error-page__emoji mr-3"> 🤕 </span>
-        <span class="error-page__message"> что-то пошло не так </span>
-      </div>
-      <nuxt-link :to="{ name: 'index' }">
+      <nuxt-link
+        v-else
+        :to="{ name: 'index' }"
+      >
         <v-button
           class="error-page__button"
           type="muted"
@@ -30,6 +34,14 @@
           на главную
         </v-button>
       </nuxt-link>
+    </div>
+
+    <div v-else>
+      <div class="d-flex align-items-baseline">
+        <span class="error-page__emoji mr-3"> 🤕 </span>
+        <span class="error-page__message"> что-то пошло не так </span>
+      </div>
+
     </div>
   </div>
 </template>
@@ -54,7 +66,13 @@
 
     computed: {
       screen() {
-        return this.errors[this.error.statusCode] || null
+        return this.errors[this.error.statusCode] || {
+          emoji: '🤕',
+          message: 'произошло что-то плохое'
+        }
+      },
+      isDev() {
+        return this.$config.isDev
       }
     }
   }
@@ -82,6 +100,17 @@
 
   &__emoji {
     font-size: var(--emoji-size);
+  }
+
+  &__status-text {
+    font-size: 1rem;
+    color: var(--color-danger);
+    max-width: 400px;
+    max-height: 200px;
+    overflow: scroll;
+    white-space: pre;
+    border-radius: 4px;
+    border: 1px dashed;
   }
 }
 </style>

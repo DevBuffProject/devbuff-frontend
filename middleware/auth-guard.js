@@ -15,6 +15,12 @@ export default async ({ store, req, $api, $config, error }) => {
 
   return $api.v1
     .post(`oAuth/check`, credentails)
-    .then(async ({ active }) => !active && error({ statusCode: 401, message: 'Unauthorized' }))
-    .catch(err => error({ statusCode: 500, message: err }))
+    .then(response => !response.active && error({
+      statusCode: 401,
+      message: response
+    }))
+    .catch(err => error({
+      statusCode: 401,
+      message: err,
+    }))
 }

@@ -19,9 +19,13 @@
     <template #footer>
       <div class="d-flex justify-content-between w-100">
         <div>
-          <v-chip class="mr-2" text="frontend" type="auto" />
-          <v-chip class="mr-2" text="backend" type="auto" />
-          <v-chip class="mr-2" text="C++" type="auto" />
+          <v-chip
+            v-for="(lang, key) in languages"
+            :key="lang + key"
+            :text="lang"
+            class="mr-2"
+            type="auto"
+          />
         </div>
 
       </div>
@@ -53,7 +57,11 @@ export default {
     },
     description: {
       type: String,
-      required: false
+      required: true
+    },
+    specialists: {
+      type: Array,
+      required: true
     },
     avatar: {
       type: String,
@@ -64,6 +72,14 @@ export default {
   methods: {
     join() {
       this.$dialog.push(() => import('~/components/Dialog/SimpleDialog'))
+    }
+  },
+
+  computed: {
+    languages() {
+      const { specialists } = this
+
+      return specialists.reduce((acc, spec) => spec.languages.map(lang => lang.name), [])
     }
   },
 

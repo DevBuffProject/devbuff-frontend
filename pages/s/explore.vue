@@ -30,8 +30,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   async middleware({ store }) {
-    store.commit('setPageName', 'Идеи')
-    process.server && await store.dispatch('ideas/getIdeas')
+    await store.dispatch('ideas/getIdeas')
   },
 
   computed: {
@@ -39,10 +38,6 @@ export default {
       ideas: 'ideas/list'
     })
   },
-
-  mounted() {
-    this.$store.dispatch('ideas/getIdeas')
-  }
 }
 </script>
 
