@@ -1,9 +1,6 @@
 import Cookies from 'universal-cookie'
 
 export const state = () => ({
-  loaded: false,
-  pageName: null,
-
   _session: {
   },
 
@@ -13,7 +10,7 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setPageName: (state, name) => state.pageName = name
+
 }
 
 export const actions = {
@@ -24,6 +21,8 @@ export const actions = {
     const { APP_KEY } = this.$config
 
     if (token && refreshToken) {
+      $api.v1.setToken(token, 'Bearer')
+
       commit('auth/setToken', token)
       commit('auth/setRefreshToken', refreshToken)
 
@@ -37,5 +36,4 @@ export const actions = {
 }
 
 export const getters = {
-  pageName: state => state.pageName
 }

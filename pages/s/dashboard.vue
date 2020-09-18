@@ -45,14 +45,6 @@
 
 <script>
 export default {
-  mounted() {
-    console.log(this)
-  },
-  async middleware({ store }) {
-    return new Promise(resolve => {
-      setTimeout(() => resolve() || store.commit('setPageName', 'Проекты'), 1000)
-    })
-  },
   name: 'name'
 }
 </script>

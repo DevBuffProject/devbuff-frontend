@@ -1,6 +1,7 @@
-module.exports = {
+const config = {
   host: '0.0.0.0',
   port: 3000,
+  dev: process.env.NODE_ENV !== 'production',
   head: {
     title: 'devbuff-front',
     meta: [
@@ -58,8 +59,8 @@ module.exports = {
   },
 
   publicRuntimeConfig: {
+    // Proxy env to runtime
     API_BASE_URL: process.env.API_BASE_URL,
-    APP_KEY: process.env.APP_KEY,
     API_BASE_PROXY_URL: '/api',
   },
 
@@ -76,3 +77,8 @@ module.exports = {
     }
   }
 }
+
+// Proxy dev prop to publicRuntimeConfig
+config.publicRuntimeConfig.isDev = config.dev
+
+module.exports = config

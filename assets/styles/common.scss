@@ -4,6 +4,8 @@
 @import 'typography';
 @import 'transitions';
 
+@import 'fonts';
+
 :root {
   --header-height: 60px;
   --font-family: #{$font-family};
