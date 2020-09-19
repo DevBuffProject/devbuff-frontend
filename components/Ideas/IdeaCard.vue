@@ -81,10 +81,6 @@ export default {
 
       return specialists.reduce((acc, spec) => spec.languages.map(lang => lang.name), [])
     }
-  },
-
-  mounted() {
-    this.$emit('idea:mounted')
   }
 }
 </script>
