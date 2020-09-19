@@ -29,5 +29,6 @@ export const actions = {
 }
 
 export const getters = {
-  profile: state => state.profile
+  profile: state => state.profile,
+  isAuthorized: state => !!state.profile
 }

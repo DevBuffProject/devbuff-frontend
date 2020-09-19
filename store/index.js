@@ -14,7 +14,7 @@ export const mutations = {
 }
 
 export const actions = {
-  nuxtServerInit({ commit, dispatch }, { req, $api, error }) {
+  async nuxtServerInit({ commit, dispatch }, { req, $api, error }) {
     const cookies = new Cookies(req.headers.cookie)
     const token = cookies.get('remix_token')
     const refreshToken = cookies.get('remix_refresh_token')
@@ -26,7 +26,7 @@ export const actions = {
       commit('auth/setToken', token)
       commit('auth/setRefreshToken', refreshToken)
 
-      dispatch('user/getProfile')
+      await dispatch('user/getProfile')
     }
 
     // Promise.all([

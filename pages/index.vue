@@ -38,6 +38,8 @@
 export default {
   layout: 'white-screen',
 
+  middleware: ['guest'],
+
   methods: {
     authorize() {
       this.$store.dispatch('auth/authorize')

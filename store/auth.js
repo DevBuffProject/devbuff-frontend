@@ -16,6 +16,12 @@ export const actions = {
     window.location.href = `${API_BASE_URL}/oAuth/GitHub`
   },
 
+  async checkToken({ commit }, credentails) {
+    return new Promise((resolve, reject) => {
+
+    })
+  },
+
   async getToken({ commit }, { grant, refresh = false }) {
     const cookies = new Cookies()
     const credentails = new URLSearchParams()
@@ -54,11 +60,6 @@ export const actions = {
 
         commit('setToken', access_token)
         commit('setRefreshToken', refresh_token)
-
-        this.$api.v1.interceptors.request.use(request => {
-          // TODO: refresh token
-          return request
-        })
       })
   },
 }
