@@ -209,9 +209,9 @@ export default {
   }
 
   &__socials-edit {
-    font-size: .75rem;
-    font-weight: 300;
-    padding: 0;
+    font-size: .75rem !important;
+    font-weight: 300 !important;
+    padding: 0 !important;
     color: var(--color-muted-darken);
     &:hover {
       text-decoration: underline;
@@ -236,7 +236,7 @@ export default {
   }
 
   &__skills-edit {
-    position: absolute;
+    position: absolute !important;
     top: 10px;
     right: 0;
   }
