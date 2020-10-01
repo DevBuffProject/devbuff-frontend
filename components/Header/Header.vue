@@ -1,17 +1,16 @@
 <template>
   <header class="header">
     <div class="header__container container">
-      <v-anim name="fade">
-        <div v-if="$route.name !== 'index'" class="header__section">
-          <v-input
-            type="text"
-            placeholder="search"
-            placeholder-centered
-            :icon="['fas', 'search']"
-            muted
-          />
-        </div>
-      </v-anim>
+      <div class="header__section">
+        <nuxt-link
+          v-for="locale in availableLocales"
+          :key="locale.code"
+          :to="switchLocalePath(locale.code)"
+          class="mr-2 pt-2 header__locale-link"
+        >
+          {{ locale.name }}
+        </nuxt-link>
+      </div>
       <div class="header__section d-flex justify-content-center">
         <v-logo />
       </div>
@@ -24,19 +23,19 @@
             class="text header__link"
             active-class="header__link--active"
             type="muted"
-            :to="{ name: 's-explore' }"
+            :to="localePath({ name: 's-ideas-explore' })"
             :icon="['fas', 'lightbulb']"
           >
-            Идеи
+            {{  $t('ideas')  }}
           </v-link>
           <v-link
             class="mr-4 text header__link"
             active-class="header__link--active"
             type="muted"
-            :to="{ name: 's-dashboard' }"
+            :to="localePath({ name: 's-dashboard' })"
             :icon="['fas', 'project-diagram']"
           >
-            Ваши проекты
+            {{ $t('dashboard') }}
           </v-link>
           <nuxt-link :to="{ name: 's-profile' }">
             <v-avatar />
@@ -47,9 +46,24 @@
   </header>
 </template>
 
+<i18n lang="yaml">
+  ru:
+    ideas: 'Идеи'
+    dashboard: 'Ваши идеи'
+  en:
+    ideas: 'ideas'
+    dashboard: 'Dashboard'
+</i18n>
+
 <script>
 export default {
-  name: 'v-header'
+  name: 'v-header',
+
+  computed: {
+    availableLocales () {
+      return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale)
+    }
+  }
 }
 </script>
 
@@ -89,6 +103,11 @@ export default {
       color: var(--color-primary) !important;
       opacity: 1;
     }
+  }
+
+  &__locale-link {
+    font-size: 2rem;
+    text-decoration: none;
   }
 }
 </style>

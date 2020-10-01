@@ -2,6 +2,7 @@ const config = {
   host: '0.0.0.0',
   port: 3000,
   dev: process.env.NODE_ENV !== 'production',
+
   head: {
     title: 'devbuff-front',
     meta: [
@@ -17,7 +18,11 @@ const config = {
     ]
   },
   css: [
-    { src: '~/assets/styles/common.scss', lang: 'sass' }
+    { src: '~/assets/styles/common.scss', lang: 'sass' },
+    { src: 'quill/dist/quill.core.css', lang: 'css' },
+    // for bubble theme
+    { src: 'quill/dist/quill.bubble.css', lang: 'css' }
+    // ...
   ],
 
   loading: '~/components/Loading/PageLoading.vue',
@@ -28,22 +33,30 @@ const config = {
   }],
 
   plugins: [
-    '~/plugins/fontawesome.js',
-    '~/plugins/ui-installer.js',
-    '~/plugins/api.js'
+    { src: '~/plugins/fontawesome.js' },
+    { src: '~/plugins/ui-installer.js', mode: 'client' },
+    { src: '~plugins/quill.js', mode: 'client' },
+    { src: '~/plugins/api.js' }
   ],
 
    modules: [
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
-    '@nuxtjs/proxy'
+    'nuxt-i18n'
   ],
 
-  proxy: {
-    '/api/v1': {
-      target: process.env.API_BASE_URL,
-      pathRewrite: { '^/api/v1' : '/' },
-    }
+  i18n : {
+    locales: [
+      { code: 'ru', name: '🇷🇺' },
+      { code: 'en', name: '🇬🇧' }
+    ],
+    defaultLocale: 'ru',
+    vueI18nLoader: true,
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+    },
+
   },
 
   router: {

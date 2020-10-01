@@ -1,5 +1,5 @@
 <template>
-  <div class="ideas">
+  <v-card class="ideas">
     <div class="ideas__list">
       <v-idea-card
         v-for="idea in ideas"
@@ -7,10 +7,10 @@
         :title="idea.name"
         :description="idea.description"
         :specialists="idea.specialists"
-        avatar="//source.unsplash.com/random"
+        class="ideas__idea"
       />
     </div>
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -27,4 +27,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.ideas {
+  &__idea {
+    margin: -1rem;
+    margin-bottom: 1rem;
+    padding: 1rem 1rem 0;
+    border-bottom: 1px solid var(--color-muted-accent);
+  }
+}
 </style>
