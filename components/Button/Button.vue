@@ -62,18 +62,19 @@ export default {
   @each $name, $color in map-get($default-colors, 'scheme' ) {
     &--type-#{$name} {
       color: #fff;
+      border: 1px solid transparent;
+      background-clip: border-box !important;
+      background-origin: border-box !important;
       background-color: var(--color-#{$name});
+      background-image: linear-gradient(135deg, var(--color-#{$name}-tint), var(--color-#{$name}));
       box-shadow: 0px 2px 4px var(--color-#{$name}-fade);
-      border: 1px solid var(--color-#{$name});
 
       &:hover {
         background-color: var(--color-#{$name}-tint);
-        border: 1px solid var(--color-#{$name}-tint);
       }
 
       &:active {
         background-color: var(--color-#{$name}-darken);
-        border: 1px solid var(--color-#{$name}-darken);
         box-shadow: none;
       }
     }
@@ -92,8 +93,8 @@ export default {
   background: none;
   font-family: inherit;
   font-size: .9rem;
-  padding: .3rem 1rem;
-  padding-top: calc(.3rem - 1px);
+  padding: .2rem 1rem;
+  text-transform: lowercase;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -102,8 +103,9 @@ export default {
   text-decoration: none;
   position: relative;
   cursor: pointer;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1.5;
+  letter-spacing: 1px;
   transition-property: background-color, box-shadow;
   transition: .3s var(--base-transition);
 
