@@ -1,4 +1,4 @@
-# Devbuff Frontend [![Build Status](https://travis-ci.com/7architect/devbuff-frontend.svg?token=KpNyjhzrpjT79DwToHzr&branch=develop)](https://travis-ci.com/7architect/devbuff-frontend) [![CodeFactor](https://www.codefactor.io/repository/github/7architect/devbuff-frontend/badge?s=a45618561d667a1813fae5396fc9d57d074c8b1f)](https://www.codefactor.io/repository/github/7architect/devbuff-frontend)
+# Devbuff Frontend ![CircleCI](https://img.shields.io/circleci/build/github/7architect/devbuff-frontend/develop?logo=circleci&logoColor=rgb%284%2C%20155%2C%2074%29&token=31982ca6fe9eb89f2087b39e35a9b9a73fed4360) [![CodeFactor](https://www.codefactor.io/repository/github/7architect/devbuff-frontend/badge?s=a45618561d667a1813fae5396fc9d57d074c8b1f)](https://www.codefactor.io/repository/github/7architect/devbuff-frontend)
 
 **Table of Contents**
 
