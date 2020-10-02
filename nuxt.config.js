@@ -1,4 +1,5 @@
-import {localeConfiguration} from './modules/i18n'
+import { localeConfiguration } from '~/modules/i18n'
+
 const config = {
   host: '0.0.0.0',
   port: 3000,
