@@ -24,7 +24,7 @@
       <v-chip
         v-for="(lang, key) in languages"
         :key="lang + key"
-        :text="lang"
+        :text="$t('languages.' + lang)"
         class="mr-2"
         type="auto"
       />

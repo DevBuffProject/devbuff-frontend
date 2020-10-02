@@ -20,7 +20,6 @@
         </div>
       </div>
     </v-toolbar>
-
     <div class="container d-flex">
       <div class="profile__sidebar">
         <div class="profile__sidebar-content d-flex flex-column align-content-center">
@@ -96,14 +95,14 @@
               :key="skill.name"
               class="profile__skill"
             >
-              <div class="profile__skill-name"> {{ skill.name }} </div>
+              <div class="profile__skill-name"> {{ $t('languages.' + skill.name) }}</div>
 
               <div
                 v-for="spec in skill.specializations"
                 :key="spec.name"
                 class="profile__skill-spec"
               >
-                <span >
+                <span>
                   <v-chip
                     v-for="framework in spec.frameworks"
                     :key="framework.name"
@@ -122,10 +121,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
-  async middleware({ store }) {
+  async middleware({store}) {
     await store.dispatch('user/getProfile')
   },
 
@@ -137,13 +136,13 @@ export default {
 
   methods: {
     changeBio(bio) {
-      this.$store.dispatch('user/update', { bio })
+      this.$store.dispatch('user/update', {bio})
     },
     changeFirstName(firstName) {
-      this.$store.dispatch('user/update', { firstName })
+      this.$store.dispatch('user/update', {firstName})
     },
     changeLastName(lastName) {
-      this.$store.dispatch('user/update', { lastName })
+      this.$store.dispatch('user/update', {lastName})
     },
     async openSkillsEditor() {
       const editor = () => import('~/components/Profile/SkillsEditor.vue')
@@ -213,6 +212,7 @@ export default {
     font-weight: 300 !important;
     padding: 0 !important;
     color: var(--color-muted-darken);
+
     &:hover {
       text-decoration: underline;
     }
@@ -230,6 +230,7 @@ export default {
     margin: -1rem;
     border-radius: 4px;
     transition: background-color .3s var(--base-transition);
+
     &:hover {
       background-color: var(--color-muted-accent);
     }

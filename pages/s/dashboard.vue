@@ -3,7 +3,7 @@
     <v-toolbar class="mb-4">
       <div class="container toolbar__grid">
         <div class="d-flex">
-          <h3 class="m-0"> Dashboard </h3>
+          <h3 class="m-0"> {{ $t('page.dashboard.title') }} </h3>
         </div>
         <div>
           <!-- ... -->

@@ -3,12 +3,12 @@
     <v-toolbar class="mb-4">
       <div class="container toolbar__grid">
         <div class="d-flex">
-          <h3 class="m-0"> {{ $t('ideas') }} </h3>
+          <h3 class="m-0"> {{ $t('page.ideas.explore.ideas') }} </h3>
         </div>
         <div>
           <nuxt-link to="/">
             <v-button :icon="['fas', 'plus']">
-              {{ $t('new') }}
+              {{ $t('page.ideas.explore.new') }}
             </v-button>
           </nuxt-link>
         </div>
@@ -22,12 +22,12 @@
             type="flat-primary"
             :icon="['fas', 'sliders-h']"
           >
-            {{ $t('advanced_search') }}
+            {{ $t('page.ideas.explore.advancedSearch') }}
           </v-button>
         </div>
       </div>
 
-      <v-ideas-list
+       <v-ideas-list
         v-if="ideas"
         :ideas="ideas"
         style="width: 500px;"
@@ -35,17 +35,6 @@
     </div>
   </div>
 </template>
-
-<i18n lang="yaml">
-  ru:
-    ideas: 'Идеи'
-    new: 'создать'
-    advanced_search: 'расширенный поиск'
-  en:
-    ideas: 'Ideas'
-    new: 'create'
-    advanced_search: 'advanced search'
-</i18n>
 
 <script>
 import { mapGetters } from 'vuex'

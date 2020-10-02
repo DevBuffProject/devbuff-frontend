@@ -6,9 +6,14 @@
 
 ## Build Setup
 
+### Setup environment
+ 1. Create `.env` file from `.env.example` and fill all properties.
+
+### Run
 ``` bash
 # install dependencies
 $ npm install
+
 
 # serve with hot reload at localhost:3000
 $ npm run dev

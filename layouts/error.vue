@@ -20,7 +20,7 @@
         @click="$store.dispatch('auth/authorize')"
         class="error-page__button"
       >
-        войти через github
+        {{ $t('layouts.error.oAuth.gitHub') }}
       </v-button>
 
       <nuxt-link
@@ -31,7 +31,7 @@
           class="error-page__button"
           type="muted"
         >
-          на главную
+          {{ $t('layouts.error.action.index') }}
         </v-button>
       </nuxt-link>
     </div>

@@ -2,11 +2,11 @@
   <section>
     <div class="slide present pt-5">
       <h1 class="present__heading">
-        Место где собирают команды
+        {{ $t('page.index.title') }}
       </h1>
       <p class="present__app-desc my-5">
-        <span class="present__app-name">DevBuff</span> — это площадка для разработчиков, которые хотят привлечь единомышленников для совместной реализации своих идей.
-        <v-link to="/about">подробнее</v-link>
+        <span class="present__app-name">DevBuff</span> — {{ $t('page.index.description') }}.
+        <v-link to="/about"> {{ $t('page.index.action.about') }}</v-link>
       </p>
       <div class="present__controls">
         <v-button
@@ -15,10 +15,10 @@
           rounded
           @click="authorize"
         >
-          Войти через Github
+          {{ $t('page.index.oAuth.gitHub') }}
         </v-button>
 
-        <v-delimiter />
+        <v-delimiter/>
 
         <nuxt-link to="/app/explore">
           <v-button
@@ -26,7 +26,7 @@
             :icon="['fas', 'long-arrow-alt-right']"
             rounded
           >
-            Посмотреть проекты
+            {{ $t('page.index.action.projects') }}
           </v-button>
         </nuxt-link>
       </div>
@@ -95,9 +95,11 @@ export default {
       color: #000;
       display: inline-block;
     }
+
     &:before {
       content: "<"
     }
+
     &:after {
       content: "/>";
       margin-left: 5px;

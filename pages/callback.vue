@@ -3,14 +3,14 @@
     <div v-if="error">
       <div class="callback-auth__error d-flex align-items-baseline">
         <span class="callback-auth__emoji mr-3"> 😬 </span>
-        <span class="callback-auth__status-text"> Что-то пошло не так </span>
+        <span class="callback-auth__status-text"> {{ $t('page.callback.status.error.text') }} </span>
       </div>
       <v-button
         class="callback-auth__retry"
         type="muted"
         @click="retryAuth"
       >
-        повторить
+        {{ $t('page.callback.status.error.retryButton') }}
       </v-button>
     </div>
 
@@ -20,7 +20,7 @@
     >
       <div class="d-flex align-items-baseline mb-4">
         <span class="callback-auth__emoji mr-3"> 👌 </span>
-        <span class="callback-auth__status-text mr-4"> Загрузка </span>
+        <span class="callback-auth__status-text mr-4"> {{ $t('page.callback.success.text') }} </span>
       </div>
     </div>
 
@@ -31,7 +31,7 @@
       <div class="d-flex align-items-baseline mb-4">
         <span class="callback-auth__emoji mr-3"> ⏳ </span>
         <span class="callback-auth__status-text mr-4">
-          Авторизация <span class="callback-auth__dots" />
+          {{ $t('page.callback.processing.text') }} <span class="callback-auth__dots"/>
         </span>
       </div>
     </div>
@@ -54,18 +54,18 @@ export default {
     },
 
     getToken() {
-      const { $store, $route, $router } = this
+      const {$store, $route, $router} = this
       const grant = $route.query.code
 
       Promise.all([
-        $store.dispatch('auth/getToken', { grant }),
+        $store.dispatch('auth/getToken', {grant}),
         $store.dispatch('user/getProfile')
       ])
-      .then(() => {
-        this.success = true
-        setTimeout(() => $router.push({ name: 's-dashboard' }), 1000)
-      })
-      .catch(() => this.error = true)
+        .then(() => {
+          this.success = true
+          setTimeout(() => $router.push({name: 's-dashboard'}), 1000)
+        })
+        .catch(() => this.error = true)
     }
   },
 
@@ -100,6 +100,7 @@ export default {
     position: absolute;
     right: -1rem;
     width: 1rem;
+
     &:after {
       content: ".";
       animation: dots 3s linear infinite;
