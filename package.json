@@ -27,11 +27,12 @@
     "bootstrap": "^4.5.2",
     "color": "^3.1.2",
     "crypto-js": "^4.0.0",
+    "newrelic": "^6.13.1",
     "nuxt": "^2.14.6",
     "nuxt-i18n": "^6.15.1",
     "nuxt-vuex-localstorage": "^1.2.7",
-    "vue-quill-editor": "^3.0.6",
-    "universal-cookie": "^4.0.4"
+    "universal-cookie": "^4.0.4",
+    "vue-quill-editor": "^3.0.6"
   },
   "devDependencies": {
     "@babel/runtime-corejs3": "^7.11.2",

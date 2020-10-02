@@ -39,13 +39,15 @@ const config = {
     { src: '~/plugins/fontawesome.js' },
     { src: '~/plugins/ui-installer.js', mode: 'client' },
     { src: '~plugins/quill.js', mode: 'client' },
-    { src: '~/plugins/api.js' }
+    { src: '~/plugins/api.js' },
   ],
 
    modules: [
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
-    'nuxt-i18n'
+    'nuxt-i18n',
+    // own modules
+    '~/modules/newrelic'
   ],
 
   i18n : {
