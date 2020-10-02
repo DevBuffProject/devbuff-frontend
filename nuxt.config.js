@@ -15,6 +15,9 @@ const config = {
       { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100;300;400;600;900&display=swap' }
+    ],
+    script: [
+      { src: 'https://6yzwffsm5625.statuspage.io/embed/script.js', body: true, defer: true }
     ]
   },
   css: [
