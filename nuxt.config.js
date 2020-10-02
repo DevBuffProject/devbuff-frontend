@@ -1,10 +1,11 @@
+import {localeConfiguration} from './modules/i18n'
 const config = {
   host: '0.0.0.0',
   port: 3000,
   dev: process.env.NODE_ENV !== 'production',
 
   head: {
-    title: 'devbuff-front',
+    title: 'DevBuff',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -61,7 +62,9 @@ const config = {
       useCookie: true,
       cookieKey: 'i18n_redirected',
     },
-
+    vueI18n: {
+      messages: localeConfiguration
+    }
   },
 
   router: {

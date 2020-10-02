@@ -26,7 +26,7 @@
             :to="localePath({ name: 's-ideas-explore' })"
             :icon="['fas', 'lightbulb']"
           >
-            {{  $t('ideas')  }}
+            {{  $t('components.header.ideas')  }}
           </v-link>
           <v-link
             class="mr-4 text header__link"
@@ -35,7 +35,7 @@
             :to="localePath({ name: 's-dashboard' })"
             :icon="['fas', 'project-diagram']"
           >
-            {{ $t('dashboard') }}
+            {{ $t('components.header.dashboard') }}
           </v-link>
           <nuxt-link :to="{ name: 's-profile' }">
             <v-avatar />
@@ -45,16 +45,6 @@
     </div>
   </header>
 </template>
-
-<i18n lang="yaml">
-  ru:
-    ideas: 'Идеи'
-    dashboard: 'Ваши идеи'
-  en:
-    ideas: 'ideas'
-    dashboard: 'Dashboard'
-</i18n>
-
 <script>
 export default {
   name: 'v-header',
