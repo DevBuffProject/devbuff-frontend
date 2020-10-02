@@ -1,8 +1,11 @@
-export let englishLocalization = {
+import common from './common/languages'
+
+export default {
+  ...common,
   components: {
     header: {
-      ideas: 'ideas',
-      dashboard: 'Dashboard'
+      ideas: 'Идеи',
+      dashboard: 'Ваши идеи'
     }
   },
   page: {
@@ -10,45 +13,45 @@ export let englishLocalization = {
       title: "Место где собирают команды",
       description: "это площадка для разработчиков, которые хотят привлечь единомышленников для совместной реализации своих идей",
       oAuth: {
-        gitHub: "Login via GitHub"
+        gitHub: "Войти через GitHub"
       },
       action: {
-        about: "see about",
+        about: "подробнее",
         projects: "Посмотреть проекты"
       }
     },
     callback: {
       status: {
         error: {
-          text: "Something wrong",
-          retryButton: "Try again please"
+          text: "Что-то пошло не так",
+          retryButton: "Повторить"
         }
       },
       success: {
-        text: "Loading your data"
+        text: "Загружаем ваш профиль"
       },
       processing: {
-        text: "Authorization..."
+        text: "Авторизация..."
       }
     },
     dashboard: {
-      title: "Dashboard"
+      title: "Персональная страница"
     },
     ideas: {
       explore: {
-        ideas: 'Ideas',
-        new: 'Create',
-        advancedSearch: 'Advanced search'
+        ideas: 'Идеи',
+        new: 'Создать',
+        advancedSearch: 'Расширенный поиск'
       }
     }
   },
   layouts: {
     error: {
       oAuth: {
-        gitHub: "Login vie GitHub"
+        gitHub: "Войти через GitHub"
       },
       action: {
-        index: "Return"
+        index: "На главную"
       }
     }
   }
