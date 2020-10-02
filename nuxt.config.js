@@ -1,4 +1,4 @@
-import localeConfiguration from './modules/i18n'
+// import localeConfiguration from './lang/index.js'
 
 const config = {
   host: '0.0.0.0',
@@ -54,18 +54,16 @@ const config = {
 
   i18n : {
     locales: [
-      { code: 'ru', name: '🇷🇺' },
-      { code: 'en', name: '🇬🇧' }
+      { code: 'ru', name: '🇷🇺', file: 'ru.js' },
+      { code: 'en', name: '🇬🇧', file: 'en.js' }
     ],
     defaultLocale: 'ru',
-    vueI18nLoader: true,
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
     },
-    vueI18n: {
-      messages: localeConfiguration
-    }
+    lazy: true,
+    langDir: 'lang/'
   },
 
   router: {

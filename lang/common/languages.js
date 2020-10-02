@@ -1,4 +1,4 @@
-export let languagesLocalization = {
+export default {
   languages: {
     CSharp: "C#",
     CPlusPlus: "C++",
