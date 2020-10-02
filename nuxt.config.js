@@ -1,4 +1,4 @@
-import localeConfiguration from './lang'
+// import localeConfiguration from './lang'
 
 const config = {
   host: '0.0.0.0',
@@ -64,7 +64,7 @@ const config = {
       cookieKey: 'i18n_redirected',
     },
     vueI18n: {
-      messages: localeConfiguration
+      messages: require('./lang')
     }
   },
 
