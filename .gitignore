@@ -21,3 +21,6 @@ dist
 
 # PWA
 static/sw.js
+
+#IDEA files
+.idea/
