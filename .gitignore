@@ -28,4 +28,4 @@ static/sw.js
 
 newrelic_agent.log
 
-.nuxt-storybook/
+.nuxt-storybook
