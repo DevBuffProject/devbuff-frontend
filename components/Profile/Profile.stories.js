@@ -391,15 +391,39 @@ export const Default = () => ({
       ], ':')
     },
   },
+  data() {
+    return {
+      resultSkills: []
+    }
+  },
   template: `
     <v-app>
     <div>
-      <v-skills-editor v-bind="$props">
+      <v-skills-editor
+        @change="show"
+        v-bind="$props">
       </v-skills-editor>
 
 
-      <h1>Data: </h1>
+      <h1>Result: </h1>
+      <ul v-for="(language,index) in resultSkills" :key="index">
+        <li>{{ language.name }}
+          <ul v-for="(specialization,index) in language.specializations" :key="index">
+            <li>{{ specialization.name }}
+            <ul v-for="technology in specialization.frameworks">
+              <li>{{technology.name}}</li>
+            </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
     </div>
     </v-app>
-  `
+  `,
+  methods: {
+    show: function (dd) {
+      this.resultSkills = dd;
+    }
+  }
 })

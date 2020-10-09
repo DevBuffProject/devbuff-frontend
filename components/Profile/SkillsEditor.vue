@@ -212,6 +212,8 @@ export default {
           this.service.prevLanguage.enabled = true;
         }
       }
+
+      this.$emit('change', this.createUserSkills())
     },
     slideNext: function (value, type) {
       if (type === 'specialization') {
@@ -238,6 +240,45 @@ export default {
         this.service.currentFrameworks = null;
       }
       this.swiper.slidePrev();
+    },
+    createUserSkills() {
+      let userSkills = [];
+
+
+      for (let language of this.diffSkills) {
+        if (!language.enabled) {
+          continue;
+        }
+        userSkills[userSkills.length] = {
+          name: language.name,
+          levelKnowledge: "newbie",
+          specializations: []
+        };
+
+        for (let specialization of language.specializations) {
+          if (!specialization.enabled) {
+            continue;
+          }
+          let currentSpecializationBlock = userSkills[userSkills.length - 1].specializations;
+          currentSpecializationBlock[currentSpecializationBlock.length] = {
+            name: specialization.name,
+            frameworks: []
+          }
+
+          for (let technology of specialization.frameworks) {
+            if (!technology.enabled) {
+              continue;
+            }
+            let currentTechnologyBlock = currentSpecializationBlock[currentSpecializationBlock.length - 1].frameworks;
+            currentTechnologyBlock[currentTechnologyBlock.length] = {
+              name: technology.name,
+              levelKnowledge: "newbie"
+            }
+          }
+        }
+      }
+
+      return userSkills;
     },
     t(str, fallbackStr) {
       return this.$t && this.$te
