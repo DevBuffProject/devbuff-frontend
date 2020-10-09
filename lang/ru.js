@@ -1,11 +1,23 @@
-import common from './common/languages'
+import languages from './common/languages'
+import specializations from './common/specializations'
 
 export default {
-  ...common,
+  ...languages,
+  ...specializations,
   components: {
     header: {
       ideas: 'Идеи',
       dashboard: 'Ваши идеи'
+    },
+    skillEditor: {
+      header: {
+        language: "Языки программирования",
+        specialization: "Специальности для языка: ",
+        technology: "Технологии для специальности: "
+      },
+      controls: {
+        back: "Назад"
+      }
     }
   },
   page: {

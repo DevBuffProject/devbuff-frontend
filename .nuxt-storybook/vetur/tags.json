@@ -89,12 +89,6 @@
   "LazyVIdeaCard": {
     "description": "Auto imported from components/Ideas/IdeaCard.vue"
   },
-  "VIdeaCardSkeleton": {
-    "description": "Auto imported from components/Ideas/IdeaCardSkeleton.vue"
-  },
-  "LazyVIdeaCardSkeleton": {
-    "description": "Auto imported from components/Ideas/IdeaCardSkeleton.vue"
-  },
   "VIdeasList": {
     "description": "Auto imported from components/Ideas/IdeasList.vue"
   },
@@ -112,6 +106,12 @@
   },
   "LazyVInput": {
     "description": "Auto imported from components/Input/Input.vue"
+  },
+  "VShadowInput": {
+    "description": "Auto imported from components/Input/ShadowInput.vue"
+  },
+  "LazyVShadowInput": {
+    "description": "Auto imported from components/Input/ShadowInput.vue"
   },
   "VLink": {
     "description": "Auto imported from components/Link/Link.vue"
@@ -136,6 +136,12 @@
   },
   "LazyVLogo": {
     "description": "Auto imported from components/Logo/Logo.vue"
+  },
+  "VSkillsEditor": {
+    "description": "Auto imported from components/Profile/SkillsEditor.vue"
+  },
+  "LazyVSkillsEditor": {
+    "description": "Auto imported from components/Profile/SkillsEditor.vue"
   },
   "VSkeleton": {
     "description": "Auto imported from components/Skeleton/Skeleton.vue"

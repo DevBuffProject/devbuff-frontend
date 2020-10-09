@@ -1,7 +1,7 @@
-import common from './common/languages'
+import languages from './common/languages'
 
 export default {
-  ...common,
+  ...languages,
   components: {
     header: {
       ideas: 'ideas',

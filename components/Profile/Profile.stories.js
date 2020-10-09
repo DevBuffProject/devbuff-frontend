@@ -1,41 +1,405 @@
-import { withKnobs, text, select, array, boolean } from '@storybook/addon-knobs'
+import {withKnobs, text, select, array, boolean} from '@storybook/addon-knobs'
 
 export default {
-  title: 'Button',
+  title: 'SkillsEditor',
   decorators: [withKnobs]
 };
 
 export const Default = () => ({
   props: {
-    label: {
-      default: text('Label', 'Button')
+    userSkills: {
+      default: array('Скиллы пользователя', [
+        {
+          "name": "JavaScript",
+          "levelKnowledge": "newbie",
+          "specializations": [
+            {
+              "name": "front-end",
+              "frameworks": [
+                {
+                  "name": "Vue.js",
+                  "levelKnowledge": "newbie"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Java",
+          "levelKnowledge": "newbie",
+          "specializations": [
+            {
+              "name": "back-end",
+              "frameworks": [
+                {
+                  "name": "Spring Boot",
+                  "levelKnowledge": "strong"
+                },
+                {
+                  "name": "Spring Cloud",
+                  "levelKnowledge": "strong"
+                },
+                {
+                  "name": "Spring Security",
+                  "levelKnowledge": "strong"
+                },
+                {
+                  "name": "Spring Session",
+                  "levelKnowledge": "strong"
+                }
+              ]
+            },
+            {
+              "name": "android",
+              "frameworks": []
+            }
+          ]
+        },
+        {
+          "name": "PHP",
+          "levelKnowledge": "newbie",
+          "specializations": [
+            {
+              "name": "back-end",
+              "frameworks": [
+                {
+                  "name": "Symfony",
+                  "levelKnowledge": "newbie"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Swift",
+          "levelKnowledge": "newbie",
+          "specializations": [
+            {
+              "name": "apple",
+              "frameworks": [
+                {
+                  "name": "Swift UI",
+                  "levelKnowledge": "newbie"
+                }
+              ]
+            }
+          ]
+        }
+      ], ';')
     },
-    type: {
-      default: select('Type', {
-        primary: 'primary',
-        dark: 'dark',
-        muted: 'muted',
-        flat: 'flat'
-      })
+    skills: {
+      default: array('Список всех скиллов', [
+        {
+          "name": "CSharp",
+          "specializations": [
+            {
+              "name": "back-end",
+              "frameworks": [
+                {
+                  "name": ".NET Framework"
+                }
+              ]
+            },
+            {
+              "name": "game",
+              "frameworks": [
+                {
+                  "name": "Unity"
+                }
+              ]
+            },
+            {
+              "name": "desktop",
+              "frameworks": []
+            }
+          ]
+        },
+        {
+          "name": "JavaScript",
+          "specializations": [
+            {
+              "name": "back-end",
+              "frameworks": [
+                {
+                  "name": "Node.js"
+                }
+              ]
+            },
+            {
+              "name": "front-end",
+              "frameworks": [
+                {
+                  "name": "Vue.js"
+                },
+                {
+                  "name": "Angular"
+                },
+                {
+                  "name": "React"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "TypeScript",
+          "specializations": [
+            {
+              "name": "back-end",
+              "frameworks": [
+                {
+                  "name": "Node.js"
+                }
+              ]
+            },
+            {
+              "name": "front-end",
+              "frameworks": [
+                {
+                  "name": "Vue.js"
+                },
+                {
+                  "name": "Angular"
+                },
+                {
+                  "name": "React"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Java",
+          "specializations": [
+            {
+              "name": "back-end",
+              "frameworks": [
+                {
+                  "name": "Spring Framework"
+                },
+                {
+                  "name": "Spring Boot"
+                },
+                {
+                  "name": "Spring Cloud"
+                },
+                {
+                  "name": "Spring Cloud Data Flow"
+                },
+                {
+                  "name": "Spring Integration"
+                },
+                {
+                  "name": "Spring Batch"
+                },
+                {
+                  "name": "Spring Security"
+                },
+                {
+                  "name": "Spring Session"
+                },
+                {
+                  "name": "Spring HATEOS"
+                },
+                {
+                  "name": "Spring Flo"
+                },
+                {
+                  "name": "Spring Shell"
+                },
+                {
+                  "name": "Spring Web Flow"
+                },
+                {
+                  "name": "Spark"
+                },
+                {
+                  "name": "Struts"
+                }
+              ]
+            },
+            {
+              "name": "android",
+              "frameworks": []
+            },
+            {
+              "name": "desktop",
+              "frameworks": [
+                {
+                  "name": "JavaFX"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Kotlin",
+          "specializations": [
+            {
+              "name": "back-end",
+              "frameworks": [
+                {
+                  "name": "Spring Framework"
+                },
+                {
+                  "name": "Spring Boot"
+                },
+                {
+                  "name": "Spring Cloud"
+                },
+                {
+                  "name": "Spring Cloud Data Flow"
+                },
+                {
+                  "name": "Spring Integration"
+                },
+                {
+                  "name": "Spring Batch"
+                },
+                {
+                  "name": "Spring Security"
+                },
+                {
+                  "name": "Spring Session"
+                },
+                {
+                  "name": "Spring HATEOS"
+                },
+                {
+                  "name": "Spring Flo"
+                },
+                {
+                  "name": "Spring Shell"
+                },
+                {
+                  "name": "Spring Web Flow"
+                },
+                {
+                  "name": "Spark"
+                },
+                {
+                  "name": "Struts"
+                }
+              ]
+            },
+            {
+              "name": "android",
+              "frameworks": []
+            },
+            {
+              "name": "desktop",
+              "frameworks": [
+                {
+                  "name": "JavaFX"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "PHP",
+          "specializations": [
+            {
+              "name": "back-end",
+              "frameworks": [
+                {
+                  "name": "Laravel"
+                },
+                {
+                  "name": "Symfony"
+                },
+                {
+                  "name": "CodeIgniter"
+                },
+                {
+                  "name": "Yii 2"
+                },
+                {
+                  "name": "Phalcon"
+                },
+                {
+                  "name": "CakePHP"
+                },
+                {
+                  "name": "Zend Framework"
+                },
+                {
+                  "name": "Slim"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Python",
+          "specializations": [
+            {
+              "name": "back-end",
+              "frameworks": [
+                {
+                  "name": "Django"
+                },
+                {
+                  "name": "Flask"
+                }
+              ]
+            },
+            {
+              "name": "ML",
+              "frameworks": [
+                {
+                  "name": "TensorFlow"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Swift",
+          "specializations": [
+            {
+              "name": "apple",
+              "frameworks": [
+                {
+                  "name": "Swift UI"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "CPlusPlus",
+          "specializations": [
+            {
+              "name": "desktop",
+              "frameworks": []
+            },
+            {
+              "name": "microcontrollers",
+              "frameworks": []
+            },
+            {
+              "name": "game",
+              "frameworks": [
+                {
+                  "name": "Unreal Engine"
+                }
+              ]
+            }
+          ]
+        }
+      ], ':')
     },
-    icon: {
-      default: array('Icon', ['fas', 'plus'], ':')
-    },
-    loading: {
-      default: boolean('Loading', false)
-    },
-    rounded: {
-      default: boolean('Rounded', false)
-    },
-    disabled: {
-      default: boolean('Disabled', false)
-    }
   },
   template: `
     <v-app>
-      <v-button v-bind="$props">
-        {{ label }}
-      </v-button>
+    <div>
+      <v-skills-editor v-bind="$props">
+      </v-skills-editor>
+
+
+      <h1>Data: </h1>
+    </div>
     </v-app>
   `
 })
