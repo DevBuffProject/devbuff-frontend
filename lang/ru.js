@@ -11,9 +11,16 @@ export default {
     },
     skillEditor: {
       header: {
-        language: "Языки программирования",
-        specialization: "Специальности для языка: ",
-        technology: "Технологии для специальности: "
+        languagesSlide: {
+          language: "Выберите ЯП с которыми вы работали",
+          specialization: "Специальности",
+        },
+        specializationsSlide: {
+          specialization: "В каком направлении вы работали на ЯП: ",
+        },
+        technologiesSlide:{
+          technology: "Технологии для языка %s в специальности %s"
+        },
       },
       controls: {
         back: "Назад"

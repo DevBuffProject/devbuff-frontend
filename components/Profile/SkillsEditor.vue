@@ -6,10 +6,10 @@
       <swiper-slide style="height: auto">
         <ul class="list-group">
           <li class="list-group-item d-flex text-muted">
-            <div class="mr-auto">{{ $t('components.skillEditor.header.language') }}</div>
+            <div class="mr-auto">{{ $t('components.skillEditor.header.languagesSlide.language') }}</div>
             <div class="ml-auto text-lef text-right">
-              {{ $t('components.skillEditor.header.specialization') }}
-              <v-icon icon="arrow-right"></v-icon>
+              {{ $t('components.skillEditor.header.languagesSlide.specialization') }}
+              <v-icon icon="chevron-right"></v-icon>
             </div>
           </li>
           <li class="list-group-item" v-for="(item, index) in diffSkills" v-bind:key="index">
@@ -21,7 +21,7 @@
               </label>
             </div>
             <div class="text-right" v-on:click="slideNext(item.name,'specialization')">
-              <v-icon icon="arrow-right"></v-icon>
+              <v-icon icon="chevron-right"></v-icon>
             </div>
           </li>
         </ul>
@@ -30,11 +30,11 @@
         <ul class="list-group">
           <li class="list-group-item text-muted"
               v-if="service.prevLanguage!== null && service.prevLanguage!==undefined">
-            {{ $t('components.skillEditor.header.specialization') }}
+            {{ $t('components.skillEditor.header.specializationsSlide.specialization') }}
             {{ t('languages.' + service.prevLanguage.name, service.prevLanguage.name) }}
           </li>
           <li class="list-group-item" v-on:click="slidePrev('specialization')">
-            <v-icon icon="arrow-left"></v-icon>
+            <v-icon icon="chevron-left"></v-icon>
             {{ $t('components.skillEditor.controls.back') }}
           </li>
           <li class="list-group-item" v-for="(item,index) in service.currentSpecialization" :key="index">
@@ -48,7 +48,7 @@
             <div class="text-right"
                  v-if="item.frameworks.length > 0"
                  v-on:click="slideNext(item.name,'framework')">
-              <v-icon icon="arrow-right"></v-icon>
+              <v-icon icon="chevron-right"></v-icon>
             </div>
             <div v-else class="text-right">
               <i class="next-no-data"> </i>
@@ -60,11 +60,14 @@
         <ul class="list-group" style="margin-left: 1px; margin-right: 1px">
           <li class="list-group-item text-muted"
               v-if="service.prevSpecialization !== null && service.prevSpecialization!== undefined">
-            {{ $t('components.skillEditor.header.technology') }}
-            {{ t('specializations.' + service.prevSpecialization.name + '.title', service.prevSpecialization.name) }}
+            {{
+              $t('components.skillEditor.header.technologiesSlide.technology')
+                .replace("%s", t('languages.' + service.prevLanguage.name, service.prevLanguage.name))
+                .replace("%s", t('specializations.' + service.prevSpecialization.name + '.title', service.prevSpecialization.name))
+            }}
           </li>
           <li class="list-group-item" v-on:click="slidePrev('framework')">
-            <v-icon icon="arrow-left"></v-icon>
+            <v-icon icon="chevron-left"></v-icon>
             {{ $t('components.skillEditor.controls.back') }}
           </li>
           <li class="list-group-item" v-for="(item, index) in service.currentFrameworks" :key="index">
