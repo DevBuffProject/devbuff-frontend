@@ -25,5 +25,3 @@ static/sw.js
 
 #IDEA files
 .idea/
-
-newrelic_agent.log

@@ -13,15 +13,14 @@ export { default as VD2 } from '../../components/Dialog/d2.vue'
 export { default as VInstaller } from '../../components/Dialog/installer.js'
 export { default as VHeader } from '../../components/Header/Header.vue'
 export { default as VIdeaCard } from '../../components/Ideas/IdeaCard.vue'
+export { default as VIdeaCardSkeleton } from '../../components/Ideas/IdeaCardSkeleton.vue'
 export { default as VIdeasList } from '../../components/Ideas/IdeasList.vue'
 export { default as VImage } from '../../components/Image/Image.vue'
 export { default as VInput } from '../../components/Input/Input.vue'
-export { default as VShadowInput } from '../../components/Input/ShadowInput.vue'
 export { default as VLink } from '../../components/Link/Link.vue'
 export { default as VLoading } from '../../components/Loading/Loading.vue'
 export { default as VPageLoading } from '../../components/Loading/PageLoading.vue'
 export { default as VLogo } from '../../components/Logo/Logo.vue'
-export { default as VSkillsEditor } from '../../components/Profile/SkillsEditor.vue'
 export { default as VSkeleton } from '../../components/Skeleton/Skeleton.vue'
 export { default as VSkeletonParagraph } from '../../components/Skeleton/SkeletonParagraph.vue'
 export { default as VToolbar } from '../../components/Toolbar/Toolbar.vue'
@@ -41,15 +40,14 @@ export const LazyVD2 = import('../../components/Dialog/d2.vue' /* webpackChunkNa
 export const LazyVInstaller = import('../../components/Dialog/installer.js' /* webpackChunkName: "components/Dialog/installer" */).then(c => c.default || c)
 export const LazyVHeader = import('../../components/Header/Header.vue' /* webpackChunkName: "components/Header/Header" */).then(c => c.default || c)
 export const LazyVIdeaCard = import('../../components/Ideas/IdeaCard.vue' /* webpackChunkName: "components/Ideas/IdeaCard" */).then(c => c.default || c)
+export const LazyVIdeaCardSkeleton = import('../../components/Ideas/IdeaCardSkeleton.vue' /* webpackChunkName: "components/Ideas/IdeaCardSkeleton" */).then(c => c.default || c)
 export const LazyVIdeasList = import('../../components/Ideas/IdeasList.vue' /* webpackChunkName: "components/Ideas/IdeasList" */).then(c => c.default || c)
 export const LazyVImage = import('../../components/Image/Image.vue' /* webpackChunkName: "components/Image/Image" */).then(c => c.default || c)
 export const LazyVInput = import('../../components/Input/Input.vue' /* webpackChunkName: "components/Input/Input" */).then(c => c.default || c)
-export const LazyVShadowInput = import('../../components/Input/ShadowInput.vue' /* webpackChunkName: "components/Input/ShadowInput" */).then(c => c.default || c)
 export const LazyVLink = import('../../components/Link/Link.vue' /* webpackChunkName: "components/Link/Link" */).then(c => c.default || c)
 export const LazyVLoading = import('../../components/Loading/Loading.vue' /* webpackChunkName: "components/Loading/Loading" */).then(c => c.default || c)
 export const LazyVPageLoading = import('../../components/Loading/PageLoading.vue' /* webpackChunkName: "components/Loading/PageLoading" */).then(c => c.default || c)
 export const LazyVLogo = import('../../components/Logo/Logo.vue' /* webpackChunkName: "components/Logo/Logo" */).then(c => c.default || c)
-export const LazyVSkillsEditor = import('../../components/Profile/SkillsEditor.vue' /* webpackChunkName: "components/Profile/SkillsEditor" */).then(c => c.default || c)
 export const LazyVSkeleton = import('../../components/Skeleton/Skeleton.vue' /* webpackChunkName: "components/Skeleton/Skeleton" */).then(c => c.default || c)
 export const LazyVSkeletonParagraph = import('../../components/Skeleton/SkeletonParagraph.vue' /* webpackChunkName: "components/Skeleton/SkeletonParagraph" */).then(c => c.default || c)
 export const LazyVToolbar = import('../../components/Toolbar/Toolbar.vue' /* webpackChunkName: "components/Toolbar/Toolbar" */).then(c => c.default || c)

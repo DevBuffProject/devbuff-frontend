@@ -19,21 +19,15 @@ let store = {};
   // Enforce store modules
   store.modules = store.modules || {}
 
-  resolveStoreModules(require('../store/auth.js'), 'auth.js')
   resolveStoreModules(require('../store/ideas.js'), 'ideas.js')
-  resolveStoreModules(require('../store/skills.js'), 'skills.js')
-  resolveStoreModules(require('../store/user.js'), 'user.js')
 
   // If the environment supports hot reloading...
 
   if (process.client && module.hot) {
     // Whenever any Vuex module is updated...
     module.hot.accept([
-      '../store/auth.js',
       '../store/ideas.js',
       '../store/index.js',
-      '../store/skills.js',
-      '../store/user.js',
     ], () => {
       // Update `root.modules` with the latest definitions.
       updateModules()
