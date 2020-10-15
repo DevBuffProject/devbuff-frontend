@@ -1,7 +1,13 @@
 import Vue from 'vue'
+import { prepareForInline } from './nuxt-entry';
 import '~storybook';
 
 import * as components from '../components';
-Object.keys(components).forEach(name => Vue.component(name, components[name]))
+Object.keys(components).forEach(name => Vue.component(name, components[name]));
 
-export const parameters = {}
+const globalParameters = {};
+globalParameters.docs = {
+    ...globalParameters.docs,
+    prepareForInline
+}
+export const parameters = globalParameters

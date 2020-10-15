@@ -1,18 +1,19 @@
 import Vue from 'vue'
 
 import { getMatchedComponentsInstances, getChildrenComponentInstancesUsingFetch, promisify, globalHandleError, urlJoin, sanitizeComponent } from './utils'
-
+import NuxtError from '../layouts/error.vue'
 import NuxtLoading from '~/components/Loading/PageLoading.vue'
 
 import '../assets/styles/common.scss'
 
-import '../assets/styles/bulma.loader.scss'
+import '../node_modules/quill/dist/quill.core.css'
 
-import '../node_modules/@fortawesome/fontawesome-svg-core/styles.css'
+import '../node_modules/quill/dist/quill.bubble.css'
 
 import _6f6c098b from '../layouts/default.vue'
+import _4ce95986 from '../layouts/white-screen.vue'
 
-const layouts = { "_default": sanitizeComponent(_6f6c098b) }
+const layouts = { "_default": sanitizeComponent(_6f6c098b),"_white-screen": sanitizeComponent(_4ce95986) }
 
 export default {
   render (h, props) {
@@ -160,15 +161,24 @@ export default {
       }
       this.$loading.finish()
     },
-
     errorChanged () {
-      if (this.nuxt.err && this.$loading) {
-        if (this.$loading.fail) {
-          this.$loading.fail(this.nuxt.err)
+      if (this.nuxt.err) {
+        if (this.$loading) {
+          if (this.$loading.fail) {
+            this.$loading.fail(this.nuxt.err)
+          }
+          if (this.$loading.finish) {
+            this.$loading.finish()
+          }
         }
-        if (this.$loading.finish) {
-          this.$loading.finish()
+
+        let errorLayout = (NuxtError.options || NuxtError).layout;
+
+        if (typeof errorLayout === 'function') {
+          errorLayout = errorLayout(this.context)
         }
+
+        this.setLayout(errorLayout)
       }
     },
 

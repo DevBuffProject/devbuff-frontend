@@ -5,7 +5,7 @@ import ClientOnly from 'vue-client-only'
 import NoSsr from 'vue-no-ssr'
 import { createRouter } from './router.js'
 import NuxtChild from './components/nuxt-child.js'
-import NuxtError from './components/nuxt-error.vue'
+import NuxtError from '../layouts/error.vue'
 import Nuxt from './components/nuxt.js'
 import App from './App.js'
 import { setContext, getLocation, getRouteData, normalizeError } from './utils'
@@ -13,12 +13,14 @@ import { createStore } from './store.js'
 
 /* Plugins */
 
-import nuxt_plugin_plugin_233ed022 from 'nuxt_plugin_plugin_233ed022' // Source: ./components/plugin.js (mode: 'all')
-import nuxt_plugin_workbox_57c61961 from 'nuxt_plugin_workbox_57c61961' // Source: ./workbox.js (mode: 'client')
-import nuxt_plugin_http_77fb5c2b from 'nuxt_plugin_http_77fb5c2b' // Source: ./http.js (mode: 'all')
-import nuxt_plugin_nuxtvuexlocalstorage_1bda8c72 from 'nuxt_plugin_nuxtvuexlocalstorage_1bda8c72' // Source: ./nuxt-vuex-localstorage.js (mode: 'client')
+import nuxt_plugin_plugin_4b572608 from 'nuxt_plugin_plugin_4b572608' // Source: ./components/plugin.js (mode: 'all')
+import nuxt_plugin_workbox_d7bd2aa4 from 'nuxt_plugin_workbox_d7bd2aa4' // Source: ./workbox.js (mode: 'client')
+import nuxt_plugin_pluginrouting_bba20d18 from 'nuxt_plugin_pluginrouting_bba20d18' // Source: ./nuxt-i18n/plugin.routing.js (mode: 'all')
+import nuxt_plugin_pluginmain_5e54f30a from 'nuxt_plugin_pluginmain_5e54f30a' // Source: ./nuxt-i18n/plugin.main.js (mode: 'all')
+import nuxt_plugin_axios_72d53212 from 'nuxt_plugin_axios_72d53212' // Source: ./axios.js (mode: 'all')
 import nuxt_plugin_fontawesome_b8db358e from 'nuxt_plugin_fontawesome_b8db358e' // Source: ../plugins/fontawesome.js (mode: 'all')
-import nuxt_plugin_uiinstaller_63d725d2 from 'nuxt_plugin_uiinstaller_63d725d2' // Source: ../plugins/ui-installer.js (mode: 'all')
+import nuxt_plugin_uiinstaller_63d725d2 from 'nuxt_plugin_uiinstaller_63d725d2' // Source: ../plugins/ui-installer.js (mode: 'client')
+import nuxt_plugin_quill_967f4cae from 'nuxt_plugin_quill_967f4cae' // Source: ../plugins/quill.js (mode: 'client')
 import nuxt_plugin_api_785206da from 'nuxt_plugin_api_785206da' // Source: ../plugins/api.js (mode: 'all')
 
 // Component: <ClientOnly>
@@ -48,7 +50,7 @@ Vue.component(Nuxt.name, Nuxt)
 
 Vue.use(Meta, {"keyName":"head","attribute":"data-n-head","ssrAttribute":"data-n-head-ssr","tagIDKeyName":"hid"})
 
-const defaultTransition = {"name":"top","mode":"out-in","appear":true,"appearClass":"appear","appearActiveClass":"appear-active","appearToClass":"appear-to"}
+const defaultTransition = {"name":"page","mode":"out-in","appear":true,"appearClass":"appear","appearActiveClass":"appear-active","appearToClass":"appear-to"}
 
 const originalRegisterModule = Vuex.Store.prototype.registerModule
 const baseStoreOptions = { preserveState: process.client }
@@ -69,7 +71,7 @@ async function createApp(ssrContext, config = {}) {
   // here we inject the router and store to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.
   const app = {
-    head: {"title":"devbuff-front","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"Devbuff web client"},{"hid":"mobile-web-app-capable","name":"mobile-web-app-capable","content":"yes"},{"hid":"apple-mobile-web-app-title","name":"apple-mobile-web-app-title","content":"devbuff-front"},{"hid":"author","name":"author","content":"DevBuff, Alexander Katkov"},{"hid":"og:type","name":"og:type","property":"og:type","content":"website"},{"hid":"og:title","name":"og:title","property":"og:title","content":"devbuff-front"},{"hid":"og:site_name","name":"og:site_name","property":"og:site_name","content":"devbuff-front"},{"hid":"og:description","name":"og:description","property":"og:description","content":"Devbuff web client"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss2?family=Rubik+Mono+One&display=swap"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss2?family=Stardos+Stencil:wght@400;700&display=swap"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss2?family=Fira+Sans:wght@100;300;400;600;900&display=swap"},{"rel":"manifest","href":"\u002F_nuxt\u002Fmanifest.8f0dbc53.json"},{"rel":"shortcut icon","href":"favicon.ico"}],"style":[],"script":[],"htmlAttrs":{"lang":"en"}},
+    head: {"title":"DevBuff","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"Devbuff web client"},{"hid":"mobile-web-app-capable","name":"mobile-web-app-capable","content":"yes"},{"hid":"apple-mobile-web-app-title","name":"apple-mobile-web-app-title","content":"devbuff-front"},{"hid":"author","name":"author","content":"DevBuff, Alexander Katkov"},{"hid":"og:type","name":"og:type","property":"og:type","content":"website"},{"hid":"og:title","name":"og:title","property":"og:title","content":"devbuff-front"},{"hid":"og:site_name","name":"og:site_name","property":"og:site_name","content":"devbuff-front"},{"hid":"og:description","name":"og:description","property":"og:description","content":"Devbuff web client"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss2?family=Rubik+Mono+One&display=swap"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss2?family=Stardos+Stencil:wght@400;700&display=swap"},{"rel":"stylesheet","type":"text\u002Fcss","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss2?family=Fira+Sans:wght@100;300;400;600;900&display=swap"},{"rel":"manifest","href":"\u002F_nuxt\u002Fmanifest.8f0dbc53.json"},{"rel":"shortcut icon","href":"favicon.ico"}],"script":[{"src":"https:\u002F\u002F6yzwffsm5625.statuspage.io\u002Fembed\u002Fscript.js","body":true,"defer":true}],"style":[],"htmlAttrs":{"lang":"en"}},
 
     store,
     router,
@@ -198,28 +200,36 @@ async function createApp(ssrContext, config = {}) {
   }
   // Plugin execution
 
-  if (typeof nuxt_plugin_plugin_233ed022 === 'function') {
-    await nuxt_plugin_plugin_233ed022(app.context, inject)
+  if (typeof nuxt_plugin_plugin_4b572608 === 'function') {
+    await nuxt_plugin_plugin_4b572608(app.context, inject)
   }
 
-  if (process.client && typeof nuxt_plugin_workbox_57c61961 === 'function') {
-    await nuxt_plugin_workbox_57c61961(app.context, inject)
+  if (process.client && typeof nuxt_plugin_workbox_d7bd2aa4 === 'function') {
+    await nuxt_plugin_workbox_d7bd2aa4(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_http_77fb5c2b === 'function') {
-    await nuxt_plugin_http_77fb5c2b(app.context, inject)
+  if (typeof nuxt_plugin_pluginrouting_bba20d18 === 'function') {
+    await nuxt_plugin_pluginrouting_bba20d18(app.context, inject)
   }
 
-  if (process.client && typeof nuxt_plugin_nuxtvuexlocalstorage_1bda8c72 === 'function') {
-    await nuxt_plugin_nuxtvuexlocalstorage_1bda8c72(app.context, inject)
+  if (typeof nuxt_plugin_pluginmain_5e54f30a === 'function') {
+    await nuxt_plugin_pluginmain_5e54f30a(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_axios_72d53212 === 'function') {
+    await nuxt_plugin_axios_72d53212(app.context, inject)
   }
 
   if (typeof nuxt_plugin_fontawesome_b8db358e === 'function') {
     await nuxt_plugin_fontawesome_b8db358e(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_uiinstaller_63d725d2 === 'function') {
+  if (process.client && typeof nuxt_plugin_uiinstaller_63d725d2 === 'function') {
     await nuxt_plugin_uiinstaller_63d725d2(app.context, inject)
+  }
+
+  if (process.client && typeof nuxt_plugin_quill_967f4cae === 'function') {
+    await nuxt_plugin_quill_967f4cae(app.context, inject)
   }
 
   if (typeof nuxt_plugin_api_785206da === 'function') {

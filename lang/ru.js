@@ -1,11 +1,30 @@
-import common from './common/languages'
+import languages from './common/languages'
+import specializations from './common/specializations'
 
 export default {
-  ...common,
+  ...languages,
+  ...specializations,
   components: {
     header: {
       ideas: 'Идеи',
       dashboard: 'Ваши идеи'
+    },
+    skillEditor: {
+      header: {
+        languagesSlide: {
+          language: "Выберите ЯП с которыми вы работали",
+          specialization: "Специальности",
+        },
+        specializationsSlide: {
+          specialization: "В каком направлении вы работали на ЯП: ",
+        },
+        technologiesSlide:{
+          technology: "Технологии для языка %s в специальности %s"
+        },
+      },
+      controls: {
+        back: "Назад"
+      }
     }
   },
   page: {
