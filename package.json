@@ -28,7 +28,7 @@
     "color": "^3.1.2",
     "crypto-js": "^4.0.0",
     "newrelic": "^6.13.1",
-    "nuxt": "^2.14.6",
+    "nuxt": "^2.14.7",
     "nuxt-i18n": "^6.15.3",
     "nuxt-vuex-localstorage": "^1.2.7",
     "swiper": "^6.3.2",
