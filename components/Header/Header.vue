@@ -37,7 +37,7 @@
           >
             {{ $t('components.header.dashboard') }}
           </v-link>
-          <nuxt-link :to="{ name: 's-profile' }">
+          <nuxt-link :to="localePath({ name: 's-profile' })">
             <v-avatar />
           </nuxt-link>
         </div>

@@ -66,7 +66,6 @@
               type="flat"
               :icon="['fas', 'edit']"
               class="profile__socials-edit ml-2"
-              @click="openSkillsEditor"
             >
               изменить
             </v-button>
@@ -82,6 +81,22 @@
           </div>
 
           <div class="profile__skills">
+            <v-skills-editor
+              v-if="systemSkills"
+              :userSkills="profile.skills"
+              :skills="systemSkills"
+              @change="changeSkills"
+            />
+            <div
+              v-else
+              class="d-flex justify-content-center align-items-center"
+            >
+              <span class="mr-3">{{ $t('page.profile.skillsLoading') }}</span>
+              <v-loading />
+            </div>
+          </div>
+
+          <div v-if="false" class="profile__skills">
             <v-button
               type="flat"
               :icon="['fas', 'edit']"
@@ -121,45 +136,33 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
-  async middleware({store}) {
+  async middleware({ store }) {
     await store.dispatch('user/getProfile')
+    await store.dispatch('skills/getSkills')
   },
 
   computed: {
     ...mapGetters({
-      profile: 'user/profile'
+      profile: 'user/profile',
+      systemSkills: 'skills/skills'
     })
   },
 
   methods: {
     changeBio(bio) {
-      this.$store.dispatch('user/update', {bio})
+      this.$store.dispatch('user/update', { bio })
     },
     changeFirstName(firstName) {
-      this.$store.dispatch('user/update', {firstName})
+      this.$store.dispatch('user/update', { firstName })
     },
     changeLastName(lastName) {
-      this.$store.dispatch('user/update', {lastName})
+      this.$store.dispatch('user/update', { lastName })
     },
-    async openSkillsEditor() {
-      const editor = () => import('~/components/Profile/SkillsEditor.vue')
-      const skills = await this.$store.dispatch('skills/getSkills')
-
-      this.$dialog.push(
-        editor,
-        {
-          skills,
-          userSkills: this.profile.skills,
-        },
-        {
-          updateSkills() {
-            console.log('skill-update');
-          }
-        }
-      )
+    changeSkills(skills) {
+      this.$store.dispatch('user/update', { skills })
     }
   }
 }

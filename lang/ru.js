@@ -12,49 +12,52 @@ export default {
     skillEditor: {
       header: {
         languagesSlide: {
-          language: "Выберите ЯП с которыми вы работали",
-          specialization: "Специальности",
+          language: 'Выберите ЯП с которыми вы работали',
+          specialization: 'Специальности',
         },
         specializationsSlide: {
-          specialization: "В каком направлении вы работали на ЯП: ",
+          specialization: 'В каком направлении вы работали на ЯП: ',
         },
         technologiesSlide:{
-          technology: "Технологии для языка %s в специальности %s"
+          technology: 'Технологии для языка %s в специальности %s'
         },
       },
       controls: {
-        back: "Назад"
+        back: 'Назад'
       }
     }
   },
   page: {
     index: {
-      title: "Место где собирают команды",
-      description: "это площадка для разработчиков, которые хотят привлечь единомышленников для совместной реализации своих идей",
+      title: 'Место где собирают команды',
+      description: 'это площадка для разработчиков, которые хотят привлечь единомышленников для совместной реализации своих идей',
       oAuth: {
-        gitHub: "Войти через GitHub"
+        gitHub: 'Войти через GitHub'
       },
       action: {
-        about: "подробнее",
-        projects: "Посмотреть проекты"
+        about: 'подробнее',
+        projects: 'Посмотреть проекты'
       }
+    },
+    profile: {
+      skillsLoading: 'Загрузка скиллов'
     },
     callback: {
       status: {
         error: {
-          text: "Что-то пошло не так",
-          retryButton: "Повторить"
+          text: 'Что-то пошло не так',
+          retryButton: 'Повторить'
         }
       },
       success: {
-        text: "Загружаем ваш профиль"
+        text: 'Загружаем'
       },
       processing: {
-        text: "Авторизация..."
+        text: 'Авторизация...'
       }
     },
     dashboard: {
-      title: "Персональная страница"
+      title: 'Персональная страница'
     },
     ideas: {
       explore: {
@@ -67,10 +70,10 @@ export default {
   layouts: {
     error: {
       oAuth: {
-        gitHub: "Войти через GitHub"
+        gitHub: 'Войти через GitHub'
       },
       action: {
-        index: "На главную"
+        index: 'На главную'
       }
     }
   }

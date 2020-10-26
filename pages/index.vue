@@ -95,15 +95,6 @@ export default {
       color: #000;
       display: inline-block;
     }
-
-    &:before {
-      content: "<"
-    }
-
-    &:after {
-      content: "/>";
-      margin-left: 5px;
-    }
   }
 }
 </style>

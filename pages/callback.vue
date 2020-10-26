@@ -54,16 +54,16 @@ export default {
     },
 
     getToken() {
-      const {$store, $route, $router} = this
+      const { $store, $route, $router } = this
       const grant = $route.query.code
 
-      Promise.all([
-        $store.dispatch('auth/getToken', {grant}),
-        $store.dispatch('user/getProfile')
-      ])
+      $store.dispatch('auth/getToken', { grant })
+        .then(() => {
+          $store.dispatch('user/getProfile')
+        })
         .then(() => {
           this.success = true
-          setTimeout(() => $router.push({name: 's-dashboard'}), 1000)
+          setTimeout(() => $router.push(this.localePath({ name: 's-dashboard' })), 1000)
         })
         .catch(() => this.error = true)
     }
