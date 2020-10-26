@@ -2,7 +2,8 @@
   <div class="skills-editor">
     <swiper ref="mySwiper" :options="swiperOptions"
             :auto-update="true"
-            style="height: auto">
+            style="height: auto; margin-left: 0;"
+    >
       <swiper-slide style="height: auto">
         <ul class="list-group">
           <li class="list-group-item d-flex text-muted">
@@ -350,7 +351,7 @@ export default {
 }
 
 .swiper-container {
-  width: 600px;
+  width: 100%;
   height: 300px;
 }
 

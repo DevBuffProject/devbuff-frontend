@@ -10,32 +10,35 @@ export default {
   },
   page: {
     index: {
-      title: "Место где собирают команды",
-      description: "это площадка для разработчиков, которые хотят привлечь единомышленников для совместной реализации своих идей",
+      title: 'Место где собирают команды',
+      description: 'это площадка для разработчиков, которые хотят привлечь единомышленников для совместной реализации своих идей',
       oAuth: {
-        gitHub: "Login via GitHub"
+        gitHub: 'Login via GitHub'
       },
       action: {
-        about: "see about",
-        projects: "Посмотреть проекты"
+        about: 'see about',
+        projects: 'Посмотреть проекты'
       }
+    },
+    profile: {
+      skillsLoading: 'Загрузка скиллов'
     },
     callback: {
       status: {
         error: {
-          text: "Something wrong",
-          retryButton: "Try again please"
+          text: 'Something wrong',
+          retryButton: 'Try again please'
         }
       },
       success: {
-        text: "Loading your data"
+        text: 'Loading'
       },
       processing: {
-        text: "Authorization..."
+        text: 'Authorization...'
       }
     },
     dashboard: {
-      title: "Dashboard"
+      title: 'Dashboard'
     },
     ideas: {
       explore: {
@@ -48,10 +51,10 @@ export default {
   layouts: {
     error: {
       oAuth: {
-        gitHub: "Login vie GitHub"
+        gitHub: 'Login vie GitHub'
       },
       action: {
-        index: "Return"
+        index: 'Return'
       }
     }
   }
