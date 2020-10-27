@@ -29,7 +29,7 @@
     "crypto-js": "^4.0.0",
     "newrelic": "^6.13.2",
     "nuxt": "^2.14.7",
-    "nuxt-i18n": "^6.15.3",
+    "nuxt-i18n": "^6.15.4",
     "nuxt-vuex-localstorage": "^1.2.7",
     "swiper": "^6.3.2",
     "universal-cookie": "^4.0.4",
