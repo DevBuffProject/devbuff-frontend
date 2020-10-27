@@ -24,7 +24,7 @@
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/proxy": "^2.0.1",
     "@nuxtjs/pwa": "^3.2.2",
-    "bootstrap": "^4.5.2",
+    "bootstrap": "^4.5.3",
     "color": "^3.1.2",
     "crypto-js": "^4.0.0",
     "newrelic": "^6.13.2",
