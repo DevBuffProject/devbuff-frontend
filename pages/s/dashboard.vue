@@ -1,51 +1,58 @@
 <template>
-  <div>
+  <div class="explore">
     <v-toolbar class="mb-4">
       <div class="container toolbar__grid">
         <div class="d-flex">
-          <h3 class="m-0"> {{ $t('page.dashboard.title') }} </h3>
+          <h3 class="m-0"> {{ $t('page.ideas.explore.ideas') }} </h3>
         </div>
         <div>
-          <!-- ... -->
+          <nuxt-link to="/">
+            <v-button :icon="['fas', 'plus']">
+              {{ $t('page.ideas.explore.new') }}
+            </v-button>
+          </nuxt-link>
         </div>
       </div>
     </v-toolbar>
 
     <div class="container">
-      <v-card style="width: 500px;">
-        <template #header>
-          <div class="d-flex align-items-center w-100">
-            <v-skeleton
-              class="w-50"
-              figure="line"
-            />
-          </div>
-        </template>
-
-        <div class="d-flex w-100">
-          <v-skeleton
-            class="mr-3"
-            figure="tile"
-          />
-          <v-skeleton-paragraph class="w-100" />
-        </div>
-
-        <template #footer>
-          <div class="d-flex justify-content-end w-100">
-            <v-skeleton
-              class="w-25"
-              figure="line"
-            />
-          </div>
-        </template>
-      </v-card>
+       <div style="width: 500px;">
+         <v-ideas-list
+          v-if="ideas.length > 0"
+          :ideas="ideas"
+        />
+        <v-card
+          v-else
+          class="d-flex flex-column align-items-center"
+        >
+          <div class="mb-3"> {{ $t('page.dashboard.noIdeas') }} </div>
+          <nuxt-link to="/">
+            <v-button
+              type="flat-primary"
+              :icon="['fas', 'plus']"
+            >
+              {{ $t('page.ideas.explore.new') }}
+            </v-button>
+          </nuxt-link>
+        </v-card>
+       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'name'
+  async middleware({ store }) {
+    await store.dispatch('ideas/getOwnIdeas')
+  },
+
+  computed: {
+    ...mapGetters({
+      ideas: 'ideas/own'
+    })
+  },
 }
 </script>
 

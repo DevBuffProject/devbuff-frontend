@@ -57,7 +57,8 @@ export default {
   &__icon {
     font-size: 1rem;
     opacity: .15;
-    color: var(--color-black-fade);
+    color: #000;
+    opacity: .1;
   }
 }
 </style>

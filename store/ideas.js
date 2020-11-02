@@ -12,7 +12,7 @@ export const actions = {
   getOwnIdeas({ commit }) {
     return this.$api.v1
       .get('/idea/self')
-      .then(ideas => commit('setIdeas', ideas))
+      .then(ideas => commit('setOwnIdeas', ideas))
   },
   getIdeas({ commit }, params) {
     const finalParams = {

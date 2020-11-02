@@ -57,7 +57,8 @@ export default {
       }
     },
     dashboard: {
-      title: 'Персональная страница'
+      title: 'Персональная страница',
+      noIdeas: 'У вас нет ни одной идеи'
     },
     ideas: {
       explore: {
