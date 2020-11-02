@@ -38,7 +38,8 @@ export default {
       }
     },
     dashboard: {
-      title: 'Dashboard'
+      title: 'Dashboard',
+      noIdeas: 'You have no ideas'
     },
     ideas: {
       explore: {
