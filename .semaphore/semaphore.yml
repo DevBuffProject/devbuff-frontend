@@ -1,5 +1,5 @@
 version: v1.0
-name: Test MyApp
+name: Devbuff develop
 agent:
   machine:
     type: e1-standard-2
@@ -16,12 +16,3 @@ blocks:
             - npm install
             - cache store
             - npm run build --if-present
-promotions:
-  - name: Common
-    pipeline_file: pipeline_2.yml
-    auto_promote:
-      when: branch = 'develop' OR branch = 'master'
-  - name: Deploy
-    pipeline_file: pipeline_3.yml
-    auto_promote:
-      when: branch = 'master' AND result = 'passed'
