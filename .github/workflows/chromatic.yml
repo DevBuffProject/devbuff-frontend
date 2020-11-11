@@ -4,12 +4,13 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
-    steps:          
+    steps:
       - uses: actions/checkout@v2
-        with:
+      - run: npm i
+      - with:
           fetch-depth: 0 # Required to retrieve git history
       - uses: chromaui/action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          storybookBuildDir: ./storybook-static 
+          storybookBuildDir: storybook-static
