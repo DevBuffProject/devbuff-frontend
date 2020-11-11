@@ -23,10 +23,7 @@
         {{ $t('layouts.error.oAuth.gitHub') }}
       </v-button>
 
-      <nuxt-link
-        v-else
-        :to="{ name: 'index' }"
-      >
+      <nuxt-link v-else to="/">
         <v-button
           class="error-page__button"
           type="muted"
