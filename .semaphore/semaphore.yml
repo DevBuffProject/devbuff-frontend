@@ -16,7 +16,6 @@ blocks:
             - npm install
             - cache store
             - npm run build --if-present
-            - npm run chromatic --if-present
 promotions:
   - name: Common
     pipeline_file: pipeline_2.yml
