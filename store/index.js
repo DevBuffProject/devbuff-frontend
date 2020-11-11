@@ -1,5 +1,3 @@
-import Cookies from 'universal-cookie'
-
 export const state = () => ({
   _session: {
   },
@@ -9,15 +7,10 @@ export const state = () => ({
   }
 })
 
-export const mutations = {
-
-}
-
 export const actions = {
-  async nuxtServerInit({ commit, dispatch }, { req, $api, error }) {
-    const cookies = new Cookies(req.headers.cookie)
-    const token = cookies.get('remix_token')
-    const refreshToken = cookies.get('remix_refresh_token')
+  async nuxtServerInit({ commit, dispatch }, { $cookies, $api, error }) {
+    const token = $cookies.get('remix_token')
+    const refreshToken = $cookies.get('remix_refresh_token')
     const { APP_KEY } = this.$config
 
     if (token && refreshToken) {
@@ -26,14 +19,8 @@ export const actions = {
       commit('auth/setToken', token)
       commit('auth/setRefreshToken', refreshToken)
 
-      await dispatch('user/getProfile')
+      // TODO: BUG - 401 because nuxtServerInit runs before middleware cheks
+      // await dispatch('user/getProfile')
     }
-
-    // Promise.all([
-    //   // ... common server actions
-    // ])
   }
-}
-
-export const getters = {
 }

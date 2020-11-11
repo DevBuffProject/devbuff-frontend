@@ -16,14 +16,20 @@ export const actions = {
     window.location.href = `${API_BASE_URL}/oAuth/GitHub`
   },
 
-  async checkToken({ commit }, credentails) {
-    return new Promise((resolve, reject) => {
+  async checkToken(_, token) {
+    const credentails = new URLSearchParams()
+    credentails.set('token', token)
 
+    return new Promise((resolve, reject) => {
+      this.$api.v1
+        .post(`oAuth/check`, credentails)
+        .then(response => response.active ? resolve() : reject())
+        .catch(reject)
     })
   },
 
   async getToken({ commit }, { grant, refresh = false }) {
-    const cookies = new Cookies()
+    const cookies = this.$cookies
     const credentails = new URLSearchParams()
 
     const endpoint = refresh
@@ -46,17 +52,27 @@ export const actions = {
       .then(({ access_token, refresh_token, expires_in }) => {
         this.$api.v1.setToken(access_token, 'Bearer')
 
-        const date = new Date()
-        const expires = new Date(date.setFullYear(date.getFullYear() + 1))
-
+        const nowToken = new Date()
+        const nowRefresh = new Date()
+        const tokenExpires = new Date(nowToken.setSeconds(nowToken.getSeconds() + expires_in))
+        const refreshExpires = new Date(nowRefresh.setDate(nowRefresh.getDate() + 30))
         const cookieOptions = {
-          expires,
           SameSite: 'Lax',
           secure: true,
+          path: '/'
         }
 
-        cookies.set('remix_token', access_token, cookieOptions)
-        cookies.set('remix_refresh_token', refresh_token, cookieOptions)
+        cookies.remove('remix_token')
+        cookies.remove('remix_refresh_token')
+
+        cookies.set('remix_token', access_token, {
+          expires: tokenExpires,
+          ...cookieOptions
+        })
+        cookies.set('remix_refresh_token', refresh_token, {
+          expires: refreshExpires,
+          ...cookieOptions
+        })
 
         commit('setToken', access_token)
         commit('setRefreshToken', refresh_token)
