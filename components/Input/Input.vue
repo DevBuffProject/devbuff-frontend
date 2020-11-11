@@ -17,7 +17,6 @@
         (type === 'textarea') && 'input__field--type-textarea'
       ]"
       :type="type"
-      v-model="model"
       v-on:input="$emit('input', $event.target.value)"
       @focus="focus"
       @blur="blur"
@@ -25,7 +24,7 @@
     <div class="input__placeholder">
       <v-icon v-if="icon" :icon="icon" class="input__placeholder-icon" />
       <span
-        v-if="placeholder && !model"
+        v-if="placeholder && !value"
         :class="[
           'input__placeholder-text',
           focused && 'muted'
@@ -103,11 +102,12 @@ export default {
 
   &__placeholder {
     position: absolute;
-    top: 0;
+    top: 1rem;
     left: 10px;
     height: 100%;
+    font-weight: 200;
     display: flex;
-    align-items: center;
+    padding-left: 1rem;
     transition: .2s var(--base-transition);
     transition-property: transform, left;
     &--centered {
@@ -145,9 +145,6 @@ export default {
     }
     &:focus {
       border-color: var(--color-primary) !important
-    }
-    &--type-textarea {
-      padding: 1rem;
     }
   }
 }
