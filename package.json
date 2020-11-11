@@ -13,7 +13,7 @@
     "precommit": "npm run lint",
     "storybook": "npx nuxt storybook",
     "build-storybook": "npx nuxt storybook build",
-    "chromatic": "chromatic --project-token CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes"
+    "chromatic": "chromatic --project-token $CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
