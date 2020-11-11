@@ -11,6 +11,6 @@ blocks:
         - name: Storybook publish
           commands:
             - npm run chromatic --if-present
-      env_vars:
-        - name: CHROMATIC_PROJECT_TOKEN
-          value: djrksgh3ale
+      env_vars: []
+      secrets:
+        - name: Chromatic
