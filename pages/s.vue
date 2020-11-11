@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section>    
     <nuxt-child />
   </section>
 </template>

@@ -23,11 +23,7 @@ const config = {
     ]
   },
   css: [
-    { src: '~/assets/styles/common.scss', lang: 'sass' },
-    { src: 'quill/dist/quill.core.css', lang: 'css' },
-    // for bubble theme
-    { src: 'quill/dist/quill.bubble.css', lang: 'css' }
-    // ...
+    { src: '~/assets/styles/common.scss', lang: 'sass' }
   ],
 
   loading: '~/components/Loading/PageLoading.vue',
@@ -40,7 +36,6 @@ const config = {
   plugins: [
     { src: '~/plugins/fontawesome.js' },
     { src: '~/plugins/ui-installer.js', mode: 'client' },
-    { src: '~plugins/quill.js', mode: 'client' },
     { src: '~/plugins/api.js' },
   ],
 
@@ -83,6 +78,8 @@ const config = {
     API_BASE_URL: process.env.API_BASE_URL,
     API_BASE_PROXY_URL: '/api',
   },
+
+  // modern: true,
 
   build: {
     extend (config, { isDev, isClient }) {

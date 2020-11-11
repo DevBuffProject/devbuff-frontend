@@ -6,7 +6,7 @@
           v-for="locale in availableLocales"
           :key="locale.code"
           :to="switchLocalePath(locale.code)"
-          class="mr-2 pt-2 header__locale-link"
+          class="header__locale-link"
         >
           {{ locale.name }}
         </nuxt-link>
@@ -59,7 +59,7 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  background-color: #fff;
+  background-color: var(--color-background);
   position: relative;
   height: var(--header-height);
   border-bottom: 1px solid var(--color-muted);
@@ -96,7 +96,7 @@ export default {
   }
 
   &__locale-link {
-    font-size: 2rem;
+    font-size: 1rem;
     text-decoration: none;
   }
 }
