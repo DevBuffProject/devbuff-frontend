@@ -10,7 +10,7 @@ blocks:
       jobs:
         - name: Storybook publish
           commands:
-            - chromatic --project-token $CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes
+            - npm run chromatic --if-present
       env_vars:
         - name: CHROMATIC_PROJECT_TOKEN
           value: djrksgh3ale
