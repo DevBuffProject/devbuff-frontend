@@ -8,6 +8,6 @@ blocks:
   - name: Deployment
     task:
       jobs:
-        - name: Storubook publish
+        - name: Storybook publish
           commands:
-            - npm run chromatic --if-present
+            - chromatic --project-token CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes
