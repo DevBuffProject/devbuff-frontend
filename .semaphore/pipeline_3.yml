@@ -1,0 +1,13 @@
+version: v1.0
+name: Pipeline 3
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Vercel
+    task:
+      jobs:
+        - name: Deploy
+          commands:
+            - 'curl https://api.vercel.com/v1/integrations/deploy/QmcBquWyrCKfyaEy7KnjPZedNRxQQZ9ndz69fti6GCKj42/3qf2A2Zecb'
