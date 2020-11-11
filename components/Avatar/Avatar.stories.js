@@ -8,7 +8,7 @@ export default {
 export const Default = () => ({
   props: {
     avatar: {
-      default: text('Avavar URL', '//source.unsplash.com/random')
+      default: text('Avavar URL', 'https://images.unsplash.com/photo-1603998495505-bb6bf7502119?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max')
     },
     square: {
       default: boolean('Square', false)
