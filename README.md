@@ -1,4 +1,4 @@
-# Devbuff Frontend ![CircleCI](https://img.shields.io/circleci/build/github/7architect/devbuff-frontend/develop?logo=circleci&logoColor=rgb%284%2C%20155%2C%2074%29&token=31982ca6fe9eb89f2087b39e35a9b9a73fed4360) [![CodeFactor](https://www.codefactor.io/repository/github/7architect/devbuff-frontend/badge?s=a45618561d667a1813fae5396fc9d57d074c8b1f)](https://www.codefactor.io/repository/github/7architect/devbuff-frontend)
+# Devbuff Frontend [![Build Status](https://semaphoreci.com/api/v1/projects/172ad4b2-8ce1-480a-b66b-88c35126d383/3381386/badge.svg)](https://semaphoreci.com/7architect-64/devbuff-frontend)![CircleCI](https://img.shields.io/circleci/build/github/7architect/devbuff-frontend/develop?logo=circleci&logoColor=rgb%284%2C%20155%2C%2074%29&token=31982ca6fe9eb89f2087b39e35a9b9a73fed4360) [![CodeFactor](https://www.codefactor.io/repository/github/7architect/devbuff-frontend/badge?s=a45618561d667a1813fae5396fc9d57d074c8b1f)](https://www.codefactor.io/repository/github/7architect/devbuff-frontend)
 
 **Table of Contents**
 
