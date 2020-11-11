@@ -1,5 +1,5 @@
 version: v1.0
-name: Pipeline 2
+name: Common Pipeline
 agent:
   machine:
     type: e1-standard-2
@@ -14,3 +14,12 @@ blocks:
       env_vars: []
       secrets:
         - name: Chromatic
+    dependencies:
+      - Checkout
+  - name: Checkout
+    dependencies: []
+    task:
+      jobs:
+        - name: Checkout
+          commands:
+            - checkout
