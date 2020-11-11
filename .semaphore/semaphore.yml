@@ -1,5 +1,5 @@
 version: v1.0
-name: Test MyApp
+name: Devbuff develop
 agent:
   machine:
     type: e1-standard-2
@@ -8,7 +8,7 @@ blocks:
   - name: Build
     task:
       jobs:
-        - name: Test
+        - name: Build
           commands:
             - checkout
             - sem-version node 12
