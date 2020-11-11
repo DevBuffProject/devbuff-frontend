@@ -6,11 +6,9 @@
           <h3 class="m-0"> Создание идеи </h3>
         </div>
         <div>
-          <nuxt-link to="/">
-            <v-button :icon="['fas', 'plus']">
-              Сохранить
-            </v-button>
-          </nuxt-link>
+          <v-button :icon="['fas', 'plus']">
+            Сохранить
+          </v-button>
         </div>
       </div>
     </v-toolbar>

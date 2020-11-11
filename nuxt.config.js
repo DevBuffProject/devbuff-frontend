@@ -1,8 +1,9 @@
-// import localeConfiguration from './lang/index.js'
-
 const config = {
-  host: '0.0.0.0',
-  port: 3000,
+  server: {
+    host: '0.0.0.0',
+    port: 3000,
+  },
+
   dev: process.env.NODE_ENV !== 'production',
 
   head: {
@@ -74,7 +75,7 @@ const config = {
     API_BASE_PROXY_URL: '/api',
   },
 
-  // modern: true,
+  modern: true,
 
   build: {
     extend (config, { isDev, isClient }) {
