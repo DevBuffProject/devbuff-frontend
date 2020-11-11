@@ -1,5 +1,3 @@
-import Cookies from 'universal-cookie'
-
 export const state = () => ({
   token: null,
   refreshToken: null,
