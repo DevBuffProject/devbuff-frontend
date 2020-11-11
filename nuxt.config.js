@@ -43,6 +43,7 @@ const config = {
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
     'nuxt-i18n',
+    'cookie-universal-nuxt',
     // own modules
     '~/modules/newrelic'
   ],
@@ -59,12 +60,6 @@ const config = {
     },
     lazy: true,
     langDir: 'lang/'
-  },
-
-  router: {
-    middleware: [
-      'auth-refresh'
-    ],
   },
 
   storybook: {

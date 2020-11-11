@@ -38,7 +38,7 @@
 export default {
   layout: 'white-screen',
 
-  middleware: ['guest'],
+  // middleware: ['guest'],
 
   methods: {
     authorize() {

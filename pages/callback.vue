@@ -59,13 +59,13 @@ export default {
 
       $store.dispatch('auth/getToken', { grant })
         .then(() => {
-          $store.dispatch('user/getProfile')
+          // $store.dispatch('user/getProfile')
         })
         .then(() => {
           this.success = true
           setTimeout(() => $router.push(this.localePath({ name: 's-dashboard' })), 1000)
         })
-        .catch(() => this.error = true)
+        .catch(error => this.error = error)
     }
   },
 
