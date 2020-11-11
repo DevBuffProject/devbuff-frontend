@@ -1,30 +1,28 @@
-import Cookies from 'universal-cookie'
+export default async ({ store, req, error }) => {
+  const token = store.getters['auth/token']
+  const refreshToken = store.getters['auth/refreshToken']
+  const createError = message => error({
+    statusCode: 401,
+    message
+  })
+  const tryRestore = () => store.dispatch('auth/getToken', {
+    grant: refreshToken,
+    refresh: true
+  })
 
-export default async ({ store, req, $api, $config, error }) => {
-  const cookies = new Cookies(process.server && req.headers.cookie)
-  const token = cookies.get('remix_token')
-  const refreshToken = cookies.get('remix_refresh_token')
+  console.log(token);
 
-  if (!(token && refreshToken))
-    return error({ statusCode: 401, message: 'Unauthorized' })
+  if (!token && !refreshToken) return createError('Corrupted auth')
+  // if refresh token exist try to restore
+  if (!token && refreshToken) return tryRestore()
 
-  const { API_BASE_URL } = $config
+  return new Promise((resolve, reject) => store
+    .dispatch('auth/checkToken', token)
+    .then(resolve)
+    // finally try to refresh
+    .catch(err => tryRestore()
+      .then(resolve)
+      .catch(() => createError('Corrupted auth'))
+    ))
 
-  const credentails = new URLSearchParams()
-  credentails.set('token', token)
-
-  return $api.v1
-    .post(`oAuth/check`, credentails)
-    .then(response => {
-      if (!response.active) {
-        error({
-          statusCode: 401,
-          message: response
-        })
-      }
-    })
-    .catch(err => error({
-      statusCode: 401,
-      message: err,
-    }))
 }

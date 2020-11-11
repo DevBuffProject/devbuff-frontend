@@ -1,14 +1,16 @@
-import Cookies from 'universal-cookie'
-
-export default function ({ req, $config, $axios, store, error }, inject) {
+export default function ({ $cookies, $config, $axios, store, error }, inject) {
   const { API_BASE_URL } = $config
-  const cookies = new Cookies(process.server && req.headers.cookie)
+  const cookies = $cookies
   const token = cookies.get('remix_token')
 
-  const createError = err => error({
-    statusCode: err.response.status,
-    message: err.response.data || err.message
-  })
+  const createError = err => {
+    const errMessage = {
+      statusCode: err.response ? err.response.status : 500,
+      message: err.response ? err.response.data : err.message
+    }
+    // return error(errMessage)
+    console.error(errMessage)
+  }
 
   const v1 = $axios.create()
 
