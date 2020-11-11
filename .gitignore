@@ -8,6 +8,7 @@ node_modules_dev
 # Nuxt
 .nuxt
 .nuxt-storybook
+storybook-static
 
 # Nuxt generate
 dist
