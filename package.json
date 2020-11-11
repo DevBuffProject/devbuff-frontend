@@ -31,7 +31,7 @@
     "nuxt": "^2.14.7",
     "nuxt-i18n": "^6.15.4",
     "nuxt-vuex-localstorage": "^1.2.7",
-    "swiper": "^6.3.4",
+    "swiper": "^6.3.5",
     "universal-cookie": "^4.0.4",
     "vue-awesome-swiper": "^4.1.1",
     "vue-quill-editor": "^3.0.6"
