@@ -1,4 +1,3 @@
-
 export default {
   title: 'Loading'
 };
@@ -14,7 +13,7 @@ export const Spinner = () => ({
 export const Page = () => ({
   template: `
     <v-app>
-      <v-page-loading />
+      <v-progress />
     </v-app>
   `
 })

@@ -15,7 +15,7 @@ export default {
     figure: {
       type: String,
       default: 'square',
-      validate: (v) => ['circle', 'line'].includes(v)
+      validate: (v) => ['square', 'circle', 'line'].includes(v)
     }
   }
 }

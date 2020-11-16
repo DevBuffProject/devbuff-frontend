@@ -56,7 +56,6 @@ export const actions = {
         const refreshExpires = new Date(nowRefresh.setDate(nowRefresh.getDate() + 30))
         const cookieOptions = {
           SameSite: 'Lax',
-          secure: true,
           path: '/'
         }
 
