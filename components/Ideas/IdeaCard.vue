@@ -1,19 +1,9 @@
 <template>
   <div class="idea">
     <div class="d-flex align-items-center justify-content-between mb-3">
-      <nuxt-link
-        to="/"
-        class="idea__link"
-      >
+      <nuxt-link to="/" class="idea__link">
         {{ title }}
       </nuxt-link>
-      <v-button
-        @click="join"
-        rounded
-        :icon="['fas', 'user-plus']"
-        type="dark"
-      >
-      </v-button>
     </div>
 
     <div class="idea__description mb-3">
@@ -51,12 +41,6 @@ export default {
       type: Array,
       required: true
     },
-  },
-
-  methods: {
-    join() {
-      this.$dialog.push(() => import('~/components/Dialog/SimpleDialog'))
-    }
   },
 
   computed: {

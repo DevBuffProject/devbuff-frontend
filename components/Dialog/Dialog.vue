@@ -4,26 +4,31 @@
       v-if="queue.length > 0"
       class="dialog"
     >
-      <div class="dialog__window">
-        <div
-          class="dialog__content"
-          ref="content"
-        >
-          <component
-            :is="component"
-            v-bind="data"
-            v-on="listeners"
-            :class="dialog ? 'dialog__component' : 'dialog__loader'"
-            ref="component"
-          />
+        <div class="dialog__window">
+          <div
+            class="dialog__content"
+            ref="content"
+          >
+            <transition name="fade">
+              <div v-if="resolvedDialog" class="dialog__close">
+                <v-icon :icon="['fas', 'times']" @click="kill" />
+              </div>
+            </transition>
+
+            <component
+              :is="dialog.component"
+              v-bind="dialog.props"
+              :class="resolvedDialog ? 'dialog__component' : 'dialog__loader'"
+              ref="component"
+            />
+          </div>
         </div>
-      </div>
     </div>
   </transition>
 </template>
 
 <script>
-import Loader from '~/components/Loading/Loading.vue'
+import loading from '~/components/Loading/Loading.vue'
 import Bus from './EventBus'
 
 export default {
@@ -31,45 +36,46 @@ export default {
 
   data() {
     return {
-      Loader,
-      dialog: {},
+      resolvedDialog: {},
+      progress: false,
       queue: [],
       opened: false
     }
   },
 
   computed: {
-    component() {
-      return this.dialog ? this.dialog.component : this.Loader
-    },
-    data() {
-      return this.dialog ? this.dialog.data : {}
-    },
-    listeners() {
-      return this.dialog ? this.dialog.listeners : {}
-    },
-    lastDialog() {
-      return this.queue[0]
+    dialog() {
+      const resolvedDialog = this.resolvedDialog
+
+      if (!this.resolvedDialog) return {
+        component: loading,
+        props: {}
+      }
+
+      return {
+        component: resolvedDialog.component,
+        props: resolvedDialog.props
+      }
     }
   },
 
   methods: {
     init() {
       Bus.$on('dialog:push', this.push)
-      Bus.$on('dialog:close', this.close)
+
+      Bus.$on('dialog:resolve', this.close)
+      Bus.$on('dialog:reject', this.close)
       Bus.$on('dialog:kill', this.kill)
 
       Bus.$on('dialog:ready', this.setSize)
     },
 
     push(dialog) {
-      this.dialog = null
       this.queue.unshift(dialog)
       this.resolveDialog()
     },
 
     close() {
-      this.dialog = null
       this.queue.shift()
 
       if (this.queue.length > 0) {
@@ -78,37 +84,48 @@ export default {
     },
 
     kill() {
-      this.dialog = null
+      this.resolvedDialog = null
       this.opened = false
       this.queue = []
     },
 
     resolveDialog() {
-      if (!this.lastDialog) return
+      const lastDialog = this.queue[0]
 
+      if (!lastDialog) return
+
+      // Reset last dialog for show loader
+      this.resolvedDialog = null
 
       const _resolve = () => {
-        const { component, props } = this.lastDialog
+        const { component, props } = lastDialog
+
+        this.progress = true
 
         Promise.all([
           Promise.resolve(props),
           Promise.resolve(component)
         ])
         .then(resolved => {
-          const [ data, dialog ] = resolved
+          const [ props, dialog ] = resolved
 
-          this.dialog = {
-            data,
-            component: () => ({ component: dialog.apply(), loading: this.Loader })
+          this.resolvedDialog = {
+            props,
+            component: () => ({ component: dialog.apply(), loading })
           }
+
+          this.opened = true
+          this.progress = false
         })
-        .then(() => this.opened = true)
       }
 
       // FIX window blink
       !this.opened
-        ? setTimeout(_resolve, 100)
+        ? setTimeout(_resolve, 500)
         : _resolve()
+
+      // Close if dialog unavailable
+      setTimeout(() => !this.resolvedDialog && this.close(), 5000)
     },
 
     setSize({ offsetHeight, offsetWidth }) {
@@ -148,6 +165,7 @@ export default {
   }
 
   &__content {
+    position: relative;
     width: 30px;
     height: 30px;
     display: flex;
@@ -158,8 +176,8 @@ export default {
   }
 
   &__loader {
-    width: 25px;
-    height: 25px;
+    width: 25px !important;
+    height: 25px !important;
     font-size: .1rem;
   }
 
@@ -172,6 +190,23 @@ export default {
       position: static;
       opacity: 1;
     }
+  }
+
+  &__close {
+    background-color: var(--color-muted);
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    font-size: .8rem;
+    padding: .7rem;
+    border-radius: 100px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition-delay: 1s !important;
   }
 }
 </style>
