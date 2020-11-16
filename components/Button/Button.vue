@@ -11,10 +11,13 @@
   >
     <div
       v-if="$slots.default"
-      class="btn__content"
+      :class="['btn__content', loading && 'btn__content-hidden']"
     >
       <slot />
     </div>
+    <span v-if="loading" class="btn__loading">
+      <v-loading />
+    </span>
     <v-icon
       v-if="icon"
       :icon="icon"
@@ -90,6 +93,7 @@ export default {
 }
 
 .btn {
+  position: relative;
   background: none;
   font-family: inherit;
   font-size: .9rem;
@@ -109,11 +113,11 @@ export default {
   transition-property: background-color, box-shadow;
   transition: .3s var(--base-transition);
 
+  @include button-type();
+
   &--disabled {
     opacity: .5;
   }
-
-  @include button-type();
 
   &--type-muted {
     background-color: var(--color-muted);
@@ -127,6 +131,16 @@ export default {
 
   &--rounded {
     border-radius: 50px;
+  }
+
+  &__content-hidden {
+    opacity: 0;
+  }
+
+  &__loading {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) !important;
   }
 
   &__icon {

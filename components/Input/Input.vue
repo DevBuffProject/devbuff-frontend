@@ -1,39 +1,22 @@
 <template>
-  <div
-    :class="[
-      'input',
-      /* (autocomplete && focused) && 'input--island', */
-      /* (autocomplete && focused && icon) && 'input--island-icon' */
-    ]"
-    @click="focus"
-  >
+  <label class="input" @mousedown="focus">
+    <v-icon v-if="icon" :icon="icon" class="input__icon" />
     <component
       :is="type === 'textarea' ? 'textarea' : 'input'"
       ref="field"
       :class="[
         'input__field',
-        muted && 'input__field--muted',
         icon && 'input__field--icon',
         (type === 'textarea') && 'input__field--type-textarea'
       ]"
       :type="type"
-      v-on:input="$emit('input', $event.target.value)"
+      :value="value"
+      :placeholder="placeholder"
+      @input="$emit('input', $event.target.value)"
       @focus="focus"
       @blur="blur"
     />
-    <div class="input__placeholder">
-      <v-icon v-if="icon" :icon="icon" class="input__placeholder-icon" />
-      <span
-        v-if="placeholder && !value"
-        :class="[
-          'input__placeholder-text',
-          focused && 'muted'
-        ]"
-      >
-        {{ placeholder }}
-      </span>
-    </div>
-  </div>
+  </label>
 </template>
 
 <script>
@@ -49,38 +32,22 @@ export default {
       type: String,
       default: null
     },
-    placeholderCentered: {
-      type: Boolean,
-      default: null
-    },
     value: {
       type: [ String, Number ],
       default: null
     },
-    muted: {
-      type: Boolean,
-      default: false
-    },
     icon: {
       type: [ String, Array ],
       default: null
-    },
-    autocomplete: {
-      type: [ String, Object ],
-      default: null,
-      validate: (v) => {
-        if (typeof v === 'object') {
-          return v.data || v.url
-        } else if (typeof v === 'string') return Boolean(v)
-      }
     }
   },
+
   data() {
     return {
       focused: false,
-      model: null
     }
   },
+
   methods: {
     focus() {
       this.focused = true
@@ -96,55 +63,51 @@ export default {
 <style lang="scss" scoped>
 .input {
   position: relative;
-  margin: -10px;
-  padding: 10px;
   width: fit-content;
+  display: inline-flex;
+  border: 1px solid var(--color-muted);
+  box-shadow: 0 1px 1px rgba(211 ,218, 230, .3);
+  padding: .3rem 1rem;
+  border-radius: 4px;
+  box-sizing: border-box;
+  align-items: center;
+  cursor: text;
+  transition: border-color .3s var(--base-transition);
 
-  &__placeholder {
-    position: absolute;
-    top: 1rem;
-    left: 10px;
-    height: 100%;
-    font-weight: 200;
+  &--focused {
+    border-color: var(--color-primary) !important
+  }
+
+  &__icon {
     display: flex;
-    padding-left: 1rem;
+    margin-right: 1rem;
+    align-items: center;
+    color: var(--color-muted);
+    width: 1.2rem;
+    font-size: 1.2rem;
     transition: .2s var(--base-transition);
     transition-property: transform, left;
-    &--centered {
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    &-icon {
-      padding: 0 10px;
-    }
-    &-text {
-      transition: opacity .3s var(--base-transition);
-    }
   }
 
   &__field {
     outline: none;
-    border-radius: 4px;
     font-family: inherit;
     font-size: 1rem;
-    padding: .3rem 1rem;
+    border: 0;
+    outline: 0;
     width: 100%;
     resize: none;
     box-sizing: border-box;
-    border: 1px solid var(--color-muted);
-    box-shadow: 0 1px 1px rgba(211,218,230,.3);
-    transition: border-color .3s var(--base-transition);
-    &--icon {
-      padding-left: 2rem;
+    &::placeholder {
+      font-family: inherit;
+      font-weight: 200;
+      text-transform: lowercase;
+      transition: .2s var(--base-transition);
+      transition-property: transform, opacity;
     }
-    &--muted {
-      background-color: var(--color-muted);
-      border: 0;
-      box-shadow: none;
-    }
-    &:focus {
-      border-color: var(--color-primary) !important
+    &:focus::placeholder {
+      opacity: .35;
+      transform: translateX(5px);
     }
   }
 }
