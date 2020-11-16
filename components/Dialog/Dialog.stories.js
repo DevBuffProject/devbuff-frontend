@@ -1,5 +1,5 @@
 import { withKnobs, text } from '@storybook/addon-knobs'
-import WindowAbstract from '~/components/Dialog/WindowAbstract'
+import WindowAbstract from '~/components/Dialog/Window'
 
 export default {
   title: 'Dialog',
@@ -25,8 +25,8 @@ export const Default = () => {
         </div>
 
         <div class="d-flex justify-content-end mt-4">
-          <v-button class="mr-2" type="muted" @click="$dialog.close"> Отмена </v-button>
-          <v-button type="primary" @click="$dialog.close"> OK </v-button>
+          <v-button class="mr-2" type="muted" @click="reject('rejected from window')"> Отмена </v-button>
+          <v-button type="primary" @click="resolve('resolved from window')"> OK </v-button>
         </div>
       </div>
     `
@@ -45,9 +45,12 @@ export const Default = () => {
     },
     methods: {
       open() {
-        this.$dialog.push(SimleDialog, {
-          content: this.content
-        })
+        this.$dialog
+          .push(SimleDialog, {
+            content: this.content
+          })
+          .then(payload => alert('resolved: ' + payload))
+          .catch(payload => alert('rejected: '+ payload))
       }
     },
     template: `

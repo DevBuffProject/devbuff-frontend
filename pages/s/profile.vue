@@ -38,34 +38,49 @@
       <div class="container pt-3 pl-4">
         <div class="profile__container">
           <div class="mb-4 d-flex align-items-baseline">
-            <v-link href="/">
+            <a
+              v-if="profile.socialNetworks.vk"
+              :href="'//vk.com/' + profile.socialNetworks.vk"
+              target="_blank"
+            >
               <v-icon
                 :icon="['fab', 'vk']"
                 class="profile__social-icon mr-2"
               />
-            </v-link>
-            <v-link href="/">
+            </a>
+            <a
+              v-if="profile.socialNetworks.telegram"
+              :href="'//t.me/' + profile.socialNetworks.telegram"
+              target="_blank"
+            >
               <v-icon
-                :icon="['fab', 'twitter']"
+                :icon="['fab', 'telegram']"
                 class="profile__social-icon mr-2"
               />
-            </v-link>
-            <v-link href="/">
+            </a>
+            <a
+              v-if="profile.socialNetworks.skype"
+              target="_blank"
+            >
               <v-icon
                 :icon="['fab', 'skype']"
                 class="profile__social-icon mr-2"
               />
-            </v-link>
-            <v-link href="/">
+            </a>
+            <a
+              v-if="profile.socialNetworks.discord"
+              target="_blank"
+            >
               <v-icon
                 :icon="['fab', 'discord']"
                 class="profile__social-icon mr-2"
               />
-            </v-link>
+            </a>
             <v-button
               type="flat"
               :icon="['fas', 'edit']"
               class="profile__socials-edit ml-2"
+              @click="changeSocials"
             >
               изменить
             </v-button>
@@ -138,6 +153,8 @@
 <script>
 import { mapGetters } from 'vuex'
 
+const SocialsDialog = () => import('~/components/Profile/ContactsDialog.vue')
+
 export default {
   async middleware({ store }) {
     await store.dispatch('user/getProfile')
@@ -152,6 +169,9 @@ export default {
   },
 
   methods: {
+    changeSocials() {
+      this.$dialog.push(SocialsDialog, this.profile.socialNetworks)
+    },
     changeBio(bio) {
       this.$store.dispatch('user/update', { bio })
     },
