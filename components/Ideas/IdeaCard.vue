@@ -7,7 +7,9 @@
     </div>
 
     <div class="idea__description mb-3">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aliquid corporis debitis doloremque, error exercitationem, fugit harum ipsum iure libero magnam minus molestiae optio quis rem repellat repellendus. Numquam, suscipit.
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aliquid corporis debitis doloremque, error
+      exercitationem, fugit harum ipsum iure libero magnam minus molestiae optio quis rem repellat repellendus. Numquam,
+      suscipit.
     </div>
 
     <div class="d-flex justify-content-between w-100 idea__languages">
@@ -45,7 +47,7 @@ export default {
     languages() {
       const { specialists } = this
 
-      return specialists.reduce((acc, spec) => spec.languages.map(lang => lang.name), [])
+      return specialists !== undefined ? specialists.reduce((acc, spec) => spec.languages.map(lang => lang.name), []) : [];
     }
   }
 }
@@ -55,7 +57,10 @@ export default {
 .idea {
   position: relative;
   transition: box-shadow .3s var(--base-transition);
-  &:hover { box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, .1); }
+
+  &:hover {
+    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, .1);
+  }
 
   &__link {
     text-decoration: none;
@@ -64,16 +69,20 @@ export default {
     opacity: .65;
     transition: border-bottom-color 0.3s var(--base-transition);
     transition-property: opacity, border-bottom-color, color;
+
     &:hover {
       color: var(--color-primary);
       border-bottom-color: var(--color-primary-tint);
       opacity: 1;
     }
+
     &:after {
       content: '';
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
   }
 
