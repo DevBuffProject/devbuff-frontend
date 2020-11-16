@@ -70,7 +70,7 @@ const config = {
   },
 
   serverMiddleware: [
-    { path: '/_api/help/og', handler: '~/endpoints/opengraph.js' }
+    { path: '/_api/help/og', handler: '~endpoints/opengraph.js' }
   ],
 
   publicRuntimeConfig: {
