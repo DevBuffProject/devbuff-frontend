@@ -27,7 +27,7 @@ const config = {
     { src: '~/assets/styles/common.scss', lang: 'sass' }
   ],
 
-  loading: '~/components/Loading/PageLoading.vue',
+  loading: '~/page-loading.vue',
 
   components: [{
     path: '~/components/',
@@ -68,6 +68,10 @@ const config = {
       '@storybook/addon-knobs'
     ]
   },
+
+  serverMiddleware: [
+    { path: '/_api/help/og', handler: '~/endpoints/opengraph.js' }
+  ],
 
   publicRuntimeConfig: {
     // Proxy env to runtime

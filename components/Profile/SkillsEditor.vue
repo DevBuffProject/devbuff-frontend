@@ -87,20 +87,21 @@
 </template>
 
 <script>
-import WindowAbstract from '~/components/Dialog/WindowAbstract'
-import {Swiper, SwiperSlide, directive} from 'vue-awesome-swiper'
+import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
 import 'swiper/swiper-bundle.css'
 
 export default {
   name: 'v-skills-editor',
-  extends: WindowAbstract,
+
   components: {
     Swiper,
     SwiperSlide
   },
+
   directives: {
     swiper: directive
   },
+
   props: {
     userSkills: {
       type: Array,
@@ -111,6 +112,7 @@ export default {
       default: null
     }
   },
+
   data() {
     return {
       swiperOptions: {
@@ -127,11 +129,13 @@ export default {
 
     }
   },
+
   computed: {
     swiper() {
       return this.$refs.mySwiper.$swiper
     }
   },
+
   methods: {
     processDiffSkills() {
       let storage = [];
@@ -295,6 +299,7 @@ export default {
     },
 
   },
+
   mounted() {
     this.processDiffSkills()
   }
