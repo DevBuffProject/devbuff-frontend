@@ -38,7 +38,7 @@
             {{ $t('components.header.dashboard') }}
           </v-link>
           <nuxt-link :to="localePath({ name: 's-profile' })">
-            <v-avatar />
+            <v-avatar :avatar="avatar" />
           </nuxt-link>
         </div>
       </v-anim>
@@ -50,6 +50,9 @@ export default {
   name: 'v-header',
 
   computed: {
+    avatar() {
+      return this.$store.getters['user/profile'].avatar
+    },
     availableLocales () {
       return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale)
     }
