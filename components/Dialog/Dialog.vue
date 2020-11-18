@@ -29,7 +29,7 @@
 
 <script>
 import loading from '~/components/Loading/Loading.vue'
-import Bus from './EventBus'
+import bus from '~/components/Bus'
 
 export default {
   name: 'v-dialog',
@@ -61,13 +61,13 @@ export default {
 
   methods: {
     init() {
-      Bus.$on('dialog:push', this.push)
+      bus.on('dialog:push', this.push)
 
-      Bus.$on('dialog:resolve', this.close)
-      Bus.$on('dialog:reject', this.close)
-      Bus.$on('dialog:kill', this.kill)
+      bus.on('dialog:resolve', this.close)
+      bus.on('dialog:reject', this.close)
+      bus.on('dialog:kill', this.kill)
 
-      Bus.$on('dialog:ready', this.setSize)
+      bus.on('dialog:ready', this.setSize)
     },
 
     push(dialog) {
@@ -146,7 +146,7 @@ export default {
 
 <style lang="scss" scoped>
 .dialog {
-  background-color: rgba(0, 0, 0, .8);
+  background-color: rgba(0, 0, 0, 0.8);
   position: fixed;
   z-index: 99999999;
   top: 0;
@@ -154,14 +154,18 @@ export default {
   width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity .3s var(--base-transition);
+  transition: opacity 0.3s var(--base-transition);
+  padding: 2rem 0;
+  box-sizing: border-box;
+  overflow: auto;
 
   &__window {
     background-color: var(--color-background);
     padding: 1.5rem;
     border-radius: 4px;
+    overflow: hidden;
+    margin: auto;
+    width: max-content;
   }
 
   &__content {

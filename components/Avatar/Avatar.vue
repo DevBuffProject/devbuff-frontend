@@ -49,6 +49,7 @@ export default {
   border-radius: 100px;
   background-size: cover;
   background-position: center;
+  box-shadow: inset 0 0 0 1px var(--color-muted);
 
   &--square {
     border-radius: 4px;
