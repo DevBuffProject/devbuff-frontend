@@ -7,6 +7,10 @@ export const mutations = {
 }
 
 export const actions = {
+  async resendVerifyMail() {
+    return await this.$api.v1.post(`profile/resendEmail`)
+  },
+
   async getProfile({ commit }) {
     console.log('profile');
     const { API_BASE_URL } = this.$config

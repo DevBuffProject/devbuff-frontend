@@ -1,5 +1,4 @@
-import Bus from './EventBus'
-import bus from '~/Components/Bus'
+import bus from '~/components/Bus'
 
 export default {
   push: (component, props) => {

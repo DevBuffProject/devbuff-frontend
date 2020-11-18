@@ -46,7 +46,7 @@ export default {
     return {
       focused: false,
       model: this.value,
-      inputType: this.type === 'date' && !this.model
+      inputType: this.type === 'date' && !this.value
         ? 'text'
         : this.type
     }

@@ -1,6 +1,5 @@
 <template>
   <v-dialog-viewport class="profile-socials-dialog">
-
     <div class="profile-edit__cover d-flex align-items-center">
       <v-avatar
         class="profile-edit__avatar"
@@ -11,26 +10,26 @@
 
     <v-input
       :icon="['fas', 'at']"
-      placeholder="Имя пользователя"
+      :placeholder="$t('page.profile.userName')"
       class="w-100 mb-2 mt-5"
       v-model="profile.userName"
     />
     <div class="d-flex mb-2">
       <v-input
         :icon="['fas', 'signature']"
-        placeholder="Имя"
+        :placeholder="$t('page.profile.firstName')"
         class="w-100 mr-2"
         v-model="profile.firstName"
       />
       <v-input
         :icon="['fas', 'signature']"
-        placeholder="Фамилия"
+        :placeholder="$t('page.profile.lastName')"
         class="w-100"
         v-model="profile.lastName"
       />
     </div>
     <v-input
-      placeholder="О себе"
+      :placeholder="$t('page.profile.about')"
       class="w-100 mb-2"
       type="textarea"
       v-model="profile.bio"
@@ -38,7 +37,7 @@
 
     <v-input
       :icon="['fas', 'calendar']"
-      placeholder="День рождения"
+      :placeholder="$t('page.profile.birthdate')"
       class="w-100 mt-3"
       type="date"
       v-model="profile.birthday"
@@ -46,23 +45,43 @@
 
     <v-dropdown
       :icon="['fas', 'globe']"
-      placeholder="Страна"
+      :placeholder="$t('page.profile.country')"
       class="w-100 mb-2 mt-4"
       :options="countries"
       v-model="profile.country"
     />
     <v-input
       :icon="['fas', 'city']"
-      placeholder="Город"
+      :placeholder="$t('page.profile.city')"
       class="w-100 mb-2"
       v-model="profile.city"
     />
 
-    <h5>Социальные сети</h5>
+    <v-input
+      :icon="['fas', 'mail']"
+      placeholder="mail@example.com"
+      class="w-100 mt-3"
+      v-model="profile.email"
+    />
+    <div class="d-flex align-items-center mt-1 profile-edit__email-status">
+      {{ emailStatusText }}
+      <a
+        v-show="!profile.statusEmailConfirm && !verifyRequestSent"
+        class="ml-2 profile-edit__email-verify"
+        @click="resendVerifyMail"
+      >
+        {{ $t('page.profile.emailSendVerifyMail') }}
+      </a>
+      <span class="text-muted ml-2" v-show="!profile.statusEmailConfirm && verifyRequestSent">
+        {{ $t('page.profile.emailVerificationMailSent') }}
+      </span>
+    </div>
+
+    <h5>{{ $t('page.profile.socialNetworks') }}</h5>
     <v-input
       :value="profile.socialNetworks.vk"
       :icon="['fab', 'vk']"
-      placeholder="вконтакте"
+      :placeholder="$t('page.profile.vk')"
       @input="setContact('vk', $event)"
       class="w-100 mb-2"
     />
@@ -96,8 +115,8 @@
 
     <template #controls>
       <div>
-        <v-button class="mr-2" type="muted" @click="reject"> отмена </v-button>
-        <v-button type="primary" :loading="progress" @click="send"> сохранить </v-button>
+        <v-button class="mr-2" type="muted" @click="reject"> {{ $t('common.cancel') }} </v-button>
+        <v-button type="primary" :loading="progress" @click="send"> {{ $t('common.save') }} </v-button>
       </div>
     </template>
   </v-dialog-viewport>
@@ -105,8 +124,8 @@
 
 <script>
 import { debounce } from 'lodash'
-import WindowAbstract from '~/components/Dialog/Window'
 import { codes } from '~/kernel/UI/Countries'
+import WindowAbstract from '~/components/Dialog/Window'
 
 export default {
   extends: WindowAbstract,
@@ -118,6 +137,7 @@ export default {
   data() {
     return {
       progress: false,
+      verifyRequestSent: false,
       profile: {
         userName: null,
         firstName: null,
@@ -140,6 +160,11 @@ export default {
   },
 
   computed: {
+    emailStatusText() {
+      return this.profile.statusEmailConfirm
+        ? this.$t('page.profile.emailVerified')
+        : this.$t('page.profile.emailNoVerified')
+    },
     countries() {
       return codes.map(code => ({ code, title: this.$t(`country.${code}`) }))
     },
@@ -153,8 +178,14 @@ export default {
 
   methods: {
     setContact: debounce(function (contact, value) {
+      console.log(this.profile);
       this.profile.socialNetworks[contact] = value
     }, 500),
+    resendVerifyMail() {
+      this.$store
+        .dispatch('user/resendVerifyMail')
+        .then(() => this.verifyRequestSent = true)
+    },
     send() {
       this.progress = true
       this.$store
@@ -187,6 +218,15 @@ export default {
     bottom: -15px;
     left: 50%;
     transform: translateX(-50%);
+  }
+
+  &__email-status {
+    font-size: .75rem;
+    font-weight: 100;
+  }
+
+  &__email-verify {
+    color: var(--color-primary) !important;
   }
 }
 .profile-socials-dialog {

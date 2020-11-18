@@ -1,5 +1,4 @@
-import Bus from './EventBus'
-import bus from '~/Components/Bus'
+import bus from '~/components/Bus'
 
 export default {
   methods: {
@@ -25,10 +24,7 @@ export default {
 
   mounted() {
     if (process.client) {
-      const observer = new MutationObserver(() => {
-        console.log('modalupdated')
-        this.postSizes()
-      })
+      const observer = new MutationObserver(this.postSizes)
 
       observer.observe(this.$el, {
         childList: true, // наблюдать за непосредственными детьми
@@ -37,9 +33,5 @@ export default {
     }
 
     this.postSizes()
-  },
-
-  updated() {
-    this.postSizes()
-  },
+  }
 }

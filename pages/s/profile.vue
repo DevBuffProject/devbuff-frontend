@@ -113,7 +113,6 @@
               class="profile__skill"
             >
               <div class="profile__skill-name"> {{ $t('languages.' + skill.name) }}</div>
-
               <div
                 v-for="spec in skill.specializations"
                 :key="spec.name"
@@ -157,7 +156,10 @@ export default {
 
   methods: {
     edit() {
-      this.$dialog.push(ProfileEdit, { dataProfile: this.profile })
+      this.$dialog.push(
+        ProfileEdit,
+        { dataProfile: JSON.parse(JSON.stringify(this.profile)) }
+      )
     },
     changeBio(bio) {
       this.$store.dispatch('user/update', { bio })

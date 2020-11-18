@@ -4,6 +4,11 @@ import specializations from './common/specializations'
 export default {
   ...languages,
   ...specializations,
+  common: {
+    cancel: 'cancel',
+    save: 'save',
+    apply: 'apply',
+  },
   country: {
     default: "Not selected",
     "AF":"Afghanistan",
@@ -275,6 +280,19 @@ export default {
       }
     },
     profile: {
+      userName: 'username',
+      firstName: 'firstname',
+      lastName: 'lastname',
+      birthdate: 'birthdate',
+      about: 'about',
+      country: 'country',
+      city: 'city',
+      socialNetworks: 'Social networks',
+      vk: 'vkontakte',
+      emailSendVerifyMail: 'send verification mail',
+      emailVerificationMailSent: 'verification mail sent',
+      emailVerified: 'e-mail verified',
+      emailNoVerified: 'e-mail no verified',
       skillsLoading: 'Загрузка скиллов'
     },
     callback: {

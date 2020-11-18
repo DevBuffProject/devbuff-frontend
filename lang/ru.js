@@ -4,6 +4,11 @@ import specializations from './common/specializations'
 export default {
   ...languages,
   ...specializations,
+  common: {
+    cancel: 'отменить',
+    save: 'сохранить',
+    apply: 'применить',
+  },
   country: {
     default: 'Не выбрана',
     "AU":"Австралия",
@@ -292,6 +297,19 @@ export default {
       }
     },
     profile: {
+      userName: 'имя пользователя',
+      firstName: 'имя',
+      lastName: 'фамилия',
+      birthdate: 'дата рождения',
+      about: 'о себе',
+      country: 'страна',
+      city: 'город',
+      socialNetworks: 'Социальные сети',
+      vk: 'вконтакте',
+      emailSendVerifyMail: 'отправить письмо',
+      emailVerificationMailSent: 'письмо отправлено',
+      emailVerified: 'e-mail подтвержден',
+      emailNoVerified: 'e-mail не подтвержден',
       skillsLoading: 'Загрузка скиллов'
     },
     callback: {

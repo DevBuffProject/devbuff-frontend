@@ -29,8 +29,7 @@
 
 <script>
 import loading from '~/components/Loading/Loading.vue'
-import Bus from './EventBus'
-import bus from '~/Components/Bus'
+import bus from '~/components/Bus'
 
 export default {
   name: 'v-dialog',

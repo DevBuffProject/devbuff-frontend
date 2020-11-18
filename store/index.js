@@ -20,9 +20,6 @@ export const actions = {
       commit('auth/setRefreshToken', refreshToken)
     }
 
-    return Promise.all([
-      dispatch('auth/checkToken', token),
-      dispatch('user/getProfile')
-    ])
+    return dispatch('auth/checkToken', token).then(() => dispatch('user/getProfile'))
   }
 }
