@@ -1,4 +1,3 @@
-import Bus from './EventBus'
 import Controller from './Controller'
 
 const install = (Vue) => {

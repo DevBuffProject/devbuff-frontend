@@ -9,13 +9,13 @@
         icon && 'input__field--icon',
         (type === 'textarea') && 'input__field--type-textarea'
       ]"
-      :type="type"
-      :value="value"
+      :type="inputType"
+      :value="model"
       :placeholder="placeholder"
-      @input="$emit('input', $event.target.value)"
+      @input="input"
       @focus="focus"
       @blur="blur"
-    />
+    >{{ type === 'textarea' && value }}</component>
   </label>
 </template>
 
@@ -45,6 +45,10 @@ export default {
   data() {
     return {
       focused: false,
+      model: this.value,
+      inputType: this.type === 'date' && !this.value
+        ? 'text'
+        : this.type
     }
   },
 
@@ -52,9 +56,24 @@ export default {
     focus() {
       this.focused = true
       this.$refs.field.focus()
+
+      if (this.type === 'date') {
+        this.inputType = 'date'
+        setTimeout(() => this.$refs.field.focus(), 100)
+      }
     },
     blur() {
       this.focused = false
+
+      if (this.type === 'date' && !this.model) {
+        this.inputType = 'text'
+      }
+    },
+    input(event) {
+      const value = event.target.value
+      this.model = value
+
+      this.$emit('input', value)
     }
   }
 }
@@ -96,6 +115,7 @@ export default {
     border: 0;
     outline: 0;
     width: 100%;
+    min-width: 0;
     resize: none;
     box-sizing: border-box;
     &::placeholder {

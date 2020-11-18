@@ -18,9 +18,8 @@ export const actions = {
 
       commit('auth/setToken', token)
       commit('auth/setRefreshToken', refreshToken)
-
-      // TODO: BUG - 401 because nuxtServerInit runs before middleware cheks
-      // await dispatch('user/getProfile')
     }
+
+    return dispatch('auth/checkToken', token).then(() => dispatch('user/getProfile'))
   }
 }

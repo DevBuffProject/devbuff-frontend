@@ -7,8 +7,16 @@ export const mutations = {
 }
 
 export const actions = {
+  async resendVerifyMail() {
+    return await this.$api.v1.post(`profile/resendEmail`)
+  },
+
   async getProfile({ commit }) {
+    console.log('profile');
+    const { API_BASE_URL } = this.$config
     const profile = await this.$api.v1.get('profile')
+
+    profile.avatar = `${API_BASE_URL}/photo/profile/${profile.id}`
 
     commit('setProfile', profile)
 

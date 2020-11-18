@@ -10,8 +10,6 @@ export default async ({ store, req, error }) => {
     refresh: true
   })
 
-  console.log(token);
-
   if (!token && !refreshToken) return createError('Corrupted auth')
   // if refresh token exist try to restore
   if (!token && refreshToken) return tryRestore()
@@ -19,6 +17,7 @@ export default async ({ store, req, error }) => {
   return new Promise((resolve, reject) => store
     .dispatch('auth/checkToken', token)
     .then(resolve)
+    .then(() => store.dispatch('user/getProfile'))
     // finally try to refresh
     .catch(err => tryRestore()
       .then(resolve)

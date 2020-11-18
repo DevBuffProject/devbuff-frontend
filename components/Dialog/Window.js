@@ -1,21 +1,21 @@
-import Bus from './EventBus'
+import bus from '~/components/Bus'
 
 export default {
   methods: {
     resolve(payload = null) {
-      Bus.$emit('dialog:resolve', payload)
+      bus.emit('dialog:resolve', payload)
     },
     reject(payload = null) {
-      Bus.$emit('dialog:reject', payload)
+      bus.emit('dialog:reject', payload)
     },
     close() {
-      Bus.$emit('dialog:close')
+      bus.emit('dialog:close')
     },
     kill() {
-      Bus.$emit('dialog:kill')
+      bus.emit('dialog:kill')
     },
     postSizes() {
-      Bus.$emit('dialog:ready', {
+      bus.emit('dialog:ready', {
         offsetHeight: this.$el.offsetHeight,
         offsetWidth: this.$el.offsetWidth
       })
@@ -24,10 +24,7 @@ export default {
 
   mounted() {
     if (process.client) {
-      const observer = new MutationObserver(() => {
-        console.log('modalupdated')
-        this.postSizes()
-      })
+      const observer = new MutationObserver(this.postSizes)
 
       observer.observe(this.$el, {
         childList: true, // наблюдать за непосредственными детьми
@@ -36,9 +33,5 @@ export default {
     }
 
     this.postSizes()
-  },
-
-  updated() {
-    this.postSizes()
-  },
+  }
 }
