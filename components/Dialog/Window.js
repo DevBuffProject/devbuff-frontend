@@ -1,21 +1,22 @@
 import Bus from './EventBus'
+import bus from '~/Components/Bus'
 
 export default {
   methods: {
     resolve(payload = null) {
-      Bus.$emit('dialog:resolve', payload)
+      bus.emit('dialog:resolve', payload)
     },
     reject(payload = null) {
-      Bus.$emit('dialog:reject', payload)
+      bus.emit('dialog:reject', payload)
     },
     close() {
-      Bus.$emit('dialog:close')
+      bus.emit('dialog:close')
     },
     kill() {
-      Bus.$emit('dialog:kill')
+      bus.emit('dialog:kill')
     },
     postSizes() {
-      Bus.$emit('dialog:ready', {
+      bus.emit('dialog:ready', {
         offsetHeight: this.$el.offsetHeight,
         offsetWidth: this.$el.offsetWidth
       })

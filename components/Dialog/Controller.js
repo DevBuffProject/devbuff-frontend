@@ -1,20 +1,21 @@
 import Bus from './EventBus'
+import bus from '~/Components/Bus'
 
 export default {
   push: (component, props) => {
-    Bus.$emit('dialog:push', {
+    bus.emit('dialog:push', {
       component,
       props,
     })
 
     return new Promise((resolve, reject) => {
-      Bus.$on('dialog:resolve', resolve)
-      Bus.$on('dialog:reject', reject)
+      bus.on('dialog:resolve', resolve)
+      bus.on('dialog:reject', reject)
     })
   },
 
-  close: () => Bus.$emit('dialog:close'),
+  close: () => bus.emit('dialog:close'),
 
   // close all windows
-  kill: () => Bus.$emit('dialog:kill')
+  kill: () => bus.emit('dialog:kill')
 }

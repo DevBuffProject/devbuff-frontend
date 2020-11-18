@@ -77,9 +77,8 @@ export default {
       if (!url) return false
 
       this.progress = true
-      console.log('mount');
       this.$axios
-        .get(`/_api/help/og?url=${url}`)
+        .get(`/_api/help/og?url=${url}`, { progress: true })
         .then(({ data }) => {
           setTimeout(() => this.progress = false, 200)
           this.og = data

@@ -3,16 +3,7 @@
     <v-toolbar class="profile__toolbar">
       <div class="container toolbar__grid">
         <div class="profile__name d-flex align-items-end pt-4 pl-4">
-          <v-shadow-input
-            label="enter чтобы сохранить"
-            @keyup.enter="changeFirstName($event.target.value)"
-            type="text" :value="profile.firstName"
-          />
-          <v-shadow-input
-            label="enter чтобы сохранить"
-            @keyup.enter="changeLastName($event.target.value)"
-            type="text" :value="profile.lastName"
-          />
+          {{ profile.firstName }} {{ profile.lastName }}
           <span class="text-muted profile__username"> @{{ profile.userName }} </span>
         </div>
 
@@ -25,13 +16,14 @@
         <div class="profile__sidebar-content d-flex flex-column align-content-center">
           <v-avatar
             class="profile__avatar mb-3"
-            :avatar="profile.image"
+            :avatar="profile.avatar"
             size="6rem"
           />
           <v-button
             type="black"
             :icon="['fas', 'edit']"
             rounded
+            @click="edit"
           />
         </div>
       </div>
@@ -80,19 +72,14 @@
               type="flat"
               :icon="['fas', 'edit']"
               class="profile__socials-edit ml-2"
-              @click="changeSocials"
+              @click="edit"
             >
               изменить
             </v-button>
           </div>
 
           <div class="profile__bio mb-4">
-            <v-shadow-input
-              type="textarea"
-              label="alt + shift чтобы сохранить"
-              :value="profile.bio.replace(/^\s+|\s+$/g, '')"
-              @keyup.alt.enter="changeBio($event.target.value)"
-            />
+            {{ profile.bio }}
           </div>
 
           <div class="profile__skills">
@@ -153,7 +140,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
-const SocialsDialog = () => import('~/components/Profile/ContactsDialog.vue')
+const ProfileEdit = () => import('~/components/Profile/ProfileEdit.vue')
 
 export default {
   async middleware({ store }) {
@@ -165,12 +152,12 @@ export default {
     ...mapGetters({
       profile: 'user/profile',
       systemSkills: 'skills/skills'
-    })
+    }),
   },
 
   methods: {
-    changeSocials() {
-      this.$dialog.push(SocialsDialog, this.profile.socialNetworks)
+    edit() {
+      this.$dialog.push(ProfileEdit, { dataProfile: this.profile })
     },
     changeBio(bio) {
       this.$store.dispatch('user/update', { bio })
