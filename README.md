@@ -4,7 +4,6 @@
 </p>
 <p align="center">
   <img src="https://7architect.semaphoreci.com/badges/devbuff-frontend/branches/develop.svg?key=710bba83-3085-419c-9304-df54d3d7467f" alt="Build Status">
-	<img src="https://img.shields.io/circleci/build/github/7architect/devbuff-frontend/develop?logo=circleci&logoColor=rgb%284%2C%20155%2C%2074%29&token=31982ca6fe9eb89f2087b39e35a9b9a73fed4360" alt="CircleCI">
 	<img src="https://www.codefactor.io/repository/github/7architect/devbuff-frontend/badge?s=a45618561d667a1813fae5396fc9d57d074c8b1f" alt="CodeFactor">
 	</a>
 </p>
