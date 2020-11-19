@@ -10,6 +10,7 @@
       </p>
       <div class="present__controls">
         <v-button
+          v-if="!isAuthorized"
           type="dark"
           :icon="['fab', 'github']"
           rounded
@@ -17,10 +18,10 @@
         >
           {{ $t('page.index.oAuth.gitHub') }}
         </v-button>
-
-        <v-delimiter/>
-
-        <nuxt-link to="/app/explore">
+        <nuxt-link
+          v-else
+          :to="localePath({ name: 's-ideas-explore' })"
+        >
           <v-button
             type="muted"
             :icon="['fas', 'long-arrow-alt-right']"
@@ -29,6 +30,7 @@
             {{ $t('page.index.action.projects') }}
           </v-button>
         </nuxt-link>
+
       </div>
     </div>
   </section>
@@ -39,6 +41,12 @@ export default {
   layout: 'white-screen',
 
   // middleware: ['guest'],
+
+  computed: {
+    isAuthorized() {
+      return this.$store.getters['user/isAuthorized']
+    }
+  },
 
   methods: {
     authorize() {
