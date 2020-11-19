@@ -7,20 +7,19 @@ on: push
 # List of jobs
 jobs:
   chromatic-deployment:
-    # Operating System
-    runs-on: ubuntu-latest
-    # Job steps
-    steps:
-      - name: Install dependencies
-      - uses: actions/checkout@v2
-        with:
+      steps:
+          # 👇 Version 2 of the action
+        - name: Checkout repository
+          uses: actions/checkout@v2
+          with:
             fetch-depth: 0 # 👈 Required to retrieve git history
-        run: npm i
-        # 👇 Adds Chromatic as a step in the workflow
-      - name: Deploy to Chromatic
-        uses: chromaui/action@v1
-        # Chromatic GitHub Action options
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        - name: Install dependencies
+          run: npm install
+          # 👇 Adds Chromatic as a step in the workflow
+        - name: Deploy to Chromatic
+          uses: chromaui/action@v1
+          # Options required to the GitHub Chromatic Action
+          with:
+            # 👇 Chromatic projectToken, refer to the manage page to obtain it.
+            projectToken: ${{ secrets.GITHUB_TOKEN }}
+            token: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
