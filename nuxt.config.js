@@ -46,7 +46,8 @@ const config = {
     'nuxt-i18n',
     'cookie-universal-nuxt',
     // own modules
-    '~/modules/newrelic'
+    '~/modules/newrelic',
+    '~/modules/logrocket'
   ],
 
   i18n : {
