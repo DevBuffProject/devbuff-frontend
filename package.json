@@ -13,7 +13,9 @@
     "precommit": "npm run lint",
     "storybook": "npx nuxt storybook",
     "build-storybook": "npx nuxt storybook build",
-    "chromatic": "npx chromatic"
+    "chromatic": "npx chromatic",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
@@ -47,7 +49,8 @@
     "swiper": "^6.3.5",
     "tls": "0.0.1",
     "vue-awesome-swiper": "^4.1.1",
-    "vue-quill-editor": "^3.0.6"
+    "vue-quill-editor": "^3.0.6",
+    "snyk": "^1.428.2"
   },
   "devDependencies": {
     "@babel/runtime-corejs3": "^7.12.5",
@@ -64,5 +67,6 @@
     "sass-loader": "^10.1.0",
     "stylus": "^0.54.8",
     "stylus-loader": "^4.2.0"
-  }
+  },
+  "snyk": true
 }
