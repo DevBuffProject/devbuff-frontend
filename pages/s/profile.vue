@@ -4,7 +4,6 @@
       <div class="container toolbar__grid">
         <div class="profile__name d-flex align-items-end pt-4 pl-4">
           {{ profile.firstName }} {{ profile.lastName }}
-          <span class="text-muted profile__username"> @{{ profile.userName }} </span>
         </div>
 
         <div>
@@ -29,57 +28,60 @@
       </div>
       <div class="container pt-3 pl-4">
         <div class="profile__container">
-          <div class="mb-4 d-flex align-items-baseline">
-            <a
-              v-if="profile.socialNetworks.vk"
-              :href="'//vk.com/' + profile.socialNetworks.vk"
-              target="_blank"
-            >
-              <v-icon
-                :icon="['fab', 'vk']"
-                class="profile__social-icon mr-2"
-              />
-            </a>
-            <a
-              v-if="profile.socialNetworks.telegram"
-              :href="'//t.me/' + profile.socialNetworks.telegram"
-              target="_blank"
-            >
-              <v-icon
-                :icon="['fab', 'telegram']"
-                class="profile__social-icon mr-2"
-              />
-            </a>
-            <a
-              v-if="profile.socialNetworks.skype"
-              target="_blank"
-            >
-              <v-icon
-                :icon="['fab', 'skype']"
-                class="profile__social-icon mr-2"
-              />
-            </a>
-            <a
-              v-if="profile.socialNetworks.discord"
-              target="_blank"
-            >
-              <v-icon
-                :icon="['fab', 'discord']"
-                class="profile__social-icon mr-2"
-              />
-            </a>
-            <v-button
-              type="flat"
-              :icon="['fas', 'edit']"
-              class="profile__socials-edit ml-2"
-              @click="edit"
-            >
-              изменить
-            </v-button>
+          <div class="mb-4 text-muted profile__username">
+            @{{ profile.userName }}
           </div>
 
           <div class="profile__bio mb-4">
             {{ profile.bio }}
+          </div>
+
+          <div class="profile__socials">
+            <div v-if="profile.socialNetworks.vk" class="profile__social-contact mb-2">
+              <div class="mb-2 d-flex align-items-center profile__social-contact">
+                <v-icon class="mr-2 profile__social-icon" :icon="['fab', 'vk']" />
+                <span class="text-muted mr-1">{{ profile.socialNetworks.vk }}</span>
+                <span class="mx-1">—</span>
+                {{ $t('page.profile.vk') }}
+              </div>
+              <v-og-preview
+                v-if="profile.socialNetworks.vk"
+                class="mb-4"
+                :url="urls.vk"
+              />
+            </div>
+
+            <div v-if="profile.socialNetworks.telegram" class="profile__social-contact mb-2">
+              <div class="mb-2 d-flex align-items-center profile__social-contact">
+                <v-icon class="mr-2 profile__social-icon" :icon="['fab', 'telegram']" />
+                <span class="text-muted">{{ profile.socialNetworks.telegram }}</span>
+                <span class="mx-1">—</span>
+                tetegram
+              </div>
+              <v-og-preview
+                v-if="profile.socialNetworks.telegram"
+                class="mb-4"
+                :url="urls.telegram"
+              />
+            </div>
+
+            <div v-if="profile.socialNetworks.skype" class="profile__social-contact mb-2">
+              <div class="d-flex align-items-center profile__social-contact">
+                <v-icon class="mr-2 profile__social-icon" :icon="['fab', 'skype']" />
+                <span class="text-muted">{{ profile.socialNetworks.skype }}</span>
+                <span class="mx-1">—</span>
+                skype
+              </div>
+            </div>
+
+            <div v-if="profile.socialNetworks.discord" class="profile__social-contact mb-4">
+              <div class="d-flex align-items-center profile__social-contact">
+                <v-icon class="mr-2 profile__social-icon" :icon="['fab', 'discord']" />
+                <span class="text-muted">{{ profile.socialNetworks.discord }}</span>
+                <span class="mx-1">—</span>
+                discord
+              </div>
+            </div>
           </div>
 
           <div class="profile__skills">
@@ -152,6 +154,12 @@ export default {
       profile: 'user/profile',
       systemSkills: 'skills/skills'
     }),
+    urls() {
+      return {
+        vk: this.profile.socialNetworks.vk && `https://vk.com/${this.profile.socialNetworks.vk}`,
+        telegram: this.profile.socialNetworks.telegram && `https://t.me/${this.profile.socialNetworks.telegram}`,
+      }
+    }
   },
 
   methods: {
@@ -212,7 +220,7 @@ export default {
 
   &__username {
     font-size: .7rem;
-    margin-left: .5rem;
+    margin-top: -.5rem;
   }
 
   &__socials {
