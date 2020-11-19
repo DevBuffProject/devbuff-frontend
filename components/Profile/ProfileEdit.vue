@@ -85,9 +85,7 @@
       @input="setContact('vk', $event)"
       class="w-100 mb-2"
     />
-    <div class="">
-      <v-og-preview :key="1" v-if="profile.socialNetworks.vk" class="mb-4" :url="urls.vk" />
-    </div>
+    <v-og-preview :key="1" v-if="profile.socialNetworks.vk" class="mb-4" :url="urls.vk" />
 
     <v-input
       :value="profile.socialNetworks.telegram"
@@ -178,7 +176,6 @@ export default {
 
   methods: {
     setContact: debounce(function (contact, value) {
-      console.log(this.profile);
       this.profile.socialNetworks[contact] = value
     }, 500),
     resendVerifyMail() {

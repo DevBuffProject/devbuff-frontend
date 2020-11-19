@@ -4,14 +4,19 @@
       v-if="queue.length > 0"
       class="dialog"
     >
+      <div class="dialog__wrapper">
         <div class="dialog__window">
           <div
             class="dialog__content"
             ref="content"
           >
             <transition name="fade">
-              <div v-if="resolvedDialog" class="dialog__close">
-                <v-icon :icon="['fas', 'times']" @click="kill" />
+              <div
+                v-if="resolvedDialog"
+                class="dialog__close"
+                @click="kill"
+              >
+                <v-icon :icon="['fas', 'times']" />
               </div>
             </transition>
 
@@ -23,6 +28,7 @@
             />
           </div>
         </div>
+      </div>
     </div>
   </transition>
 </template>
@@ -148,23 +154,26 @@ export default {
 .dialog {
   background-color: rgba(0, 0, 0, 0.8);
   position: fixed;
-  z-index: 99999999;
+  z-index: 9999999;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   display: flex;
   transition: opacity 0.3s var(--base-transition);
-  padding: 2rem 0;
   box-sizing: border-box;
   overflow: auto;
+
+  &__wrapper {
+    margin: auto;
+    padding: 3rem 0;
+  }
 
   &__window {
     background-color: var(--color-background);
     padding: 1.5rem;
     border-radius: 4px;
     overflow: hidden;
-    margin: auto;
     width: max-content;
   }
 
@@ -210,6 +219,7 @@ export default {
     display: flex;
     align-items: center;
     cursor: pointer;
+    z-index: 99999999;
     transition-delay: 1s !important;
   }
 }
