@@ -1,7 +1,4 @@
 export const state = () => ({
-  loaded: false,
-  pageName: null,
-
   _session: {
   },
 
@@ -10,10 +7,23 @@ export const state = () => ({
   }
 })
 
-export const mutations = {
-  setPageName: (state, name) => state.pageName = name
-}
+export const actions = {
+  async nuxtServerInit({ commit, dispatch }, { $cookies, $api, error }) {
+    const token = $cookies.get('remix_token')
+    const refreshToken = $cookies.get('remix_refresh_token')
+    const { APP_KEY } = this.$config
 
-export const getters = {
-  pageName: state => state.pageName
+    if (token && refreshToken) {
+      $api.v1.setToken(token, 'Bearer')
+
+      commit('auth/setToken', token)
+      commit('auth/setRefreshToken', refreshToken)
+    }
+
+    return new Promise((resolve, reject) => {
+      dispatch('auth/checkToken', token)
+        .then(() => dispatch('user/getProfile'))
+        .finally(resolve)
+    })
+  }
 }

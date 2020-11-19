@@ -1,0 +1,18 @@
+version: v1.0
+name: Devbuff develop
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Build
+    task:
+      jobs:
+        - name: Build
+          commands:
+            - checkout
+            - sem-version node 12
+            - cache restore
+            - npm install
+            - cache store
+            - npm run build --if-present

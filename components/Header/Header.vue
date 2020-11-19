@@ -1,17 +1,16 @@
 <template>
   <header class="header">
     <div class="header__container container">
-      <v-anim name="fade">
-        <div v-if="$route.name !== 'index'" class="header__section">
-          <v-input
-            type="text"
-            placeholder="search"
-            placeholder-centered
-            :icon="['fas', 'search']"
-            muted
-          />
-        </div>
-      </v-anim>
+      <div class="header__section">
+        <nuxt-link
+          v-for="locale in availableLocales"
+          :key="locale.code"
+          :to="switchLocalePath(locale.code)"
+          class="header__locale-link"
+        >
+          {{ locale.name }}
+        </nuxt-link>
+      </div>
       <div class="header__section d-flex justify-content-center">
         <v-logo />
       </div>
@@ -24,36 +23,46 @@
             class="text header__link"
             active-class="header__link--active"
             type="muted"
-            to="/app/explore"
+            :to="localePath({ name: 's-ideas-explore' })"
             :icon="['fas', 'lightbulb']"
           >
-            Идеи
+            {{  $t('components.header.ideas')  }}
           </v-link>
           <v-link
             class="mr-4 text header__link"
             active-class="header__link--active"
             type="muted"
-            to="/app/dashboard"
+            :to="localePath({ name: 's-dashboard' })"
             :icon="['fas', 'project-diagram']"
           >
-            Ваши проекты
+            {{ $t('components.header.dashboard') }}
           </v-link>
-          <v-avatar />
+          <nuxt-link :to="localePath({ name: 's-profile' })">
+            <v-avatar :avatar="avatar" />
+          </nuxt-link>
         </div>
       </v-anim>
     </div>
   </header>
 </template>
-
 <script>
 export default {
-  name: 'v-header'
+  name: 'v-header',
+
+  computed: {
+    avatar() {
+      return this.$store.getters['user/profile'].avatar
+    },
+    availableLocales () {
+      return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale)
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .header {
-  background-color: #fff;
+  background-color: var(--color-background);
   position: relative;
   height: var(--header-height);
   border-bottom: 1px solid var(--color-muted);
@@ -87,6 +96,11 @@ export default {
       color: var(--color-primary) !important;
       opacity: 1;
     }
+  }
+
+  &__locale-link {
+    font-size: 1rem;
+    text-decoration: none;
   }
 }
 </style>

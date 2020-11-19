@@ -1,9 +1,13 @@
-module.exports = {
-  /*
-  ** Headers of the page
-  */
+const config = {
+  server: {
+    host: '0.0.0.0',
+    port: 3000,
+  },
+
+  dev: process.env.NODE_ENV !== 'production',
+
   head: {
-    title: 'devbuff-front',
+    title: 'DevBuff',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -14,46 +18,70 @@ module.exports = {
       { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100;300;400;600;900&display=swap' }
+    ],
+    script: [
+      { src: 'https://6yzwffsm5625.statuspage.io/embed/script.js', body: true, defer: true }
     ]
   },
   css: [
-    { src: '~/assets/styles/common.scss', lang: 'sass' },
-    { src: '~/assets/styles/bulma.loader.scss', lang: 'sass' },
-    '@fortawesome/fontawesome-svg-core/styles.css'
+    { src: '~/assets/styles/common.scss', lang: 'sass' }
   ],
 
-  pageTransition: 'top',
+  loading: '~/page-loading.vue',
 
-  /*
-  ** Customize the progress bar color
-  */
-  loading: '~/components/Loading/PageLoading.vue',
-  /*
-  ** Components Discovery
-  */
   components: [{
     path: '~/components/',
     prefix: 'v'
   }],
+
   plugins: [
-    '~/plugins/fontawesome.js'
+    { src: '~/plugins/fontawesome.js' },
+    { src: '~/plugins/ui-installer.js', mode: 'client' },
+    { src: '~/plugins/api.js' },
   ],
-  /*
-   * Modules
-   */
+
    modules: [
-    ['nuxt-vuex-localstorage', {
-      localStorage: ['shared'],
-      sessionStorage: ['session']
-    }]
+    '@nuxtjs/pwa',
+    '@nuxtjs/axios',
+    'nuxt-i18n',
+    'cookie-universal-nuxt',
+    // own modules
+    '~/modules/newrelic'
   ],
-  /*
-   * Build configuration
-   */
+
+  i18n : {
+    locales: [
+      { code: 'ru', name: '🇷🇺', file: 'ru.js' },
+      { code: 'en', name: '🇬🇧', file: 'en.js' }
+    ],
+    defaultLocale: 'ru',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+    },
+    lazy: true,
+    langDir: 'lang/'
+  },
+
+  storybook: {
+    addons: [
+      '@storybook/addon-knobs'
+    ]
+  },
+
+  serverMiddleware: [
+    { path: '/_api/help/og', handler: '~endpoints/opengraph.js' }
+  ],
+
+  publicRuntimeConfig: {
+    // Proxy env to runtime
+    API_BASE_URL: process.env.API_BASE_URL,
+    API_BASE_PROXY_URL: '/api',
+  },
+
+  modern: true,
+
   build: {
-    /*
-    ** Run ESLint on save
-    */
     extend (config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({
@@ -66,3 +94,8 @@ module.exports = {
     }
   }
 }
+
+// Proxy dev prop to publicRuntimeConfig
+config.publicRuntimeConfig.isDev = config.dev
+
+module.exports = config

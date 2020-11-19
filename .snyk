@@ -1,0 +1,73 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.19.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:mime:20170907':
+    - dns > winston > request > mime:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > express > send > mime:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > winston > request > form-data > mime:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > winston > request > mime:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > express > serve-static > send > mime:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > winston > request > form-data > mime:
+        patched: '2020-11-19T18:44:10.968Z'
+  'npm:ms:20151024':
+    - dns > tomahawk > connect > debug > ms:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > express > debug > ms:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > express > send > ms:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > express > finalhandler > debug > ms:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > express > send > debug > ms:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > connect > finalhandler > debug > ms:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > express > serve-static > send > ms:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > express > serve-static > send > debug > ms:
+        patched: '2020-11-19T18:44:10.968Z'
+  'npm:negotiator:20160616':
+    - dns > tomahawk > errorhandler > accepts > negotiator:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > express > accepts > negotiator:
+        patched: '2020-11-19T18:44:10.968Z'
+  'npm:qs:20140806-1':
+    - dns > tomahawk > body-parser > qs:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > express > qs:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > winston > request > qs:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > winston > request > qs:
+        patched: '2020-11-19T18:44:10.968Z'
+  'npm:request:20160119':
+    - dns > winston > request:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > winston > request:
+        patched: '2020-11-19T18:44:10.968Z'
+  'npm:ws:20160920':
+    - dns > tomahawk > socket.io > engine.io > ws:
+        patched: '2020-11-19T18:44:10.968Z'
+    - dns > tomahawk > socket.io > socket.io-client > engine.io-client > ws:
+        patched: '2020-11-19T18:44:10.968Z'
+  'npm:qs:20140806':
+    - dns > tomahawk > body-parser > qs:
+        patched: '2020-11-19T18:58:08.002Z'
+    - dns > tomahawk > express > qs:
+        patched: '2020-11-19T18:58:08.002Z'
+    - dns > winston > request > qs:
+        patched: '2020-11-19T18:58:08.002Z'
+    - dns > tomahawk > winston > request > qs:
+        patched: '2020-11-19T18:58:08.002Z'
+  'npm:ws:20160104':
+    - dns > tomahawk > socket.io > engine.io > ws:
+        patched: '2020-11-19T18:58:08.002Z'
+    - dns > tomahawk > socket.io > socket.io-client > engine.io-client > ws:
+        patched: '2020-11-19T18:58:08.002Z'

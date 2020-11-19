@@ -1,4 +1,4 @@
-<template>
+<template functional>
   <div class="logo">
     <div class="logo__circle" />
     <div class="logo__text"> DevBuff </div>
@@ -16,7 +16,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap');
 
 .logo {

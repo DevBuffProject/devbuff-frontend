@@ -1,45 +1,35 @@
 <template>
-  <component
-    :is="btnProps.is"
-    v-bind="btnProps"
+  <button
     v-on="$listeners"
     :class="[
       'btn',
       'btn--type-' + type,
-      small && 'btn--small',
       rounded && 'btn--rounded',
       disabled && 'btn--disabled',
     ]"
     :disabled="disabled"
   >
-  <div class="btn__overlay" @click="click"></div>
     <div
       v-if="$slots.default"
-      class="btn__content"
+      :class="['btn__content', loading && 'btn__content-hidden']"
     >
       <slot />
     </div>
+    <span v-if="loading" class="btn__loading">
+      <v-loading />
+    </span>
     <v-icon
-      v-if="icon && !(loading || internalLoading)"
+      v-if="icon"
       :icon="icon"
       :class="[
         'btn__icon',
         !$slots.default && 'btn__icon--nomargin'
       ]"
     />
-    <v-loading
-      v-if="icon && (loading || internalLoading)"
-      :class="[
-        'btn__icon',
-        !$slots.default && 'btn__icon--nomargin'
-      ]"
-    />
-  </component>
+  </button>
 </template>
 
 <script>
-const TYPES = require('@/kernel/UI/colors.json')
-
 export default {
   name: 'v-button',
 
@@ -55,7 +45,6 @@ export default {
     type: {
       type: String,
       default: 'primary',
-      validate: (v) => TYPES.includes(v)
     },
     icon: {
       type: [ Array, String ],
@@ -65,62 +54,51 @@ export default {
       type: Boolean,
       default: false
     },
-    to: {
-      type: [ String, Object ],
-      default: null
-    },
-    href: {
-      type: String,
-      default: null
-    },
-    small: {
-      type: Boolean,
-      default: false
-    }
   },
-  data() {
-    return {
-      internalLoading: false
-    }
-  },
-  computed: {
-    btnProps() {
-      const props = {
-        is: ((Object.keys(this.$listeners).length) && 'button')
-          || (this.to && 'NuxtLink')
-          || (this.href && 'a')
-          || 'span',
-      };
-      if (props.is === 'NuxtLink') {
-        props.to = this.to;
-      } else if (props.is === 'a') {
-        props.href = this.href;
-      }
-      return props;
-    }
-  },
-  methods: {
-    click(event) {
-      if (this.internalLoading || this.disabled && this.loading) {
-        event.preventDefault()
-        event.stopPropagation()
-
-        return false
-      }
-
-      if (this.to && this.icon) {
-        this.internalLoading = true
-      }
-    }
-  }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '~/assets/styles/variables.scss';
+
+@mixin button-type () {
+  @each $name, $color in map-get($default-colors, 'scheme' ) {
+    &--type-#{$name} {
+      color: #fff;
+      border: 1px solid transparent;
+      background-clip: border-box !important;
+      background-origin: border-box !important;
+      background-color: var(--color-#{$name});
+      background-image: linear-gradient(135deg, var(--color-#{$name}-tint), var(--color-#{$name}));
+      box-shadow: 0px 2px 4px var(--color-#{$name}-fade);
+
+      &:hover {
+        background-color: var(--color-#{$name}-tint);
+      }
+
+      &:active {
+        background-color: var(--color-#{$name}-darken);
+        box-shadow: none;
+      }
+    }
+
+    &--type-flat-#{$name} {
+      color: var(--color-#{$name});
+      transition: background-color .3s var(--base-transition);
+      &:hover {
+        background-color: var(--color-#{$name}-fade);
+      }
+    }
+  }
+}
+
 .btn {
+  position: relative;
+  background: none;
   font-family: inherit;
   font-size: .9rem;
-  padding: .35rem 1.5rem;
+  padding: .2rem 1rem;
+  text-transform: lowercase;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -129,69 +107,49 @@ export default {
   text-decoration: none;
   position: relative;
   cursor: pointer;
-  font-weight: 400;
-  text-shadow: 0 1px 0 rgba(0,0,0,.07);
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 1px;
   transition-property: background-color, box-shadow;
   transition: .3s var(--base-transition);
+
+  @include button-type();
 
   &--disabled {
     opacity: .5;
   }
 
-  &--type {
-    &-primary {
-      border: 1px solid var(--color-primary);
-      background-color: var(--color-primary);
-      box-shadow: 0 2px 4px var(--color-primary-lighten);
-      color: #fff;
-      &:active {
-        background-color: var(--color-primary-darken);
-        border: 1px solid var(--color-primary-darken);
-        box-shadow: none;
-      }
-    }
-    &-muted {
-      background-color: var(--color-muted);
-      color: #000;
-    }
-    &-dark {
-      background-color: #000;
-      color: #fff;
-    }
+  &--type-muted {
+    background-color: var(--color-muted);
+    color: #000;
   }
 
-  &--small {
-    font-size: .8rem;
-    padding: .2rem 1rem;
+  &--type-dark {
+    background-color: #000;
+    color: #fff;
   }
 
   &--rounded {
     border-radius: 50px;
   }
 
-  &__overlay {
+  &__content-hidden {
+    opacity: 0;
+  }
+
+  &__loading {
     position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
+    top: 50%;
+    transform: translateY(-50%) !important;
   }
 
   &__icon {
-    margin-left: 1rem;
-    width: 1.1em;
-    height: 1.1em;
+    margin-left: 8px;
+    width: 1em !important;
+    height: 1em !important;
     &--nomargin {
       margin: 0;
     }
-    &--spin {
-      animation: spin 1s linear infinite;
-    }
   }
-}
-
-@keyframes spin {
-  0% { transform: rotateZ(0deg) }
-  100% { transform: rotateZ(360deg) }
 }
 </style>

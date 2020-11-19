@@ -8,12 +8,12 @@ $base-transition: cubic-bezier(.28,.98,.43,.99);
 }
 
 .top-enter-active,
-.top-leave-active { transition: all .3s var(--base-transition); }
+.top-leave-active { transition: transform .3s var(--base-transition); }
 .top-enter {
   opacity: 0;
-  transform: translate3d(0, -100px, 0);
+  transform: translate3d(0, -20px, 0);
 }
 .top-leave-to {
   opacity: 0;
-  transform: translate3d(0, 0px, 0);
+  transform: translate3d(0, 0, 0);
 }

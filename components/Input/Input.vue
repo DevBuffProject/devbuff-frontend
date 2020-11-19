@@ -1,44 +1,22 @@
 <template>
-  <div
-    :class="[
-      'input',
-      (autocomplete && focused) && 'input--island',
-      (autocomplete && focused && icon) && 'input--island-icon'
-    ]"
-    @click="focus"
-  >
-    <input
+  <label class="input" @mousedown="focus">
+    <v-icon v-if="icon" :icon="icon" class="input__icon" />
+    <component
+      :is="type === 'textarea' ? 'textarea' : 'input'"
       ref="field"
       :class="[
         'input__field',
-        this.muted && 'input__field--muted',
-        this.icon && 'input__field--icon'
+        icon && 'input__field--icon',
+        (type === 'textarea') && 'input__field--type-textarea'
       ]"
-      :type="type"
-      v-model="model"
-      v-on:input="$emit('input', $event.target.value)"
+      :type="inputType"
+      :value="model"
+      :placeholder="placeholder"
+      @input="input"
       @focus="focus"
       @blur="blur"
-    />
-    <div
-      :class="[
-        'input__placeholder',
-        (placeholderCentered && !focused && !model) && 'input__placeholder--centered'
-      ]"
-
-    >
-      <v-icon v-if="icon" :icon="icon" class="input__placeholder-icon" />
-      <span
-        v-if="placeholder && !model"
-        :class="[
-          'input__placeholder-text',
-          focused && 'muted'
-        ]"
-      >
-        {{ placeholder }}
-      </span>
-    </div>
-  </div>
+    >{{ type === 'textarea' && value }}</component>
+  </label>
 </template>
 
 <script>
@@ -54,45 +32,48 @@ export default {
       type: String,
       default: null
     },
-    placeholderCentered: {
-      type: Boolean,
-      default: null
-    },
     value: {
       type: [ String, Number ],
       default: null
     },
-    muted: {
-      type: Boolean,
-      default: false
-    },
     icon: {
       type: [ String, Array ],
       default: null
-    },
-    autocomplete: {
-      type: [ String, Object ],
-      default: null,
-      validate: (v) => {
-        if (typeof v === 'object') {
-          return v.data || v.url
-        } else if (typeof v === 'string') return Boolean(v)
-      }
     }
   },
+
   data() {
     return {
       focused: false,
-      model: null
+      model: this.value,
+      inputType: this.type === 'date' && !this.value
+        ? 'text'
+        : this.type
     }
   },
+
   methods: {
     focus() {
       this.focused = true
       this.$refs.field.focus()
+
+      if (this.type === 'date') {
+        this.inputType = 'date'
+        setTimeout(() => this.$refs.field.focus(), 100)
+      }
     },
     blur() {
       this.focused = false
+
+      if (this.type === 'date' && !this.model) {
+        this.inputType = 'text'
+      }
+    },
+    input(event) {
+      const value = event.target.value
+      this.model = value
+
+      this.$emit('input', value)
     }
   }
 }
@@ -101,44 +82,52 @@ export default {
 <style lang="scss" scoped>
 .input {
   position: relative;
-  margin: -10px;
-  padding: 10px;
   width: fit-content;
+  display: inline-flex;
+  border: 1px solid var(--color-muted);
+  box-shadow: 0 1px 1px rgba(211 ,218, 230, .3);
+  padding: .3rem 1rem;
+  border-radius: 4px;
+  box-sizing: border-box;
+  align-items: center;
+  cursor: text;
+  transition: border-color .3s var(--base-transition);
 
-  &__placeholder {
-    position: absolute;
-    top: 0;
-    left: 10px;
-    height: 100%;
+  &--focused {
+    border-color: var(--color-primary) !important
+  }
+
+  &__icon {
     display: flex;
+    margin-right: 1rem;
     align-items: center;
+    color: var(--color-muted);
+    width: 1.2rem;
+    font-size: 1.2rem;
     transition: .2s var(--base-transition);
     transition-property: transform, left;
-    &--centered {
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    &-icon {
-      padding: 0 10px;
-    }
-    &-text {
-      transition: opacity .3s var(--base-transition);
-    }
   }
 
   &__field {
     outline: none;
-    border-radius: 4px;
     font-family: inherit;
     font-size: 1rem;
-    padding: .3rem 1rem;
-    &--icon {
-      padding-left: 2rem;
+    border: 0;
+    outline: 0;
+    width: 100%;
+    min-width: 0;
+    resize: none;
+    box-sizing: border-box;
+    &::placeholder {
+      font-family: inherit;
+      font-weight: 200;
+      text-transform: lowercase;
+      transition: .2s var(--base-transition);
+      transition-property: transform, opacity;
     }
-    &--muted {
-      background-color: var(--color-muted);
-      border: 0;
+    &:focus::placeholder {
+      opacity: .35;
+      transform: translateX(5px);
     }
   }
 }

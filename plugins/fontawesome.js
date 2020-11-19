@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 
+require('@fortawesome/fontawesome-svg-core/styles.css')
 
 // This is important, we are going to let Nuxt.js worry about the CSS
 config.autoAddCss = false

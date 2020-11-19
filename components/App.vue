@@ -1,10 +1,7 @@
 <template>
-  <div
-    :class="[
-      'app',
-      'colors--light'
-    ]"
-  >
+  <div class="app">
+    <v-dialog />
+
     <transition name="scale">
       <div>
         <slot />
@@ -14,19 +11,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Vue from 'vue'
-
 export default {
   name: 'v-app',
-  mounted() {
-    this.$bus = new Vue()
-  }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .app {
-  
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 80px 1fr;
+  background-color: var(--color-background);
 }
 </style>

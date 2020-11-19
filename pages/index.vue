@@ -2,30 +2,35 @@
   <section>
     <div class="slide present pt-5">
       <h1 class="present__heading">
-        Место где собирают команды
+        {{ $t('page.index.title') }}
       </h1>
       <p class="present__app-desc my-5">
-        <span class="present__app-name">DevBuff</span> — это площадка для разработчиков, которые хотят привлечь единомышленников для совместной реализации своих идей.
-        <v-link to="/about">подробнее</v-link>
+        <span class="present__app-name">DevBuff</span> — {{ $t('page.index.description') }}.
+        <v-link to="/about"> {{ $t('page.index.action.about') }}</v-link>
       </p>
       <div class="present__controls">
         <v-button
+          v-if="!isAuthorized"
           type="dark"
           :icon="['fab', 'github']"
           rounded
-          pulse
+          @click="authorize"
         >
-          Войти через Github
+          {{ $t('page.index.oAuth.gitHub') }}
         </v-button>
-        <v-delimiter />
-        <v-button
-          to="/app/explore"
-          type="muted"
-          :icon="['fas', 'long-arrow-alt-right']"
-          rounded
+        <nuxt-link
+          v-else
+          :to="localePath({ name: 's-ideas-explore' })"
         >
-          Посмотреть проекты
-        </v-button>
+          <v-button
+            type="muted"
+            :icon="['fas', 'long-arrow-alt-right']"
+            rounded
+          >
+            {{ $t('page.index.action.projects') }}
+          </v-button>
+        </nuxt-link>
+
       </div>
     </div>
   </section>
@@ -33,7 +38,21 @@
 
 <script>
 export default {
-  transition: 'top',
+  layout: 'white-screen',
+
+  // middleware: ['guest'],
+
+  computed: {
+    isAuthorized() {
+      return this.$store.getters['user/isAuthorized']
+    }
+  },
+
+  methods: {
+    authorize() {
+      this.$store.dispatch('auth/authorize')
+    }
+  },
 }
 </script>
 
@@ -55,6 +74,7 @@ export default {
     flex-direction: column;
     justify-content: center;
   }
+
   &__heading {
     font-family: 'Rubik Mono One', sans-serif;
     font-size: 4rem;
@@ -62,33 +82,26 @@ export default {
     color: #000;
     text-align: center;
   }
-  &__app {
-    &-name {
-      font-size: 1.5rem;
-      font-weight: bold;
-      transform: translateY(3px);
-      display: inline-block;
-      color: #000;
-    }
-    &-desc {
-      position: relative;
-      padding-left: 1rem;
 
-      &:before,
-      &:after {
-        font-weight: bold;
-        font-size: 1.5rem;
-        transform: translateY(3px);
-        color: #000;
-        display: inline-block;
-      }
-      &:before {
-        content: "<"
-      }
-      &:after {
-        content: "/>";
-        margin-left: 5px;
-      }
+  &__app-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    transform: translateY(3px);
+    display: inline-block;
+    color: #000;
+  }
+
+  &__app-desc {
+    position: relative;
+    padding-left: 1rem;
+
+    &:before,
+    &:after {
+      font-weight: bold;
+      font-size: 1.5rem;
+      transform: translateY(3px);
+      color: #000;
+      display: inline-block;
     }
   }
 }

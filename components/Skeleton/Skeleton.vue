@@ -15,7 +15,7 @@ export default {
     figure: {
       type: String,
       default: 'square',
-      validate: (v) => ['circle', 'line'].includes(v)
+      validate: (v) => ['square', 'circle', 'line'].includes(v)
     }
   }
 }
@@ -32,9 +32,11 @@ export default {
   overflow: hidden;
 
   &:after {
-    background-image: linear-gradient(90deg, hsla(0,0%,100%,0), hsla(0,0%,100%,.3), hsla(0,0%,100%,0));
+    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0));
     content: "";
     height: 100%;
+    min-width: 200px;
+    width: 100%;
     left: 0;
     position: absolute;
     right: 0;
@@ -47,17 +49,19 @@ export default {
   &--figure-circle {
     border-radius: 50%;
   }
+  &--figure-tile {
+    border-radius: 4px;
+  }
   &--figure-line {
     height: 10px;
     width: 100%;
     flex: initial;
-    margin: .5rem 0;
   }
 }
 
 @keyframes loading {
   to {
-    transform: translateX(100%)
+    transform: translateX(100%);
   }
 }
 </style>

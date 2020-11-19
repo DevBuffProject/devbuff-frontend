@@ -1,12 +1,24 @@
-# devbuff-front
-
-> Devbuff web client
+# Devbuff Frontend
+<p align="center">
+	<a href="https://devbuff.statuspage.io/">Statuspage</a>
+</p>
+<p align="center">
+  <img src="https://7architect.semaphoreci.com/badges/devbuff-frontend/branches/develop.svg?key=710bba83-3085-419c-9304-df54d3d7467f" alt="Build Status">
+	<img src="https://www.codefactor.io/repository/github/7architect/devbuff-frontend/badge?s=a45618561d667a1813fae5396fc9d57d074c8b1f" alt="CodeFactor">
+	</a>
+</p>
+ 
 
 ## Build Setup
 
+### Setup environment
+ 1. Create `.env` file from `.env.example` and fill all properties.
+
+### Run
 ``` bash
 # install dependencies
-$ npm install # Or yarn install
+$ npm install
+
 
 # serve with hot reload at localhost:3000
 $ npm run dev
@@ -14,10 +26,32 @@ $ npm run dev
 # build for production and launch server
 $ npm run build
 $ npm start
-
-# generate static project
-$ npm run generate
 ```
 
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
 
+# UI Components
+
+[Storybook and docs](https://chromatic.com/library?appId=5fabab5e8406cb00219555d5&branch=develop)
+
+Run storybook development server
+
+``` bash
+$ npm run storybook
+```
+
+# Contribute
+
+Use [Github flow](https://guides.github.com/introduction/flow/http:// "Github flow")
+
+``` bash
+$ git clone https://github.com/7architect/devbuff-frontend.git
+$ git checkout develop
+$ git checkout <feature-name>
+```
+
+Commit work, then push branch and open PR
+
+Keep [![CodeFactor](https://www.codefactor.io/repository/github/7architect/devbuff-frontend/badge?s=a45618561d667a1813fae5396fc9d57d074c8b1f)](https://www.codefactor.io/repository/github/7architect/devbuff-frontend) status as `A/A+`
+
+------------
