@@ -1,11 +1,11 @@
-export default function ({
+export default ({
   $loading,
   $cookies,
   $config,
   $axios,
   store,
   error
-}, inject) {
+}, inject) => {
   const { API_BASE_URL } = $config
   const cookies = $cookies
   const token = cookies.get('remix_token')

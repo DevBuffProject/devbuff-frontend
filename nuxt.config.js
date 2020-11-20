@@ -35,9 +35,10 @@ const config = {
   }],
 
   plugins: [
+    { src: '~/plugins/api.js' },
+    { src: '~/plugins/sentry.js' },
     { src: '~/plugins/fontawesome.js' },
     { src: '~/plugins/ui-installer.js', mode: 'client' },
-    { src: '~/plugins/api.js' },
   ],
 
    modules: [
@@ -45,9 +46,14 @@ const config = {
     '@nuxtjs/axios',
     'nuxt-i18n',
     'cookie-universal-nuxt',
-    // own modules
-    '~/modules/newrelic'
+    'nuxt-logrocket',
   ],
+
+
+  logRocket: {
+    logRocketId: '6ayvln/devbuff-stage',
+    devModeAllowed: true,
+  },
 
   i18n : {
     locales: [
