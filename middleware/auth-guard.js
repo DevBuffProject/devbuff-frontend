@@ -5,23 +5,17 @@ export default async ({ store, req, error }) => {
     statusCode: 401,
     message
   })
-  const tryRestore = () => store.dispatch('auth/getToken', {
-    grant: refreshToken,
-    refresh: true
-  })
 
-  if (!token && !refreshToken) return createError('Corrupted auth')
-  // if refresh token exist try to restore
-  if (!token && refreshToken) return tryRestore()
+  if (!token && !refreshToken) return createError('Corrupted auth: no credentials')
 
-  return new Promise((resolve, reject) => store
-    .dispatch('auth/checkToken', token)
-    .then(resolve)
-    .then(() => store.dispatch('user/getProfile'))
-    // finally try to refresh
-    .catch(err => tryRestore()
-      .then(resolve)
-      .catch(() => createError('Corrupted auth'))
-    ))
-
+  try {
+    // if refresh token failure > user not authorized
+    await store.dispatch('auth/getToken', {
+      grant: refreshToken,
+      refresh: true
+    })
+    await store.dispatch('user/getProfile')
+  } catch (e) {
+    return createError('Corrupted auth: invalid tokens')
+  }
 }

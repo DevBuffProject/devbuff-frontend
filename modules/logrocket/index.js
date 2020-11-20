@@ -1,3 +1,5 @@
-import LogRocket from 'logrocket'
+import { init } from 'logrocket';
 
-LogRocket.init('6ayvln/devbuff')
+export default async function() {
+  init('6ayvln/devbuff');
+}

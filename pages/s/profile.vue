@@ -149,6 +149,13 @@ export default {
     await store.dispatch('skills/getSkills')
   },
 
+  mounted() {
+    const { act } = this.$route.query
+
+    // show settings dialog
+    if (act === 'edit') this.edit()
+  },
+
   computed: {
     ...mapGetters({
       profile: 'user/profile',
@@ -164,10 +171,11 @@ export default {
 
   methods: {
     edit() {
-      this.$dialog.push(
-        ProfileEdit,
-        { dataProfile: JSON.parse(JSON.stringify(this.profile)) }
-      )
+      this.$dialog
+        .push(ProfileEdit, { dataProfile: JSON.parse(JSON.stringify(this.profile)) })
+        .then(() => {
+          this.$router.replace({ ...this.$route, query: {} })
+        })
     },
     changeBio(bio) {
       this.$store.dispatch('user/update', { bio })
