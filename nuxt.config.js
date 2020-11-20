@@ -45,15 +45,8 @@ const config = {
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
     'nuxt-i18n',
-    'cookie-universal-nuxt',
-    'nuxt-logrocket',
+    'cookie-universal-nuxt'
   ],
-
-
-  logRocket: {
-    logRocketId: '6ayvln/devbuff-stage',
-    devModeAllowed: true,
-  },
 
   i18n : {
     locales: [
