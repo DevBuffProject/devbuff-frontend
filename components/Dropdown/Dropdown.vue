@@ -51,6 +51,7 @@ export default {
 
 <style lang="scss" scoped>
 .dropdown {
+  background-color: var(--color-background-contrast);
   position: relative;
   width: fit-content;
   display: inline-flex;

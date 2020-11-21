@@ -170,7 +170,7 @@ export default {
   }
 
   &__window {
-    background-color: var(--color-background);
+    background-color: var(--color-background-contrast);
     padding: 1.5rem;
     border-radius: 4px;
     overflow: hidden;

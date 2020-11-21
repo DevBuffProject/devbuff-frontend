@@ -81,6 +81,7 @@ export default {
 
 <style lang="scss" scoped>
 .input {
+  background-color: var(--color-background-contrast);
   position: relative;
   width: fit-content;
   display: inline-flex;
