@@ -63,7 +63,19 @@ export default {
         })
         .then(() => {
           this.success = true
-          setTimeout(() => $router.push(this.localePath({ name: 's-dashboard' })), 1000)
+          let redirectPath = this.localePath({ name: 's-dashboard' })
+          const visited = localStorage.getItem('visited')
+
+          if (!visited) {
+            redirectPath = this.localePath({
+              name: 's-profile',
+              query: { act: 'edit' }
+            })
+
+            localStorage.setItem('visited', true)
+          }
+
+          setTimeout(() => $router.push(redirectPath), 1000)
         })
         .catch(error => this.error = error)
     }

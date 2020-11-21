@@ -2,28 +2,28 @@
   <button
     v-on="$listeners"
     :class="[
-      'btn',
-      'btn--type-' + type,
-      rounded && 'btn--rounded',
-      disabled && 'btn--disabled',
+      'v-btn',
+      'v-btn--type-' + type,
+      rounded && 'v-btn--rounded',
+      disabled && 'v-btn--disabled',
     ]"
     :disabled="disabled"
   >
     <div
       v-if="$slots.default"
-      :class="['btn__content', loading && 'btn__content-hidden']"
+      :class="['v-btn__content', loading && 'v-btn__content--hidden']"
     >
       <slot />
     </div>
-    <span v-if="loading" class="btn__loading">
+    <span v-if="loading" class="v-btn__loading">
       <v-loading />
     </span>
     <v-icon
       v-if="icon"
       :icon="icon"
       :class="[
-        'btn__icon',
-        !$slots.default && 'btn__icon--nomargin'
+        'v-btn__icon',
+        !$slots.default && 'v-btn__icon--nomargin'
       ]"
     />
   </button>
@@ -65,20 +65,27 @@ export default {
   @each $name, $color in map-get($default-colors, 'scheme' ) {
     &--type-#{$name} {
       color: #fff;
-      border: 1px solid transparent;
-      background-clip: border-box !important;
-      background-origin: border-box !important;
       background-color: var(--color-#{$name});
-      background-image: linear-gradient(135deg, var(--color-#{$name}-tint), var(--color-#{$name}));
-      box-shadow: 0px 2px 4px var(--color-#{$name}-fade);
 
-      &:hover {
-        background-color: var(--color-#{$name}-tint);
+      &::before {
+        background-image: linear-gradient(135deg, var(--color-#{$name}-tint), var(--color-#{$name}));
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        content: "";
+        opacity: 1;
+        transition-property: opacity;
+        transition: .15s var(--base-transition);
       }
 
-      &:active {
-        background-color: var(--color-#{$name}-darken);
-        box-shadow: none;
+      &:hover {
+        box-shadow: 0px 4px 10px -5px var(--color-#{$name}-tint);
+      }
+
+      &:active::before {
+        opacity: 0
       }
     }
 
@@ -92,7 +99,7 @@ export default {
   }
 }
 
-.btn {
+.v-btn {
   position: relative;
   background: none;
   font-family: inherit;
@@ -110,8 +117,10 @@ export default {
   font-weight: 300;
   line-height: 1.5;
   letter-spacing: 1px;
-  transition-property: background-color, box-shadow;
+  overflow: hidden;
+  outline: none;
   transition: .3s var(--base-transition);
+  transition-property: background-color, box-shadow;
 
   @include button-type();
 
@@ -133,17 +142,23 @@ export default {
     border-radius: 50px;
   }
 
-  &__content-hidden {
+  &__content {
+    position: relative;
+  }
+
+  &__content--hidden {
     opacity: 0;
   }
 
   &__loading {
+    position: relative;
     position: absolute;
     top: 50%;
     transform: translateY(-50%) !important;
   }
 
   &__icon {
+    position: relative;
     margin-left: 8px;
     width: 1em !important;
     height: 1em !important;
