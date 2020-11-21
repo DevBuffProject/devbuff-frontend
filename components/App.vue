@@ -1,12 +1,9 @@
 <template>
-  <div class="app">
+  <div class="v-app">
     <v-dialog />
-
-    <transition name="scale">
-      <div>
+      <div class="v-app__viewport">
         <slot />
       </div>
-    </transition>
   </div>
 </template>
 
@@ -17,10 +14,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app {
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: 80px 1fr;
+.v-app {
   background-color: var(--color-background);
+
+  &__viewport {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
 }
 </style>

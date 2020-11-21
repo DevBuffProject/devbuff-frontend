@@ -62,10 +62,10 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  background-color: var(--color-background);
+  background-color: var(--color-background-contrast);
   position: relative;
   height: var(--header-height);
-  border-bottom: 1px solid var(--color-muted);
+  border-bottom: 1px solid var(--color-muted-accent);
 
   &__container {
     display: flex;

@@ -75,7 +75,7 @@ const config = {
   publicRuntimeConfig: {
     // Proxy env to runtime
     API_BASE_URL: process.env.API_BASE_URL,
-    API_BASE_PROXY_URL: '/api',
+    STATUSPAGE_BASE_URL: process.env.STATUSPAGE_BASE_URL
   },
 
   modern: true,
