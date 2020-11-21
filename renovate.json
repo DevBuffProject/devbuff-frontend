@@ -16,5 +16,11 @@
     "helpers:disableTypesNodeMajor",
     "workarounds:all",
     "schedule:daily"
+  ],
+  "packageRules": [
+    {
+      "updateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    }
   ]
 }
