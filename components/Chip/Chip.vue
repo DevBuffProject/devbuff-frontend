@@ -1,11 +1,10 @@
 <script>
-import Color from '~/kernel/UI/colors.js'
+import Color from '~/helpers/colors.js'
 
 const cachedColors = {}
 const getTextBasedColors = text => {
-  if (cachedColors[text]) {
+  if (cachedColors[text])
     return cachedColors[text]
-  }
 
   const colorInstance = Color(Color.generateFromString(text))
   const colors = {
@@ -29,24 +28,16 @@ export default {
     type: {
       type: String,
       default: null
-    },
-    mixClass: {
-      type: [String, Array, Object],
-      default: null
-    }
-  },
-  computed: {
-    colors() {
-      return getTextBasedColors(this.text)
     }
   },
 
   render(h, { props }) {
     const colors = getTextBasedColors(props.text)
+
     return h('span', {
         class: [
           'chip',
-          (props.type && 'chip--type-' + props.type),
+          props.type && 'chip--type-' + props.type,
           props.mixClass
         ],
         style: props.type === 'auto' && {
@@ -54,7 +45,7 @@ export default {
           color: colors.text
         }
       },
-      [props.text, h('span', { staticClass: 'chip__hole' })]
+      props.text
     )
   }
 }
@@ -67,22 +58,15 @@ export default {
   align-items: center;
   line-height: 1;
   font-size: .7rem;
-  padding: 0 .5rem 0 1rem;
-  height: 1.2rem;
+  padding: 0 .7rem;
+  height: 1rem;
   border-radius: 10rem;
+  font-weight: 600;
   transition: background-color .3s var(--base-transition);
-  &__hole {
-    display: inline-block;
-    background-color: var(--color-background);
-    width: .5rem;
-    height: .5rem;
-    border-radius: 10rem;
-    margin-left: .5rem;
-  }
 
   &--type-primary {
-    background-color: var(--color-primary);
-    color: var(--color-background-contrast);
+    background-color: var(--color-primary-fade);
+    color: var(--color-primary);
   }
 }
 </style>
