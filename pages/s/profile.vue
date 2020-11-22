@@ -19,7 +19,7 @@
             size="6rem"
           />
           <v-button
-            type="black"
+            type="dark"
             :icon="['fas', 'edit']"
             rounded
             @click="edit"
