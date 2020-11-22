@@ -22,14 +22,14 @@
       </div>
     </div>
 
-    <div class="idea__param mb-2">
+    <div class="idea__param w-100 mb-2">
       <div class="idea__param-name"> дата создания </div>
       <div class="idea__param-value">
         {{ publishDate | toLocaleDateTime($i18n.locale) }}
       </div>
     </div>
 
-    <div class="idea__param">
+    <div class="idea__param w-100">
       <div class="idea__param-name"> описание </div>
       <div class="idea__param-value idea__description">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -38,9 +38,9 @@
 
     <div
       v-if="specialists.length || technologies.length || languages.length"
-      class="d-flex"
+      class="d-flex flex-wrap"
     >
-      <div v-if="specialists.length" class="idea__param w-100 mt-3">
+      <div v-if="specialists.length" class="idea__param mt-3">
         <div class="idea__param-name mb-1"> Специалисты </div>
         <div class="idea__param-value">
           <span
@@ -53,7 +53,7 @@
         </div>
       </div>
 
-      <div v-if="technologies.length" class="idea__param w-100 mt-3">
+      <div v-if="technologies.length" class="idea__param mt-3">
         <div class="idea__param-name mb-1"> Технологии </div>
         <div class="idea__param-value">
           <span
@@ -66,7 +66,7 @@
         </div>
       </div>
 
-      <div v-if="languages.length" class="idea__param w-100 mt-3">
+      <div v-if="languages.length" class="idea__param mt-3">
         <div class="idea__param-name mb-1"> Языки программирования </div>
         <div class="idea__param-value">
           <span
@@ -119,7 +119,10 @@ export default {
   computed: {
     languages() {
       return this.specialists.length
-        ? this.specialists.reduce((acc, spec) => spec.languages, [])
+        ? this.specialists.reduce((acc, spec) => {
+            spec.languages.forEach(lang => acc.push(lang))
+            return acc
+          }, [])
         : [];
     },
     technologies() {
@@ -145,6 +148,11 @@ export default {
     font-size: 1rem !important;
     line-height: 1.1;
     font-weight: 300 !important;
+  }
+
+  &__param {
+    min-width: 33%;
+    width: max-content;
   }
 
   &__param-name {
