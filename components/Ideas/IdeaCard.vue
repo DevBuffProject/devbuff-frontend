@@ -1,25 +1,86 @@
 <template>
-  <div class="idea">
+  <div
+    class="idea"
+    @mouseover="hover = true"
+    @mouseout="hover = false"
+  >
     <div class="d-flex align-items-center justify-content-between mb-3">
-      <nuxt-link to="/" class="idea__link">
-        {{ title }}
-      </nuxt-link>
+      <div class="d-flex align-items-center">
+        <v-link
+          :to="localePath({
+            name: 's-ideas-id',
+            params: { id }
+          })"
+          :class="['idea__link', hover && 'idea__link--hover']"
+        >
+          {{ title }}
+        </v-link>
+        <v-icon
+          :icon="['fas', 'long-arrow-alt-right']"
+          :class="['ml-2', 'idea__link-icon', hover && 'idea__link-icon--hover']"
+        />
+      </div>
     </div>
 
-    <div class="idea__description mb-3">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aliquid corporis debitis doloremque, error
-      exercitationem, fugit harum ipsum iure libero magnam minus molestiae optio quis rem repellat repellendus. Numquam,
-      suscipit.
+    <div class="idea__param mb-2">
+      <div class="idea__param-name"> дата создания </div>
+      <div class="idea__param-value">
+        {{ publishDate | toLocaleDateTime($i18n.locale) }}
+      </div>
     </div>
 
-    <div class="d-flex justify-content-between w-100 idea__languages">
-      <v-chip
-        v-for="(lang, key) in languages"
-        :key="lang + key"
-        :text="$t('languages.' + lang)"
-        class="mr-2"
-        type="auto"
-      />
+    <div class="idea__param">
+      <div class="idea__param-name"> описание </div>
+      <div class="idea__param-value idea__description">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </div>
+    </div>
+
+    <div
+      v-if="specialists.length || technologies.length || languages.length"
+      class="d-flex"
+    >
+      <div v-if="specialists.length" class="idea__param w-100 mt-3">
+        <div class="idea__param-name mb-1"> Специалисты </div>
+        <div class="idea__param-value">
+          <span
+            v-for="(spec, key) in specialists"
+            :key="spec.name + key"
+            class="mr-2"
+          >
+            <v-chip :text="spec.name" />
+          </span>
+        </div>
+      </div>
+
+      <div v-if="technologies.length" class="idea__param w-100 mt-3">
+        <div class="idea__param-name mb-1"> Технологии </div>
+        <div class="idea__param-value">
+          <span
+            v-for="(tech, key) in technologies"
+            :key="tech.name + key"
+            class="mr-2"
+          >
+            <v-chip :text="tech" />
+          </span>
+        </div>
+      </div>
+
+      <div v-if="languages.length" class="idea__param w-100 mt-3">
+        <div class="idea__param-name mb-1"> Языки программирования </div>
+        <div class="idea__param-value">
+          <span
+            v-for="(lang, key) in languages"
+            :key="lang.name + key"
+            class="mr-2"
+          >
+            <v-chip
+              :text="$t('languages.' + lang.name)"
+              :type="hover ? 'auto' : null"
+            />
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -29,6 +90,14 @@ export default {
   name: 'v-idea-card',
 
   props: {
+    id: {
+      type: [ String, Number ],
+      required: true
+    },
+    publishDate: {
+      type: String,
+      required: true
+    },
     title: {
       type: String,
       required: true
@@ -39,15 +108,24 @@ export default {
     },
     specialists: {
       type: Array,
-      required: true
+      default: () => []
     },
   },
 
+  data: () => ({
+    hover: false
+  }),
+
   computed: {
     languages() {
-      const { specialists } = this
-
-      return specialists !== undefined ? specialists.reduce((acc, spec) => spec.languages.map(lang => lang.name), []) : [];
+      return this.specialists.length
+        ? this.specialists.reduce((acc, spec) => spec.languages, [])
+        : [];
+    },
+    technologies() {
+      return this.languages.length
+        ? this.languages.reduce((acc, lang) => lang.technologies.map(tech => tech.name), [])
+        : [];
     }
   }
 }
@@ -56,34 +134,70 @@ export default {
 <style lang="scss" scoped>
 .idea {
   position: relative;
+  padding: 1rem 1rem 1.5rem;
   transition: box-shadow .3s var(--base-transition);
 
   &:hover {
     box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, .1);
   }
 
+  &__description {
+    font-size: 1rem !important;
+    line-height: 1.1;
+    font-weight: 300 !important;
+  }
+
+  &__param-name {
+    font-size: .7rem;
+    font-weight: 400;
+    opacity: .5;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__param-value {
+    font-size: .8rem;
+    font-weight: 400;
+  }
+
   &__link {
     text-decoration: none;
     color: var(--color-black);
     border-bottom: 1px solid var(--color-black-fade);
-    opacity: .65;
-    transition: border-bottom-color 0.3s var(--base-transition);
+    font-size: 1.1rem;
+    opacity: .5;
+    transition: .3s var(--base-transition);
     transition-property: opacity, border-bottom-color, color;
 
-    &:hover {
-      color: var(--color-primary);
-      border-bottom-color: var(--color-primary-tint);
-      opacity: 1;
-    }
-
-    &:after {
+    &:after, &:before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      z-index: 999;
     }
+  }
+
+  &__link--hover {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary-tint);
+    opacity: 1;
+  }
+
+  &__link-icon {
+    color: var(--color-black);
+    opacity: .1;
+    transition: .3s var(--base-transition);
+    transition-property: transform, opacity, color;
+  }
+
+   &__link-icon--hover {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary-tint);
+    transform: translateX(5px);
+    opacity: .5;
   }
 
   &__languages {

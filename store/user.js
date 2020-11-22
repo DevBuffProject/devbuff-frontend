@@ -12,7 +12,6 @@ export const actions = {
   },
 
   async getProfile({ commit }) {
-    console.log('profile');
     const { API_BASE_URL } = this.$config
     const profile = await this.$api.v1.get('profile')
 
