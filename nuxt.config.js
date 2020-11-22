@@ -38,7 +38,7 @@ const config = {
     { src: '~/plugins/api.js' },
     { src: '~/plugins/sentry.js' },
     { src: '~/plugins/fontawesome.js' },
-    { src: '~/plugins/ui-installer.js', mode: 'client' },
+    { src: '~/plugins/ui-setup.js' },
   ],
 
    modules: [

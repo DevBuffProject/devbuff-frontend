@@ -3,7 +3,7 @@
     <v-toolbar class="mb-4">
       <div class="container toolbar__grid">
         <div class="d-flex">
-          <h3 class="m-0"> {{ $t('page.ideas.explore.ideas') }} </h3>
+          <h3 class="m-0"> {{ $t('page.dashboard.title') }} </h3>
         </div>
         <div>
           <nuxt-link :to="localePath({ name: 's-ideas-editor' })">
@@ -16,12 +16,20 @@
     </v-toolbar>
 
     <div class="container">
-       <div style="width: 500px;">
-         <v-ideas-list
-          v-if="ideas.length > 0"
-          :ideas="ideas"
-        />
-        <v-card
+      <v-card style="width: 500px;">
+        <div v-if="ideas" class="dashboard__ideas">
+          <v-idea-card
+            v-for="idea in ideas"
+            :key="idea.id"
+            :title="idea.name"
+            :publishDate="idea.publishDate || idea.datePublished"
+            :description="idea.description"
+            :specialists="idea.specialists"
+            :id="idea.id"
+            class="dashboard__idea"
+          />
+        </div>
+        <div
           v-else
           class="d-flex flex-column align-items-center"
         >
@@ -34,8 +42,8 @@
               {{ $t('page.ideas.explore.new') }}
             </v-button>
           </nuxt-link>
-        </v-card>
-       </div>
+        </div>
+      </v-card>
     </div>
   </div>
 </template>
@@ -57,4 +65,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.dashboard {
+  &__ideas {
+    margin: -2rem;
+    padding: 1rem 1rem;
+    &:not(:last-of-type) {
+      margin-bottom: 0rem;
+    }
+  }
+
+  &__idea {
+    border-bottom: 1px solid var(--color-muted-accent);
+  }
+}
 </style>

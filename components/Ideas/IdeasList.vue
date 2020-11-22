@@ -5,8 +5,10 @@
         v-for="idea in ideas"
         :key="idea.id"
         :title="idea.name"
+        :publishDate="idea.publishDate || idea.datePublished"
         :description="idea.description"
         :specialists="idea.specialists"
+        :id="idea.id"
         class="ideas__idea"
       />
     </div>
@@ -22,17 +24,12 @@ export default {
       type: Array,
       required: true,
     }
-  },
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .ideas {
-  &__idea {
-    margin: -1rem;
-    margin-bottom: 1rem;
-    padding: 1rem 1rem 0;
-    border-bottom: 1px solid var(--color-muted-accent);
-  }
+
 }
 </style>
