@@ -17,13 +17,15 @@
 
     <div class="container">
       <div class="explore__filter mb-3">
-        <div class="explore__filter-actions">
-          <v-button
-            type="flat-primary"
-            :icon="['fas', 'sliders-h']"
-          >
-            {{ $t('page.ideas.explore.advancedSearch') }}
-          </v-button>
+        <div class="explore__filter-sort">
+          <v-switcher
+            :values="[
+              { title: 'по дате публикации', value: 'date' },
+              { title: 'по дате обновления', value: 'lastUpdate' }
+            ]"
+            :value="filter.sortBy"
+            @change="applyFilter({ sortBy: $event })"
+          />
         </div>
       </div>
 
@@ -73,18 +75,25 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  async middleware({ store }) {
-    await store.dispatch('ideas/getIdeas')
+  async middleware({ store, route }) {
+    const filter = route.query
+
+    await store.dispatch('ideas/getIdeas', filter)
   },
 
-  data: () => ({
-    moreLoading: false,
-    noMoreLoaded: false,
-    filter: {
-      page: 1,
-      sortBy: 'date'
+  data() {
+    const filter = this.$route.query
+
+    return {
+      moreLoading: false,
+      noMoreLoaded: false,
+      filter: {
+        page: 1,
+        sortBy: 'date',
+        ...filter,
+      }
     }
-  }),
+  },
 
   computed: {
     ...mapGetters({
@@ -93,11 +102,28 @@ export default {
   },
 
   methods: {
+    async applyFilter(filter = {}) {
+      const newFilter = this.filter = {
+        ...this.filter,
+        ...filter,
+      }
+
+
+      this.$router.push({
+        ...this.$route,
+        query: {
+          ...this.$route.query,
+          ...newFilter
+        }
+      })
+
+      // return await this.loadIdeas()
+    },
     async loadMore() {
       this.filter.page++
       this.moreLoading = true
 
-      let ideas = await this.$store.dispatch('ideas/getIdeas', this.filter)
+      let ideas = await this.loadIdeas()
 
       if (ideas.length === 0) {
         this.filter.page++
@@ -106,6 +132,14 @@ export default {
       }
 
       this.moreLoading = false
+    },
+    async loadIdeas() {
+      try {
+        this.$nuxt.$loading.start()
+        return await this.$store.dispatch('ideas/getIdeas', this.filter)
+      } finally {
+        this.$nuxt.$loading.finish()
+      }
     }
   },
 }
