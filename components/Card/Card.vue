@@ -1,8 +1,7 @@
 <template>
   <div
-    :class="[
-      'card'
-    ]"
+    class="card"
+    v-on="$listeners"
   >
     <div
       v-if="$slots.header"
