@@ -58,7 +58,9 @@ export default {
       if (!button) return false
 
       const width = button.offsetWidth
-      const left = button.offsetLeft
+      const left = button.offsetLeft > 0
+        ? button.offsetLeft - 1
+        : button.offsetLeft
 
       highlight.style.width = `${width}px`
       highlight.style.transform = `translateX(${left}px)`
@@ -85,7 +87,7 @@ export default {
     font-size: .8rem;
     cursor: pointer;
     z-index: 10;
-    transition: transform .5s var(--base-transition);
+    transition: transform 1s var(--base-transition);
   }
 
   &__button:active {
@@ -96,6 +98,7 @@ export default {
     position: absolute;
     background-color: var(--color-background-contrast);
     height: 100%;
+    width: 0px;
     top: 0;
     width: 50%;
     border-radius: 5px;

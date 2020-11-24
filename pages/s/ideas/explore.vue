@@ -109,7 +109,7 @@ export default {
       }
 
 
-      this.$router.push({
+      this.$router.replace({
         ...this.$route,
         query: {
           ...this.$route.query,
@@ -117,7 +117,7 @@ export default {
         }
       })
 
-      // return await this.loadIdeas()
+      return await this.loadIdeas()
     },
     async loadMore() {
       this.filter.page++
