@@ -328,7 +328,7 @@ export default {
     },
     dashboard: {
       title: 'Персональная страница',
-      noIdeas: 'У вас нет ни одной идеи'
+      noIdeas: 'Идей не найдено'
     },
     ideas: {
       explore: {

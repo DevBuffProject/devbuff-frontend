@@ -1,88 +1,144 @@
 <template>
-  <div
+  <v-card
     class="idea"
     @mouseover="hover = true"
     @mouseout="hover = false"
   >
-    <div class="d-flex align-items-center justify-content-between mb-3">
-      <div class="d-flex align-items-center">
-        <v-link
-          :to="localePath({
-            name: 's-ideas-id',
-            params: { id }
-          })"
-          :class="['idea__link', hover && 'idea__link--hover']"
-        >
-          {{ title }}
-        </v-link>
-        <v-icon
-          :icon="['fas', 'long-arrow-alt-right']"
-          :class="['ml-2', 'idea__link-icon', hover && 'idea__link-icon--hover']"
-        />
-      </div>
-    </div>
+    <client-only>
+      <div slot="placeholder">
+        <div class="idea__param w-100 mb-2">
+          <div class="idea__param-name"> название </div>
+          <div class="idea__param-value">
+            <div class="d-flex align-items-center mb-3">
+              <v-skeleton style="height: 20px; width: 200px;" />
+            </div>
+          </div>
+        </div>
 
-    <div class="idea__param w-100 mb-2">
-      <div class="idea__param-name"> дата создания </div>
-      <div class="idea__param-value">
-        {{ publishDate | toLocaleDateTime($i18n.locale) }}
-      </div>
-    </div>
+        <div class="idea__param w-100 mb-2">
+          <div class="idea__param-name"> дата создания </div>
+          <div class="idea__param-value">
+            <v-skeleton style="width: 200px;" />
+          </div>
+        </div>
 
-    <div class="idea__param w-100">
-      <div class="idea__param-name"> описание </div>
-      <div class="idea__param-value idea__description">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </div>
-    </div>
+        <div class="idea__param w-100">
+          <div class="idea__param-name"> описание </div>
+          <div class="idea__param-value">
+            <v-skeleton-paragraph :rows="4" />
+          </div>
+        </div>
 
-    <div
-      v-if="specialists.length || technologies.length || languages.length"
-      class="d-flex flex-wrap"
-    >
-      <div v-if="specialists.length" class="idea__param mt-3">
-        <div class="idea__param-name mb-1"> Специалисты </div>
-        <div class="idea__param-value">
-          <span
-            v-for="(spec, key) in specialists"
-            :key="spec.name + key"
-            class="mr-2"
-          >
-            <v-chip :text="spec.name" />
-          </span>
+        <div class="d-flex flex-wrap">
+          <div class="idea__param mt-3">
+            <div class="idea__param-name mb-1"> Специалисты </div>
+            <div class="idea__param-value">
+              <v-skeleton style="width: 50px;" />
+            </div>
+          </div>
+
+          <div class="idea__param mt-3">
+            <div class="idea__param-name mb-1"> Технологии </div>
+            <div class="idea__param-value">
+              <v-skeleton style="width: 50px;" />
+            </div>
+          </div>
+
+          <div class="idea__param mt-3">
+            <div class="idea__param-name mb-1"> Языки программирования </div>
+            <div class="idea__param-value">
+              <v-skeleton style="width: 50px;" />
+            </div>
+          </div>
         </div>
       </div>
 
-      <div v-if="technologies.length" class="idea__param mt-3">
-        <div class="idea__param-name mb-1"> Технологии </div>
+
+      <div class="idea__param w-100 mb-2">
+        <div class="idea__param-name"> название </div>
         <div class="idea__param-value">
-          <span
-            v-for="(tech, key) in technologies"
-            :key="tech.name + key"
-            class="mr-2"
-          >
-            <v-chip :text="tech" />
-          </span>
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <div class="d-flex align-items-center">
+              <v-link
+                :to="localePath({
+                  name: 's-ideas-id',
+                  params: { id }
+                })"
+                :class="['idea__link', hover && 'idea__link--hover']"
+              >
+                {{ title }}
+              </v-link>
+              <v-icon
+                :icon="['fas', 'long-arrow-alt-right']"
+                :class="['ml-2', 'idea__link-icon', hover && 'idea__link-icon--hover']"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
-      <div v-if="languages.length" class="idea__param mt-3">
-        <div class="idea__param-name mb-1"> Языки программирования </div>
+      <div class="idea__param w-100 mb-2">
+        <div class="idea__param-name"> дата создания </div>
         <div class="idea__param-value">
-          <span
-            v-for="(lang, key) in languages"
-            :key="lang.name + key"
-            class="mr-2"
-          >
-            <v-chip
-              :text="$t('languages.' + lang.name)"
-              :type="hover ? 'auto' : null"
-            />
-          </span>
+          {{ publishDate | toLocaleDateTime($i18n.locale) }}
         </div>
       </div>
-    </div>
-  </div>
+
+      <div class="idea__param w-100">
+        <div class="idea__param-name"> описание </div>
+        <div class="idea__param-value idea__description">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </div>
+      </div>
+
+      <div
+        v-if="specialists.length || technologies.length || languages.length"
+        class="d-flex flex-wrap"
+      >
+        <div v-if="specialists.length" class="idea__param mt-3">
+          <div class="idea__param-name mb-1"> Специалисты </div>
+          <div class="idea__param-value">
+            <span
+              v-for="(spec, key) in specialists"
+              :key="spec.name + key"
+              class="mr-2"
+            >
+              <v-chip :text="spec.name" />
+            </span>
+          </div>
+        </div>
+
+        <div v-if="technologies.length" class="idea__param mt-3">
+          <div class="idea__param-name mb-1"> Технологии </div>
+          <div class="idea__param-value">
+            <span
+              v-for="(tech, key) in technologies"
+              :key="tech.name + key"
+              class="mr-2"
+            >
+              <v-chip :text="tech" />
+            </span>
+          </div>
+        </div>
+
+        <div v-if="languages.length" class="idea__param mt-3">
+          <div class="idea__param-name mb-1"> Языки программирования </div>
+          <div class="idea__param-value">
+            <span
+              v-for="(lang, key) in languages"
+              :key="lang.name + key"
+              class="mr-2"
+            >
+              <v-chip
+                :text="$t('languages.' + lang.name)"
+                :type="hover ? 'auto' : null"
+              />
+            </span>
+          </div>
+        </div>
+      </div>
+    </client-only>
+  </v-card>
 </template>
 
 <script>

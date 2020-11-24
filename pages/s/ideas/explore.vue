@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <v-card style="width: 500px;">
+      <div style="width: 500px;">
         <div v-if="ideas" class="explore__ideas">
           <v-idea-card
             v-for="idea in ideas"
@@ -51,19 +51,19 @@
         </div>
         <div
           v-else
-          class="p-4 d-flex justify-content-center"
+          class="p-4 d-flex align-items-center flex-column"
         >
-          🤷
-          <span class="text-muted"> больше идей нет </span>
-          <v-link
+          <span class="text-muted"> 🤷 больше идей нет </span>
+          <nuxt-link
             :to="localePath({ name: 's-ideas-editor' })"
-            :icon="['fas', 'plus']"
-            class="ml-2"
+            class="mt-3"
           >
-            {{ $t('page.ideas.explore.new') }}
-          </v-link>
+            <v-button type="muted" :icon="['fas', 'plus']">
+              {{ $t('page.ideas.explore.new') }}
+            </v-button>
+          </nuxt-link>
         </div>
-      </v-card>
+      </div>
 
     </div>
   </div>
@@ -114,15 +114,9 @@ export default {
 <style lang="scss" scoped>
 .explore {
   &__ideas {
-    margin: -2rem;
-    padding: 1rem 1rem;
     &:not(:last-of-type) {
-      margin-bottom: 0rem;
+      margin-bottom: 2rem;
     }
-  }
-
-  &__idea {
-    border-bottom: 1px solid var(--color-muted-accent);
   }
 
   &__more {

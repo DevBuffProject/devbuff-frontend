@@ -1,3 +1,5 @@
+import { uniqBy } from 'lodash'
+
 export const state = () => ({
   list: [],
   own: [],
@@ -17,6 +19,7 @@ export const actions = {
 
     return ideas
   },
+
   async getIdeas({ commit, state }, params) {
     const finalParams = {
       page: 1,
@@ -28,10 +31,11 @@ export const actions = {
     Object.keys(finalParams).forEach(param => query.append(param, finalParams[param]));
 
     const ideas = await this.$api.v1.get(`/idea/?${query}`)
-    commit('setIdeas', new Set([ ...state.list, ...ideas ]))
+    commit('setIdeas', uniqBy([ ...state.list, ...ideas ], 'id'))
 
     return ideas
   },
+
   async getIdea({ commit }, uuid) {
     const idea = await this.$api.v1.get(`/idea/${uuid}`)
     commit('setIdea', idea)
