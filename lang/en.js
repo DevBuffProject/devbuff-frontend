@@ -311,7 +311,7 @@ export default {
     },
     dashboard: {
       title: 'Dashboard',
-      noIdeas: 'You have no ideas'
+      noIdeas: 'No ideas'
     },
     ideas: {
       explore: {

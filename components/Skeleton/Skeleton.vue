@@ -14,7 +14,7 @@ export default {
   props: {
     figure: {
       type: String,
-      default: 'square',
+      default: 'line',
       validate: (v) => ['square', 'circle', 'line'].includes(v)
     }
   }
@@ -29,6 +29,7 @@ export default {
   width: 40px;
   flex: 0 0 40px;
   height: 40px;
+  opacity: .8;
   overflow: hidden;
 
   &:after {
