@@ -6,7 +6,10 @@
       :key="button.value"
       ref="button"
       @click="setValue(index)"
-      class="v-switcher__button"
+      :class="[
+        'v-switcher__button',
+        activeIndex !== index && 'muted-text'
+      ]"
     >
       {{ button.title }}
     </div>
@@ -33,6 +36,10 @@ export default {
     }
   },
 
+  data: () => ({
+    activeIndex: 0
+  }),
+
   watch: {
     value: {
       handler() {
@@ -45,6 +52,9 @@ export default {
     setValue(index) {
       const value = this.values[index] && this.values[index].value
 
+      if (value === this.value)
+
+      this.activeIndex = index
       this.computeHighlightStyles()
       this.$emit('change', value)
     },
@@ -56,6 +66,8 @@ export default {
       const button = this.$refs.button[activeIndex]
 
       if (!button) return false
+
+      this.activeIndex = activeIndex
 
       const width = button.offsetWidth
       const left = button.offsetLeft > 0
@@ -69,6 +81,7 @@ export default {
 
   mounted() {
     this.computeHighlightStyles()
+    setTimeout(() => this.$refs.highlight.style.opacity = 1, 300)
   }
 }
 </script>
@@ -85,6 +98,7 @@ export default {
     position: relative;
     padding: .2rem 1rem;
     font-size: .8rem;
+    font-weight: 400;
     cursor: pointer;
     z-index: 10;
     transition: transform 1s var(--base-transition);
@@ -100,12 +114,12 @@ export default {
     height: 100%;
     width: 0px;
     top: 0;
-    width: 50%;
+    opacity: 0;
     border-radius: 5px;
     border: 1px solid var(--color-muted-accent);
     box-sizing: border-box;
     transition: .3s var(--base-transition);
-    transition-property: transform, width;
+    transition-property: transform, width, opacity;
     z-index: 9;
   }
 }
