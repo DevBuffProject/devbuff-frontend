@@ -30,11 +30,10 @@ export default {
     background-color: var(--color-background-contrast);
     padding: 1rem;
     border-radius: 4px;
-    box-shadow: var(--box-shadow);
+    // box-shadow: var(--box-shadow);
     border: 1px solid var(--color-muted-accent);
     border-bottom: 1px solid var(--color-muted);
-    // box-shadow: 0 1px 1px 0 var(--color-muted);
-    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 1px 0 var(--color-muted);
 
     &__header {
       display: flex;
