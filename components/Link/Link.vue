@@ -5,6 +5,7 @@
       :class="[
         'link'
       ]"
+      exact
       :activeClass="activeClass"
       :exactActiveClass="exactActiveClass"
     >
