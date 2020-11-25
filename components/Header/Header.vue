@@ -20,7 +20,7 @@
             class="text header__link"
             active-class="header__link--active"
             type="muted"
-            :to="localePath({ name: 's-ideas-explore' })"
+            :to="localePath({ name: 's-ideas' })"
             :icon="['fas', 'lightbulb']"
           >
             {{  $t('components.header.ideas')  }}

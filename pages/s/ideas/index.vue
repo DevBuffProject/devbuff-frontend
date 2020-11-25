@@ -19,14 +19,14 @@
       <div class="explore__filter mb-3">
         <div class="mb-4">
           <div class="d-flex">
-            <v-label name="специальности" class="mr-4">
+            <v-label :name="'специальности — '+ specs.length" class="mr-4">
               <span
                 :class="[
                   'mr-2',
                   'explore__filter-label',
                   !filter.specialists && 'explore__filter-label--active',
                 ]"
-                @click="applyFilter({ specialists: '' })"
+                @click="excludeFilter(['specialists'])"
               >
                 <v-chip
                   text="все"
@@ -54,7 +54,7 @@
               </span>
             </v-label>
 
-            <v-label name="языки программирования">
+            <v-label :name="'языки программирования — ' + langs.length">
               <span
                 v-for="lang in langs"
                 :key="lang"
@@ -70,7 +70,7 @@
           <v-switcher
             :values="[
               { title: 'по дате публикации', value: 'date' },
-              { title: 'по дате обновления', value: 'lastUpdate' }
+              { title: 'по дате последнего обновления', value: 'lastUpdate' }
             ]"
             :value="filter.sortBy"
             @change="applyFilter({ sortBy: $event })"
@@ -81,23 +81,28 @@
         </div>
       </div>
 
-      <div v-if="ideas" class="explore__ideas">
-        <nuxt-link
-          v-for="idea in ideas"
-          tag="div"
-          :key="idea.id"
-          :to="localePath({ name: 's-ideas-id', params: { id: idea.id } })"
-        >
-          <v-idea-card
-            :title="idea.name"
-            :publishDate="idea.publishDate || idea.datePublished"
-            :description="idea.description"
-            :specialists="idea.specialists"
-            :id="idea.id"
-            class="explore__idea"
-          />
-        </nuxt-link>
-      </div>
+      <transition name="fade">
+        <div v-if="ideas.length" class="explore__ideas">
+          <nuxt-link
+            v-for="idea in ideas"
+            tag="div"
+            :key="idea.id"
+            :to="localePath({ name: 's-ideas-id', params: { id: idea.id } })"
+          >
+            <v-idea-card
+              :title="idea.name"
+              :publishDate="idea.publishDate || idea.datePublished"
+              :description="idea.description"
+              :specialists="idea.specialists"
+              :id="idea.id"
+              class="explore__idea"
+            />
+          </nuxt-link>
+        </div>
+        <div v-else class="p-5 explore__no-ideas">
+          🤷 <span class="muted-text"> Ничего не найдено </span>
+        </div>
+      </transition>
 
     </div>
   </div>
@@ -134,6 +139,10 @@ export default {
   },
 
   methods: {
+    async excludeFilter(filters) {
+      filters.forEach(filter => delete this.filter[filter])
+      return await this.applyFilter()
+    },
     async applyFilter(filter = {}) {
       const newFilter = this.filter = {
         ...this.filter,
@@ -144,10 +153,7 @@ export default {
 
       this.$router.replace({
         ...this.$route,
-        query: {
-          ...this.$route.query,
-          ...newFilter
-        }
+        query: newFilter
       })
     },
     async loadMore() {
@@ -196,7 +202,7 @@ export default {
   }
 
   &__filter-label {
-    opacity: .5;
+    opacity: .6;
     cursor: pointer;
     transition: opacity .3s var(--base-transition);
   }
@@ -217,12 +223,9 @@ export default {
     cursor: pointer;
   }
 
-  &__more {
-    color: var(--color-primary);
-    cursor: pointer;
-    &:hover {
-      text-decoration: underline;
-    }
+  &__no-ideas {
+    font-size: 1.5rem;
+    font-weight: 100;
   }
 }
 </style>

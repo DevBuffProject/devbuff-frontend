@@ -24,7 +24,7 @@ export const getters = {
       return acc
     }, [])
 
-    return new Set(specs)
+    return Array.from(new Set(specs))
   },
   languages: state => {
     const langs = state.skills.reduce((acc, lang) => {
@@ -32,7 +32,7 @@ export const getters = {
       return acc
     }, [])
 
-    return new Set(langs)
+    return Array.from(new Set(langs))
   },
 }
 
