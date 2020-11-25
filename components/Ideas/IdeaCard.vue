@@ -80,10 +80,7 @@
             :key="lang.name + key"
             class="mr-2"
           >
-            <v-chip
-              :text="$t('languages.' + lang.name)"
-              :type="hover ? 'auto' : null"
-            />
+            <v-chip :text="lang.name" :type="hover ? 'auto' : null" />
           </span>
         </v-label>
 

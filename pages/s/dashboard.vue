@@ -31,16 +31,21 @@
         class="dashboard__ideas"
         style="width: 500px;"
       >
-        <v-idea-card
+        <nuxt-link
           v-for="idea in ideas"
+          tag="div"
           :key="idea.id"
-          :title="idea.name"
-          :publishDate="idea.publishDate || idea.datePublished"
-          :description="idea.description"
-          :specialists="idea.specialists"
-          :id="idea.id"
-          class="dashboard__idea"
-        />
+          :to="localePath({ name: 's-ideas-id', params: { id: idea.id } })"
+        >
+          <v-idea-card
+            :title="idea.name"
+            :publishDate="idea.publishDate || idea.datePublished"
+            :description="idea.description"
+            :specialists="idea.specialists"
+            :id="idea.id"
+            class="dashboard__idea"
+          />
+        </nuxt-link>
       </div>
       <div
         v-else
