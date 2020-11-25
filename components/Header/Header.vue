@@ -2,14 +2,11 @@
   <header class="header">
     <div class="header__container container">
       <div class="header__section">
-        <nuxt-link
-          v-for="locale in availableLocales"
-          :key="locale.code"
-          :to="switchLocalePath(locale.code)"
-          class="header__locale-link"
-        >
-          {{ locale.name }}
-        </nuxt-link>
+        <v-switcher
+          :values="availableLocales"
+          :value="locale"
+          @change="setLocale"
+        />
       </div>
       <div class="header__section d-flex justify-content-center">
         <v-logo />
@@ -49,12 +46,28 @@
 export default {
   name: 'v-header',
 
+  data() {
+    return {
+      locale: this.$i18n.locale
+    }
+  },
+
   computed: {
     avatar() {
       return this.$store.getters['user/profile'].avatar
     },
     availableLocales () {
-      return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale)
+      return this.$i18n.locales.map(locale => ({
+        title: locale.name,
+        value: locale.code
+      }))
+    }
+  },
+
+  methods: {
+    async setLocale(locale) {
+      await this.$i18n.setLocale(locale)
+      this.locale = locale
     }
   }
 }

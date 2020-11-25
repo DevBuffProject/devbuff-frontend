@@ -6,6 +6,7 @@
       'v-btn--type-' + type,
       rounded && 'v-btn--rounded',
       disabled && 'v-btn--disabled',
+      loading && 'v-btn--loading'
     ]"
     :disabled="disabled"
   >
@@ -76,8 +77,7 @@ export default {
         height: 100%;
         content: "";
         opacity: 1;
-        transition-property: opacity;
-        transition: .15s var(--base-transition);
+        transition: opacity .3s var(--base-transition);
       }
 
       &:hover {
@@ -91,7 +91,7 @@ export default {
 
     &--type-flat-#{$name} {
       color: var(--color-#{$name});
-      transition: background-color .3s var(--base-transition);
+      transition: background-color .5s var(--base-transition);
       &:hover {
         background-color: var(--color-#{$name}-fade);
       }
@@ -119,8 +119,8 @@ export default {
   letter-spacing: 1px;
   overflow: hidden;
   outline: none;
-  transition: .3s var(--base-transition);
-  transition-property: background-color, box-shadow;
+  transition: .5s var(--base-transition);
+  transition-property: background-color, box-shadow, transform;
 
   @include button-type();
 
@@ -140,6 +140,24 @@ export default {
 
   &--rounded {
     border-radius: 50px;
+  }
+
+  &--loading {
+    background-image: linear-gradient(
+      -45deg,
+      
+      rgba(255, 255, 255, 0.15) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0.15) 75%,
+      transparent 75%
+    );
+    background-size: 2.5em 2.5em;
+    background-repeat: repeat-x;
+    animation: progress 0.7s linear infinite;
+
+    &::before { opacity: 0 }
   }
 
   &__content {
@@ -165,6 +183,15 @@ export default {
     &--nomargin {
       margin: 0;
     }
+  }
+}
+
+@keyframes progress {
+  0% {
+    background-position: 0px 0px;
+  }
+  100% {
+    background-position: 2.5em 0px;
   }
 }
 </style>
