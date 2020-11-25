@@ -20,7 +20,7 @@ export const actions = {
     return ideas
   },
 
-  async getIdeas({ commit, state }, params) {
+  async getIdeas({ commit, state }, params, rewrite) {
     const finalParams = {
       page: 1,
       sortBy: 'date',
@@ -31,7 +31,7 @@ export const actions = {
     Object.keys(finalParams).forEach(param => query.append(param, finalParams[param]));
 
     const ideas = await this.$api.v1.get(`/idea/?${query}`)
-    commit('setIdeas', uniqBy([ ...state.list, ...ideas ], 'id'))
+    commit('setIdeas', ideas)
 
     return ideas
   },

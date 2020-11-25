@@ -17,6 +17,55 @@
 
     <div class="container">
       <div class="explore__filter mb-3">
+        <div class="mb-4">
+          <div class="d-flex">
+            <v-label name="специальности" class="mr-4">
+              <span
+                :class="[
+                  'mr-2',
+                  'explore__filter-label',
+                  !filter.specialists && 'explore__filter-label--active',
+                ]"
+                @click="applyFilter({ specialists: '' })"
+              >
+                <v-chip
+                  text="все"
+                  :type="!filter.specialists ? 'auto' : null"
+                />
+              </span>
+
+              <span
+                v-for="spec in specs"
+                :key="spec"
+                :class="[
+                  'mr-2',
+                  'explore__filter-label',
+                  (filter.specialists && filter.specialists === spec) && 'explore__filter-label--active',
+                ]"
+                @click="applyFilter({ specialists: spec })"
+              >
+                <v-chip
+                  :text="spec"
+                  :type="filter.specialists && filter.specialists === spec
+                    ? 'auto'
+                    : null
+                  "
+                />
+              </span>
+            </v-label>
+
+            <v-label name="языки программирования">
+              <span
+                v-for="lang in langs"
+                :key="lang"
+                class="mr-2"
+              >
+                <v-chip :text="lang" />
+              </span>
+            </v-label>
+          </div>
+        </div>
+
         <div class="explore__filter-sort d-flex align-items-center">
           <v-switcher
             :values="[
@@ -50,29 +99,6 @@
         </nuxt-link>
       </div>
 
-      <div
-        v-if="!noMoreLoaded"
-        class="d-flex justify-content-center align-items-center p-3 mt-3 explore__more"
-        @click="loadMore"
-      >
-        <span v-show="!moreLoading">загрузить еще</span>
-        <v-loading v-show="moreLoading" />
-      </div>
-      <div
-        v-else
-        class="p-3 d-flex align-items-center flex-column"
-      >
-        <span class="text-muted"> 🤷 больше идей нет </span>
-        <nuxt-link
-          :to="localePath({ name: 's-ideas-editor' })"
-          class="mt-3"
-        >
-          <v-button type="muted" :icon="['fas', 'plus']">
-            {{ $t('page.ideas.explore.new') }}
-          </v-button>
-        </nuxt-link>
-      </div>
-
     </div>
   </div>
 </template>
@@ -83,6 +109,7 @@ import { mapGetters } from 'vuex'
 export default {
   async middleware({ store, route }) {
     await store.dispatch('ideas/getIdeas', route.query)
+    await store.dispatch('skills/getSkills')
   },
 
   data() {
@@ -100,7 +127,9 @@ export default {
 
   computed: {
     ...mapGetters({
-      ideas: 'ideas/list'
+      ideas: 'ideas/list',
+      langs: 'skills/languages',
+      specs: 'skills/specializations'
     })
   },
 
@@ -161,10 +190,25 @@ export default {
 
 <style lang="scss" scoped>
 .explore {
+  &__filter {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  &__filter-label {
+    opacity: .5;
+    cursor: pointer;
+    transition: opacity .3s var(--base-transition);
+  }
+  &__filter-label:hover,
+  &__filter-label--active {
+    opacity: 1
+  }
+
   &__ideas {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 1rem;
+    grid-gap: .5rem;
   }
 
   &__idea {
