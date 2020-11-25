@@ -17,7 +17,7 @@
 
     <div class="container">
       <div class="explore__filter mb-3">
-        <div class="explore__filter-sort">
+        <div class="explore__filter-sort d-flex align-items-center">
           <v-switcher
             :values="[
               { title: 'по дате публикации', value: 'date' },
@@ -26,14 +26,20 @@
             :value="filter.sortBy"
             @change="applyFilter({ sortBy: $event })"
           />
+          <transition name="fade">
+            <v-loading v-show="loading" class="ml-4 muted" />
+          </transition>
         </div>
       </div>
 
-      <div style="width: 500px;">
-        <div v-if="ideas" class="explore__ideas">
+      <div v-if="ideas" class="explore__ideas">
+        <nuxt-link
+          v-for="idea in ideas"
+          tag="div"
+          :key="idea.id"
+          :to="localePath({ name: 's-ideas-id', params: { id: idea.id } })"
+        >
           <v-idea-card
-            v-for="idea in ideas"
-            :key="idea.id"
             :title="idea.name"
             :publishDate="idea.publishDate || idea.datePublished"
             :description="idea.description"
@@ -41,30 +47,30 @@
             :id="idea.id"
             class="explore__idea"
           />
-        </div>
+        </nuxt-link>
+      </div>
 
-        <div
-          v-if="!noMoreLoaded"
-          class="d-flex justify-content-center align-items-center explore__more"
-          @click="loadMore"
+      <div
+        v-if="!noMoreLoaded"
+        class="d-flex justify-content-center align-items-center p-3 mt-3 explore__more"
+        @click="loadMore"
+      >
+        <span v-show="!moreLoading">загрузить еще</span>
+        <v-loading v-show="moreLoading" />
+      </div>
+      <div
+        v-else
+        class="p-3 d-flex align-items-center flex-column"
+      >
+        <span class="text-muted"> 🤷 больше идей нет </span>
+        <nuxt-link
+          :to="localePath({ name: 's-ideas-editor' })"
+          class="mt-3"
         >
-          <span v-show="!moreLoading">загрузить еще</span>
-          <v-loading v-show="moreLoading" />
-        </div>
-        <div
-          v-else
-          class="p-4 d-flex align-items-center flex-column"
-        >
-          <span class="text-muted"> 🤷 больше идей нет </span>
-          <nuxt-link
-            :to="localePath({ name: 's-ideas-editor' })"
-            class="mt-3"
-          >
-            <v-button type="muted" :icon="['fas', 'plus']">
-              {{ $t('page.ideas.explore.new') }}
-            </v-button>
-          </nuxt-link>
-        </div>
+          <v-button type="muted" :icon="['fas', 'plus']">
+            {{ $t('page.ideas.explore.new') }}
+          </v-button>
+        </nuxt-link>
       </div>
 
     </div>
@@ -76,21 +82,18 @@ import { mapGetters } from 'vuex'
 
 export default {
   async middleware({ store, route }) {
-    const filter = route.query
-
-    await store.dispatch('ideas/getIdeas', filter)
+    await store.dispatch('ideas/getIdeas', route.query)
   },
 
   data() {
-    const filter = this.$route.query
-
     return {
       moreLoading: false,
       noMoreLoaded: false,
+      loading: false,
       filter: {
         page: 1,
         sortBy: 'date',
-        ...filter,
+        ...this.$route.query,
       }
     }
   },
@@ -108,36 +111,47 @@ export default {
         ...filter,
       }
 
+      await this.loadIdeas()
 
-      this.$router.push({
+      this.$router.replace({
         ...this.$route,
         query: {
           ...this.$route.query,
           ...newFilter
         }
       })
-
-      // return await this.loadIdeas()
     },
     async loadMore() {
-      this.filter.page++
-      this.moreLoading = true
-
-      let ideas = await this.loadIdeas()
-
-      if (ideas.length === 0) {
+      try {
         this.filter.page++
-        this.noMoreLoaded = true
-        return false
-      }
+        this.moreLoading = true
 
-      this.moreLoading = false
+        const ideas = await this.loadIdeas()
+
+        this.moreLoading = false
+
+        if (ideas.length === 0) {
+          this.filter.page--
+          this.noMoreLoaded = true
+        }
+      } catch (e) {
+        this.noMoreLoaded = true
+        this.moreLoading = false
+      }
     },
     async loadIdeas() {
       try {
+        this.loading = true
         this.$nuxt.$loading.start()
-        return await this.$store.dispatch('ideas/getIdeas', this.filter)
-      } finally {
+
+        const ideas = await this.$store.dispatch('ideas/getIdeas', this.filter)
+
+        this.loading = false
+        this.$nuxt.$loading.finish()
+
+        return ideas
+      } catch (e) {
+        this.loading = false
         this.$nuxt.$loading.finish()
       }
     }
@@ -148,14 +162,18 @@ export default {
 <style lang="scss" scoped>
 .explore {
   &__ideas {
-    &:not(:last-of-type) {
-      margin-bottom: 2rem;
-    }
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 1rem;
+  }
+
+  &__idea {
+    height: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
   }
 
   &__more {
-    padding: 1rem;
-    margin: -1rem;
     color: var(--color-primary);
     cursor: pointer;
     &:hover {

@@ -6,136 +6,87 @@
   >
     <client-only>
       <div slot="placeholder">
-        <div class="idea__param w-100 mb-2">
-          <div class="idea__param-name"> название </div>
-          <div class="idea__param-value">
-            <div class="d-flex align-items-center mb-3">
-              <v-skeleton style="height: 20px; width: 200px;" />
-            </div>
-          </div>
-        </div>
-
-        <div class="idea__param w-100 mb-2">
-          <div class="idea__param-name"> дата создания </div>
-          <div class="idea__param-value">
-            <v-skeleton style="width: 200px;" />
-          </div>
-        </div>
-
-        <div class="idea__param w-100">
-          <div class="idea__param-name"> описание </div>
-          <div class="idea__param-value">
-            <v-skeleton-paragraph :rows="4" />
-          </div>
-        </div>
-
-        <div class="d-flex flex-wrap">
-          <div class="idea__param mt-3">
-            <div class="idea__param-name mb-1"> Специалисты </div>
-            <div class="idea__param-value">
-              <v-skeleton style="width: 50px;" />
-            </div>
-          </div>
-
-          <div class="idea__param mt-3">
-            <div class="idea__param-name mb-1"> Технологии </div>
-            <div class="idea__param-value">
-              <v-skeleton style="width: 50px;" />
-            </div>
-          </div>
-
-          <div class="idea__param mt-3">
-            <div class="idea__param-name mb-1"> Языки программирования </div>
-            <div class="idea__param-value">
-              <v-skeleton style="width: 50px;" />
-            </div>
-          </div>
-        </div>
+        <v-label name="название" class="w-100 mb-3">
+          <v-skeleton style="height: 20px; width: 200px;" />
+        </v-label>
+        <v-label name="дата создания" class="w-100 mb-2">
+          <v-skeleton style="width: 200px;" />
+        </v-label>
+        <v-label name="Название" class="w-100">
+          <v-skeleton-paragraph :rows="4" />
+        </v-label>
+        <v-label v-if="specialists.length" name="Специалисты" class="mt-3">
+          <v-skeleton style="width: 50px;" />
+        </v-label>
+        <v-label v-if="technologies.length" name="Технологии" class="mt-3">
+          <v-skeleton style="width: 50px;" />
+        </v-label>
+        <v-label v-if="languages.length" name="Языки программирования" class="mt-3">
+          <v-skeleton style="width: 50px;" />
+        </v-label>
       </div>
 
-
-      <div class="idea__param w-100 mb-2">
-        <div class="idea__param-name"> название </div>
-        <div class="idea__param-value">
-          <div class="d-flex align-items-center justify-content-between mb-3">
-            <div class="d-flex align-items-center">
-              <v-link
-                :to="localePath({
-                  name: 's-ideas-id',
-                  params: { id }
-                })"
-                :class="['idea__link', hover && 'idea__link--hover']"
-              >
-                {{ title }}
-              </v-link>
-              <v-icon
-                :icon="['fas', 'long-arrow-alt-right']"
-                :class="['ml-2', 'idea__link-icon', hover && 'idea__link-icon--hover']"
-              />
-            </div>
+      <v-label name="название" class="w-100 mb-3">
+        <div class="d-flex align-items-center">
+          <div :class="['idea__link', hover && 'idea__link--hover']">
+            {{ title }}
           </div>
+          <v-icon
+            :icon="['fas', 'long-arrow-alt-right']"
+            :class="['ml-2', 'idea__link-icon', hover && 'idea__link-icon--hover']"
+          />
         </div>
-      </div>
+      </v-label>
 
-      <div class="idea__param w-100 mb-2">
-        <div class="idea__param-name"> дата создания </div>
-        <div class="idea__param-value">
+      <v-label name="дата создания" class="w-100 mb-3">
+        <div class="idea__date">
           {{ publishDate | toLocaleDateTime($i18n.locale) }}
         </div>
-      </div>
+      </v-label>
 
-      <div class="idea__param w-100">
-        <div class="idea__param-name"> описание </div>
-        <div class="idea__param-value idea__description">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      <v-label name="Название" class="w-100">
+        <div class="idea__description">
+          {{ description }}
         </div>
-      </div>
+      </v-label>
 
       <div
         v-if="specialists.length || technologies.length || languages.length"
-        class="d-flex flex-wrap"
+        class="mt-4"
       >
-        <div v-if="specialists.length" class="idea__param mt-3">
-          <div class="idea__param-name mb-1"> Специалисты </div>
-          <div class="idea__param-value">
-            <span
-              v-for="(spec, key) in specialists"
-              :key="spec.name + key"
-              class="mr-2"
-            >
-              <v-chip :text="spec.name" />
-            </span>
-          </div>
-        </div>
+        <v-label v-if="specialists.length" name="Специалисты">
+          <span
+            v-for="(spec, key) in specialists"
+            :key="spec.name + key"
+            class="mr-2"
+          >
+            <v-chip :text="spec.name" />
+          </span>
+        </v-label>
 
-        <div v-if="technologies.length" class="idea__param mt-3">
-          <div class="idea__param-name mb-1"> Технологии </div>
-          <div class="idea__param-value">
-            <span
-              v-for="(tech, key) in technologies"
-              :key="tech.name + key"
-              class="mr-2"
-            >
-              <v-chip :text="tech" />
-            </span>
-          </div>
-        </div>
+        <v-label v-if="technologies.length" name="Технологии" class="mt-3">
+          <span
+            v-for="(tech, key) in technologies"
+            :key="tech.name + key"
+            class="mr-2"
+          >
+            <v-chip :text="tech" />
+          </span>
+        </v-label>
 
-        <div v-if="languages.length" class="idea__param mt-3">
-          <div class="idea__param-name mb-1"> Языки программирования </div>
-          <div class="idea__param-value">
-            <span
-              v-for="(lang, key) in languages"
-              :key="lang.name + key"
-              class="mr-2"
-            >
-              <v-chip
-                :text="$t('languages.' + lang.name)"
-                :type="hover ? 'auto' : null"
-              />
-            </span>
-          </div>
-        </div>
+        <v-label v-if="languages.length" name="Языки программирования" class="mt-3">
+          <span
+            v-for="(lang, key) in languages"
+            :key="lang.name + key"
+            class="mr-2"
+          >
+            <v-chip
+              :text="$t('languages.' + lang.name)"
+              :type="hover ? 'auto' : null"
+            />
+          </span>
+        </v-label>
+
       </div>
     </client-only>
   </v-card>
@@ -197,29 +148,17 @@ export default {
   transition: box-shadow .3s var(--base-transition);
 
   &:hover {
-    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, .1);
+    box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, .1);
   }
 
   &__description {
     font-size: 1rem !important;
     line-height: 1.1;
     font-weight: 300 !important;
+    word-break: break-all;
   }
 
-  &__param {
-    min-width: 33%;
-    width: max-content;
-  }
-
-  &__param-name {
-    font-size: .7rem;
-    font-weight: 400;
-    opacity: .5;
-    position: relative;
-    z-index: 1;
-  }
-
-  &__param-value {
+  &__date {
     font-size: .8rem;
     font-weight: 400;
   }
@@ -230,18 +169,9 @@ export default {
     border-bottom: 1px solid var(--color-black-fade);
     font-size: 1.1rem;
     opacity: .5;
+    display: inline-block;
     transition: .3s var(--base-transition);
     transition-property: opacity, border-bottom-color, color;
-
-    &:after, &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 999;
-    }
   }
 
   &__link--hover {
