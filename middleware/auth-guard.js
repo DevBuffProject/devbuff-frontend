@@ -6,6 +6,8 @@ export default async ({ store, req, error }) => {
     message
   })
 
+  console.log('guard');
+
   if (!token && !refreshToken) return createError('Corrupted auth: no credentials')
 
   try {
