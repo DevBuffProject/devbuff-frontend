@@ -17,7 +17,23 @@ export const actions = {
 }
 
 export const getters = {
-  skills: state => state.skills
+  skills: state => state.skills,
+  specializations: state => {
+    const specs = state.skills.reduce((acc, skill) => {
+      skill.specializations.forEach(spec => acc.push(spec.name))
+      return acc
+    }, [])
+
+    return new Set(specs)
+  },
+  languages: state => {
+    const langs = state.skills.reduce((acc, lang) => {
+      acc.push(lang.name)
+      return acc
+    }, [])
+
+    return new Set(langs)
+  },
 }
 
 export default {

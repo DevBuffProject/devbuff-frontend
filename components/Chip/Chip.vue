@@ -38,7 +38,6 @@ export default {
         class: [
           'chip',
           props.type && 'chip--type-' + props.type,
-          props.mixClass
         ],
         style: props.type === 'auto' && {
           backgroundColor: colors.bg,
@@ -62,11 +61,7 @@ export default {
   height: 1rem;
   border-radius: 10rem;
   font-weight: 600;
+  color: rgba(0, 0, 0, .5);
   transition: background-color .3s var(--base-transition);
-
-  &--type-primary {
-    background-color: var(--color-primary-fade);
-    color: var(--color-primary);
-  }
 }
 </style>
