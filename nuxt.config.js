@@ -50,8 +50,8 @@ const config = {
 
   i18n : {
     locales: [
-      { code: 'ru', name: '🇷🇺', file: 'ru.js' },
-      { code: 'en', name: '🇬🇧', file: 'en.js' }
+      { code: 'ru', name: 'русский', file: 'ru.js' },
+      { code: 'en', name: 'english', file: 'en.js' }
     ],
     defaultLocale: 'ru',
     detectBrowserLanguage: {
