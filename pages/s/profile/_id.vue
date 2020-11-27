@@ -44,7 +44,7 @@
             </v-label>
           </div>
 
-          <v-label v-if="profile.bio" name="о себе" class="mr-5">
+          <v-label v-if="profile.bio" name="о себе" class="mr-5 mb-4">
             {{ profile.bio }}
           </v-label>
 

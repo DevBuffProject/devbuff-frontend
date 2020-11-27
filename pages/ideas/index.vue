@@ -6,7 +6,7 @@
           <h3 class="m-0"> {{ $t('page.ideas.explore.ideas') }} </h3>
         </div>
         <div>
-          <nuxt-link :to="localePath({ name: 's-ideas-editor' })">
+          <nuxt-link :to="localePath({ name: 's-editor' })">
             <v-button :icon="['fas', 'plus']">
               {{ $t('page.ideas.explore.new') }}
             </v-button>

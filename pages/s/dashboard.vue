@@ -6,9 +6,11 @@
           <h3 class="m-0"> {{ $t('page.dashboard.title') }} </h3>
         </div>
         <div>
-          <v-button :icon="['fas', 'plus']">
-            {{ $t('page.ideas.explore.new') }}
-          </v-button>
+          <nuxt-link :to="localePath({ name: 's-editor' })">
+            <v-button :icon="['fas', 'plus']">
+              {{ $t('page.ideas.explore.new') }}
+            </v-button>
+          </nuxt-link>
         </div>
       </div>
     </v-toolbar>
