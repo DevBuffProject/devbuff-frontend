@@ -145,7 +145,7 @@ export default {
   &--loading {
     background-image: linear-gradient(
       -45deg,
-      
+
       rgba(255, 255, 255, 0.15) 25%,
       transparent 25%,
       transparent 50%,
@@ -162,6 +162,8 @@ export default {
 
   &__content {
     position: relative;
+    text-decoration: none;
+    color: inherit;
   }
 
   &__content--hidden {

@@ -88,7 +88,7 @@ export default {
           this.og = {}
         })
 
-      this.$emit('og:done')
+      this.$emit('done')
     },
   },
 

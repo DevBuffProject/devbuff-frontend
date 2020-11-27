@@ -20,7 +20,7 @@
         </v-button>
         <nuxt-link
           v-else
-          :to="localePath({ name: 's-ideas-explore' })"
+          :to="localePath({ name: 'ideas' })"
         >
           <v-button
             type="muted"
