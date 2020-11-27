@@ -114,7 +114,7 @@ export default {
   text-decoration: none;
   position: relative;
   cursor: pointer;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.5;
   letter-spacing: 1px;
   overflow: hidden;
