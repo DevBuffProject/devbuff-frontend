@@ -83,21 +83,16 @@
 
       <transition name="fade">
         <div v-if="ideas.length" class="explore__ideas">
-          <nuxt-link
+          <v-idea-card
             v-for="idea in ideas"
-            tag="div"
             :key="idea.id"
-            :to="localePath({ name: 's-ideas-id', params: { id: idea.id } })"
-          >
-            <v-idea-card
-              :title="idea.name"
-              :publishDate="idea.publishDate || idea.datePublished"
-              :description="idea.description"
-              :specialists="idea.specialists"
-              :id="idea.id"
-              class="explore__idea"
-            />
-          </nuxt-link>
+            :title="idea.name"
+            :publishDate="idea.publishDate || idea.datePublished"
+            :description="idea.description"
+            :specialists="idea.specialists"
+            :id="idea.id"
+            class="explore__idea"
+          />
         </div>
         <div v-else class="p-5 explore__no-ideas">
           🤷 <span class="muted-text"> Ничего не найдено </span>

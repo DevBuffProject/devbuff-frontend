@@ -2,13 +2,14 @@
   <div class="v-editor">
     <v-article>
       <client-only>
+        <v-skeleton-paragraph v-show="!ready" :rows="3" />
         <quill-editor
+          v-show="ready"
           class="v-editor__area"
           :options="editorOptions"
-          content="
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            <br>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          "
+          :content="value"
+          @ready="onReady"
+          @change="$emit('change', $event.html)"
         />
       </client-only>
     </v-article>
@@ -22,13 +23,26 @@ import 'quill/dist/quill.bubble.css'
 export default {
   name: 'v-editor',
 
+  model: {
+    event: 'change',
+    prop: 'value'
+  },
+
   components: {
     quillEditor: () => process.client && import('vue-quill-editor')
       .then(bundle => bundle.quillEditor)
   },
 
+  props: {
+    value: {
+      type: String,
+      default: null,
+    }
+  },
+
   data() {
     return {
+      ready: false,
       editorOptions: {
         theme: 'bubble',
         placeholder: 'Текст идеи',
@@ -42,6 +56,13 @@ export default {
           ]
         }
       },
+    }
+  },
+
+  methods: {
+    onReady() {
+      this.ready = true
+      this.$emit('ready')
     }
   }
 }
