@@ -86,7 +86,6 @@ export default {
   width: fit-content;
   display: inline-flex;
   border: 1px solid var(--color-muted);
-  box-shadow: 0 1px 1px rgba(211 ,218, 230, .3);
   padding: .3rem 1rem;
   border-radius: 4px;
   box-sizing: border-box;

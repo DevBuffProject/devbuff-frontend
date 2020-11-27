@@ -78,7 +78,13 @@ const config = {
     STATUSPAGE_BASE_URL: process.env.STATUSPAGE_BASE_URL
   },
 
-  modern: true,
+  modern: !this.dev,
+
+  router: {
+    middleware: [
+      'restore-profile'
+    ]
+  },
 
   build: {
     extend (config, { isDev, isClient }) {

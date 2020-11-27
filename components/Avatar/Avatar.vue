@@ -5,7 +5,7 @@
       square && 'avatar--square'
     ]"
     :style="{
-      backgroundImage: 'url(' + avatar + ')',
+      backgroundImage: 'url(' + avatarUrl + ')',
       width: size,
       height: size,
       flex: `0 0 ${size}`
@@ -35,6 +35,12 @@ export default {
     size: {
       type: String,
       default: '40px'
+    }
+  },
+
+  computed: {
+    avatarUrl() {
+      return `${this.$config.API_BASE_URL}/photo/profile/${this.avatar}`
     }
   }
 }

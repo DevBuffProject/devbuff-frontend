@@ -4,88 +4,68 @@
     @mouseover="hover = true"
     @mouseout="hover = false"
   >
-    <client-only>
-      <div slot="placeholder">
-        <v-label name="название" class="w-100 mb-3">
-          <v-skeleton style="height: 20px; width: 200px;" />
-        </v-label>
-        <v-label name="дата создания" class="w-100 mb-2">
-          <v-skeleton style="width: 200px;" />
-        </v-label>
-        <v-label name="Название" class="w-100">
-          <v-skeleton-paragraph :rows="4" />
-        </v-label>
-        <v-label v-if="specialists.length" name="Специалисты" class="mt-3">
-          <v-skeleton style="width: 50px;" />
-        </v-label>
-        <v-label v-if="technologies.length" name="Технологии" class="mt-3">
-          <v-skeleton style="width: 50px;" />
-        </v-label>
-        <v-label v-if="languages.length" name="Языки программирования" class="mt-3">
-          <v-skeleton style="width: 50px;" />
-        </v-label>
+    <v-label name="название" class="w-100 mb-3">
+      <div class="d-flex align-items-center">
+        <nuxt-link
+          :to="localePath({ name: 'ideas-id', params: { id } })"
+          :class="['idea__link', hover && 'idea__link--hover']"
+        >
+          {{ title }}
+        </nuxt-link>
+        <v-icon
+          :icon="['fas', 'long-arrow-alt-right']"
+          :class="['ml-2', 'idea__link-icon', hover && 'idea__link-icon--hover']"
+        />
       </div>
+    </v-label>
 
-      <v-label name="название" class="w-100 mb-3">
-        <div class="d-flex align-items-center">
-          <div :class="['idea__link', hover && 'idea__link--hover']">
-            {{ title }}
-          </div>
-          <v-icon
-            :icon="['fas', 'long-arrow-alt-right']"
-            :class="['ml-2', 'idea__link-icon', hover && 'idea__link-icon--hover']"
-          />
-        </div>
-      </v-label>
-
-      <v-label name="дата создания" class="w-100 mb-3">
-        <div class="idea__date">
-          {{ publishDate | toLocaleDateTime($i18n.locale) }}
-        </div>
-      </v-label>
-
-      <v-label name="Название" class="w-100">
-        <div class="idea__description">
-          {{ description }}
-        </div>
-      </v-label>
-
-      <div
-        v-if="specialists.length || technologies.length || languages.length"
-        class="mt-4"
-      >
-        <v-label v-if="specialists.length" name="Специалисты">
-          <span
-            v-for="(spec, key) in specialists"
-            :key="spec.name + key"
-            class="mr-2"
-          >
-            <v-chip :text="spec.name" />
-          </span>
-        </v-label>
-
-        <v-label v-if="technologies.length" name="Технологии" class="mt-3">
-          <span
-            v-for="(tech, key) in technologies"
-            :key="tech.name + key"
-            class="mr-2"
-          >
-            <v-chip :text="tech" />
-          </span>
-        </v-label>
-
-        <v-label v-if="languages.length" name="Языки программирования" class="mt-3">
-          <span
-            v-for="(lang, key) in languages"
-            :key="lang.name + key"
-            class="mr-2"
-          >
-            <v-chip :text="lang.name" :type="hover ? 'auto' : null" />
-          </span>
-        </v-label>
-
+    <v-label name="дата создания" class="w-100 mb-3">
+      <div class="idea__date">
+        {{ publishDate | toLocaleDateTime($i18n.locale) }}
       </div>
-    </client-only>
+    </v-label>
+
+    <v-label name="Название" class="w-100">
+      <div class="idea__description">
+        {{ description }}
+      </div>
+    </v-label>
+
+    <div
+      v-if="specialists.length || technologies.length || languages.length"
+      class="mt-4"
+    >
+      <v-label v-if="specialists.length" name="Специалисты">
+        <span
+          v-for="(spec, key) in specialists"
+          :key="spec.name + key"
+          class="mr-2"
+        >
+          <v-chip :text="spec.name" />
+        </span>
+      </v-label>
+
+      <v-label v-if="technologies.length" name="Технологии" class="mt-3">
+        <span
+          v-for="(tech, key) in technologies"
+          :key="tech.name + key"
+          class="mr-2"
+        >
+          <v-chip :text="tech" />
+        </span>
+      </v-label>
+
+      <v-label v-if="languages.length" name="Языки программирования" class="mt-3">
+        <span
+          v-for="(lang, key) in languages"
+          :key="lang.name + key"
+          class="mr-2"
+        >
+          <v-chip :text="lang.name" :type="hover ? 'auto' : null" />
+        </span>
+      </v-label>
+
+    </div>
   </v-card>
 </template>
 

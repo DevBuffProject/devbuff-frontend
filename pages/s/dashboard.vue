@@ -6,7 +6,7 @@
           <h3 class="m-0"> {{ $t('page.dashboard.title') }} </h3>
         </div>
         <div>
-          <nuxt-link :to="localePath({ name: 's-ideas-editor' })">
+          <nuxt-link :to="localePath({ name: 's-editor' })">
             <v-button :icon="['fas', 'plus']">
               {{ $t('page.ideas.explore.new') }}
             </v-button>
@@ -31,21 +31,16 @@
         class="dashboard__ideas"
         style="width: 500px;"
       >
-        <nuxt-link
+        <v-idea-card
           v-for="idea in ideas"
-          tag="div"
           :key="idea.id"
-          :to="localePath({ name: 's-ideas-id', params: { id: idea.id } })"
-        >
-          <v-idea-card
-            :title="idea.name"
-            :publishDate="idea.publishDate || idea.datePublished"
-            :description="idea.description"
-            :specialists="idea.specialists"
-            :id="idea.id"
-            class="dashboard__idea"
-          />
-        </nuxt-link>
+          :title="idea.name"
+          :publishDate="idea.publishDate || idea.datePublished"
+          :description="idea.description"
+          :specialists="idea.specialists"
+          :id="idea.id"
+          class="dashboard__idea"
+        />
       </div>
       <div
         v-else
@@ -99,6 +94,10 @@ export default {
     margin-bottom: 3rem;
     box-shadow: 0 15px 25px 5px rgba(211, 218, 230, 0.3) !important;
     border-radius: 20px !important;
+  }
+
+  &__idea {
+    margin-bottom: 1rem;
   }
 }
 </style>

@@ -13,6 +13,10 @@ export const mutations = {
 }
 
 export const actions = {
+  async updateIdea(ctx, { id, data }) {
+    return await await this.$api.v1.put(`idea/${id}`, data)
+  },
+
   async getOwnIdeas({ commit, state }) {
     const ideas = await this.$api.v1.get('/idea/self')
     commit('setOwnIdeas', ideas)
