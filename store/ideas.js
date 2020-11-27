@@ -13,6 +13,10 @@ export const mutations = {
 }
 
 export const actions = {
+  async appendIdea(ctx, data) {
+    return await this.$api.v1.post('idea', data)
+  },
+
   async updateIdea(ctx, { id, data }) {
     return await await this.$api.v1.put(`idea/${id}`, data)
   },

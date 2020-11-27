@@ -1,5 +1,6 @@
 $base-transition: cubic-bezier(.28,.98,.43,.99);
 
+
 .fade-enter-active, .fade-leave-active {
   transition: .3s var(--base-transition);
 }
@@ -7,13 +8,13 @@ $base-transition: cubic-bezier(.28,.98,.43,.99);
   opacity: 0;
 }
 
-.top-enter-active,
-.top-leave-active { transition: transform .3s var(--base-transition); }
-.top-enter {
+.page-enter-active,
+.page-leave-active { transition: transform .5s ease; }
+.page-enter {
   opacity: 0;
-  transform: translate3d(0, -20px, 0);
+  transform: scale(.98);
 }
-.top-leave-to {
+.page-leave-to {
   opacity: 0;
-  transform: translate3d(0, 0, 0);
+  transform: scale(.98);
 }

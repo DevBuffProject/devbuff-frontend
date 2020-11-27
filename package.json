@@ -1,7 +1,7 @@
 {
-  "name": "devbuff-front",
+  "name": "devbuff",
   "version": "1.0.0",
-  "description": "Devbuff web client",
+  "description": "Devbuff",
   "author": "DevBuff, Alexander Katkov <katkov.alexander@yahoo.com>",
   "private": true,
   "scripts": {

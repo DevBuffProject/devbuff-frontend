@@ -103,6 +103,15 @@ export default {
         : [];
     }
   },
+
+  head() {
+    return {
+      title: `Devbuff :: ${this.idea.name}`,
+      meta: [
+        { hid: 'description', name: 'description', content: this.idea.description }
+      ]
+    }
+  }
 }
 </script>
 

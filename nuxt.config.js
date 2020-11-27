@@ -1,17 +1,18 @@
+const dev = process.env.NODE_ENV !== 'production'
+
 const config = {
+  dev,
+
   server: {
     host: '0.0.0.0',
     port: 3000,
   },
 
-  dev: process.env.NODE_ENV !== 'production',
-
   head: {
-    title: 'DevBuff',
+    title: 'Devbuff',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Devbuff web client' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -28,6 +29,11 @@ const config = {
   ],
 
   loading: '~/page-loading.vue',
+
+  transition: {
+    name: 'page',
+    mode: 'out-in'
+  },
 
   components: [{
     path: '~/components/',
@@ -78,7 +84,7 @@ const config = {
     STATUSPAGE_BASE_URL: process.env.STATUSPAGE_BASE_URL
   },
 
-  modern: !this.dev,
+  modern: !dev,
 
   router: {
     middleware: [
