@@ -13,26 +13,13 @@ export const actions = {
     return await this.$api.v1.post(`profile/resendEmail`)
   },
 
-  async getUser({ commit }, uuid) {
+  async getProfile({ commit }, uuid) {
     const { API_BASE_URL } = this.$config
-    // const user = await this.$api.v1.get(`profile/${uuid}`)
-
-    console.log(uuid);
-
-    // user.avatar = `${API_BASE_URL}/photo/profile/${user.id}`
-
-    // commit('setUser', user)
-
-    // return user
-  },
-
-  async getProfile({ commit }) {
-    const { API_BASE_URL } = this.$config
-    const profile = await this.$api.v1.get('profile')
+    const profile = await this.$api.v1.get(uuid ? `profile/${uuid}` : 'profile')
 
     profile.avatar = `${API_BASE_URL}/photo/profile/${profile.id}`
 
-    commit('setProfile', profile)
+    commit(uuid ? 'setUser' : 'setProfile', profile)
 
     return profile
   },

@@ -2,25 +2,27 @@
   <header class="header">
     <div class="header__container container">
       <div class="header__section">
-        <v-switcher
-          :values="availableLocales"
-          :value="locale"
-          @change="setLocale"
-        />
+        <div class="d-flex align-items-center">
+          <v-switcher
+            :values="availableLocales"
+            :value="locale"
+            @change="setLocale"
+          />
+          <transition name="fade">
+            <v-loading class="muted ml-3" v-show="localeLoading" />
+          </transition>
+        </div>
       </div>
       <div class="header__section d-flex justify-content-center">
         <v-logo />
       </div>
-      <v-anim name="fade">
-        <div
-          v-if="$route.name !== 'index'"
-          class="header__section align-items-center justify-content-end"
-        >
+      <div class="header__section d-flex align-items-center justify-content-end">
+        <div v-if="isAuthorized" class="d-flex align-items-center">
           <v-link
             class="text header__link"
             active-class="header__link--active"
             type="muted"
-            :to="localePath({ name: 's-ideas' })"
+            :to="localePath({ name: 'ideas' })"
             :icon="['fas', 'lightbulb']"
           >
             {{  $t('components.header.ideas')  }}
@@ -35,10 +37,21 @@
             {{ $t('components.header.dashboard') }}
           </v-link>
           <nuxt-link :to="localePath({ name: 's-profile' })">
-            <v-avatar :avatar="avatar" />
+            <v-avatar :avatar="this.$store.getters['user/profile'].id" />
           </nuxt-link>
         </div>
-      </v-anim>
+
+        <div v-else class="d-flex align-items-center">
+          <v-button
+            type="dark"
+            :icon="['fab', 'github']"
+            rounded
+            @click="authorize"
+          >
+            {{ $t('page.index.oAuth.gitHub') }}
+          </v-button>
+        </div>
+      </div>
     </div>
   </header>
 </template>
@@ -48,11 +61,15 @@ export default {
 
   data() {
     return {
+      localeLoading: false,
       locale: this.$i18n.locale
     }
   },
 
   computed: {
+    isAuthorized() {
+      return this.$store.getters['user/isAuthorized']
+    },
     avatar() {
       return this.$store.getters['user/profile'].avatar
     },
@@ -65,9 +82,21 @@ export default {
   },
 
   methods: {
+    authorize() {
+      this.$store.dispatch('auth/authorize')
+    },
     async setLocale(locale) {
-      await this.$i18n.setLocale(locale)
-      this.locale = locale
+      try {
+        this.$router.beforeEach((to, from, next) => {
+          this.localeLoading = false
+          next()
+        })
+        this.localeLoading = true
+        await this.$i18n.setLocale(locale)
+        this.locale = locale
+      } catch (e) {
+        this.localeLoading = false
+      }
     }
   }
 }
