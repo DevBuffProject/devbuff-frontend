@@ -14,12 +14,15 @@ export const mutations = {
 
 export const actions = {
   async appendIdea(ctx, data) {
-    return await this.$api.post('api/v1/idea', data)
+    return await this.$api.latest.post('idea', data)
   },
 
   async updateIdea(ctx, { id, data }) {
-    console.log(data);
-    return await await this.$api.put(`api/v1/idea/${id}`, data)
+    return await await this.$api.latest.put(`idea/${id}`, data)
+  },
+
+  async deleteIdea(ctx, id) {
+    return await this.$api.latest.delete(`idea/${id}`)
   },
 
   async getOwnIdeas({ commit, state }) {

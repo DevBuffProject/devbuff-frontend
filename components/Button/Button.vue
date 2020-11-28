@@ -6,7 +6,8 @@
       'v-btn--type-' + type,
       rounded && 'v-btn--rounded',
       disabled && 'v-btn--disabled',
-      loading && 'v-btn--loading'
+      loading && 'v-btn--loading',
+      small && 'v-btn--size-small'
     ]"
     :disabled="disabled"
   >
@@ -35,6 +36,10 @@ export default {
   name: 'v-button',
 
   props: {
+    small: {
+      type: Boolean,
+      default: false
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -66,7 +71,7 @@ export default {
   @each $name, $color in map-get($default-colors, 'scheme' ) {
     &--type-#{$name} {
       color: #fff;
-      font-weight: 600 !important;
+      font-weight: 800 !important;
       background-color: var(--color-#{$name});
 
       &::before {
@@ -130,6 +135,10 @@ export default {
     background-color .5s var(--base-transition);
 
   @include button-type();
+
+  &--size-small {
+    font-size: .7rem;
+  }
 
   &--disabled {
     opacity: .5;

@@ -3,7 +3,11 @@
     <div class="header__container container">
       <div class="header__section">
         <div class="d-flex align-items-center">
+          <div class="mr-3">
+            <v-logo />
+          </div>
           <v-switcher
+            class="header__lang-switcher"
             :values="availableLocales"
             :value="locale"
             @change="setLocale"
@@ -13,11 +17,21 @@
           </transition>
         </div>
       </div>
-      <div class="header__section d-flex justify-content-center">
-        <v-logo />
-      </div>
+      <!-- <div class="header__section d-flex justify-content-center">
+
+      </div> -->
       <div class="header__section d-flex align-items-center justify-content-end">
         <div v-if="isAuthorized" class="d-flex align-items-center">
+          <v-link
+            v-if="isAdmin"
+            class="text header__link"
+            active-class="header__link--active"
+            type="muted"
+            :to="localePath({ name: 's-admin' })"
+            :icon="['fas', 'crown']"
+          >
+            admin
+          </v-link>
           <v-link
             class="text header__link"
             active-class="header__link--active"
@@ -69,6 +83,9 @@ export default {
   computed: {
     isAuthorized() {
       return this.$store.getters['user/isAuthorized']
+    },
+    isAdmin() {
+      return this.$store.getters['auth/isAdmin']
     },
     avatar() {
       return this.$store.getters['user/profile'].avatar
@@ -140,9 +157,8 @@ export default {
     }
   }
 
-  &__locale-link {
-    font-size: 1rem;
-    text-decoration: none;
+  &__lang-switcher {
+    transform: scale(.85);
   }
 }
 </style>
