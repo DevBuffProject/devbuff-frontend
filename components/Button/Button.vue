@@ -123,17 +123,11 @@ export default {
   cursor: pointer;
   font-weight: 500;
   line-height: 1.5;
-  // letter-spacing: 1px;
   overflow: hidden;
   outline: none;
   transition:
     box-shadow .3s var(--base-transition),
-    background-color .5s var(--base-transition),
-    transform .2s var(--base-transition);
-
-  &:active {
-    transform: scale(.98);
-  }
+    background-color .5s var(--base-transition);
 
   @include button-type();
 

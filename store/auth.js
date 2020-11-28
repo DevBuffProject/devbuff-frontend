@@ -18,7 +18,7 @@ export const actions = {
     const credentails = new URLSearchParams()
     credentails.set('token', token)
 
-    const status = await this.$api.v1.post(`oAuth/check`, credentails)
+    const status = await this.$api.latest.post(`oAuth/check`, credentails)
 
     return status && status.active
   },
@@ -39,10 +39,10 @@ export const actions = {
     credentails.set(grantName, grant)
     credentails.set('grant_type', grantType)
 
-    const response = await this.$api.v1.post(endpoint, credentails)
+    const response = await this.$api.latest.post(endpoint, credentails)
     const { access_token, refresh_token, expires_in } = response
 
-    this.$api.v1.setToken(access_token, 'Bearer')
+    this.$api.latest.setToken(access_token, 'Bearer')
 
     const nowToken = new Date()
     const nowRefresh = new Date()

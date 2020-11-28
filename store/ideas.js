@@ -14,15 +14,16 @@ export const mutations = {
 
 export const actions = {
   async appendIdea(ctx, data) {
-    return await this.$api.v1.post('idea', data)
+    return await this.$api.post('api/v1/idea', data)
   },
 
   async updateIdea(ctx, { id, data }) {
-    return await await this.$api.v1.put(`idea/${id}`, data)
+    console.log(data);
+    return await await this.$api.put(`api/v1/idea/${id}`, data)
   },
 
   async getOwnIdeas({ commit, state }) {
-    const ideas = await this.$api.v1.get('/idea/self')
+    const ideas = await this.$api.latest.get('/idea/self')
     commit('setOwnIdeas', ideas)
 
     return ideas
@@ -38,14 +39,14 @@ export const actions = {
     const query = new URLSearchParams
     Object.keys(finalParams).forEach(param => query.append(param, finalParams[param]));
 
-    const ideas = await this.$api.v1.get(`/idea/?${query}`)
+    const ideas = await this.$api.latest.get(`/idea/?${query}`)
     commit('setIdeas', ideas)
 
     return ideas
   },
 
   async getIdea({ commit }, uuid) {
-    const idea = await this.$api.v1.get(`/idea/${uuid}`)
+    const idea = await this.$api.latest.get(`/idea/${uuid}`)
     commit('setIdea', idea)
 
     return idea

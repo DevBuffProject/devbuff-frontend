@@ -16,8 +16,6 @@ const config = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap' },
-      { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100;300;400;600;900&display=swap' }
     ],
     script: [
@@ -30,8 +28,8 @@ const config = {
 
   loading: '~/page-loading.vue',
 
-  transition: {
-    name: 'page',
+  pageTransition: {
+    name: 'fade',
     mode: 'out-in'
   },
 
@@ -50,9 +48,17 @@ const config = {
    modules: [
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     'nuxt-i18n',
     'cookie-universal-nuxt'
   ],
+
+  proxy: {
+    '/api/v1': {
+      target: process.env.API_BASE_URL,
+      pathRewrite: { '^/api/v1' : '/' },
+    }
+  },
 
   i18n : {
     locales: [

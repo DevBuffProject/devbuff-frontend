@@ -2,19 +2,8 @@ $base-transition: cubic-bezier(.28,.98,.43,.99);
 
 
 .fade-enter-active, .fade-leave-active {
-  transition: .3s var(--base-transition);
+  transition: .2s var(--base-transition);
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;
-}
-
-.page-enter-active,
-.page-leave-active { transition: transform .5s ease; }
-.page-enter {
-  opacity: 0;
-  transform: scale(.98);
-}
-.page-leave-to {
-  opacity: 0;
-  transform: scale(.98);
 }

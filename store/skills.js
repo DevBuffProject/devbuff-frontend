@@ -8,7 +8,7 @@ export const mutations = {
 
 export const actions = {
   async getSkills({ commit }) {
-    const skills = await this.$api.v1.get('skills')
+    const skills = await this.$api.latest.get('skills')
 
     commit('setSkills', skills)
 

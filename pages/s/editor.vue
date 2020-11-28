@@ -3,7 +3,7 @@
     <v-toolbar class="mb-5">
       <div class="container toolbar__grid">
         <div class="d-flex">
-          <h3 class="m-0"> Создание идеи </h3>
+          <h3 class="m-0"> {{ isEditMode ? 'Редактирование' : 'Создание идеи' }} </h3>
         </div>
         <div>
           <v-button
@@ -22,11 +22,13 @@
         <div class="editor__field editor__form-input">
           <v-label name="Заголовок">
             <v-input
+              v-if="!isEditMode"
               class="w-100 mt-1"
               placeholder="Заголовок идеи"
               type="text"
               v-model="idea.name"
             />
+            <b v-else> {{ idea.name }} </b>
           </v-label>
         </div>
 
@@ -68,18 +70,18 @@ export default {
     return {
       loading: false,
       title: 'Devbuff :: Публикация идеи',
-      idea: {
-        name,
-        text,
-        description,
-      }
+      idea: { name, text, description }
     }
   },
 
   computed: {
     ...mapGetters({
       systemSkills: 'skills/skills'
-    })
+    }),
+
+    isEditMode() {
+      return this.$route.query.id
+    }
   },
 
   methods: {
@@ -90,12 +92,13 @@ export default {
         this.loading = true
 
         if (id) {
-          const data = { text: this.text, description: this.description }
+          const data = { text: this.idea.text, description: this.idea.description }
           await this.$store.dispatch('ideas/updateIdea', { id, data })
         } else {
           await this.$store.dispatch('ideas/appendIdea', this.idea)
         }
 
+        this.$router.push(this.localePath({ name: 'ideas-id', params: { id } }))
       } catch (e) {
         this.loading = false
       } finally {
