@@ -65,7 +65,7 @@ export default {
   },
 
   data() {
-    let idea = {
+    const idea = {
       name: null,
       text: null,
       description: null
