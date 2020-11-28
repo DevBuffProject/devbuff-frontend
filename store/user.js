@@ -10,12 +10,12 @@ export const mutations = {
 
 export const actions = {
   async resendVerifyMail() {
-    return await this.$api.v1.post(`profile/resendEmail`)
+    return await this.$api.latest.post(`profile/resendEmail`)
   },
 
   async getProfile({ commit }, uuid) {
     const { API_BASE_URL } = this.$config
-    const profile = await this.$api.v1.get(uuid ? `profile/${uuid}` : 'profile')
+    const profile = await this.$api.latest.get(uuid ? `profile/${uuid}` : 'profile')
 
     profile.avatar = `${API_BASE_URL}/photo/profile/${profile.id}`
 
@@ -32,7 +32,7 @@ export const actions = {
       profile[key] = data[key]
     });
 
-    await this.$api.v1.post('profile', profile)
+    await this.$api.latest.post('profile', profile)
     await dispatch('getProfile')
   }
 }

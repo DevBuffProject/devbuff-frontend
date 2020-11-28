@@ -186,6 +186,15 @@ export default {
       }
     }
   },
+
+  head() {
+    return {
+      title: 'Devbuff :: Проекты',
+      meta: [
+        { hid: 'description', name: 'description', content: 'Список проектов' }
+      ]
+    }
+  }
 }
 </script>
 
