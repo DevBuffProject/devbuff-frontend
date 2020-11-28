@@ -1,39 +1,34 @@
-export default ({
-  $loading,
-  $cookies,
-  $config,
-  $axios,
-  store,
-  error
-}, inject) => {
+export default ({ $loading, $cookies, $config, $axios, store, error }, inject) => {
   const { API_BASE_URL } = $config
   const cookies = $cookies
   const token = cookies.get('remix_token')
-
   const createError = err => {
     const errMessage = {
       statusCode: err.response ? err.response.status : 500,
       message: err.response ? err.response.data : err.message
     }
-    // return error(errMessage)
     console.error(errMessage)
   }
+  const createApiInstance = (baseURL = null) => {
+    const axios = $axios.create()
 
-  const v1 = $axios.create()
+    if (baseURL) axios.setBaseURL(baseURL)
+    axios.setToken(token, 'Bearer')
 
-  v1.setBaseURL(API_BASE_URL)
-  v1.setToken(token, 'Bearer')
+    // eject data
+    axios.onResponse(response => response.data)
+    axios.onError(createError)
+    axios.onResponseError(createError)
+    axios.onRequestError(createError)
 
-  // eject data
-  v1.onResponse(response => response.data)
-  v1.onError(createError)
-  v1.onResponseError(createError)
-  v1.onRequestError(createError)
-
-  const api = {
-    v1
+    return axios
   }
 
+  const latest = createApiInstance(API_BASE_URL)
+  const latestProxy = createApiInstance()
+
+  const v1 = latest
+
   // Inject to context as $api
-  inject('api', api)
+  inject('api', { v1, latest, ...latestProxy })
 }
