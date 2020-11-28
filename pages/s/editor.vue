@@ -65,12 +65,23 @@ export default {
   },
 
   data() {
-    const { id, description, text, name } = this.$store.getters['ideas/idea']
+    let idea = {
+      name: null,
+      text: null,
+      description: null
+    }
+
+    if (this.isEditMode) {
+      const { id, description, text, name } = this.$store.getters['ideas/idea']
+      idea.name = name
+      idea.text = text
+      idea.description = description
+    }
 
     return {
       loading: false,
       title: 'Devbuff :: Публикация идеи',
-      idea: { name, text, description }
+      idea,
     }
   },
 
