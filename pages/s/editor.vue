@@ -91,7 +91,7 @@ export default {
     }),
 
     isEditMode() {
-      return this.$route.query.id
+      return !!this.$route.query.id
     }
   },
 
