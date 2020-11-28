@@ -41,7 +41,7 @@
 </template>
 
 <script>
-const ideaFastViewDialog = () => import('~/components/admin/ViewIdeaDialog')
+const ideaFastViewDialog = () => import('~/components/admin/ViewIdeaDialog.vue')
 
 export default {
   middleware: 'is-admin',

@@ -48,17 +48,9 @@ const config = {
    modules: [
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
-    '@nuxtjs/proxy',
     'nuxt-i18n',
     'cookie-universal-nuxt'
   ],
-
-  proxy: {
-    '/api/v1': {
-      target: process.env.API_BASE_URL,
-      pathRewrite: { '^/api/v1' : '/' },
-    }
-  },
 
   i18n : {
     locales: [
