@@ -5,27 +5,30 @@
     @mouseout="hover = false"
   >
     <v-label name="название" class="w-100 mb-3">
-      <div class="d-flex align-items-center">
-        <nuxt-link
-          :to="localePath({ name: 'ideas-id', params: { id } })"
-          :class="['idea__link', hover && 'idea__link--hover']"
-        >
+        <div v-if="!linked">
           {{ title }}
-        </nuxt-link>
-        <v-icon
-          :icon="['fas', 'long-arrow-alt-right']"
-          :class="['ml-2', 'idea__link-icon', hover && 'idea__link-icon--hover']"
-        />
-      </div>
+        </div>
+        <div v-else class="d-flex align-items-center">
+          <nuxt-link
+            :to="localePath({ name: 'ideas-id', params: { id } })"
+            :class="['idea__link', hover && 'idea__link--hover']"
+          >
+            {{ title }}
+          </nuxt-link>
+          <v-icon
+            :icon="['fas', 'long-arrow-alt-right']"
+            :class="['ml-2', 'idea__link-icon', hover && 'idea__link-icon--hover']"
+          />
+        </div>
     </v-label>
 
-    <v-label name="дата создания" class="w-100 mb-3">
+    <v-label v-if="publishDate" name="дата создания" class="w-100 mb-3">
       <div class="idea__date">
         {{ publishDate | toLocaleDateTime($i18n.locale) }}
       </div>
     </v-label>
 
-    <v-label name="Название" class="w-100">
+    <v-label name="описание" class="w-100">
       <div class="idea__description">
         {{ description }}
       </div>
@@ -74,13 +77,17 @@ export default {
   name: 'v-idea-card',
 
   props: {
+    linked: {
+      type: Boolean,
+      default: true,
+    },
     id: {
       type: [ String, Number ],
       required: true
     },
     publishDate: {
       type: String,
-      required: true
+      default: null
     },
     title: {
       type: String,

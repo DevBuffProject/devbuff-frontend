@@ -18,8 +18,8 @@
   @each $name, $color in map-get($default-colors, 'scheme' ) {
     --color-#{$name}: #{$color};
     --color-#{$name}-darken: #{darken($color, 10%)};
-    --color-#{$name}-tint: #{lighten($color, 10%)};
-    --color-#{$name}-fade: #{transparentize($color, 0.9)};
+    --color-#{$name}-tint: #{lighten($color, 25%)};
+    --color-#{$name}-fade: #{transparentize($color, 0.85)};
   }
 }
 

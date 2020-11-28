@@ -42,8 +42,8 @@
         </div>
 
         <v-label name="действия">
-          <div v-if="isOwner">
             <v-button
+              v-if="isOwner"
               class="mr-2"
               :icon="['fas', 'edit']"
               type="muted"
@@ -53,13 +53,22 @@
               изменить
             </v-button>
 
-            <v-button type="danger">
+            <v-button
+              v-if="isOwner || isAdmin"
+              type="danger"
+              small
+              @click="deleteIdea"
+            >
               удалить
             </v-button>
-          </div>
-          <v-button v-else type="primary">
-            откликнуться
-          </v-button>
+
+            <v-button
+              v-if="!isOwner && !isAdmin"
+              type="primary"
+              small
+            >
+              откликнуться
+            </v-button>
         </v-label>
       </div>
 
@@ -77,16 +86,33 @@ import { mapGetters } from 'vuex'
 
 export default {
   async middleware({ store, route }) {
-    const { id } = await store.dispatch('ideas/getIdea', route.params.id)
+    const isAdmin = store.getters['auth/isAdmin']
+
+    await store.dispatch('ideas/getIdea', route.params.id)
+
+    if (isAdmin)  await store.dispatch('admin/getPendingIdeas')
   },
+
+  data: () => ({
+    progress: false
+  }),
 
   computed: {
     ...mapGetters({
-      idea: 'ideas/idea'
+      idea: 'ideas/idea',
+      pending: 'admin/pendingIdeas'
     }),
 
     isOwner() {
       return this.$store.getters['user/profile'].id === this.idea.ownerIdea.id
+    },
+
+    isAdmin() {
+      return this.$store.getters['auth/isAdmin']
+    },
+
+    isIdeaPending() {
+      return this.isAdmin && this.pending.find(idea => idea.id === this.idea.id)
     },
 
     languages() {
@@ -103,6 +129,34 @@ export default {
         : [];
     }
   },
+
+  methods: {
+    async deleteIdea() {
+      try {
+        this.progress = true
+        const commit = this.isAdmin
+          ? 'admin/deleteIdea'
+          : 'ideas/deleteIdea'
+
+        await this.$store.dispatch(commit, this.idea.id)
+        this.progress = false
+        this.$router.push(this.localePath({ name: 'ideas' }))
+      } catch (e) {
+        this.progress = false
+      } finally {
+        this.progress = false
+      }
+    }
+  },
+
+  head() {
+    return {
+      title: `Devbuff :: ${this.idea.name}`,
+      meta: [
+        { hid: 'description', name: 'description', content: this.idea.description }
+      ]
+    }
+  }
 }
 </script>
 
