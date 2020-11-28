@@ -53,6 +53,15 @@ export default {
       this.$store.dispatch('auth/authorize')
     }
   },
+
+  head() {
+    return {
+      title: 'Devbuff',
+      meta: [
+        { hid: 'description', name: 'description', content: this.$t('page.index.action.about') }
+      ]
+    }
+  }
 }
 </script>
 
