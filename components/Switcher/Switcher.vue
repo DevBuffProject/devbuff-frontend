@@ -118,7 +118,7 @@ export default {
     border-radius: 5px;
     border: 1px solid var(--color-muted-accent);
     box-sizing: border-box;
-    transition: .3s var(--base-transition);
+    transition: .5s var(--base-transition);
     transition-property: transform, width, opacity;
     z-index: 9;
   }
