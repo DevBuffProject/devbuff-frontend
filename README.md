@@ -1,13 +1,9 @@
-# Devbuff Frontend
-<p align="center">
-	<a href="https://devbuff.statuspage.io/">Statuspage</a>
-</p>
+![Devbuff Logo](static/logos/Logo@0.5x.png)
+
 <p align="center">
   <img src="https://7architect.semaphoreci.com/badges/devbuff-frontend/branches/develop.svg?key=710bba83-3085-419c-9304-df54d3d7467f" alt="Build Status">
 	<img src="https://www.codefactor.io/repository/github/7architect/devbuff-frontend/badge?s=a45618561d667a1813fae5396fc9d57d074c8b1f" alt="CodeFactor">
-	</a>
 </p>
- 
 
 ## Build Setup
 
