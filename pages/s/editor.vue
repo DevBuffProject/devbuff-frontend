@@ -65,23 +65,14 @@ export default {
   },
 
   data() {
-    const idea = {
-      name: null,
-      text: null,
-      description: null
-    }
-
-    if (this.isEditMode) {
-      const { id, description, text, name } = this.$store.getters['ideas/idea']
-      idea.name = name
-      idea.text = text
-      idea.description = description
-    }
-
     return {
       loading: false,
       title: 'Devbuff :: Публикация идеи',
-      idea,
+      idea: {
+        name: null,
+        text: null,
+        description: null
+      },
     }
   },
 
@@ -97,24 +88,37 @@ export default {
 
   methods: {
     async save() {
-      const id = this.$route.query.id
-
       try {
+        const queryId = this.$route.query.id
         this.loading = true
 
-        if (id) {
+        if (this.isEditMode) {
           const data = { text: this.idea.text, description: this.idea.description }
-          await this.$store.dispatch('ideas/updateIdea', { id, data })
+          await this.$store.dispatch('ideas/updateIdea', { id: queryId, data })
         } else {
-          await this.$store.dispatch('ideas/appendIdea', this.idea)
+          const newIdea = await this.$store.dispatch('ideas/appendIdea', this.idea)
         }
 
-        this.$router.push(this.localePath({ name: 'ideas-id', params: { id } }))
+        await this.$nextTick()
+
+        this.$router.push(this.localePath({
+          name: 'ideas-id',
+          params: { id: this.isEditMode ? queryId : newIdea.id }
+        }))
       } catch (e) {
         this.loading = false
       } finally {
         this.loading = false
       }
+    }
+  },
+
+  created() {
+    if (this.isEditMode) {
+      const { id, description, text, name } = this.$store.getters['ideas/idea']
+      this.idea.name = name
+      this.idea.text = text
+      this.idea.description = description
     }
   },
 

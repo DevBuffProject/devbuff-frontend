@@ -3,7 +3,9 @@
     v-on="$listeners"
     :class="[
       'v-btn',
-      'v-btn--type-' + type,
+      (flat && type) && 'v-btn--type-flat-' + type,
+      !flat && 'v-btn--type-' + type,
+      flat && 'v-btn--type-flat',
       rounded && 'v-btn--rounded',
       disabled && 'v-btn--disabled',
       loading && 'v-btn--loading',
@@ -36,6 +38,10 @@ export default {
   name: 'v-button',
 
   props: {
+    flat: {
+      type: Boolean,
+      default: false
+    },
     small: {
       type: Boolean,
       default: false

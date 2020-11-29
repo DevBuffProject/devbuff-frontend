@@ -36,7 +36,7 @@
             {{ idea.status }}
           </v-label>
 
-          <v-label name="статус модерации">
+          <v-label v-if="isOwner" name="статус модерации">
             {{ idea.waitingValidation ? 'на модерации' : 'одобрено модератором' }}
           </v-label>
         </div>

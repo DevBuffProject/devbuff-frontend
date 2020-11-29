@@ -8,18 +8,20 @@
         <span class="present__app-name">DevBuff</span> — {{ $t('page.index.description') }}.
         <v-link to="/about"> {{ $t('page.index.action.about') }}</v-link>
       </p>
-      <div class="present__controls">
-        <v-button
-          v-if="!isAuthorized"
-          type="dark"
-          :icon="['fab', 'github']"
-          rounded
-          @click="authorize"
-        >
-          {{ $t('page.index.oAuth.gitHub') }}
-        </v-button>
+      <div class="present__controls d-flex flex-column justify-content-center">
+        <div class="w-100" v-if="!isAuthorized">
+          <v-button
+            class="w-100"
+            type="dark"
+            :icon="['fab', 'github']"
+            rounded
+            @click="authorize"
+          >
+            {{ $t('page.index.oAuth.gitHub') }}
+          </v-button>
+          <v-delimiter text="или" />
+        </div>
         <nuxt-link
-          v-else
           :to="localePath({ name: 'ideas' })"
         >
           <v-button
@@ -30,7 +32,6 @@
             {{ $t('page.index.action.projects') }}
           </v-button>
         </nuxt-link>
-
       </div>
     </div>
   </section>

@@ -46,18 +46,27 @@ const ideaFastViewDialog = () => import('~/components/Admin/ViewIdeaDialog.vue')
 export default {
   middleware: 'is-admin',
 
-  async asyncData({ $api }) {
-    const ideas = await $api.latest.get('idea/moderator/waitingIdea')
+  async asyncData({ store }) {
+    await store.dispatch('admin/getPendingIdeas')
+    const ideas = store.getters['admin/pendingIdeas']
     return { ideas }
   },
 
   methods: {
+    async refresh() {
+      return this.ideas = await this.$store.dispatch('admin/getPendingIdeas')
+    },
+
     async viewIdea(id) {
       const idea = await this.$store.dispatch('ideas/getIdea', id)
       this.$dialog
         .push(ideaFastViewDialog, { idea })
-        .then(() => this.$store.dispatch['admin/getPendingIdeas'])
+        .then(this.refresh)
     }
+  },
+
+  created() {
+
   }
 }
 </script>

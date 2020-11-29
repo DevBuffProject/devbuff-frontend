@@ -5,9 +5,7 @@
     @mouseout="hover = false"
   >
     <v-label name="название" class="w-100 mb-3">
-        <div v-if="!linked">
-          {{ title }}
-        </div>
+        <div v-if="!linked"> {{ title }} </div>
         <div v-else class="d-flex align-items-center">
           <nuxt-link
             :to="localePath({ name: 'ideas-id', params: { id } })"
@@ -137,9 +135,9 @@ export default {
 
   &__description {
     font-size: 1rem !important;
-    line-height: 1.1;
+    line-height: 1.2;
     font-weight: 300 !important;
-    word-break: break-all;
+    word-break: break-word;
   }
 
   &__date {

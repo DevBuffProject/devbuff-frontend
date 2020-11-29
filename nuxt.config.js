@@ -41,8 +41,9 @@ const config = {
   plugins: [
     { src: '~/plugins/api.js' },
     { src: '~/plugins/sentry.js' },
-    { src: '~/plugins/fontawesome.js' },
     { src: '~/plugins/ui-setup.js' },
+    { src: '~/plugins/fontawesome.js' },
+    { src: '~/plugins/admin-auto-refresh.js', mode: 'client' },
   ],
 
    modules: [

@@ -10,7 +10,7 @@ export const actions = {
   async getPendingIdeas({ commit }) {
     const ideas = await this.$api.latest.get('idea/moderator/waitingIdea')
 
-    commit('setPendingIdeas', ideas)
+    commit('setPendingIdeas', ideas || [])
 
     return ideas
   },
@@ -25,7 +25,7 @@ export const actions = {
 }
 
 export const getters = {
-  pendingIdeas: state => state.pendingIdeas,
+  pendingIdeas: state => state.pendingIdeas
 }
 
 export default {

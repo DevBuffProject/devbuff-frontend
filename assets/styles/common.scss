@@ -39,3 +39,9 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+@each $name, $color in map-get($default-colors, 'scheme' ) {
+  .color-#{$name} {
+    color: var(--color-#{$name}) !important;
+  }
+}

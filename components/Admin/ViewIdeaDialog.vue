@@ -20,9 +20,9 @@
 
     <template #controls>
       <div>
-        <v-button class="mr-2" type="muted" @click="reject"> {{ $t('common.cancel') }} </v-button>
-        <v-button type="success" :loading="progress" @click="aprooveIdea"> одобрить </v-button>
-        <v-button type="danger" :loading="progress" @click="deleteIdea"> удалить </v-button>
+        <v-button flat type="success" :loading="progress" @click="aprooveIdea"> одобрить </v-button>
+        <v-button flat type="danger" :loading="progress" @click="deleteIdea"> удалить </v-button>
+        <v-button class="ml-2" type="muted" @click="reject"> {{ $t('common.cancel') }} </v-button>
       </div>
     </template>
   </v-dialog-viewport>
@@ -44,26 +44,37 @@ export default {
 
   methods: {
     async aprooveIdea() {
-      try {
-        this.loading = true
-        await this.$store.dispatch('admin/aprooveIdea', this.idea.id)
-        this.resolve()
-      } catch (e) {
-        this.loading = false
-      } finally {
-        this.loading = false
+      this.loading = true
+
+      const accept = confirm('Опубликовать идею?')
+      alert(accept)
+
+      if (accept) {
+        try {
+          await this.$store.dispatch('admin/aprooveIdea', this.idea.id)
+          this.resolve()
+        } catch (e) {
+          this.loading = false
+        } finally {
+          this.loading = false
+        }
       }
     },
 
     async deleteIdea() {
-      try {
-        this.loading = true
-        await this.$store.dispatch('admin/deleteIdea', this.idea.id)
-      } catch (e) {
-        this.resolve()
-        this.loading = false
-      } finally {
-        this.loading = false
+      this.loading = true
+
+      const confirm = prompt('Введите DELETE для подтверждения удаления')
+
+      if (confirm === 'DELETE') {
+        try {
+          await this.$store.dispatch('admin/deleteIdea', this.idea.id)
+          this.resolve()
+        } catch (e) {
+          this.loading = false
+        } finally {
+          this.loading = false
+        }
       }
     }
   }
