@@ -45,7 +45,7 @@
 
         <v-label name="Выделите для форматирования">
           <v-card class="mt-1">
-            <v-editor v-model="idea.text" />
+            <v-editor :key="key" v-model="idea.text" />
           </v-card>
         </v-label>
       </div>
@@ -66,6 +66,7 @@ export default {
 
   data() {
     return {
+      key: 1,
       loading: false,
       title: 'Devbuff :: Публикация идеи',
       idea: {

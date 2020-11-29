@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="header d-flex align-items-center">
     <div class="header__container container">
       <div class="header__section">
         <div class="d-flex align-items-center">

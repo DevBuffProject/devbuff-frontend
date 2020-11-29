@@ -48,11 +48,15 @@ export default {
         placeholder: 'Текст идеи',
         modules: {
           toolbar: [
-            ['bold', 'italic', 'underline', 'code-block'],
+            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+            ['blockquote', 'code-block', 'code'],
+            [{ 'header': 2 }],                                // headers
             [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            [{ 'header': 2 }],
+            [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+            [{ 'direction': 'rtl' }], // text direction
+            [{ 'align': [] }],
             ['link', 'image', 'video'],
-            ['clean']
+            ['clean']                                         // remove formatting button
           ]
         }
       },

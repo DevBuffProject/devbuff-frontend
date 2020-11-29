@@ -22,7 +22,7 @@ export const actions = {
 
     const status = await this.$api.latest.post(`oAuth/check`, credentails)
 
-    commit('setStatus', status)
+    commit('setStatus', status || {})
 
     return status && status.active
   },
@@ -80,5 +80,5 @@ export const getters = {
   token: state => state.token,
   refreshToken: state => state.refreshToken,
   status: state => state.status,
-  isAdmin: state => state.status.authorities.includes('ROLE_ADMIN'),
+  isAdmin: state => state.status && state.status.authorities.includes('ROLE_ADMIN'),
 }

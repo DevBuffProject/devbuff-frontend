@@ -40,7 +40,6 @@ const config = {
 
   plugins: [
     { src: '~/plugins/api.js' },
-    { src: '~/plugins/sentry.js' },
     { src: '~/plugins/ui-setup.js' },
     { src: '~/plugins/fontawesome.js' },
     { src: '~/plugins/admin-auto-refresh.js', mode: 'client' },
@@ -103,6 +102,10 @@ const config = {
       }
     }
   }
+}
+
+if (!config.dev) {
+  config.plugins.push({ src: '~/plugins/sentry.js' })
 }
 
 // Proxy dev prop to publicRuntimeConfig
