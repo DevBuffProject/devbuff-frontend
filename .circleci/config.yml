@@ -5,8 +5,8 @@ jobs:
       - image: 'circleci/node:latest'
     steps:
       - checkout
-      # - run: npm install
-      # - run: npm run build
+      - run: npm install
+      - run: npm run build
       - telegram/status
 orbs:
   telegram: uniqueck/telegram-orb@0.0.1
