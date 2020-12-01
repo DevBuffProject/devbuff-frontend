@@ -9,4 +9,4 @@ jobs:
       # - run: npm run build
       - telegram/status
 orbs:
-  telegram-orb: uniqueck/telegram-orb@0.0.1
+  telegram: uniqueck/telegram-orb@0.0.1
