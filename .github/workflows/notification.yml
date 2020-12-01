@@ -10,8 +10,8 @@ jobs:
       steps:
         - name: Notify
         - uses: yanzay/notify-telegram@v0.1.0
-            if: always()
-            with:
-              chat: ${{ secrets.tg_chat }} # user id or channel name secret
-              token: ${{ secrets.tg_token }} # token secret
-              status: ${{ job.status }} # do not modify this line
+          if: always()
+          with:
+            chat: ${{ secrets.chat }} # user id or channel name secret
+            token: ${{ secrets.token }} # token secret
+            status: ${{ job.status }} # do not modify this line
