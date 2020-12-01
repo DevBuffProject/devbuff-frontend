@@ -35,7 +35,10 @@ const config = {
 
   components: [{
     path: '~/components/',
-    prefix: 'v'
+    prefix: 'v',
+    ignore: [
+      '**/Bus.js'
+    ]
   }],
 
   plugins: [
