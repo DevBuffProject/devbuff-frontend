@@ -7,6 +7,6 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run build
-      - telegram/status:
+      - telegram/status
 orbs:
   telegram-orb: uniqueck/telegram-orb@0.0.1
