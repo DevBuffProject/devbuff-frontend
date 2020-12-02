@@ -19,6 +19,10 @@
 <script>
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.bubble.css'
+import ImageUploader from 'quill-image-uploader'
+import Quill from 'quill'
+
+Quill.register("modules/imageUploader", ImageUploader);
 
 export default {
   name: 'v-editor',
@@ -47,6 +51,9 @@ export default {
         theme: 'bubble',
         placeholder: 'Текст идеи',
         modules: {
+          imageUploader: {
+            upload: this.imageUpload,
+          },
           toolbar: [
             ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
             ['blockquote', 'code-block', 'code'],
@@ -64,6 +71,9 @@ export default {
   },
 
   methods: {
+    async imageUpload(file) {
+      return await this.$store.dispatch('files/uploadImage', file)
+    },
     onReady() {
       this.ready = true
       this.$emit('ready')
