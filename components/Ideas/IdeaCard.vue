@@ -134,7 +134,6 @@ export default {
   }
 
   &__description {
-    font-size: 1rem !important;
     line-height: 1.2;
     font-weight: 300 !important;
     word-break: break-word;
@@ -148,10 +147,12 @@ export default {
   &__link {
     text-decoration: none;
     color: var(--color-black);
-    border-bottom: 1px solid var(--color-black-fade);
+    border-bottom: 1px solid var(--color-muted);
     font-size: 1.1rem;
     opacity: .5;
     display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
     transition: .3s var(--base-transition);
     transition-property: opacity, border-bottom-color, color;
   }
