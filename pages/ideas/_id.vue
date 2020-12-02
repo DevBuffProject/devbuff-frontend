@@ -146,7 +146,7 @@ import { mapGetters } from 'vuex'
 export default {
   async middleware({ store, route }) {
     const isAdmin = store.getters['auth/isAdmin']
-    const isAuthorized = store.getters['auth/isAuthorized']
+    const isAuthorized = store.getters['user/isAuthorized']
     const id = route.params.id
 
     await store.dispatch('ideas/getIdea', id)
@@ -171,7 +171,7 @@ export default {
     },
 
     isAuthorized() {
-      return this.$store.getters['auth/isAuthorized']
+      return this.$store.getters['user/isAuthorized']
     },
 
     isOwner() {
