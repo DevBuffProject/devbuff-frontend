@@ -143,7 +143,8 @@ export default {
   @include button-type();
 
   &--size-small {
-    font-size: .7rem;
+    font-size: .8rem;
+    padding: .1rem .8rem;
   }
 
   &--disabled {
@@ -158,6 +159,7 @@ export default {
 
   &--type-dark {
     background-color: #000;
+    font-weight: 700;
     color: #fff;
   }
 

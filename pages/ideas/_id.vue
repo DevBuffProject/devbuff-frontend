@@ -77,6 +77,65 @@
           <div v-html="idea.text" />
         </v-article>
       </v-card>
+
+      <div class="mt-5">
+        <h3 class="text-muted text-thin">Позиции в команде — {{ idea.specialist.length }}</h3>
+        <div class="idea__positions">
+          <v-card
+            v-for="position in idea.specialist"
+            :key="position.name"
+            class="mr-2"
+          >
+            <template #header>
+              <h4 class="m-0">{{ position.name }}</h4>
+            </template>
+
+            <template #footer>
+              <div class="w-100 d-flex justify-content-between align-items-center">
+                <div>
+                  мест <v-chip type="muted" :text="'' + position.count" />
+                </div>
+                <v-button
+                  v-if="statusPositions
+                    .find(s => s.specializationId === position.id)
+                    .positionStatus !== 'PENDING'
+                  "
+                  flat
+                  @click="respondPosition(position.id)"
+                >
+                  откликнуться
+                </v-button>
+                <div v-else-if="isOwner">
+                   вы создатель идеи
+                </div>
+                <div v-else class="idea__position-status">
+                  вы откликнулись
+                </div>
+              </div>
+            </template>
+            <v-label
+              name="Языки программирования"
+              class="mb-3"
+            >
+              <v-chip
+                v-for="language in position.languages"
+                :key="language.name"
+                :text="language.name"
+                type="auto"
+              />
+            </v-label>
+
+            <v-label v-if="mapFrameworks(position.languages).length" name="Технологии">
+              <v-chip
+                v-for="framework in mapFrameworks(position.languages)"
+                :key="framework"
+                :text="framework"
+                type="auto"
+              />
+            </v-label>
+          </v-card>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -87,14 +146,17 @@ import { mapGetters } from 'vuex'
 export default {
   async middleware({ store, route }) {
     const isAdmin = store.getters['auth/isAdmin']
+    const id = route.params.id
 
-    await store.dispatch('ideas/getIdea', route.params.id)
+    await store.dispatch('ideas/getIdea', id)
+    await store.dispatch('ideas/getStatusPositions', id)
 
     if (isAdmin)  await store.dispatch('admin/getPendingIdeas')
   },
 
   data: () => ({
-    progress: false
+    progress: false,
+    responded: [],
   }),
 
   computed: {
@@ -102,6 +164,10 @@ export default {
       idea: 'ideas/idea',
       pending: 'admin/pendingIdeas'
     }),
+
+    statusPositions() {
+      return this.$store.getters['ideas/statusPositions']
+    },
 
     isOwner() {
       const profile = this.$store.getters['user/profile']
@@ -115,23 +181,22 @@ export default {
     isIdeaPending() {
       return this.isAdmin && this.pending.find(idea => idea.id === this.idea.id)
     },
-
-    languages() {
-      return this.idea.specialist.length
-        ? this.idea.specialist.reduce((acc, spec) => {
-            spec.languages.forEach(lang => acc.push(lang))
-            return acc
-          }, [])
-        : [];
-    },
-    technologies() {
-      return this.languages.length
-        ? this.languages.reduce((acc, lang) => lang.frameworks.map(tech => tech.name), [])
-        : [];
-    }
   },
 
   methods: {
+    isResponded(position) {
+      return this.$store.getters['ideas/isUserResponded'](position)
+    },
+    async respondPosition(position) {
+      try {
+        this.responded.push(position)
+        await this.$store.dispatch('ideas/respondPosition', {
+          idea: this.idea.id,
+          position
+        })
+        await this.$store.dispatch('ideas/getStatusPositions', this.idea.id)
+      } catch (e) {}
+    },
     async deleteIdea() {
       try {
         this.progress = true
@@ -147,6 +212,12 @@ export default {
       } finally {
         this.progress = false
       }
+    },
+
+    mapFrameworks(languages) {
+      return languages.length
+        ? languages.reduce((acc, lang) => lang.frameworks.map(f => f.name), [])
+        : [];
     }
   },
 
@@ -205,6 +276,16 @@ export default {
     margin-top: .1rem;
     font-size: .8rem;
     opacity: .5;
+  }
+
+  &__positions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &__position-status {
+    font-size: .9rem;
+    padding: .2rem 1rem;
   }
 }
 </style>
