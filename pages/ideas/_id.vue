@@ -90,7 +90,7 @@
               <h4 class="m-0">{{ position.name }}</h4>
             </template>
 
-            <template #footer>
+            <template v-if="isAuthorized" #footer>
               <div class="w-100 d-flex justify-content-between align-items-center">
                 <div>
                   мест <v-chip type="muted" :text="'' + position.count" />
@@ -146,11 +146,12 @@ import { mapGetters } from 'vuex'
 export default {
   async middleware({ store, route }) {
     const isAdmin = store.getters['auth/isAdmin']
+    const isAuthorized = store.getters['auth/isAuthorized']
     const id = route.params.id
 
     await store.dispatch('ideas/getIdea', id)
-    await store.dispatch('ideas/getStatusPositions', id)
 
+    if (isAuthorized) await store.dispatch('ideas/getStatusPositions', id)
     if (isAdmin)  await store.dispatch('admin/getPendingIdeas')
   },
 
@@ -167,6 +168,10 @@ export default {
 
     statusPositions() {
       return this.$store.getters['ideas/statusPositions']
+    },
+
+    isAuthorized() {
+      return this.$store.getters['auth/isAuthorized']
     },
 
     isOwner() {
