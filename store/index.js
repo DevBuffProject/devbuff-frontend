@@ -13,9 +13,9 @@ export const actions = {
 
     // commit('setHealth', data, { root: true })
 
-    console.log('[ FETCH STATUS ]: statuspage request', STATUSPAGE_BASE_URL);
+    console.log('[ FETCH STATUS ]: statuspage request ', `${STATUSPAGE_BASE_URL}/status.json`);
 
-    return data
+    // return data
   },
   async nuxtServerInit({ commit, dispatch }, { $cookies, $api, error }) {
     await dispatch('getHealth', null, { root: true })
