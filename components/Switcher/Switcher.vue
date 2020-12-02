@@ -8,7 +8,7 @@
       @click="setValue(index)"
       :class="[
         'v-switcher__button',
-        activeIndex !== index && 'muted-text'
+        activeIndex !== index && 'v-switcher__button--active'
       ]"
     >
       {{ button.title }}
@@ -102,6 +102,11 @@ export default {
     cursor: pointer;
     z-index: 10;
     transition: transform 1s var(--base-transition);
+  }
+
+  &__button--active {
+    opacity: .5;
+    color: var(--color-text) !important;
   }
 
   &__button:active {

@@ -5,18 +5,28 @@ export const state = () => ({
   own: [],
   idea: {},
   statusPositions: [],
+  pendingUsers: []
 })
 
 export const mutations = {
   setIdeas: (state, list) => state.list = list,
   setOwnIdeas: (state, list) => state.own = list,
   setIdea: (state, idea) => state.idea = idea,
+  setPendingUsers: (state, pendingUsers) => state.pendingUsers = pendingUsers,
   setStatusPositions: (state, statusPositions) => state.statusPositions = statusPositions
 }
 
 export const actions = {
-  async getStatusPositions({ commit }, idea) {
-    const statusPositions = await this.$api.latest.get(`idea/${idea}/statusPositions`)
+  async getPendingUsers({ commit }, ideaId) {
+    const pendingUsers = await this.$api.latest.get(`idea/pending/${ideaId}`)
+
+    commit('setPendingUsers', pendingUsers)
+
+    return pendingUsers
+  },
+
+  async getStatusPositions({ commit }, ideaId) {
+    const statusPositions = await this.$api.latest.get(`idea/${ideaId}/statusPositions`)
 
     commit('setStatusPositions', statusPositions)
 
@@ -102,6 +112,7 @@ export const getters = {
   list: state => state.list,
   own: state => state.own,
   idea: state => state.idea,
+  pendingUsers: state => state.pendingUsers,
   statusPositions: state => state.statusPositions,
   isUserResponded: state => specializationId => {
     const pos = state.statusPositions.find(s => s.specializationId === specializationId)

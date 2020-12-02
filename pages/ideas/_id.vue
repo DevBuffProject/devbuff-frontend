@@ -18,16 +18,14 @@
 
       <div class="d-flex flex-wrap align-items-center justify-content-between mt-3">
         <div class="d-flex flex-wrap">
-          <nuxt-link
-            :to="localePath({ name: 's-profile-id', params: { id: idea.ownerIdea.id} })"
-            class="mr-5 d-flex"
-          >
-            <v-avatar :avatar="idea.ownerIdea.id" class="mr-2" />
-            <div>
-              <div> {{ idea.ownerIdea.firstName }} {{ idea.ownerIdea.lastName }} </div>
-              <div class="idea__owner-username"> {{ idea.ownerIdea.userName }} </div>
-            </div>
-          </nuxt-link>
+          <v-user
+            :user-id="idea.ownerIdea.id"
+            :firstname="idea.ownerIdea.firstName"
+            :lastname="idea.ownerIdea.lastName"
+            :username="idea.ownerIdea.userName"
+            class="mr-4"
+          />
+
           <v-label name="дата обновления" class="mr-5">
             {{ idea.lastUpdateDate | toLocaleDateTime($i18n.locale) }}
           </v-label>
