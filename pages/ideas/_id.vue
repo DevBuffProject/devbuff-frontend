@@ -104,7 +104,8 @@ export default {
     }),
 
     isOwner() {
-      return this.$store.getters['user/profile'].id === this.idea.ownerIdea.id
+      const profile = this.$store.getters['user/profile']
+      return profile && profile.id === this.idea.ownerIdea.id
     },
 
     isAdmin() {
