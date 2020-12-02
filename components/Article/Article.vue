@@ -5,15 +5,8 @@
 </template>
 
 <script>
-import hljs from 'highlight.js/lib/core';
-import 'highlight.js/styles/github.css';
-
 export default {
   name: 'v-article',
-
-  async mounted() {
-    await this.$nextTick()
-  }
 }
 </script>
 

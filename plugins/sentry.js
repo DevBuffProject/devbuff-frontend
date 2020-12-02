@@ -3,7 +3,7 @@ import * as Sentry from "@sentry/browser";
 import { Vue as VueIntegration } from "@sentry/integrations";
 import { Integrations } from "@sentry/tracing";
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'production') {
   Sentry.init({
     dsn: "https://fdbdca1fd3f4454fbe5c1e0ed013e87d@o479489.ingest.sentry.io/5525924",
     integrations: [
