@@ -45,7 +45,9 @@
 
         <v-label name="Выделите для форматирования">
           <v-card class="mt-1">
-            <v-editor :key="key" v-model="idea.text" />
+            <client-only>
+              <lazy-v-editor :key="key" v-model="idea.text" />
+            </client-only>
           </v-card>
         </v-label>
       </div>

@@ -2,6 +2,7 @@
   <footer class="v-footer">
     <div class="container">
       <v-status-badge
+        v-if="health.status"
         :indicator="health.status.indicator"
         :description="health.status.description"
         :href="health.page.url"
