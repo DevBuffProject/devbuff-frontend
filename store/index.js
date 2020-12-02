@@ -13,7 +13,7 @@ export const actions = {
 
     commit('setHealth', data, { root: true })
 
-    console.log('[ FETCH STATUS ]: statuspage request');
+    console.log('[ FETCH STATUS ]: statuspage request', data, STATUSPAGE_BASE_URL);
 
     return data
   },
