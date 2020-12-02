@@ -13,6 +13,8 @@ export const actions = {
 
     commit('setHealth', data, { root: true })
 
+    console.log('[ FETCH STATUS ]: statuspage request', data, STATUSPAGE_BASE_URL);
+
     return data
   },
   async nuxtServerInit({ commit, dispatch }, { $cookies, $api, error }) {
