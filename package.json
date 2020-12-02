@@ -28,7 +28,7 @@
     "@nuxtjs/axios": "5.12.3",
     "@nuxtjs/pwa": "3.3.2",
     "@sentry/browser": "5.27.6",
-    "@sentry/integrations": "5.27.6",
+    "@sentry/integrations": "5.28.0",
     "@sentry/tracing": "5.27.6",
     "animejs": "3.2.1",
     "bootstrap": "4.5.3",
