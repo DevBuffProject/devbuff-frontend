@@ -29,7 +29,7 @@
     "@nuxtjs/pwa": "3.3.2",
     "@sentry/browser": "5.27.6",
     "@sentry/integrations": "5.27.6",
-    "@sentry/tracing": "5.27.6",
+    "@sentry/tracing": "5.28.0",
     "animejs": "3.2.1",
     "bootstrap": "4.5.3",
     "color": "3.1.3",
