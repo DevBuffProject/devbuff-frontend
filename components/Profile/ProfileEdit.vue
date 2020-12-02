@@ -3,9 +3,17 @@
     <div class="profile-edit__cover d-flex align-items-center">
       <v-avatar
         class="profile-edit__avatar"
-        :avatar="$store.getters['user/profile'].avatar"
+        :avatar="$store.getters['user/profile'].id"
         size="60px"
       />
+      <label>
+        <input
+          type="file"
+          accept="image/*"
+          @change="uploadAvatar($event.target.files[0])"
+        />
+        изменить фото
+      </label>
     </div>
 
     <v-input
@@ -178,12 +186,20 @@ export default {
     setContact: debounce(function (contact, value) {
       this.profile.socialNetworks[contact] = value
     }, 500),
-    resendVerifyMail() {
+    async resendVerifyMail() {
       this.$store
         .dispatch('user/resendVerifyMail')
         .then(() => this.verifyRequestSent = true)
     },
-    send() {
+    async uploadAvatar(image) {
+      if (!image) return
+
+      try {
+        const r = await this.$store.dispatch('user/uploadAvatar', image)
+        console.log(r);
+      } catch (e) {}
+    },
+    async send() {
       this.progress = true
       this.$store
         .dispatch('user/update', this.profile)

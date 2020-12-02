@@ -134,13 +134,20 @@ export default {
       setTimeout(() => !this.resolvedDialog && this.close(), 5000)
     },
 
-    setSize({ offsetHeight, offsetWidth }) {
+    async setSize({ offsetHeight, offsetWidth }) {
       if (!this.$refs.content) return
+      // this.$refs.component.$el.classList.add('dialog__component--show')
 
-      this.$refs.content.style.height = offsetHeight + 'px'
-      this.$refs.content.style.width = offsetWidth + 'px'
+      await this.$nextTick()
+      // HOTFIX: 
+      setTimeout(() => {
+        this.$refs.component.$el.classList.add('dialog__component--show')
+      }, 400)
 
-      this.$refs.component.$el.classList.add('dialog__component--show')
+      setTimeout(() => {
+        this.$refs.content.style.height = this.$refs.component.$el.offsetHeight + 'px'
+        this.$refs.content.style.width = this.$refs.component.$el.offsetWidth + 'px'
+      }, 200)
     }
   },
 
@@ -160,7 +167,7 @@ export default {
   width: 100vw;
   height: 100vh;
   display: flex;
-  transition: opacity 0.3s var(--base-transition);
+  transition: opacity .3s var(--base-transition);
   box-sizing: border-box;
   overflow: auto;
 
@@ -197,7 +204,7 @@ export default {
   &__component {
     position: fixed;
     opacity: 0;
-    transition: opacity .3s var(--base-transition);
+    transition: opacity .5s var(--base-transition);
     transition-delay: .3s;
     &--show {
       position: static;
