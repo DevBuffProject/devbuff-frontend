@@ -9,9 +9,11 @@ export const mutations = {
 export const actions = {
   async getHealth({ commit, state }) {
     const { STATUSPAGE_BASE_URL } = this.$config
-    const { data } = await this.$axios.get(`${STATUSPAGE_BASE_URL}/status.json`)
+    // const { data } = await this.$axios.get(`${STATUSPAGE_BASE_URL}/status.json`)
 
-    commit('setHealth', data, { root: true })
+    // commit('setHealth', data, { root: true })
+
+    console.log('[ FETCH STATUS ]: statuspage request', STATUSPAGE_BASE_URL);
 
     return data
   },
