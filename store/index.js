@@ -9,18 +9,13 @@ export const mutations = {
 export const actions = {
   async getHealth({ commit, state }) {
     const { STATUSPAGE_BASE_URL } = this.$config
-    console.log('[ FETCH STATUS ]: fetching status');
     const { data } = await this.$axios.get('https://6yzwffsm5625.statuspage.io/api/v2/status.json')
 
-    // commit('setHealth', data, { root: true })
+    commit('setHealth', data, { root: true })
 
-    console.log('[ FETCH STATUS ]: statuspage request ', data, `${STATUSPAGE_BASE_URL}/status.json`);
-
-    // return data
+    return data
   },
   async nuxtServerInit({ commit, dispatch }, { $cookies, $api, error }) {
-    await dispatch('getHealth', null, { root: true })
-
     const token = $cookies.get('remix_token')
     const refreshToken = $cookies.get('remix_refresh_token')
 

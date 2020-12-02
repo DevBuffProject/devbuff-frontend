@@ -16,7 +16,6 @@ const config = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100;300;400;600;900&display=swap' }
     ],
     script: [
       { src: 'https://6yzwffsm5625.statuspage.io/embed/script.js', body: true, defer: true }

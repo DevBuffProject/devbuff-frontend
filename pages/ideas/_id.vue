@@ -162,8 +162,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
 
 .idea {
   max-width: 1000px;

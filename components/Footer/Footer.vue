@@ -24,6 +24,10 @@ export default {
     health() {
       return this.$store.getters['health']
     }
+  },
+
+  mounted() {
+    this.$store.dispatch('getHealth', null, { root: true })
   }
 }
 </script>
