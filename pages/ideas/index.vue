@@ -22,7 +22,7 @@
                 @click="excludeFilter(['specialists'])"
               >
                 <v-chip
-                  text="все"
+                  :text="$t('page.ideas.explore.filter.all')"
                   :type="!filter.specialists ? 'auto' : null"
                 />
               </span>
@@ -38,7 +38,7 @@
                 @click="applyFilter({ specialists: spec })"
               >
                 <v-chip
-                  :text="spec"
+                  :text="t('specializations.'+spec+'.title',spec)"
                   :type="filter.specialists && filter.specialists === spec
                     ? 'auto'
                     : null
@@ -53,7 +53,7 @@
                 :key="lang"
                 class="mr-2"
               >
-                <v-chip :text="lang"/>
+                <v-chip :text="t('languages.'+lang,lang)"/>
               </span>
             </v-label>
           </div>
@@ -88,7 +88,7 @@
           />
         </div>
         <div v-else class="p-5 explore__no-ideas">
-          🤷 <span class="muted-text"> {{$t('page.ideas.explore.notFound')}} </span>
+          🤷 <span class="muted-text"> {{ $t('page.ideas.explore.notFound') }} </span>
         </div>
       </transition>
 
@@ -177,7 +177,16 @@ export default {
         this.loading = false
         this.$nuxt.$loading.finish()
       }
-    }
+    },
+    t(str, fallbackStr) {
+      return this.$t && this.$te
+        ? this.$te(str)
+          ? this.$t(str)
+          : fallbackStr
+        : fallbackStr
+          ? fallbackStr
+          : str
+    },
   },
 
   head() {

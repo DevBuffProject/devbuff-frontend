@@ -344,6 +344,7 @@ export default {
         ideas: 'Ideas',
         new: 'Create',
         filter: {
+          all: 'All',
           specializations: 'Specializations',
           languages: 'Languages',
           datePublish: 'By publication date',

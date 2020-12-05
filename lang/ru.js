@@ -344,6 +344,7 @@ export default {
         ideas: 'Идеи',
         new: 'Создать',
         filter: {
+          all: 'Все',
           specializations: 'Специальности',
           languages: 'Языки программирование',
           datePublish: 'По дате публикации',

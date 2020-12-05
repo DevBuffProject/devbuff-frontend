@@ -5,19 +5,19 @@
     @mouseout="hover = false"
   >
     <v-label :name="$t('components.ideaCard.name')" class="w-100 mb-3">
-        <div v-if="!linked"> {{ title }} </div>
-        <div v-else class="d-flex align-items-center">
-          <nuxt-link
-            :to="localePath({ name: 'ideas-id', params: { id } })"
-            :class="['idea__link', hover && 'idea__link--hover']"
-          >
-            {{ title }}
-          </nuxt-link>
-          <v-icon
-            :icon="['fas', 'long-arrow-alt-right']"
-            :class="['ml-2', 'idea__link-icon', hover && 'idea__link-icon--hover']"
-          />
-        </div>
+      <div v-if="!linked"> {{ title }}</div>
+      <div v-else class="d-flex align-items-center">
+        <nuxt-link
+          :to="localePath({ name: 'ideas-id', params: { id } })"
+          :class="['idea__link', hover && 'idea__link--hover']"
+        >
+          {{ title }}
+        </nuxt-link>
+        <v-icon
+          :icon="['fas', 'long-arrow-alt-right']"
+          :class="['ml-2', 'idea__link-icon', hover && 'idea__link-icon--hover']"
+        />
+      </div>
     </v-label>
 
     <v-label v-if="publishDate" :name="$t('components.ideaCard.dateCreation')" class="w-100 mb-3">
@@ -42,7 +42,7 @@
           :key="spec.name + key"
           class="mr-2"
         >
-          <v-chip :text="spec.name" />
+          <v-chip :text="t('specializations.'+spec.name+'.title',spec.name)"/>
         </span>
       </v-label>
 
@@ -52,7 +52,7 @@
           :key="tech.name + key"
           class="mr-2"
         >
-          <v-chip :text="tech" />
+          <v-chip :text="tech"/>
         </span>
       </v-label>
 
@@ -62,7 +62,7 @@
           :key="lang.name + key"
           class="mr-2"
         >
-          <v-chip :text="lang.name" :type="hover ? 'auto' : null" />
+          <v-chip :text="t('languages.'+lang.name,lang.name)" :type="hover ? 'auto' : null"/>
         </span>
       </v-label>
 
@@ -80,7 +80,7 @@ export default {
       default: true,
     },
     id: {
-      type: [ String, Number ],
+      type: [String, Number],
       required: true
     },
     publishDate: {
@@ -109,9 +109,9 @@ export default {
     languages() {
       return this.specialists.length
         ? this.specialists.reduce((acc, spec) => {
-            spec.languages.forEach(lang => acc.push(lang))
-            return acc
-          }, [])
+          spec.languages.forEach(lang => acc.push(lang))
+          return acc
+        }, [])
         : [];
     },
     technologies() {
@@ -119,6 +119,17 @@ export default {
         ? this.languages.reduce((acc, lang) => lang.technologies.map(tech => tech.name), [])
         : [];
     }
+  },
+  methods: {
+    t(str, fallbackStr) {
+      return this.$t && this.$te
+        ? this.$te(str)
+          ? this.$t(str)
+          : fallbackStr
+        : fallbackStr
+          ? fallbackStr
+          : str
+    },
   }
 }
 </script>
@@ -170,7 +181,7 @@ export default {
     transition-property: transform, opacity, color;
   }
 
-   &__link-icon--hover {
+  &__link-icon--hover {
     color: var(--color-primary);
     border-bottom-color: var(--color-primary-tint);
     transform: translateX(5px);
