@@ -56,7 +56,7 @@
             :to="localePath({ name: 's-editor' })"
           >
             <v-button type="muted" :icon="['fas', 'plus']">
-              создать
+              {{ $t('components.header.create') }}
             </v-button>
           </nuxt-link>
           <nuxt-link :to="localePath({ name: 's-profile' })">

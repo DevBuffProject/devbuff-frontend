@@ -9,7 +9,7 @@
           :icon="['fas', 'long-arrow-alt-left']"
           class="idea__back-link-icon"
         />
-        список идей
+        {{ $t('page.ideas.view.back') }}
       </nuxt-link>
 
       <strong>
@@ -26,58 +26,62 @@
             class="mr-4"
           />
 
-          <v-label name="дата обновления" class="mr-5">
+          <v-label :name="$t('page.ideas.view.dateCreation')" class="mr-5">
             {{ idea.lastUpdateDate | toLocaleDateTime($i18n.locale) }}
           </v-label>
 
-          <v-label name="статус" class="mr-5">
-            {{ idea.status }}
+          <v-label :name="$t('page.ideas.view.status.title')" class="mr-5">
+            {{ $t('page.ideas.view.status.' + idea.status) }}
           </v-label>
 
-          <v-label v-if="isOwner" name="статус модерации">
-            {{ idea.waitingValidation ? 'на модерации' : 'одобрено модератором' }}
+          <v-label v-if="isOwner" :name="$t('page.ideas.view.statusModeration.title')">
+            {{
+              idea.waitingValidation ? $t('page.ideas.view.statusModeration.waitingValidation') : $t('page.ideas.view.statusModeration.alreadyApproved')
+            }}
           </v-label>
         </div>
 
-        <v-label name="действия">
-            <v-button
-              v-if="isOwner"
-              class="mr-2"
-              :icon="['fas', 'edit']"
-              type="muted"
-              small
-              @click="$router.push(localePath({ name: 's-editor', query: { id: idea.id }}))"
-            >
-              изменить
-            </v-button>
+        <v-label :name="$t('page.ideas.view.action.title')">
+          <v-button
+            v-if="isOwner"
+            class="mr-2"
+            :icon="['fas', 'edit']"
+            type="muted"
+            small
+            @click="$router.push(localePath({ name: 's-editor', query: { id: idea.id }}))"
+          >
+            {{ $t('page.ideas.view.action.change') }}
+          </v-button>
 
-            <v-button
-              v-if="isOwner || isAdmin"
-              type="danger"
-              small
-              @click="deleteIdea"
-            >
-              удалить
-            </v-button>
+          <v-button
+            v-if="isOwner || isAdmin"
+            type="danger"
+            small
+            @click="deleteIdea"
+          >
+            {{ $t('page.ideas.view.action.delete') }}
+          </v-button>
 
-            <v-button
-              v-if="!isOwner && !isAdmin"
-              type="primary"
-              small
-            >
-              откликнуться
-            </v-button>
+          <v-button
+            v-if="!isOwner && !isAdmin"
+            type="primary"
+            small
+          >
+            {{ $t('page.ideas.view.action.respond') }}
+          </v-button>
         </v-label>
       </div>
 
       <v-card class="mt-3">
         <v-article>
-          <div v-html="idea.text" />
+          <div v-html="idea.text"/>
         </v-article>
       </v-card>
 
       <div class="mt-5">
-        <h3 class="text-muted text-thin">Позиции в команде — {{ idea.specialist.length }}</h3>
+        <h3 class="text-muted text-thin">{{
+            $t('page.ideas.view.team.countSpecialists') + '—' + idea.specialist.length
+          }}</h3>
         <div class="idea__positions">
           <v-card
             v-for="position in idea.specialist"
@@ -85,45 +89,48 @@
             class="mr-2"
           >
             <template #header>
-              <h4 class="m-0">{{ position.name }}</h4>
+              <h4 class="m-0">
+                {{ t('specializations.' + position.name + ".title", position.name) }}</h4>
             </template>
 
             <template v-if="isAuthorized" #footer>
               <div class="w-100 d-flex justify-content-between align-items-center">
                 <div>
-                  мест <v-chip type="muted" :text="'' + position.count" />
+                  {{ $t('page.ideas.view.team.countPositionsPerSpecialists') }}
+                  <v-chip type="muted" :text="'' + position.count"/>
+                </div>
+
+                <div v-if="isOwner">
+                  {{ $t('page.ideas.view.team.statusPending.ownerIdea') }}
                 </div>
                 <v-button
-                  v-if="statusPositions
+                  v-else-if="statusPositions
                     .find(s => s.specializationId === position.id)
                     .positionStatus !== 'PENDING'
                   "
                   flat
                   @click="respondPosition(position.id)"
                 >
-                  откликнуться
+                  {{ $t('page.ideas.view.team.statusPending.not') }}
                 </v-button>
-                <div v-else-if="isOwner">
-                   вы создатель идеи
-                </div>
                 <div v-else class="idea__position-status">
-                  вы откликнулись
+                  {{ $t('page.ideas.view.team.statusPending.pending') }}
                 </div>
               </div>
             </template>
             <v-label
-              name="Языки программирования"
+              :name="$t('page.ideas.view.team.languages')"
               class="mb-3"
             >
               <v-chip
                 v-for="language in position.languages"
                 :key="language.name"
-                :text="language.name"
+                :text="t('languages.' + language.name, language.name)"
                 type="auto"
               />
             </v-label>
 
-            <v-label v-if="mapFrameworks(position.languages).length" name="Технологии">
+            <v-label v-if="mapFrameworks(position.languages).length" :name="$t('page.ideas.view.team.technologies')">
               <v-chip
                 v-for="framework in mapFrameworks(position.languages)"
                 :key="framework"
@@ -139,10 +146,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
-  async middleware({ store, route }) {
+  async middleware({store, route}) {
     const isAdmin = store.getters['auth/isAdmin']
     const isAuthorized = store.getters['user/isAuthorized']
     const id = route.params.id
@@ -150,7 +157,7 @@ export default {
     await store.dispatch('ideas/getIdea', id)
 
     if (isAuthorized) await store.dispatch('ideas/getStatusPositions', id)
-    if (isAdmin)  await store.dispatch('admin/getPendingIdeas')
+    if (isAdmin) await store.dispatch('admin/getPendingIdeas')
   },
 
   data: () => ({
@@ -198,7 +205,8 @@ export default {
           position
         })
         await this.$store.dispatch('ideas/getStatusPositions', this.idea.id)
-      } catch (e) {}
+      } catch (e) {
+      }
     },
     async deleteIdea() {
       try {
@@ -209,7 +217,7 @@ export default {
 
         await this.$store.dispatch(commit, this.idea.id)
         this.progress = false
-        this.$router.push(this.localePath({ name: 'ideas' }))
+        this.$router.push(this.localePath({name: 'ideas'}))
       } catch (e) {
         this.progress = false
       } finally {
@@ -221,14 +229,23 @@ export default {
       return languages.length
         ? languages.reduce((acc, lang) => lang.frameworks.map(f => f.name), [])
         : [];
-    }
+    },
+    t(str, fallbackStr) {
+      return this.$t && this.$te
+        ? this.$te(str)
+          ? this.$t(str)
+          : fallbackStr
+        : fallbackStr
+          ? fallbackStr
+          : str
+    },
   },
 
   head() {
     return {
       title: `Devbuff :: ${this.idea.name}`,
       meta: [
-        { hid: 'description', name: 'description', content: this.idea.description }
+        {hid: 'description', name: 'description', content: this.idea.description}
       ]
     }
   }
@@ -256,7 +273,10 @@ export default {
     font-size: .8rem;
     margin-bottom: 2rem;
     font-weight: 600;
-    &:hover { opacity: 1; }
+
+    &:hover {
+      opacity: 1;
+    }
   }
 
   &__back-link-icon {
@@ -271,6 +291,7 @@ export default {
     border-radius: 1rem;
     transition: background-color .3s var(--base-transition);
   }
+
   &__back-link:hover &__back-link-icon {
     background-color: var(--color-muted);
   }
