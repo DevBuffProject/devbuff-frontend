@@ -160,6 +160,7 @@ export default {
     text-transform: lowercase;
     margin-right: 1.5rem;
     opacity: 0.5;
+    font-weight: 600;
     transition-property: background-color, color, opacity;
     transition: .3s var(--base-transition);
 

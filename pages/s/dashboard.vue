@@ -5,13 +5,6 @@
         <div class="d-flex">
           <h3 class="m-0"> {{ $t('page.dashboard.title') }} </h3>
         </div>
-        <div>
-          <nuxt-link :to="localePath({ name: 's-editor' })">
-            <v-button :icon="['fas', 'plus']">
-              {{ $t('page.ideas.explore.new') }}
-            </v-button>
-          </nuxt-link>
-        </div>
       </div>
     </v-toolbar>
 
@@ -71,20 +64,17 @@
         </div>
 
 
-        <div v-if="idea" class="dashboard__detail">
-          <div class="d-flex justify-content-center">
-            <v-switcher
-              :values="[
-                { title: 'отклики и команда', value: 'peoples' },
-                { title: 'предпросмотр идеи', value: 'preview-idea' }
-              ]"
-              v-model="tab"
-              class="mb-4"
-            />
+        <div v-if="inspectedIdeaId && !loading" class="dashboard__detail">
+          <div class="d-flex align-items-baseline mb-3">
+            <h3 class="my-0 mr-3">Отклики</h3>
+            <v-link
+              :to="localePath({ name: 'ideas-id', params: { id: inspectedIdeaId }})"
+            >
+              посмотреть идею
+            </v-link>
           </div>
-
-          <div>
-            <div v-if="tab === 'peoples'" class="">
+          <div v-if="pendingUsers.length">
+            <div>
               <v-card
                 v-for="spec in pendingUsers"
                 :key="spec.specialisationId"
@@ -101,7 +91,10 @@
                     />
 
                     <v-label name="специальность" class="mr-4">
-                      {{ getPositionName(spec.specialisationId) }}
+                      <div v-if="getPositionName(spec.specialisationId)">
+                        {{ getPositionName(spec.specialisationId) }}
+                      </div>
+                      <v-skeleton v-else figure="line" />
                     </v-label>
                     <div>
                       <div v-if="spec.userEntity.vk" class="mb-2">
@@ -131,7 +124,7 @@
                         </div>
                       </div>
 
-                      <div v-if="spec.userEntity.discord" class="mb-4">
+                      <div v-if="spec.userEntity.discord">
                         <div class="d-flex align-items-center">
                           <v-icon class="mr-2" :icon="['fab', 'discord']" />
                           <span class="text-muted">{{ spec.userEntity.discord }}</span>
@@ -159,8 +152,6 @@
                   v-if="spec.userEntity.telegram"
                   :url="`https://t.me/${spec.userEntity.telegram}`"
                 />
-
-
               </v-card>
             </div>
 
@@ -173,6 +164,12 @@
               />
             </v-card>
           </div>
+          <div v-else class="muted mt-4">
+            Откликов пока нет
+          </div>
+        </div>
+        <div v-if="inspectedIdeaId && loading" class="d-flex justify-content-center">
+          <v-loading />
         </div>
       </div>
 
@@ -182,18 +179,19 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
+import VLink from "@/components/Link/Link";
+import VSkeleton from "@/components/Skeleton/Skeleton";
 export default {
+  components: {VSkeleton, VLink},
   async middleware({ store }) {
-    const ideas = await store.dispatch('ideas/getOwnIdeas')
-    // ideas.map()
+    await store.dispatch('ideas/getOwnIdeas')
   },
 
   data: () => ({
     search: null,
     tab: 'peoples',
     inspectedIdeaId: null,
+    loading: false,
   }),
 
   computed: {
@@ -227,8 +225,16 @@ export default {
     },
     async getIdeaStatus(ideaId) {
       this.inspectedIdeaId = ideaId
-      await this.$store.dispatch('ideas/getIdea', ideaId)
-      await this.$store.dispatch('ideas/getPendingUsers', ideaId)
+      this.loading = true
+
+      try {
+        await this.$store.dispatch('ideas/getIdea', ideaId)
+        await this.$store.dispatch('ideas/getPendingUsers', ideaId)
+      } catch (e) {
+        this.loading = false
+      } finally {
+        this.loading = false
+      }
     }
   }
 }
