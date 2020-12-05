@@ -354,6 +354,30 @@ export default {
         },
         notFound: 'Not found'
       }
+    },
+    viewIdea: {
+      back: 'Back',
+      lastDateUpdate: 'Date updated',
+      ideaStatus: {
+        title: 'Status',
+        PUBLISH: 'Published',
+        WAITING_FULL_TEAM: 'Waiting teammates',
+        WORKING: 'In work',
+        FINISHED: 'Done.',
+        PAUSED: 'Paused',
+        STOPPED: 'Stopped'
+      },
+      moderationStatus: {
+        title: 'Status of moderation',
+        waitingModeration: 'Waiting approved',
+        successModerated: 'Approved'
+      },
+      action: {
+        title: 'Actions',
+        change: 'Change',
+        delete: 'Delete',
+        respond: 'Respond'
+      }
     }
   },
   layouts: {

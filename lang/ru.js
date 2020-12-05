@@ -354,6 +354,30 @@ export default {
         },
         notFound: 'Ничего не найдено'
       }
+    },
+    viewIdea: {
+      back: 'Список идей',
+      lastDateUpdate: 'Дата обновления',
+      ideaStatus: {
+        title: 'Статус',
+        PUBLISH: 'Опубликована',
+        WAITING_FULL_TEAM: 'Ожидает набора участников',
+        WORKING: 'В работе',
+        FINISHED: 'Завершена',
+        PAUSED: 'Пауза',
+        STOPPED: 'Остановлена'
+      },
+      moderationStatus: {
+        title: 'Статус модерации',
+        waitingModeration: 'Ожидание модерации',
+        successModerated: 'Одобрена'
+      },
+      action: {
+        title: 'Действия',
+        change: 'Изменить',
+        delete: 'Удалить',
+        respond: 'Откликнуться'
+      }
     }
   },
   layouts: {
