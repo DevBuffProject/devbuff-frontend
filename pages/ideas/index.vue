@@ -12,7 +12,7 @@
       <div class="explore__filter mb-3">
         <div class="mb-4">
           <div class="d-flex">
-            <v-label :name="'специальности — '+ specs.length" class="mr-4">
+            <v-label :name="$t('page.ideas.explore.filter.specializations') + ' — '+ specs.length" class="mr-4">
               <span
                 :class="[
                   'mr-2',
@@ -47,13 +47,13 @@
               </span>
             </v-label>
 
-            <v-label :name="'языки программирования — ' + langs.length">
+            <v-label :name="$t('page.ideas.explore.filter.languages')+' — ' + langs.length">
               <span
                 v-for="lang in langs"
                 :key="lang"
                 class="mr-2"
               >
-                <v-chip :text="lang" />
+                <v-chip :text="lang"/>
               </span>
             </v-label>
           </div>
@@ -62,14 +62,14 @@
         <div class="explore__filter-sort d-flex align-items-center">
           <v-switcher
             :values="[
-              { title: 'по дате публикации', value: 'date' },
-              { title: 'по дате последнего обновления', value: 'lastUpdate' }
+              { title: $t('page.ideas.explore.filter.datePublish'), value: 'date' },
+              { title: $t('page.ideas.explore.filter.lastUpdate'), value: 'lastUpdate' }
             ]"
             :value="filter.sortBy"
             @change="applyFilter({ sortBy: $event })"
           />
           <transition name="fade">
-            <v-loading v-show="loading" class="ml-4 muted" />
+            <v-loading v-show="loading" class="ml-4 muted"/>
           </transition>
         </div>
       </div>
@@ -88,7 +88,7 @@
           />
         </div>
         <div v-else class="p-5 explore__no-ideas">
-          🤷 <span class="muted-text"> Ничего не найдено </span>
+          🤷 <span class="muted-text"> {{$t('page.ideas.explore.notFound')}} </span>
         </div>
       </transition>
 
@@ -97,10 +97,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
-  async middleware({ store, route }) {
+  async middleware({store, route}) {
     await store.dispatch('ideas/getIdeas', route.query)
     await store.dispatch('skills/getSkills')
   },
@@ -184,7 +184,7 @@ export default {
     return {
       title: 'Devbuff :: Проекты',
       meta: [
-        { hid: 'description', name: 'description', content: 'Список проектов' }
+        {hid: 'description', name: 'description', content: 'Список проектов'}
       ]
     }
   }
@@ -203,6 +203,7 @@ export default {
     cursor: pointer;
     transition: opacity .3s var(--base-transition);
   }
+
   &__filter-label:hover,
   &__filter-label--active {
     opacity: 1

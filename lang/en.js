@@ -317,7 +317,13 @@ export default {
       explore: {
         ideas: 'Ideas',
         new: 'Create',
-        advancedSearch: 'Advanced search'
+        filter: {
+          specializations: 'Specializations',
+          languages: 'Languages',
+          datePublish: 'By publication date',
+          lastUpdate: 'Last update',
+        },
+        notFound: 'Not found'
       }
     }
   },
