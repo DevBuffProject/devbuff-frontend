@@ -283,6 +283,14 @@ export default {
       controls: {
         back: 'Назад'
       }
+    },
+    ideaCard: {
+      name: "Название",
+      dateCreation: "Дата создания",
+      description: "Описание",
+      specialists: "Специалисты",
+      languages: "Языки программирования",
+      technologies: "Технологии"
     }
   },
   page: {
@@ -342,6 +350,41 @@ export default {
           lastUpdate: 'По дате последнего обновления',
         },
         notFound: 'Ничего не найдено'
+      },
+      view: {
+        back: 'Назад',
+        dateCreation: 'Дата обновления',
+        status: {
+          title: 'Статус',
+          PUBLISH: 'Опубликована',
+          WAITING_FULL_TEAM: 'Ожидает набора кондидатов',
+          WORKING: 'В разработке',
+          FINISHED: 'Готово',
+          PAUSED: 'На паузе',
+          STOPPED: 'Проект закрыт :('
+        },
+        statusModeration: {
+          title: 'Статус модерации',
+          waitingValidation: 'на модерации',
+          alreadyApproved: 'одобрено модератором'
+        },
+        action: {
+          title: 'Действия',
+          change: 'Изменить',
+          delete: 'Удалить',
+          respond: 'Откликнуться'
+        },
+        team: {
+          countSpecialists: 'Позиции в команде',
+          countPositionsPerSpecialists: 'Мест',
+          languages: "Языки программирования",
+          technologies: "Технологии",
+          statusPending: {
+            not: 'Откликнуться',
+            pending: 'Вы откликнулись',
+            ownerIdea: 'Вы создатель идеи'
+          }
+        }
       }
     }
   },

@@ -283,6 +283,14 @@ export default {
       controls: {
         back: 'Back'
       }
+    },
+    ideaCard: {
+      name: "Name",
+      dateCreation: "Date creation",
+      description: "Description",
+      specialists: "Specialists",
+      languages: "Languages",
+      technologies: "Technologies"
     }
   },
   page: {
@@ -342,6 +350,41 @@ export default {
           lastUpdate: 'Last update',
         },
         notFound: 'Not found'
+      },
+      view: {
+        back: 'Back',
+        dateCreation: 'Date creation',
+        status: {
+          title: 'Status idea',
+          PUBLISH: 'Published',
+          WAITING_FULL_TEAM: 'Waiting full team',
+          WORKING: 'Development',
+          FINISHED: 'Done.',
+          PAUSED: 'Paused',
+          STOPPED: 'Project closed :('
+        },
+        statusModeration: {
+          title: 'Status of moderation',
+          waitingValidation: 'Pending to moderation',
+          alreadyApproved: 'Approved moderation'
+        },
+        action: {
+          title: 'Action',
+          change: 'Change',
+          delete: 'Delete',
+          respond: 'Respond'
+        },
+        team: {
+          countSpecialists: 'List of positions',
+          countPositionsPerSpecialists: 'Count',
+          languages: "Languages",
+          technologies: "Technologies",
+          statusPending: {
+            not: 'Respond',
+            pending: 'Your already pending',
+            ownerIdea: 'Your owner of idea'
+          }
+        }
       }
     }
   },
