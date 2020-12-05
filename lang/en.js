@@ -264,7 +264,8 @@ export default {
   components: {
     header: {
       ideas: 'ideas',
-      dashboard: 'Dashboard'
+      dashboard: 'Dashboard',
+      create: 'Create'
     },
     skillEditor: {
       header: {

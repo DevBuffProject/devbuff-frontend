@@ -4,7 +4,7 @@
       <div class="header__section">
         <div class="d-flex align-items-center">
           <div class="mr-3">
-            <v-logo class="header__logo" />
+            <v-logo class="header__logo"/>
           </div>
           <v-switcher
             class="header__lang-switcher"
@@ -13,7 +13,7 @@
             @change="setLocale"
           />
           <transition name="fade">
-            <v-loading class="muted ml-3" v-show="localeLoading" />
+            <v-loading class="muted ml-3" v-show="localeLoading"/>
           </transition>
         </div>
       </div>
@@ -40,7 +40,7 @@
             :to="localePath({ name: 'ideas' })"
             :icon="['fas', 'lightbulb']"
           >
-            {{  $t('components.header.ideas')  }}
+            {{ $t('components.header.ideas') }}
           </v-link>
           <v-link
             class="text header__link"
@@ -56,11 +56,11 @@
             :to="localePath({ name: 's-editor' })"
           >
             <v-button type="muted" :icon="['fas', 'plus']">
-              создать
+              {{ $t('components.header.create') }}
             </v-button>
           </nuxt-link>
           <nuxt-link :to="localePath({ name: 's-profile' })">
-            <v-avatar :avatar="this.$store.getters['user/profile'].id" />
+            <v-avatar :avatar="this.$store.getters['user/profile'].id"/>
           </nuxt-link>
         </div>
 
@@ -103,7 +103,7 @@ export default {
     avatar() {
       return this.$store.getters['user/profile'].avatar
     },
-    availableLocales () {
+    availableLocales() {
       return this.$i18n.locales.map(locale => ({
         title: locale.name,
         value: locale.code
