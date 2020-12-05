@@ -9,7 +9,7 @@
           :icon="['fas', 'long-arrow-alt-left']"
           class="idea__back-link-icon"
         />
-        {{ $t('page.viewIdea.back') }}
+        список идей
       </nuxt-link>
 
       <strong>
@@ -22,61 +22,59 @@
             :to="localePath({ name: 's-profile-id', params: { id: idea.ownerIdea.id} })"
             class="mr-5 d-flex"
           >
-            <v-avatar :avatar="idea.ownerIdea.id" class="mr-2"/>
+            <v-avatar :avatar="idea.ownerIdea.id" class="mr-2" />
             <div>
-              <div> {{ idea.ownerIdea.firstName }} {{ idea.ownerIdea.lastName }}</div>
-              <div class="idea__owner-username"> {{ idea.ownerIdea.userName }}</div>
+              <div> {{ idea.ownerIdea.firstName }} {{ idea.ownerIdea.lastName }} </div>
+              <div class="idea__owner-username"> {{ idea.ownerIdea.userName }} </div>
             </div>
           </nuxt-link>
-          <v-label :name="$t('page.viewIdea.lastDateUpdate')" class="mr-5">
+          <v-label name="дата обновления" class="mr-5">
             {{ idea.lastUpdateDate | toLocaleDateTime($i18n.locale) }}
           </v-label>
 
-          <v-label :name="$t('page.viewIdea.ideaStatus.title')" class="mr-5">
-            {{ $t('page.viewIdea.ideaStatus.' + idea.status) }}
+          <v-label name="статус" class="mr-5">
+            {{ idea.status }}
           </v-label>
 
-          <v-label v-if="isOwner" :name="$t('page.viewIdea.moderationStatus.title')">
-            {{
-              idea.waitingValidation ? $t('page.viewIdea.moderationStatus.waitingModeration') : $t('page.viewIdea.moderationStatus.successModerated')
-            }}
+          <v-label v-if="isOwner" name="статус модерации">
+            {{ idea.waitingValidation ? 'на модерации' : 'одобрено модератором' }}
           </v-label>
         </div>
 
-        <v-label :name="$t('page.viewIdea.action.title')">
-          <v-button
-            v-if="isOwner"
-            class="mr-2"
-            :icon="['fas', 'edit']"
-            type="muted"
-            small
-            @click="$router.push(localePath({ name: 's-editor', query: { id: idea.id }}))"
-          >
-            {{ $t('page.viewIdea.action.change') }}
-          </v-button>
+        <v-label name="действия">
+            <v-button
+              v-if="isOwner"
+              class="mr-2"
+              :icon="['fas', 'edit']"
+              type="muted"
+              small
+              @click="$router.push(localePath({ name: 's-editor', query: { id: idea.id }}))"
+            >
+              изменить
+            </v-button>
 
-          <v-button
-            v-if="isOwner || isAdmin"
-            type="danger"
-            small
-            @click="deleteIdea"
-          >
-            {{ $t('page.viewIdea.action.delete') }}
-          </v-button>
+            <v-button
+              v-if="isOwner || isAdmin"
+              type="danger"
+              small
+              @click="deleteIdea"
+            >
+              удалить
+            </v-button>
 
-          <v-button
-            v-if="!isOwner && !isAdmin"
-            type="primary"
-            small
-          >
-            {{ $t('page.viewIdea.action.respond') }}
-          </v-button>
+            <v-button
+              v-if="!isOwner && !isAdmin"
+              type="primary"
+              small
+            >
+              откликнуться
+            </v-button>
         </v-label>
       </div>
 
       <v-card class="mt-3">
         <v-article>
-          <div v-html="idea.text"/>
+          <div v-html="idea.text" />
         </v-article>
       </v-card>
     </div>
@@ -84,15 +82,15 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
-  async middleware({store, route}) {
+  async middleware({ store, route }) {
     const isAdmin = store.getters['auth/isAdmin']
 
     await store.dispatch('ideas/getIdea', route.params.id)
 
-    if (isAdmin) await store.dispatch('admin/getPendingIdeas')
+    if (isAdmin)  await store.dispatch('admin/getPendingIdeas')
   },
 
   data: () => ({
@@ -121,9 +119,9 @@ export default {
     languages() {
       return this.idea.specialist.length
         ? this.idea.specialist.reduce((acc, spec) => {
-          spec.languages.forEach(lang => acc.push(lang))
-          return acc
-        }, [])
+            spec.languages.forEach(lang => acc.push(lang))
+            return acc
+          }, [])
         : [];
     },
     technologies() {
@@ -143,7 +141,7 @@ export default {
 
         await this.$store.dispatch(commit, this.idea.id)
         this.progress = false
-        this.$router.push(this.localePath({name: 'ideas'}))
+        this.$router.push(this.localePath({ name: 'ideas' }))
       } catch (e) {
         this.progress = false
       } finally {
@@ -156,7 +154,7 @@ export default {
     return {
       title: `Devbuff :: ${this.idea.name}`,
       meta: [
-        {hid: 'description', name: 'description', content: this.idea.description}
+        { hid: 'description', name: 'description', content: this.idea.description }
       ]
     }
   }
@@ -184,10 +182,7 @@ export default {
     font-size: .8rem;
     margin-bottom: 2rem;
     font-weight: 600;
-
-    &:hover {
-      opacity: 1;
-    }
+    &:hover { opacity: 1; }
   }
 
   &__back-link-icon {
@@ -202,7 +197,6 @@ export default {
     border-radius: 1rem;
     transition: background-color .3s var(--base-transition);
   }
-
   &__back-link:hover &__back-link-icon {
     background-color: var(--color-muted);
   }
