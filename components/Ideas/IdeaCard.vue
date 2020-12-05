@@ -4,7 +4,7 @@
     @mouseover="hover = true"
     @mouseout="hover = false"
   >
-    <v-label name="название" class="w-100 mb-3">
+    <v-label :name="$t('components.ideaCard.name')" class="w-100 mb-3">
         <div v-if="!linked"> {{ title }} </div>
         <div v-else class="d-flex align-items-center">
           <nuxt-link
@@ -20,13 +20,13 @@
         </div>
     </v-label>
 
-    <v-label v-if="publishDate" name="дата создания" class="w-100 mb-3">
+    <v-label v-if="publishDate" :name="$t('components.ideaCard.dateCreation')" class="w-100 mb-3">
       <div class="idea__date">
         {{ publishDate | toLocaleDateTime($i18n.locale) }}
       </div>
     </v-label>
 
-    <v-label name="описание" class="w-100">
+    <v-label :name="$t('components.ideaCard.description')" class="w-100">
       <div class="idea__description">
         {{ description }}
       </div>
@@ -36,7 +36,7 @@
       v-if="specialists.length || technologies.length || languages.length"
       class="mt-4"
     >
-      <v-label v-if="specialists.length" name="Специалисты">
+      <v-label v-if="specialists.length" :name="$t('components.ideaCard.specialists')">
         <span
           v-for="(spec, key) in specialists"
           :key="spec.name + key"
@@ -46,7 +46,7 @@
         </span>
       </v-label>
 
-      <v-label v-if="technologies.length" name="Технологии" class="mt-3">
+      <v-label v-if="technologies.length" :name="$t('components.ideaCard.technologies')" class="mt-3">
         <span
           v-for="(tech, key) in technologies"
           :key="tech.name + key"
@@ -56,7 +56,7 @@
         </span>
       </v-label>
 
-      <v-label v-if="languages.length" name="Языки программирования" class="mt-3">
+      <v-label v-if="languages.length" :name="$t('components.ideaCard.languages')" class="mt-3">
         <span
           v-for="(lang, key) in languages"
           :key="lang.name + key"
