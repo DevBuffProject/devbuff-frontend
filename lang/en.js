@@ -336,8 +336,18 @@ export default {
       }
     },
     dashboard: {
+      search: 'Search',
       title: 'Dashboard',
-      noIdeas: 'No ideas'
+      noIdeas: 'No ideas',
+      respond: {
+        title: 'Responses',
+        viewIdea: 'View idea',
+        contacts: {
+          vk: "VK"
+        },
+        accept: "Accept",
+        notFound: "No response yet"
+      }
     },
     ideas: {
       explore: {
