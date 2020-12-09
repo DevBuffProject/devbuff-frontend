@@ -342,6 +342,7 @@ export default {
       respond: {
         title: 'Отклики',
         viewIdea: 'Просмотреть идею',
+        specialization:'Специальность',
         contacts: {
           vk: "ВКонтакте"
         },

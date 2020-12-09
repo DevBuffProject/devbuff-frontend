@@ -90,7 +90,7 @@
                       class="dashboard__user-card"
                     />
 
-                    <v-label name="специальность" class="mr-4">
+                    <v-label :name="$t('page.dashboard.respond.specialization')" class="mr-4">
                       <div v-if="getPositionName(spec.specialisationId)">
                         {{
                           t('specializations.' + getPositionName(spec.specialisationId) + '.title', getPositionName(spec.specialisationId))

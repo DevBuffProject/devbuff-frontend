@@ -342,6 +342,7 @@ export default {
       respond: {
         title: 'Responses',
         viewIdea: 'View idea',
+        specialization: 'Specialization',
         contacts: {
           vk: "VK"
         },
