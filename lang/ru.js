@@ -336,8 +336,18 @@ export default {
       }
     },
     dashboard: {
+      search: 'Поиск',
       title: 'Персональная страница',
-      noIdeas: 'Идей не найдено'
+      noIdeas: 'Идей не найдено',
+      respond: {
+        title: 'Отклики',
+        viewIdea: 'Просмотреть идею',
+        contacts: {
+          vk: "ВКонтакте"
+        },
+        accept: "Принять",
+        notFound: "Откликов пока нет"
+      }
     },
     ideas: {
       explore: {

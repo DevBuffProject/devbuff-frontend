@@ -13,7 +13,7 @@
         <v-input
           v-model="search"
           type="search"
-          placeholder="поиск"
+          :placeholder="$t('page.dashboard.search')"
           :icon="['fas', 'search']"
           class="dashboard__search w-100"
         />
@@ -66,11 +66,11 @@
 
         <div v-if="inspectedIdeaId && !loading" class="dashboard__detail">
           <div class="d-flex align-items-baseline mb-3">
-            <h3 class="my-0 mr-3">Отклики</h3>
+            <h3 class="my-0 mr-3">{{ $t('page.dashboard.respond.title') }}</h3>
             <v-link
               :to="localePath({ name: 'ideas-id', params: { id: inspectedIdeaId }})"
             >
-              посмотреть идею
+              {{ $t('page.dashboard.respond.viewIdea') }}
             </v-link>
           </div>
           <div v-if="pendingUsers.length">
@@ -92,23 +92,25 @@
 
                     <v-label name="специальность" class="mr-4">
                       <div v-if="getPositionName(spec.specialisationId)">
-                        {{ getPositionName(spec.specialisationId) }}
+                        {{
+                          t('specializations.' + getPositionName(spec.specialisationId) + '.title', getPositionName(spec.specialisationId))
+                        }}
                       </div>
-                      <v-skeleton v-else figure="line" />
+                      <v-skeleton v-else figure="line"/>
                     </v-label>
                     <div>
                       <div v-if="spec.userEntity.vk" class="mb-2">
                         <div class="mb-2 d-flex align-items-center">
-                          <v-icon class="mr-2" :icon="['fab', 'vk']" />
+                          <v-icon class="mr-2" :icon="['fab', 'vk']"/>
                           <span class="text-muted mr-1">{{ spec.userEntity.vk }}</span>
                           <span class="mx-1">—</span>
-                          ВКонтакте
+                          {{ $t('page.dashboard.respond.contacts.vk') }}
                         </div>
                       </div>
 
                       <div v-if="spec.userEntity.telegram" class="mb-2">
                         <div class="mb-2 d-flex align-items-center">
-                          <v-icon class="mr-2" :icon="['fab', 'telegram']" />
+                          <v-icon class="mr-2" :icon="['fab', 'telegram']"/>
                           <span class="text-muted">{{ spec.userEntity.telegram }}</span>
                           <span class="mx-1">—</span>
                           Tetegram
@@ -117,7 +119,7 @@
 
                       <div v-if="spec.userEntity.skype" class="mb-2">
                         <div class="d-flex align-items-center">
-                          <v-icon class="mr-2" :icon="['fab', 'skype']" />
+                          <v-icon class="mr-2" :icon="['fab', 'skype']"/>
                           <span class="text-muted">{{ spec.userEntity.skype }}</span>
                           <span class="mx-1">—</span>
                           skype
@@ -126,7 +128,7 @@
 
                       <div v-if="spec.userEntity.discord">
                         <div class="d-flex align-items-center">
-                          <v-icon class="mr-2" :icon="['fab', 'discord']" />
+                          <v-icon class="mr-2" :icon="['fab', 'discord']"/>
                           <span class="text-muted">{{ spec.userEntity.discord }}</span>
                           <span class="mx-1">—</span>
                           Discord
@@ -138,7 +140,7 @@
 
                 <template #footer>
                   <div class="w-100 d-flex align-items-center justify-content-end">
-                    <v-button> Принять </v-button>
+                    <v-button> {{ $t('page.dashboard.respond.accept') }}</v-button>
                   </div>
                 </template>
 
@@ -165,11 +167,11 @@
             </v-card>
           </div>
           <div v-else class="muted mt-4">
-            Откликов пока нет
+            {{ $t('page.dashboard.respond.notFound') }}
           </div>
         </div>
         <div v-if="inspectedIdeaId && loading" class="d-flex justify-content-center">
-          <v-loading />
+          <v-loading/>
         </div>
       </div>
 
@@ -181,9 +183,10 @@
 <script>
 import VLink from "@/components/Link/Link";
 import VSkeleton from "@/components/Skeleton/Skeleton";
+
 export default {
   components: {VSkeleton, VLink},
-  async middleware({ store }) {
+  async middleware({store}) {
     await store.dispatch('ideas/getOwnIdeas')
   },
 
@@ -203,7 +206,7 @@ export default {
     },
     ideas() {
       const ideas = this.$store.getters['ideas/own']
-      const { search } = this
+      const {search} = this
 
       if (!search) return ideas
 
@@ -235,7 +238,16 @@ export default {
       } finally {
         this.loading = false
       }
-    }
+    },
+    t(str, fallbackStr) {
+      return this.$t && this.$te
+        ? this.$te(str)
+          ? this.$t(str)
+          : fallbackStr
+        : fallbackStr
+          ? fallbackStr
+          : str
+    },
   }
 }
 </script>
