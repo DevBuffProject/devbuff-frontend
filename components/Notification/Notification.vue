@@ -1,12 +1,10 @@
 <template>
   <div class="notifications-box">
-    1
+    <!-- TODO -->
   </div>
 </template>
 
 <script>
-import bus from '~/Components/Bus'
-
 export default {
   name: 'v-notification',
 }
