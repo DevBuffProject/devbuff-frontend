@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import { throttle } from 'lodash'
-
 export default {
   name: 'v-og-preview',
 
@@ -49,11 +47,6 @@ export default {
   computed: {
     preview() {
       const og = this.og
-      const ogImage = og.ogImage
-
-      let image = null
-      if (typeof ogImage === 'object') image = ogImage.url;
-      // if (ogImage.length > 0) image =  ogImage[0].url
 
       return {
         title: og.ogTitle || og.ogSiteName || this.url,

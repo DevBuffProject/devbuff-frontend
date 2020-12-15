@@ -1,5 +1,3 @@
-import { uniqBy } from 'lodash'
-
 export const state = () => ({
   list: [],
   own: [],

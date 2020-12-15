@@ -90,7 +90,6 @@ export default {
         if (!document.createRange) return
 
         const { field, hiddenText } = this.$refs
-        const range = document.createRange();
 
         field.style.height = 'auto'
         field.style.width = `${hiddenText.offsetWidth}px`
