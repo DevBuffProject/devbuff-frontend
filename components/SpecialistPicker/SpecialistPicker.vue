@@ -3,7 +3,7 @@
     <ul class="list-group">
       <li class="list-group-item" v-for="(value, index) in specialistsMap" :key="index">
 
-        {{ t('specializations.' +index + ".title", index) }}
+        {{ t('specializations.' + index + ".title", index) }}
 
         <v-icon
           style="position: relative; float: right; color: #297eff"
@@ -15,8 +15,8 @@
     </ul>
     <div class="idea__positions">
       <v-card
-        v-for="position in userSpecialists"
-        :key="position.name"
+        v-for="(position,index) in userSpecialists"
+        :key="position.name+index"
         class="mr-2"
       >
         <template #header>
@@ -45,7 +45,7 @@
             <span v-if="language.selected">
               <span v-for="technology of language.technologies"
                     :key="technology.name"
-                    @click="technology.selected = !technology.selected;"
+                    @click="submitTechnology(position,technology)"
               >
                 <v-chip
                   v-if="!alreadyHas(position, language, technology)"
@@ -63,6 +63,8 @@
 </template>
 
 <script>
+import languages from "../../lang/common/languages";
+
 export default {
   name: 'v-specialist-picker',
   props: {
@@ -122,8 +124,17 @@ export default {
           }
         }
       }
-
       return false;
+    },
+    submitTechnology(positionContext, technologyContext) {
+      let currentStatus = !technologyContext.selected;
+      for (let languages of positionContext.languages) {
+        for (let technology of languages.technologies) {
+          if (technology.name === technologyContext.name) {
+            technology.selected = currentStatus;
+          }
+        }
+      }
     },
     addSpecialist: function (specialistCodeName) {
       let languages = this.specialistsMap[specialistCodeName];
