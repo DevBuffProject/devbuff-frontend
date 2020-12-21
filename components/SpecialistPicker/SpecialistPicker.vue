@@ -1,16 +1,64 @@
 <template>
   <div>
     <ul class="list-group">
-      <li class="list-group-item">Cras justo odio</li>
-      <li class="list-group-item">Dapibus ac facilisis in</li>
-      <li class="list-group-item">Morbi leo risus</li>
-      <li class="list-group-item">Porta ac consectetur ac</li>
-      <li class="list-group-item">Vestibulum at eros</li>
+      <li class="list-group-item" v-for="(value, index) in specialistsMap" :key="index">
+
+        {{ t('specializations.' +index + ".title", index) }}
+
+        <v-icon
+          style="position: relative; float: right; color: #297eff"
+          :icon="`plus`"
+          class="link__icon"
+          @click="addSpecialist(index)"
+        />
+      </li>
     </ul>
-    <li v-for="(value, index) in specialistsMap"  :key="index">
-      {{ index }}
-      {{ value }}
-    </li>
+    <div class="idea__positions">
+      <v-card
+        v-for="position in userSpecialists"
+        :key="position.name"
+        class="mr-2"
+      >
+        <template #header>
+          <h4 class="m-0">
+            {{ t('specializations.' + position.name + ".title", position.name) }}</h4>
+        </template>
+
+        <v-label
+          :name="$t('page.ideas.view.team.languages')"
+          class="mb-3"
+        >
+          <span v-for="language in position.languages" :key="language.name"
+                @click="language.selected = !language.selected"
+                style="cursor: pointer">
+            <v-chip
+              :text="t('languages.' + language.name, language.name)"
+              :type="language.selected?'auto':'mutted'"
+            />
+          </span>
+        </v-label>
+
+        <v-label :name="$t('page.ideas.view.team.technologies')">
+
+
+         <span v-for="language in position.languages" :key="language.name">
+            <span v-if="language.selected">
+              <span v-for="technology of language.technologies"
+                    :key="technology.name"
+                    @click="technology.selected = !technology.selected;"
+              >
+                <v-chip
+                  v-if="!alreadyHas(position, language, technology)"
+                  :text="technology.name"
+                  :type="technology.selected?'auto':'mutted'"
+                />
+              </span>
+            </span>
+          </span>
+        </v-label>
+
+      </v-card>
+    </div>
   </div>
 </template>
 
@@ -23,7 +71,11 @@ export default {
       default: null
     }
   },
-
+  data() {
+    return {
+      userSpecialists: []
+    }
+  },
   computed: {
     specialistsMap: function () {
       let specialistsMap = {};
@@ -51,11 +103,64 @@ export default {
 
       }
       console.log("DATA");
-      console.log( specialistsMap);
+      console.log(specialistsMap);
       return specialistsMap;
-    }
+    },
   },
-  created() {
+  methods: {
+    alreadyHas(position, language, technology) {
+
+      let buffer = new Set();
+
+      for (let languageOfPosition of position.languages) {
+        if (languageOfPosition.selected) {
+          for (let technologyOfPosition of languageOfPosition.technologies) {
+            if (buffer.has(technology.name) && language.name !== languageOfPosition.name && technology.name === technologyOfPosition.name) {
+              return true;
+            }
+            buffer.add(technologyOfPosition.name);
+          }
+        }
+      }
+
+      return false;
+    },
+    addSpecialist: function (specialistCodeName) {
+      let languages = this.specialistsMap[specialistCodeName];
+      let userLanguages = [];
+
+      for (let language of languages) {
+
+        let technologies = [];
+        for (let technology of language.technologies) {
+          technologies.push({
+            name: technology.name,
+            selected: false
+          });
+        }
+
+        userLanguages.push({
+          name: language.name,
+          selected: false,
+          technologies: technologies
+        });
+      }
+
+
+      this.userSpecialists.push({
+        name: specialistCodeName,
+        languages: userLanguages
+      });
+    },
+    t(str, fallbackStr) {
+      return this.$t && this.$te
+        ? this.$te(str)
+          ? this.$t(str)
+          : fallbackStr
+        : fallbackStr
+          ? fallbackStr
+          : str
+    },
   }
 }
 </script>
