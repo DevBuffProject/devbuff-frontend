@@ -16,7 +16,6 @@ const config = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100;300;400;600;900&display=swap' }
     ],
     script: [
       { src: 'https://6yzwffsm5625.statuspage.io/embed/script.js', body: true, defer: true }
@@ -40,25 +39,17 @@ const config = {
 
   plugins: [
     { src: '~/plugins/api.js' },
-    { src: '~/plugins/sentry.js' },
-    { src: '~/plugins/fontawesome.js' },
     { src: '~/plugins/ui-setup.js' },
+    { src: '~/plugins/fontawesome.js' },
+    { src: '~/plugins/admin-auto-refresh.js', mode: 'client' },
   ],
 
    modules: [
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
-    '@nuxtjs/proxy',
     'nuxt-i18n',
     'cookie-universal-nuxt'
   ],
-
-  proxy: {
-    '/api/v1': {
-      target: process.env.API_BASE_URL,
-      pathRewrite: { '^/api/v1' : '/' },
-    }
-  },
 
   i18n : {
     locales: [
@@ -110,6 +101,10 @@ const config = {
       }
     }
   }
+}
+
+if (!config.dev) {
+  config.plugins.push({ src: '~/plugins/sentry.js' })
 }
 
 // Proxy dev prop to publicRuntimeConfig

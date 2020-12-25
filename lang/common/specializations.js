@@ -3,7 +3,13 @@ export default {
     "back-end": {
       title: "Backend developer"
     },
-    game:{
+    "front-end": {
+      title: "Frontend developer"
+    },
+    desktop: {
+      title: "Desktop developer"
+    },
+    game: {
       title: "Game developer"
     }
   }

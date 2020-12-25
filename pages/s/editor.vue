@@ -45,7 +45,9 @@
 
         <v-label name="Выделите для форматирования">
           <v-card class="mt-1">
-            <v-editor v-model="idea.text" />
+            <client-only>
+              <lazy-v-editor :key="key" v-model="idea.text" />
+            </client-only>
           </v-card>
         </v-label>
       </div>
@@ -65,12 +67,15 @@ export default {
   },
 
   data() {
-    const { id, description, text, name } = this.$store.getters['ideas/idea']
-
     return {
+      key: 1,
       loading: false,
       title: 'Devbuff :: Публикация идеи',
-      idea: { name, text, description }
+      idea: {
+        name: null,
+        text: null,
+        description: null
+      },
     }
   },
 
@@ -80,25 +85,29 @@ export default {
     }),
 
     isEditMode() {
-      return this.$route.query.id
+      return !!this.$route.query.id
     }
   },
 
   methods: {
     async save() {
-      const id = this.$route.query.id
-
       try {
+        const queryId = this.$route.query.id
         this.loading = true
 
-        if (id) {
+        if (this.isEditMode) {
           const data = { text: this.idea.text, description: this.idea.description }
-          await this.$store.dispatch('ideas/updateIdea', { id, data })
+          await this.$store.dispatch('ideas/updateIdea', { id: queryId, data })
         } else {
           await this.$store.dispatch('ideas/appendIdea', this.idea)
         }
 
-        this.$router.push(this.localePath({ name: 'ideas-id', params: { id } }))
+        await this.$nextTick()
+
+        this.$router.push(this.localePath({
+          name: 'ideas-id',
+          params: { id: this.isEditMode ? queryId : newIdea.id }
+        }))
       } catch (e) {
         this.loading = false
       } finally {
@@ -107,8 +116,16 @@ export default {
     }
   },
 
+  created() {
+    if (this.isEditMode) {
+      const { description, text, name } = this.$store.getters['ideas/idea']
+      this.idea.name = name
+      this.idea.text = text
+      this.idea.description = description
+    }
+  },
+
   mounted() {
-    const { name } = this.idea
     let showIdeaName = false
 
     setInterval(() => {

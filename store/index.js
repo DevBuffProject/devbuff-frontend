@@ -16,8 +16,6 @@ export const actions = {
     return data
   },
   async nuxtServerInit({ commit, dispatch }, { $cookies, $api, error }) {
-    await dispatch('getHealth', null, { root: true })
-
     const token = $cookies.get('remix_token')
     const refreshToken = $cookies.get('remix_refresh_token')
 
