@@ -311,11 +311,25 @@ export const Default = () => ({
       ])
     }
   },
+  data: () => ({
+    result: []
+  }),
+  methods: {
+    onChanged(data) {
+      this.result = data
+    }
+  },
   template: `
     <v-app>
     <v-specialist-picker
       :specialists="specialists"
+      @change="onChanged"
     />
+
+    <hr>
+    <h1>
+      Story data: {{result}}
+    </h1>
     </v-app>
   `
 })

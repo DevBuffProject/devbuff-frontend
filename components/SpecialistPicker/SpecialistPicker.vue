@@ -8,7 +8,7 @@
         <v-icon
           style="position: relative; float: right; color: #297eff"
           :icon="`plus`"
-          class="link__icon"
+          v-if="maxCountSpecialists > userSpecialists.length"
           @click="addSpecialist(index)"
         />
       </li>
@@ -20,8 +20,16 @@
         class="mr-2"
       >
         <template #header>
-          <h4 class="m-0">
-            {{ t('specializations.' + position.name + ".title", position.name) }}</h4>
+          <div style="width: 100%">
+            <h4 class="m-0">
+              {{ t('specializations.' + position.name + ".title", position.name) }}
+              <v-icon
+                style="position:relative; float: right; color: red; font-size: 20px"
+                :icon="`user-minus`"
+                @click="userSpecialists.splice(index,1)"
+              />
+            </h4>
+          </div>
         </template>
 
         <v-label
@@ -38,7 +46,7 @@
           </span>
         </v-label>
 
-        <v-label :name="$t('page.ideas.view.team.technologies')">
+        <v-label :name="$t('page.ideas.view.team.technologies')" v-if="hasSelectedLanguage(position)">
 
 
          <span v-for="language in position.languages" :key="language.name">
@@ -56,14 +64,30 @@
             </span>
           </span>
         </v-label>
+        <v-label :name="`Количество`">
+          <div>
+            <v-icon
+              :icon="`minus`"
+              @click="position.count <= 1 ? position.count = 1 : position.count--"
+            />
 
+            {{ position.count }}
+
+
+            <v-icon
+              :icon="`plus`"
+              @click="position.count >= maxCountSpecialist ? position.count = maxCountSpecialist: position.count++"
+            />
+
+
+          </div>
+        </v-label>
       </v-card>
     </div>
   </div>
 </template>
 
 <script>
-import languages from "../../lang/common/languages";
 
 export default {
   name: 'v-specialist-picker',
@@ -75,8 +99,18 @@ export default {
   },
   data() {
     return {
+      maxCountSpecialists: 10,
+      maxCountSpecialist: 5,
       userSpecialists: []
     }
+  },
+  watch: {
+    userSpecialists: {
+      deep: true,
+      handler() {
+        this.$emit('change', this.buildUserSpecialists())
+      }
+    },
   },
   computed: {
     specialistsMap: function () {
@@ -104,8 +138,6 @@ export default {
         }
 
       }
-      console.log("DATA");
-      console.log(specialistsMap);
       return specialistsMap;
     },
   },
@@ -122,6 +154,14 @@ export default {
             }
             buffer.add(technologyOfPosition.name);
           }
+        }
+      }
+      return false;
+    },
+    hasSelectedLanguage(position) {
+      for (let language of position.languages) {
+        if (language.selected && language.technologies.length > 0) {
+          return true;
         }
       }
       return false;
@@ -160,8 +200,39 @@ export default {
 
       this.userSpecialists.push({
         name: specialistCodeName,
-        languages: userLanguages
+        languages: userLanguages,
+        count: 1
       });
+    },
+    buildUserSpecialists() {
+      let result = [];
+      for (let specialistRaw of this.userSpecialists) {
+
+        let languages = [];
+        for (let languageRaw of specialistRaw.languages) {
+          if (!languageRaw.selected) {
+            continue;
+          }
+          let technologies = [];
+          for (let technologyRaw of languageRaw.technologies) {
+            if (technologyRaw.selected) {
+              technologies.push({
+                name: technologyRaw.name
+              });
+            }
+          }
+          languages.push({
+            name: languageRaw.name,
+            frameworks: technologies
+          })
+        }
+        result.push({
+          name: specialistRaw.name,
+          count: specialistRaw.count,
+          languages: languages
+        })
+      }
+      return result;
     },
     t(str, fallbackStr) {
       return this.$t && this.$te
