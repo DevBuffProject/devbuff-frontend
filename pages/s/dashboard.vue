@@ -64,7 +64,7 @@
         </div>
 
 
-        <div v-if="inspectedIdeaId && !loading" class="dashboard__detail">
+        <div class="dashboard__detail">
           <div class="d-flex align-items-baseline mb-3">
             <h3 class="my-0 mr-3">{{ $t('page.dashboard.respond.title') }}</h3>
             <v-link
@@ -73,7 +73,7 @@
               {{ $t('page.dashboard.respond.viewIdea') }}
             </v-link>
           </div>
-          <div v-if="pendingUsers.length">
+          <div v-if="inspectedIdeaId && !loading && pendingUsers.length">
             <div>
               <v-card
                 v-for="spec in pendingUsers"
@@ -166,12 +166,10 @@
               />
             </v-card>
           </div>
+          <v-skeleton-paragraph v-else-if="inspectedIdeaId && loading" />
           <div v-else class="muted mt-4">
             {{ $t('page.dashboard.respond.notFound') }}
           </div>
-        </div>
-        <div v-if="inspectedIdeaId && loading" class="d-flex justify-content-center">
-          <v-loading/>
         </div>
       </div>
 
@@ -183,9 +181,10 @@
 <script>
 import VLink from "@/components/Link/Link";
 import VSkeleton from "@/components/Skeleton/Skeleton";
+import VSkeletonParagraph from "@/components/Skeleton/SkeletonParagraph";
 
 export default {
-  components: {VSkeleton, VLink},
+  components: {VSkeletonParagraph, VSkeleton, VLink},
   async middleware({store}) {
     await store.dispatch('ideas/getOwnIdeas')
   },
