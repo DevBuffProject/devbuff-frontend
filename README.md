@@ -2,9 +2,12 @@
 <p align="center">
   <img src="https://github.com/7architect/devbuff-frontend/raw/develop/static/logos/Logo@small.png" alt="Logo">
 </p>
+
 <p align="center">
-  <img src="https://7architect.semaphoreci.com/badges/devbuff-frontend/branches/develop.svg?key=710bba83-3085-419c-9304-df54d3d7467f" alt="Build Status">
-	<img src="https://www.codefactor.io/repository/github/7architect/devbuff-frontend/badge?s=a45618561d667a1813fae5396fc9d57d074c8b1f" alt="CodeFactor">
+  <a href='https://7architect.semaphoreci.com/badges/devbuff-frontend/branches/develop.svg?key=710bba83-3085-419c-9304-df54d3d7467f'> <img src='https://7architect.semaphoreci.com/badges/devbuff-frontend/branches/develop.svg?key=710bba83-3085-419c-9304-df54d3d7467f' alt='Build Status'></a>
+  <a href="https://app.circleci.com/pipelines/github/7architect/devbuff-frontend"><img alt="CircleCI" src="https://img.shields.io/circleci/build/github/7architect/devbuff-frontend/develop?label=CircleCI&logo=circleCI&style=flat-square"></a>
+	<a href="https://www.codefactor.io/repository/github/7architect/devbuff-frontend"><img alt="CodeFactor Grade" src="https://img.shields.io/codefactor/grade/github/7architect/devbuff-frontend/develop?label=Codefactor%20quality%3A%20js&logo=codefactor&logoColor=%23fff&style=flat-square"></a>
+  <a href="https://lgtm.com/projects/g/7architect/devbuff-frontend/context:javascript"><img alt="LGTM Grade" src="https://img.shields.io/lgtm/grade/javascript/github/7architect/devbuff-frontend?label=LGTM%20quality%3A%20js&logo=lgtm&style=flat-square"></a>
 </p>
 
 ## Build Setup
@@ -50,6 +53,6 @@ $ git checkout <feature-name>
 
 Commit work, then push branch and open PR
 
-Keep [![CodeFactor](https://www.codefactor.io/repository/github/7architect/devbuff-frontend/badge?s=a45618561d667a1813fae5396fc9d57d074c8b1f)](https://www.codefactor.io/repository/github/7architect/devbuff-frontend) status as `A/A+`
+Keep code quality (of lgtm and codefactor) as `A/A+`
 
 ------------
