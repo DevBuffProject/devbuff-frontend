@@ -22,7 +22,7 @@ export default {
 
   props: {
     text: {
-      type: String,
+      type: [String],
       default: null
     },
     type: {
@@ -60,8 +60,12 @@ export default {
   padding: 0 .7rem;
   height: 1rem;
   border-radius: 10rem;
-  font-weight: 600;
+  font-weight: 400;
   color: rgba(0, 0, 0, .5);
   transition: background-color .3s var(--base-transition);
+
+  &--type-muted {
+    background-color: var(--color-muted);
+  }
 }
 </style>

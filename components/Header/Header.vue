@@ -1,9 +1,13 @@
 <template>
-  <header class="header">
+  <header class="header d-flex align-items-center">
     <div class="header__container container">
       <div class="header__section">
         <div class="d-flex align-items-center">
+          <div class="mr-3">
+            <v-logo class="header__logo" />
+          </div>
           <v-switcher
+            class="header__lang-switcher"
             :values="availableLocales"
             :value="locale"
             @change="setLocale"
@@ -13,22 +17,33 @@
           </transition>
         </div>
       </div>
-      <div class="header__section d-flex justify-content-center">
-        <v-logo />
-      </div>
+      <!-- <div class="header__section d-flex justify-content-center">
+
+      </div> -->
       <div class="header__section d-flex align-items-center justify-content-end">
         <div v-if="isAuthorized" class="d-flex align-items-center">
+          <v-link
+            v-if="isAdmin"
+            class="text header__link color-warning"
+            type="muted"
+            :to="localePath({ name: 's-admin' })"
+            :icon="['fas', 'crown']"
+          >
+            admin
+            <span class="ml-1" v-if="pendingIdeas.length > 0">({{ pendingIdeas.length }})</span>
+          </v-link>
           <v-link
             class="text header__link"
             active-class="header__link--active"
             type="muted"
+            :exact="false"
             :to="localePath({ name: 'ideas' })"
             :icon="['fas', 'lightbulb']"
           >
             {{  $t('components.header.ideas')  }}
           </v-link>
           <v-link
-            class="mr-4 text header__link"
+            class="text header__link"
             active-class="header__link--active"
             type="muted"
             :to="localePath({ name: 's-dashboard' })"
@@ -36,6 +51,14 @@
           >
             {{ $t('components.header.dashboard') }}
           </v-link>
+          <nuxt-link
+            class="mr-4 mt-1 text header__create-btn"
+            :to="localePath({ name: 's-editor' })"
+          >
+            <v-button type="muted" :icon="['fas', 'plus']">
+              {{ $t('components.header.create') }}
+            </v-button>
+          </nuxt-link>
           <nuxt-link :to="localePath({ name: 's-profile' })">
             <v-avatar :avatar="this.$store.getters['user/profile'].id" />
           </nuxt-link>
@@ -55,6 +78,7 @@
     </div>
   </header>
 </template>
+
 <script>
 export default {
   name: 'v-header',
@@ -69,6 +93,12 @@ export default {
   computed: {
     isAuthorized() {
       return this.$store.getters['user/isAuthorized']
+    },
+    isAdmin() {
+      return this.$store.getters['auth/isAdmin']
+    },
+    pendingIdeas() {
+      return this.$store.getters['admin/pendingIdeas']
     },
     avatar() {
       return this.$store.getters['user/profile'].avatar
@@ -109,6 +139,11 @@ export default {
   height: var(--header-height);
   border-bottom: 1px solid var(--color-muted-accent);
 
+  &__logo {
+    height: 30px;
+    width: auto;
+  }
+
   &__container {
     display: flex;
     align-items: center;
@@ -120,12 +155,12 @@ export default {
   }
 
   &__link {
-    padding: .2rem 1rem;
+    padding: 1rem 0;
     font-size: .9rem;
     text-transform: lowercase;
-    border-radius: 4px;
-    margin-right: .3rem;
+    margin-right: 1.5rem;
     opacity: 0.5;
+    font-weight: 600;
     transition-property: background-color, color, opacity;
     transition: .3s var(--base-transition);
 
@@ -140,9 +175,13 @@ export default {
     }
   }
 
-  &__locale-link {
-    font-size: 1rem;
-    text-decoration: none;
+  &__create-btn {
+    padding-left: 1rem;
+    border-left: 1px solid var(--color-muted);
+  }
+
+  &__lang-switcher {
+    transform: scale(.85);
   }
 }
 </style>

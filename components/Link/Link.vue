@@ -5,7 +5,7 @@
       :class="[
         'link'
       ]"
-      exact
+      :exact="exact"
       :activeClass="activeClass"
       :exactActiveClass="exactActiveClass"
     >
@@ -42,6 +42,10 @@ export default {
     exactActiveClass: {
       type: String,
       default: 'link--exact-active'
+    },
+    exact: {
+      type: Boolean,
+      default: true,
     }
   },
   computed: {
@@ -70,7 +74,8 @@ export default {
   align-items: center;
 
   &__icon {
-    margin-left: 8px;
+    margin-left: .4rem;
+    opacity: .5;
     transition: translateY(1px);
   }
 }

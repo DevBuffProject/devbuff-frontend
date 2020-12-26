@@ -3,10 +3,13 @@
     v-on="$listeners"
     :class="[
       'v-btn',
-      'v-btn--type-' + type,
+      (flat && type) && 'v-btn--type-flat-' + type,
+      !flat && 'v-btn--type-' + type,
+      flat && 'v-btn--type-flat',
       rounded && 'v-btn--rounded',
       disabled && 'v-btn--disabled',
-      loading && 'v-btn--loading'
+      loading && 'v-btn--loading',
+      small && 'v-btn--size-small'
     ]"
     :disabled="disabled"
   >
@@ -35,6 +38,14 @@ export default {
   name: 'v-button',
 
   props: {
+    flat: {
+      type: Boolean,
+      default: false
+    },
+    small: {
+      type: Boolean,
+      default: false
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -66,7 +77,7 @@ export default {
   @each $name, $color in map-get($default-colors, 'scheme' ) {
     &--type-#{$name} {
       color: #fff;
-      font-weight: 600 !important;
+      font-weight: 700;
       background-color: var(--color-#{$name});
 
       &::before {
@@ -98,6 +109,7 @@ export default {
 
     &--type-flat-#{$name} {
       color: var(--color-#{$name});
+      font-weight: 600;
       transition: background-color .5s var(--base-transition);
       &:hover {
         background-color: var(--color-#{$name}-fade);
@@ -121,7 +133,6 @@ export default {
   text-decoration: none;
   position: relative;
   cursor: pointer;
-  font-weight: 500;
   line-height: 1.5;
   overflow: hidden;
   outline: none;
@@ -131,17 +142,24 @@ export default {
 
   @include button-type();
 
+  &--size-small {
+    font-size: .8rem;
+    padding: .1rem .8rem;
+  }
+
   &--disabled {
     opacity: .5;
   }
 
   &--type-muted {
     background-color: var(--color-muted);
+    font-weight: 600;
     color: #000;
   }
 
   &--type-dark {
     background-color: #000;
+    font-weight: 700;
     color: #fff;
   }
 

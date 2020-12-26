@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import { throttle } from 'lodash'
-
 export default {
   name: 'v-og-preview',
 
@@ -49,11 +47,6 @@ export default {
   computed: {
     preview() {
       const og = this.og
-      const ogImage = og.ogImage
-
-      let image = null
-      if (typeof ogImage === 'object') image = ogImage.url;
-      // if (ogImage.length > 0) image =  ogImage[0].url
 
       return {
         title: og.ogTitle || og.ogSiteName || this.url,
@@ -100,13 +93,12 @@ export default {
 
 <style lang="scss" scoped>
 .og-preview {
-  --size: 60px;
+  --size: 50px;
 
   display: flex;
   max-height: var(--size);
   height: 100%;
   overflow: hidden;
-  margin-bottom: 1rem;
 
   &__skeleton {
     display: flex;
@@ -134,13 +126,14 @@ export default {
 
   &__link {
     font-size: .9rem;
+    font-weight: 600;
   }
 
   &__desc {
-    font-size: .75rem;
-    color: var(--color-muted-darken);
+    font-size: .8rem;
+    // color: var(--color-muted-darken);
     line-height: 1.1;
-    font-weight: 100;
+    font-weight: 400;
   }
 }
 </style>
