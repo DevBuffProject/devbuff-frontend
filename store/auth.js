@@ -1,10 +1,12 @@
 export const state = () => ({
   token: null,
   refreshToken: null,
+  status: null,
 })
 
 export const mutations = {
   setToken: (state, token) => state.token = token,
+  setStatus: (state, status) => state.status = status,
   setRefreshToken: (state, refreshToken) => state.refreshToken = refreshToken,
 }
 
@@ -14,11 +16,13 @@ export const actions = {
     window.location.href = `${API_BASE_URL}/oAuth/GitHub`
   },
 
-  async checkToken(_, token) {
+  async checkToken({ commit }, token) {
     const credentails = new URLSearchParams()
     credentails.set('token', token)
 
     const status = await this.$api.latest.post(`oAuth/check`, credentails)
+
+    commit('setStatus', status || {})
 
     return status && status.active
   },
@@ -74,5 +78,7 @@ export const actions = {
 
 export const getters = {
   token: state => state.token,
-  refreshToken: state => state.refreshToken
+  refreshToken: state => state.refreshToken,
+  status: state => state.status,
+  isAdmin: state => state.status && state.status.authorities.includes('ROLE_ADMIN'),
 }

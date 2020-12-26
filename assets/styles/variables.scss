@@ -2,19 +2,18 @@ $default-colors: (
   // Core colors
   static: (
     // only for app background
-    background: #fcfcfc,
+    background: #f5f5f5,
     background-contrast: #fff,
-    muted: #eee,
-    muted-accent: #f5f5f5,
-    muted-darken: #d0d0d0,
-    muted-fade: #00000005,
-    text: #242424
+    muted: #e3e3e3,
+    muted-accent: #e6e6e6,
+    muted-darken: #b9b9b9,
   ),
 
   // Colorful
   scheme: (
+    text: #242424,
     primary: #297eff,
-    success: #07d85b,
+    success: #06b94e,
     danger: #f93155,
     warning: #ffba00,
     black: #131313,

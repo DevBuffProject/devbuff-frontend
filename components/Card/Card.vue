@@ -9,7 +9,9 @@
     >
       <slot name="header" />
     </div>
-    <slot />
+    <div class="card__content">
+      <slot />
+    </div>
     <div
       v-if="$slots.footer"
       class="card__footer"
@@ -34,6 +36,9 @@ export default {
     border: 1px solid var(--color-muted-accent);
     border-bottom: 1px solid var(--color-muted);
     box-shadow: 0 1px 1px 0 var(--color-muted);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     &__header {
       display: flex;
@@ -50,6 +55,9 @@ export default {
       margin-top: 1rem;
       padding: .8rem 1rem;
       border-top: 1px solid var(--color-muted-accent);
+    }
+    &__content {
+      height: 100%;
     }
   }
 </style>
