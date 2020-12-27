@@ -56,7 +56,7 @@
             :to="localePath({ name: 's-editor' })"
           >
             <v-button type="muted" :icon="['fas', 'plus']">
-              создать
+              {{ $t('components.header.create') }}
             </v-button>
           </nuxt-link>
           <nuxt-link :to="localePath({ name: 's-profile' })">
@@ -160,6 +160,7 @@ export default {
     text-transform: lowercase;
     margin-right: 1.5rem;
     opacity: 0.5;
+    font-weight: 600;
     transition-property: background-color, color, opacity;
     transition: .3s var(--base-transition);
 

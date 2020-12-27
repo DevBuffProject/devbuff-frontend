@@ -2,6 +2,7 @@
   <footer class="v-footer">
     <div class="container">
       <v-status-badge
+        v-if="health.status"
         :indicator="health.status.indicator"
         :description="health.status.description"
         :href="health.page.url"
@@ -24,6 +25,10 @@ export default {
     health() {
       return this.$store.getters['health']
     }
+  },
+
+  mounted() {
+    this.$store.dispatch('getHealth', null, { root: true })
   }
 }
 </script>

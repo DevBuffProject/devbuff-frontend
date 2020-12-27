@@ -45,7 +45,9 @@
 
         <v-label name="Выделите для форматирования">
           <v-card class="mt-1">
-            <v-editor :key="key" v-model="idea.text" />
+            <client-only>
+              <lazy-v-editor :key="key" v-model="idea.text" />
+            </client-only>
           </v-card>
         </v-label>
       </div>
@@ -97,7 +99,7 @@ export default {
           const data = { text: this.idea.text, description: this.idea.description }
           await this.$store.dispatch('ideas/updateIdea', { id: queryId, data })
         } else {
-          const newIdea = await this.$store.dispatch('ideas/appendIdea', this.idea)
+          await this.$store.dispatch('ideas/appendIdea', this.idea)
         }
 
         await this.$nextTick()
@@ -116,7 +118,7 @@ export default {
 
   created() {
     if (this.isEditMode) {
-      const { id, description, text, name } = this.$store.getters['ideas/idea']
+      const { description, text, name } = this.$store.getters['ideas/idea']
       this.idea.name = name
       this.idea.text = text
       this.idea.description = description
@@ -124,7 +126,6 @@ export default {
   },
 
   mounted() {
-    const { name } = this.idea
     let showIdeaName = false
 
     setInterval(() => {

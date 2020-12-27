@@ -77,7 +77,7 @@ export default {
   @each $name, $color in map-get($default-colors, 'scheme' ) {
     &--type-#{$name} {
       color: #fff;
-      font-weight: 800 !important;
+      font-weight: 700;
       background-color: var(--color-#{$name});
 
       &::before {
@@ -109,6 +109,7 @@ export default {
 
     &--type-flat-#{$name} {
       color: var(--color-#{$name});
+      font-weight: 600;
       transition: background-color .5s var(--base-transition);
       &:hover {
         background-color: var(--color-#{$name}-fade);
@@ -132,7 +133,6 @@ export default {
   text-decoration: none;
   position: relative;
   cursor: pointer;
-  font-weight: 500;
   line-height: 1.5;
   overflow: hidden;
   outline: none;
@@ -143,7 +143,8 @@ export default {
   @include button-type();
 
   &--size-small {
-    font-size: .7rem;
+    font-size: .8rem;
+    padding: .1rem .8rem;
   }
 
   &--disabled {
@@ -152,11 +153,13 @@ export default {
 
   &--type-muted {
     background-color: var(--color-muted);
+    font-weight: 600;
     color: #000;
   }
 
   &--type-dark {
     background-color: #000;
+    font-weight: 700;
     color: #fff;
   }
 

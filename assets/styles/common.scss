@@ -3,7 +3,6 @@
 @import 'variables';
 @import 'typography';
 @import 'transitions';
-@import 'fonts';
 
 :root {
   --header-height: 60px;
@@ -18,8 +17,9 @@
   @each $name, $color in map-get($default-colors, 'scheme' ) {
     --color-#{$name}: #{$color};
     --color-#{$name}-darken: #{darken($color, 10%)};
-    --color-#{$name}-tint: #{lighten($color, 25%)};
+    --color-#{$name}-tint: #{lighten($color, 20%)};
     --color-#{$name}-fade: #{transparentize($color, 0.85)};
+    --color-#{$name}-extra-fade: #{transparentize($color, 0.1)};
   }
 }
 
