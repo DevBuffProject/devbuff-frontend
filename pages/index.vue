@@ -74,7 +74,7 @@ export default {
 }
 
 .present {
-  max-width: 500px;
+  max-width: 550px;
   margin: 0 auto;
 
   &__controls {
