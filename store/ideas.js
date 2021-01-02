@@ -36,35 +36,7 @@ export const actions = {
   },
 
   async appendIdea(ctx, data) {
-    return await this.$api.latest.post('idea', {
-      ...data,
-        "specialist": [
-        {
-          "name": "front-end",
-          "count": 1,
-          "languages": [
-            {
-              "name": "JavaScript",
-              "frameworks": [
-                {
-                  "name": "Vue.js"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "desktop",
-          "count": "2",
-          "languages": [
-            {
-              "name": "CPlusPlus",
-              "frameworks": []
-            }
-          ]
-        }
-      ]
-    })
+    return await this.$api.latest.post('idea', { ...data })
   },
 
   async updateIdea(ctx, { id, data }) {

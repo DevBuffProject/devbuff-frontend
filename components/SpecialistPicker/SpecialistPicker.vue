@@ -1,59 +1,67 @@
 <template>
-  <div>
-    <ul class="list-group">
-      <li class="list-group-item" v-for="(value, index) in specialistsMap" :key="index">
-
-        {{ t('specializations.' + index + ".title", index) }}
-
+  <div class="v-specialist">
+    <ul class="v-specialist__list">
+      <li
+        v-for="(value, index) in specialistsMap"
+        :key="index"
+        @click="addSpecialist(index)"
+        class="v-specialist__spec"
+      >
+        {{ t(`specializations.${index}.title`, index) }}
         <v-icon
-          style="position: relative; float: right; color: #297eff"
-          :icon="`plus`"
+          icon="plus"
           v-if="maxCountSpecialists > userSpecialists.length"
-          @click="addSpecialist(index)"
+          class="v-specialist__icon"
         />
       </li>
     </ul>
-    <div class="idea__positions">
+    <div class="v-specialist__list">
       <v-card
-        v-for="(position,index) in userSpecialists"
-        :key="position.name+index"
-        class="mr-2"
+        v-for="(position, index) in userSpecialists"
+        :key="position.name + index"
+        class="v-specialist__card"
       >
         <template #header>
-          <div style="width: 100%">
+          <div class="v-specialist__card-header">
             <h4 class="m-0">
-              {{ t('specializations.' + position.name + ".title", position.name) }}
-              <v-icon
-                style="position:relative; float: right; color: red; font-size: 20px"
-                :icon="`user-minus`"
-                @click="userSpecialists.splice(index,1)"
-              />
+              {{ t(`specializations.${position.name}.title`, position.name) }}
             </h4>
+            <v-icon
+              icon="trash-alt"
+              @click="userSpecialists.splice(index,1)"
+              class="v-specialist__card-remove-icon"
+            />
           </div>
         </template>
 
-        <v-label
-          :name="$t('page.ideas.view.team.languages')"
-          class="mb-3"
-        >
-          <span v-for="language in position.languages" :key="language.name"
-                @click="language.selected = !language.selected"
-                style="cursor: pointer">
+        <v-label :name="$t('page.ideas.view.team.languages')">
+          <span
+            v-for="language in position.languages"
+            :key="language.name"
+            @click="language.selected = !language.selected"
+            class="v-specialist__chip"
+          >
             <v-chip
-              :text="t('languages.' + language.name, language.name)"
-              :type="language.selected?'auto':'mutted'"
+              :text="t(`languages.${language.name}`, language.name)"
+              :type="language.selected?'auto':'muted'"
             />
           </span>
         </v-label>
-
-        <v-label :name="$t('page.ideas.view.team.technologies')" v-if="hasSelectedLanguage(position)">
-
-
-         <span v-for="language in position.languages" :key="language.name">
+        <v-label
+          v-if="hasSelectedLanguage(position)"
+          :name="$t('page.ideas.view.team.technologies')"
+          class="v-specialist__label"
+        >
+         <span
+           v-for="language in position.languages"
+           :key="language.name"
+         >
             <span v-if="language.selected">
-              <span v-for="technology of language.technologies"
-                    :key="technology.name"
-                    @click="submitTechnology(position,technology)"
+              <span
+                v-for="technology of language.technologies"
+                :key="technology.name"
+                @click="submitTechnology(position,technology)"
+                class="v-specialist__chip"
               >
                 <v-chip
                   v-if="!alreadyHas(position, language, technology)"
@@ -64,24 +72,21 @@
             </span>
           </span>
         </v-label>
-        <v-label :name="`Количество`">
-          <div>
-            <v-icon
-              :icon="`minus`"
-              @click="position.count <= 1 ? position.count = 1 : position.count--"
-            />
-
-            {{ position.count }}
-
-
-            <v-icon
-              :icon="`plus`"
-              @click="position.count >= maxCountSpecialist ? position.count = maxCountSpecialist: position.count++"
-            />
-
-
-          </div>
-        </v-label>
+        <template #footer>
+          <v-label name="Количество">
+            <div>
+              <v-icon
+                icon="minus"
+                @click="position.count <= 1 ? position.count = 1 : position.count--"
+              />
+              {{ position.count }}
+              <v-icon
+                icon="plus"
+                @click="position.count >= maxCountSpecialist ? position.count = maxCountSpecialist: position.count++"
+              />
+            </div>
+          </v-label>
+        </template>
       </v-card>
     </div>
   </div>
@@ -143,7 +148,6 @@ export default {
   },
   methods: {
     alreadyHas(position, language, technology) {
-
       let buffer = new Set();
 
       for (let languageOfPosition of position.languages) {
@@ -247,54 +251,65 @@ export default {
 }
 </script>
 
-<style scoped>
-.list-group {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  padding-left: 0;
-  margin-bottom: 0;
-  border-radius: 0.25rem;
-}
+<style lang="scss" scoped>
+.v-specialist {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    word-break: keep-all;
+    padding: 0;
+    margin: .5rem 0 0;
+  }
 
-.list-group-item {
-  position: relative;
-  display: block;
-  padding: 0.75rem 1.25rem;
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-}
+  &__spec {
+    position: relative;
+    padding: .1rem 1rem;
+    margin-bottom: .5rem;
+    background-color: var(--color-muted);
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    margin-right: .5rem;
+    font-weight: 500;
+    font-size: .85rem;
+    cursor: pointer;
+    &:first-letter {
+      text-transform: uppercase;
+    }
+  }
 
-.list-group-item:first-child {
-  border-top-left-radius: inherit;
-  border-top-right-radius: inherit;
-}
+  &__icon {
+    color: var(--color-muted-darken);
+    margin-left: .5rem;
+    transform: translateY(-1px);
+  }
 
-.list-group-item:last-child {
-  border-bottom-right-radius: inherit;
-  border-bottom-left-radius: inherit;
-}
+  &__chip {
+    margin-right: .25rem;
+    cursor: pointer;
+  }
 
-.list-group-item.disabled, .list-group-item:disabled {
-  color: #6c757d;
-  pointer-events: none;
-  background-color: #fff;
-}
+  &__label {
+    margin-top: 1rem;
+  }
 
-.list-group-item.active {
-  z-index: 2;
-  color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
-}
+  &__card {
+    max-width: 300px;
+    width: 100%;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+  }
 
-.list-group-item + .list-group-item {
-  border-top-width: 0;
-}
+  &__card-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.list-group-item + .list-group-item.active {
-  margin-top: -1px;
-  border-top-width: 1px;
+  &__card-remove-icon {
+    color: var(--color-danger);
+    cursor: pointer;
+  }
 }
 </style>

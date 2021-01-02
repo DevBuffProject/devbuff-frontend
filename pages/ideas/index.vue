@@ -221,7 +221,7 @@ export default {
   &__ideas {
     display: grid;
     grid-template-columns: repeat(4, 25%);
-    grid-gap: .5rem;
+    grid-gap: 1rem;
   }
 
   &__idea {

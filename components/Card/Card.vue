@@ -31,7 +31,7 @@ export default {
   .card {
     background-color: var(--color-background-contrast);
     padding: 1rem;
-    border-radius: 4px;
+    border-radius: 8px;
     // box-shadow: var(--box-shadow);
     border: 1px solid var(--color-muted-accent);
     border-bottom: 1px solid var(--color-muted);
@@ -53,7 +53,7 @@ export default {
       align-items: center;
       margin: -1rem;
       margin-top: 1rem;
-      padding: .8rem 1rem;
+      padding: .5rem 1rem;
       border-top: 1px solid var(--color-muted-accent);
     }
     &__content {

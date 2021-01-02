@@ -33,7 +33,7 @@
               @click="getIdeaStatus(idea.id)"
               :class="[
                 'dashboard__idea',
-                inspectedIdeaId === idea.id && 'dashboard__idea--pinned'
+                inspectedIdeaId === idea.id && 'dashboard__idea--inspected'
               ]"
             >
               <v-idea-card
@@ -191,7 +191,6 @@ export default {
 
   data: () => ({
     search: null,
-    tab: 'peoples',
     inspectedIdeaId: null,
     loading: false,
   }),
@@ -278,13 +277,32 @@ export default {
   &__idea {
     margin-bottom: 1rem;
     cursor: pointer;
+    position: relative;
   }
 
-  &__idea--pinned {
-    position: sticky;
-    top: 5rem;
-    z-index: 9999;
-    box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.1);
+  &__idea::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    width: calc(100% + 16px);
+    height: calc(100% + 16px);
+    border-radius: 8px;
+    transition: .5s var(--base-transition);
+    transition-property: box-shadow, width, height, top, left;
+    z-index: 1;
+  }
+
+  &__idea--inspected {
+    box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, .1);
+  }
+
+  &__idea--inspected::before {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    box-shadow: inset 0px 0px 0px 2px var(--color-primary);
   }
 
   &__position-name {
