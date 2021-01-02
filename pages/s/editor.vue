@@ -43,13 +43,30 @@
           </v-label>
         </div>
 
-        <v-label name="Выделите для форматирования">
-          <v-card class="mt-1">
-            <client-only>
-              <lazy-v-editor :key="key" v-model="idea.text" />
-            </client-only>
-          </v-card>
-        </v-label>
+        <div class="editor__form-input">
+          <v-label name="Выделите для форматирования">
+            <v-card class="mt-1">
+              <client-only>
+                <lazy-v-editor :key="key" v-model="idea.text" />
+              </client-only>
+            </v-card>
+          </v-label>
+        </div>
+
+        <div
+          v-if="!isEditMode"
+          class="editor__form-input"
+        >
+          <client-only>
+            <v-label name="Позиции в команде">
+              <v-specialist-picker
+                :specialists="systemSkills"
+                @change="idea.specialist = $event"
+              />
+            </v-label>
+          </client-only>
+        </div>
+
       </div>
     </div>
   </div>
@@ -74,7 +91,8 @@ export default {
       idea: {
         name: null,
         text: null,
-        description: null
+        description: null,
+        specialist: null,
       },
     }
   },
@@ -118,10 +136,8 @@ export default {
 
   created() {
     if (this.isEditMode) {
-      const { description, text, name } = this.$store.getters['ideas/idea']
-      this.idea.name = name
-      this.idea.text = text
-      this.idea.description = description
+      const {description, text, name, specialist} = this.$store.getters['ideas/idea']
+      this.idea = {name, text, description, specialist}
     }
   },
 

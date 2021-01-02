@@ -4,7 +4,44 @@
     @mouseover="hover = true"
     @mouseout="hover = false"
   >
-    <v-label :name="$t('components.ideaCard.name')" class="w-100 mb-3">
+    <template #footer>
+      <div class="d-flex align-items-center justify-content-between w-100">
+        <div class="idea__date muted">
+          {{ publishDate | toLocaleDateTime($i18n.locale) }}
+        </div>
+        <v-link
+          v-if="linked"
+          :to="localePath({ name: 'ideas-id', params: { id } })"
+          :icon="['fas', 'angle-right']"
+        >
+          посмотреть
+        </v-link>
+      </div>
+    </template>
+
+<!--    <v-label :name="$t('components.ideaCard.name')" class="w-100 mb-3">-->
+<!--      <div v-if="!linked"> {{ title }}</div>-->
+<!--      <div v-else class="d-flex align-items-center">-->
+<!--        <nuxt-link-->
+<!--          :to="localePath({ name: 'ideas-id', params: { id } })"-->
+<!--          :class="['idea__link', hover && 'idea__link&#45;&#45;hover']"-->
+<!--        >-->
+<!--          {{ title }}-->
+<!--        </nuxt-link>-->
+<!--        <v-icon-->
+<!--          :icon="['fas', 'long-arrow-alt-right']"-->
+<!--          :class="['ml-2', 'idea__link-icon', hover && 'idea__link-icon&#45;&#45;hover']"-->
+<!--        />-->
+<!--      </div>-->
+<!--    </v-label>-->
+
+<!--    <v-label v-if="publishDate" :name="$t('components.ideaCard.dateCreation')" class="w-100 mb-3">-->
+<!--      <div class="idea__date">-->
+<!--        {{ publishDate | toLocaleDateTime($i18n.locale) }}-->
+<!--      </div>-->
+<!--    </v-label>-->
+
+    <div class="mb-4">
       <div v-if="!linked"> {{ title }}</div>
       <div v-else class="d-flex align-items-center">
         <nuxt-link
@@ -18,13 +55,7 @@
           :class="['ml-2', 'idea__link-icon', hover && 'idea__link-icon--hover']"
         />
       </div>
-    </v-label>
-
-    <v-label v-if="publishDate" :name="$t('components.ideaCard.dateCreation')" class="w-100 mb-3">
-      <div class="idea__date">
-        {{ publishDate | toLocaleDateTime($i18n.locale) }}
-      </div>
-    </v-label>
+    </div>
 
     <v-label :name="$t('components.ideaCard.description')" class="w-100">
       <div class="idea__description">

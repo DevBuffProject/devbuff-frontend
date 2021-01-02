@@ -80,17 +80,17 @@ export default {
       font-weight: 700;
       background-color: var(--color-#{$name});
 
-      &::before {
-        background-image: linear-gradient(135deg, var(--color-#{$name}-tint), var(--color-#{$name}));
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        content: "";
-        opacity: 1;
-        transition: opacity .3s var(--base-transition);
-      }
+      //&::before {
+      //  background-image: linear-gradient(135deg, var(--color-#{$name}-tint), var(--color-#{$name}));
+      //  position: absolute;
+      //  top: 0;
+      //  left: 0;
+      //  width: 100%;
+      //  height: 100%;
+      //  content: "";
+      //  opacity: 1;
+      //  transition: opacity .3s var(--base-transition);
+      //}
 
       &:hover {
         box-shadow: 0px 4px 10px -5px var(--color-#{$name}-tint);
@@ -102,9 +102,9 @@ export default {
         box-shadow: 0px 0px 0px 4px var(--color-#{$name}-fade);
       }
 
-      &:active::before {
-        opacity: 0
-      }
+      //&:active::before {
+      //  opacity: 0
+      //}
     }
 
     &--type-flat-#{$name} {
