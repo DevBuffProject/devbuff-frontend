@@ -1,22 +1,27 @@
 <template>
-  <label class="input" @mousedown="focus">
-    <v-icon v-if="icon" :icon="icon" class="input__icon" />
-    <component
-      :is="type === 'textarea' ? 'textarea' : 'input'"
-      ref="field"
-      :class="[
-        'input__field',
-        icon && 'input__field--icon',
-        (type === 'textarea') && 'input__field--type-textarea'
-      ]"
-      :type="inputType"
-      :value="model"
-      :placeholder="placeholder"
-      @input="input"
-      @focus="focus"
-      @blur="blur"
-    >{{ type === 'textarea' && value }}</component>
-  </label>
+  <ValidationProvider :rules="rules" v-slot="{ errors }">
+    <label class="input" @mousedown="focus">
+      <v-icon v-if="icon" :icon="icon" class="input__icon" />
+      <input
+        ref="field"
+        :class="[
+          'input__field',
+          icon && 'input__field--icon',
+        ]"
+        :value="model"
+        v-bind="$attrs"
+        @input="input"
+        @focus="focus"
+        @blur="blur"
+      />
+    </label>
+    <transition name="fade">
+      <div v-if="errors.length" class="input__error">
+        <v-icon v-if="icon" :icon="['fas', 'exclamation']" class="input__error-icon" />
+        <span>{{ errors[0] }}</span>
+      </div>
+    </transition>
+  </ValidationProvider>
 </template>
 
 <script>
@@ -24,11 +29,7 @@ export default {
   name: 'v-input',
 
   props: {
-    type: {
-      type: String,
-      default: 'text'
-    },
-    placeholder: {
+    rules: {
       type: String,
       default: null
     },
@@ -45,10 +46,7 @@ export default {
   data() {
     return {
       focused: false,
-      model: this.value,
-      inputType: this.type === 'date' && !this.value
-        ? 'text'
-        : this.type
+      model: this.value
     }
   },
 
@@ -95,6 +93,24 @@ export default {
 
   &--focused {
     border-color: var(--color-primary) !important
+  }
+
+  &--invalid:not(:focus),
+  &--invalid:not(:focus)::placeholder {
+    color: var(--color-danger)
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    margin-top: .25rem;
+    font-size: .85rem;
+    color: var(--color-danger);
+  }
+
+  &__error-icon {
+    font-size: .85rem;
+    margin-right: .5rem;
   }
 
   &__icon {
