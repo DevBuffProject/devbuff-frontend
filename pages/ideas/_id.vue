@@ -101,7 +101,6 @@
                 </div>
 
                 <div v-if="isOwner">
-                  {{ $t('page.ideas.view.team.statusPending.ownerIdea') }}
                 </div>
                 <v-button
                   v-else-if="statusPositions
