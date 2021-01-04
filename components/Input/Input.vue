@@ -1,6 +1,12 @@
 <template>
   <ValidationProvider :rules="rules" v-slot="{ errors }">
-    <label class="input" @mousedown="focus">
+    <label
+      :class="[
+        'input',
+        errors.length && 'input--invalid'
+      ]"
+      @mousedown="focus"
+    >
       <v-icon v-if="icon" :icon="icon" class="input__icon" />
       <input
         ref="field"
@@ -95,9 +101,8 @@ export default {
     border-color: var(--color-primary) !important
   }
 
-  &--invalid:not(:focus),
-  &--invalid:not(:focus)::placeholder {
-    color: var(--color-danger)
+  &--invalid {
+    border-color: var(--color-danger);
   }
 
   &__error {
