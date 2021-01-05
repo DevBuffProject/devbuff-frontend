@@ -1,14 +1,32 @@
 <template>
-  <ValidationProvider :rules="rules" v-slot="{ errors }">
+  <ValidationProvider
+    :rules="rules"
+    v-slot="{ errors }"
+  >
     <label
       :class="[
-        'input',
-        errors.length && 'input--invalid'
-      ]"
+      'input',
+      errors.length && 'input--invalid'
+    ]"
       @mousedown="focus"
     >
       <v-icon v-if="icon" :icon="icon" class="input__icon" />
+      <textarea
+        v-if="textarea"
+        ref="field"
+        :class="[
+        'input__field',
+        icon && 'input__field--icon',
+      ]"
+        :value="model"
+        v-bind="$attrs"
+        @input="input"
+        @focus="focus"
+        @blur="blur"
+      >
+      </textarea>
       <input
+        v-else
         ref="field"
         :class="[
           'input__field',
@@ -23,7 +41,7 @@
     </label>
     <transition name="fade">
       <div v-if="errors.length" class="input__error">
-        <v-icon v-if="icon" :icon="['fas', 'exclamation']" class="input__error-icon" />
+        <v-icon :icon="['fas', 'exclamation']" class="input__error-icon" />
         <span>{{ errors[0] }}</span>
       </div>
     </transition>
@@ -31,10 +49,20 @@
 </template>
 
 <script>
+import { localize } from 'vee-validate'
+
 export default {
   name: 'v-input',
 
   props: {
+    type: {
+      type: String,
+      default: 'text'
+    },
+    textarea: {
+      type: Boolean,
+      default: false
+    },
     rules: {
       type: String,
       default: null
@@ -47,6 +75,10 @@ export default {
       type: [ String, Array ],
       default: null
     }
+  },
+
+  created() {
+    localize(this.$i18n.locale)
   },
 
   data() {
@@ -93,7 +125,7 @@ export default {
   padding: .3rem 1rem;
   border-radius: 4px;
   box-sizing: border-box;
-  align-items: center;
+  align-items: baseline;
   cursor: text;
   transition: border-color .3s var(--base-transition);
 
@@ -114,11 +146,13 @@ export default {
   }
 
   &__error-icon {
-    font-size: .85rem;
+    font-size: .7rem;
     margin-right: .5rem;
+    transform: translateY(-1px);
   }
 
   &__icon {
+    transform: translateY(4px);
     display: flex;
     margin-right: 1rem;
     align-items: center;
@@ -139,16 +173,20 @@ export default {
     min-width: 0;
     resize: none;
     box-sizing: border-box;
+    position: relative;
     &::placeholder {
+      position: absolute;
+      top: 2px;
+      left: 0;
       font-family: inherit;
       font-weight: 200;
       text-transform: lowercase;
       transition: .2s var(--base-transition);
-      transition-property: transform, opacity;
+      transition-property: left, opacity;
     }
     &:focus::placeholder {
       opacity: .35;
-      transform: translateX(5px);
+      left: 5px;
     }
   }
 }

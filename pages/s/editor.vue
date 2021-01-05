@@ -3,7 +3,7 @@
     <v-toolbar class="mb-5">
       <div class="container toolbar__grid">
         <div class="d-flex">
-          <h3 class="m-0"> {{ isEditMode ? 'Редактирование' : 'Создание идеи' }} </h3>
+          <h3 class="m-0"> {{ isEditMode ? $t('page.editor.title.ideaEdit') : $t('page.editor.title.ideaNew') }} </h3>
         </div>
         <div>
           <v-button
@@ -11,63 +11,63 @@
             :loading="loading"
             @click="save"
           >
-            Сохранить
+            {{$t('common.save')}}
           </v-button>
         </div>
       </div>
     </v-toolbar>
 
     <div class="editor__form">
-      <div class="container mb-4">
-        <div class="editor__field editor__form-input">
-          <v-label name="Заголовок">
-            <v-input
-              v-if="!isEditMode"
-              class="w-100 mt-1"
-              placeholder="Заголовок идеи"
-              type="text"
-              v-model="idea.name"
-            />
-            <b v-else> {{ idea.name }} </b>
-          </v-label>
-        </div>
+      <ValidationObserver ref="form">
+        <div class="container mb-4">
+          <div class="editor__field editor__form-input">
+            <v-label :name="$t('page.editor.idea.heading')">
+              <v-input
+                v-if="!isEditMode"
+                class="w-100 mt-1"
+                :placeholder="$t('page.editor.idea.heading')"
+                :name="$t('page.editor.idea.heading')"
+                type="text"
+                rules="required"
+                v-model="idea.name"
+              />
+              <b v-else> {{ idea.name }} </b>
+            </v-label>
+          </div>
 
-        <div class="editor__field editor__form-input">
-          <v-label name="Краткое описание">
-            <v-input
-              class="w-100 mt-1"
-              placeholder="Краткое описание"
-              type="textarea"
-              v-model="idea.description"
-            />
-          </v-label>
-        </div>
+          <div class="editor__field editor__form-input">
+            <v-label :name="$t('page.editor.idea.desc')">
+              <v-input
+                class="w-100 mt-1"
+                :placeholder="$t('page.editor.idea.desc')"
+                :name="$t('page.editor.idea.desc')"
+                type="textarea"
+                rules="required"
+                v-model="idea.description"
+              />
+            </v-label>
+          </div>
 
-        <div class="editor__form-input">
-          <v-label name="Выделите для форматирования">
-            <v-card class="mt-1">
-              <client-only>
-                <lazy-v-editor :key="key" v-model="idea.text" />
-              </client-only>
-            </v-card>
-          </v-label>
-        </div>
+          <div class="editor__form-input">
+            <v-label :name="$t('page.editor.idea.selectForFormat')">
+              <v-card class="mt-1">
+                <client-only>
+                  <lazy-v-editor :key="key" v-model="idea.text" />
+                </client-only>
+              </v-card>
+            </v-label>
+          </div>
 
-        <div
-          v-if="!isEditMode"
-          class="editor__form-input"
-        >
-          <client-only>
-            <v-label name="Позиции в команде">
+          <div v-if="!isEditMode" class="editor__form-input">
+            <v-label :name="$t('page.editor.idea.positions')">
               <v-specialist-picker
                 :specialists="systemSkills"
                 @change="idea.specialist = $event"
               />
             </v-label>
-          </client-only>
+          </div>
         </div>
-
-      </div>
+      </ValidationObserver>
     </div>
   </div>
 </template>
@@ -87,7 +87,7 @@ export default {
     return {
       key: 1,
       loading: false,
-      title: 'Devbuff :: Публикация идеи',
+      title: `Devbuff :: ${this.$t('page.editor.title.publish')}`,
       idea: {
         name: null,
         text: null,
@@ -109,28 +109,34 @@ export default {
 
   methods: {
     async save() {
-      try {
-        const queryId = this.$route.query.id
-        this.loading = true
-
-        if (this.isEditMode) {
-          const data = { text: this.idea.text, description: this.idea.description }
-          await this.$store.dispatch('ideas/updateIdea', { id: queryId, data })
-        } else {
-          await this.$store.dispatch('ideas/appendIdea', this.idea)
+      this.$refs.form.validate().then(async success => {
+        if (!success) {
+          return;
         }
 
-        await this.$nextTick()
+        try {
+          const queryId = this.$route.query.id
+          this.loading = true
 
-        this.$router.push(this.localePath({
-          name: 'ideas-id',
-          params: { id: this.isEditMode ? queryId : newIdea.id }
-        }))
-      } catch (e) {
-        this.loading = false
-      } finally {
-        this.loading = false
-      }
+          if (this.isEditMode) {
+            const data = { text: this.idea.text, description: this.idea.description }
+            await this.$store.dispatch('ideas/updateIdea', { id: queryId, data })
+          } else {
+            await this.$store.dispatch('ideas/appendIdea', this.idea)
+          }
+
+          await this.$nextTick()
+
+          this.$router.push(this.localePath({
+            name: 'ideas-id',
+            params: { id: this.isEditMode ? queryId : newIdea.id }
+          }))
+        } catch (e) {
+          this.loading = false
+        } finally {
+          this.loading = false
+        }
+      })
     }
   },
 
@@ -148,7 +154,7 @@ export default {
       showIdeaName = !showIdeaName
       this.title = showIdeaName && this.idea.name
         ? `Devbuff :: ${this.idea.name}`
-        : 'Devbuff :: Публикация идеи'
+        : `Devbuff :: ${this.$t('page.editor.title.publish')}`
     }, 2000)
   },
 
