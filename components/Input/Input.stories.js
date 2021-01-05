@@ -8,10 +8,10 @@ export default {
 export const Default = () => ({
   props: {
     type: {
-      default: select('Type', [
-        'text',
-        'textarea'
-      ])
+      default: text('Type', 'text')
+    },
+    textarea: {
+      default: boolean('textarea', false)
     },
     placeholder: {
       default: text('Placeholder', 'Search')
@@ -26,6 +26,7 @@ export const Default = () => ({
   template: `
     <v-app>
       <v-input
+        :textarea="textarea"
         :type="type"
         :placeholder="placeholder"
         :placeholder-centered="placeholderCentered"

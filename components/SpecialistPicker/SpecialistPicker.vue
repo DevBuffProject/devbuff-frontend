@@ -1,40 +1,45 @@
 <template>
-  <div class="v-specialist">
-    <ul class="v-specialist__list">
-      <li
-        v-for="(value, index) in specialistsMap"
-        :key="index"
-        @click="addSpecialist(index)"
-        class="v-specialist__spec"
-      >
-        {{ t(`specializations.${index}.title`, index) }}
-        <v-icon
-          icon="plus"
-          v-if="maxCountSpecialists > userSpecialists.length"
-          class="v-specialist__icon"
-        />
-      </li>
-    </ul>
-    <div class="v-specialist__list">
-      <v-card
-        v-for="(position, index) in userSpecialists"
-        :key="position.name + index"
-        class="v-specialist__card"
-      >
-        <template #header>
-          <div class="v-specialist__card-header">
-            <h4 class="m-0">
-              {{ t(`specializations.${position.name}.title`, position.name) }}
-            </h4>
-            <v-icon
-              icon="trash-alt"
-              @click="userSpecialists.splice(index,1)"
-              class="v-specialist__card-remove-icon"
-            />
-          </div>
-        </template>
+  <ValidationProvider
+    rules="min_specialists:1"
+    v-slot="{ errors, validate }"
+  >
+    <input type="hidden" :value="pickedSpecialists.length" @input="validate" />
+    <div class="v-specialist">
+      <ul class="v-specialist__list">
+        <li
+          v-for="(value, index) in specialistsMap"
+          :key="index"
+          @click="addSpecialist(index)"
+          class="v-specialist__spec"
+        >
+          {{ t(`specializations.${index}.title`, index) }}
+          <v-icon
+            icon="plus"
+            v-if="maxCountSpecialists > userSpecialists.length"
+            class="v-specialist__icon"
+          />
+        </li>
+      </ul>
+      <div class="v-specialist__list">
+        <v-card
+          v-for="(position, index) in userSpecialists"
+          :key="position.name + index"
+          class="v-specialist__card"
+        >
+          <template #header>
+            <div class="v-specialist__card-header">
+              <h4 class="m-0">
+                {{ t(`specializations.${position.name}.title`, position.name) }}
+              </h4>
+              <v-icon
+                icon="trash-alt"
+                @click="userSpecialists.splice(index,1)"
+                class="v-specialist__card-remove-icon"
+              />
+            </div>
+          </template>
 
-        <v-label :name="$t('page.ideas.view.team.languages')">
+          <v-label :name="$t('page.ideas.view.team.languages')">
           <span
             v-for="language in position.languages"
             :key="language.name"
@@ -46,12 +51,12 @@
               :type="language.selected?'auto':'muted'"
             />
           </span>
-        </v-label>
-        <v-label
-          v-if="hasSelectedLanguage(position)"
-          :name="$t('page.ideas.view.team.technologies')"
-          class="v-specialist__label"
-        >
+          </v-label>
+          <v-label
+            v-if="hasSelectedLanguage(position)"
+            :name="$t('page.ideas.view.team.technologies')"
+            class="v-specialist__label"
+          >
          <span
            v-for="language in position.languages"
            :key="language.name"
@@ -71,28 +76,53 @@
               </span>
             </span>
           </span>
-        </v-label>
-        <template #footer>
-          <v-label name="Количество">
-            <div>
-              <v-icon
-                icon="minus"
-                @click="position.count <= 1 ? position.count = 1 : position.count--"
-              />
-              {{ position.count }}
-              <v-icon
-                icon="plus"
-                @click="position.count >= maxCountSpecialist ? position.count = maxCountSpecialist: position.count++"
-              />
-            </div>
           </v-label>
-        </template>
-      </v-card>
+          <template #footer>
+            <v-label name="Количество">
+              <div>
+                <v-icon
+                  icon="minus"
+                  @click="position.count <= 1 ? position.count = 1 : position.count--"
+                />
+                {{ position.count }}
+                <v-icon
+                  icon="plus"
+                  @click="position.count >= maxCountSpecialist ? position.count = maxCountSpecialist: position.count++"
+                />
+              </div>
+            </v-label>
+          </template>
+        </v-card>
+      </div>
     </div>
-  </div>
+
+    <transition name="fade">
+      <div v-if="errors.length" class="v-specialist__error">
+        <v-icon :icon="['fas', 'exclamation']" class="v-specialist__error-icon" />
+        <span>{{ errors[0] }}</span>
+      </div>
+    </transition>
+  </ValidationProvider>
 </template>
 
 <script>
+import { extend, localize } from 'vee-validate'
+import { min_value } from 'vee-validate/dist/rules'
+
+extend('min_specialists', { ...min_value });
+
+localize({
+  en: {
+    messages:{
+      min_specialists: 'Select one or more specializations'
+    }
+  },
+  ru: {
+    messages: {
+      min_specialists: 'Выберите одного или несколько специальностей'
+    }
+  }
+})
 
 export default {
   name: 'v-specialist-picker',
@@ -113,11 +143,15 @@ export default {
     userSpecialists: {
       deep: true,
       handler() {
-        this.$emit('change', this.buildUserSpecialists())
+        const specialists = this.buildUserSpecialists()
+        this.$emit('change', specialists)
       }
     },
   },
   computed: {
+    pickedSpecialists() {
+      return this.buildUserSpecialists()
+    },
     specialistsMap: function () {
       let specialistsMap = {};
 
@@ -276,6 +310,20 @@ export default {
     &:first-letter {
       text-transform: uppercase;
     }
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    margin-top: .25rem;
+    font-size: .85rem;
+    color: var(--color-danger);
+  }
+
+  &__error-icon {
+    font-size: .7rem;
+    margin-right: .5rem;
+    transform: translateY(-1px);
   }
 
   &__icon {

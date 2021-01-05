@@ -398,6 +398,20 @@ export default {
           }
         }
       }
+    },
+    editor: {
+      title: {
+        ideaNew: 'Новая идея',
+        ideaEdit: 'Редактирование',
+        publish: 'Пуликация идеи'
+      },
+      idea: {
+        heading: 'заголовок идеи',
+        desc: 'краткое описание идеи',
+        text: 'текст идеи',
+        selectForFormat: 'выделите для форматирования',
+        positions: 'позиции в команде',
+      }
     }
   },
   layouts: {

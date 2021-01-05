@@ -398,6 +398,20 @@ export default {
           }
         }
       }
+    },
+    editor: {
+      title: {
+        ideaNew: 'New idea',
+        ideaEdit: 'Change idea',
+        publish: 'Idea publish'
+      },
+      idea: {
+        heading: 'idea heading',
+        desc: 'short description',
+        text: 'idea text',
+        selectForFormat: 'select for format',
+        positions: 'team positions',
+      }
     }
   },
   layouts: {

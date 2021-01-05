@@ -1,19 +1,34 @@
 <template>
-  <div class="v-editor">
-    <v-article>
-      <client-only>
-        <v-skeleton-paragraph v-show="!ready" :rows="3" />
-        <quill-editor
-          v-show="ready"
-          class="v-editor__area"
-          :options="editorOptions"
-          :content="value"
-          @ready="onReady"
-          @change="$emit('change', $event.html)"
-        />
-      </client-only>
-    </v-article>
-  </div>
+  <client-only>
+    <ValidationProvider
+      rules="quillRequired"
+      ref="validator"
+      name="text"
+      v-slot="{ errors }"
+    >
+      <div :class="['v-editor', errors.length && 'v-editor--state-invalid']">
+        <v-article>
+          <input type="hidden" :value="value" @change="validate" />
+
+          <v-skeleton-paragraph v-show="!ready" :rows="3" />
+          <quill-editor
+            v-show="ready"
+            class="v-editor__area"
+            :options="editorOptions"
+            :content="value"
+            @blur="validate"
+            @ready="onReady"
+            @change="change"
+          />
+        </v-article>
+
+        <div v-if="errors.length" class="v-editor__error">
+          <v-icon :icon="['fas', 'exclamation']" class="v-editor__error-icon" />
+          <span>{{ errors[0] }}</span>
+        </div>
+      </div>
+    </ValidationProvider>
+  </client-only>
 </template>
 
 <script>
@@ -21,6 +36,23 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.bubble.css'
 import ImageUploader from 'quill-image-uploader'
 import Quill from 'quill'
+import { localize, extend } from 'vee-validate'
+import { required } from 'vee-validate/dist/rules'
+
+extend('quillRequired', { ...required });
+
+localize({
+  en: {
+    messages:{
+      quillRequired: 'Text can\'t be empty'
+    }
+  },
+  ru: {
+    messages: {
+      quillRequired: 'Текст не может быть пустым'
+    }
+  }
+})
 
 Quill.register("modules/imageUploader", ImageUploader);
 
@@ -47,6 +79,7 @@ export default {
   data() {
     return {
       ready: false,
+      valid: true,
       editorOptions: {
         theme: 'bubble',
         placeholder: 'Текст идеи',
@@ -71,6 +104,12 @@ export default {
   },
 
   methods: {
+    validate() {
+      this.$refs.validator.validate().then(success => this.valid = success)
+    },
+    change({ html }) {
+      this.$emit('change', html)
+    },
     async imageUpload(file) {
       return await this.$store.dispatch('files/uploadImage', file)
     },
@@ -85,6 +124,15 @@ export default {
 <style lang="scss" scoped>
 
 .v-editor {
+  margin: -1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+
+  &--state-invalid {
+    box-shadow: inset 0 0px 0px 1px var(--color-danger);
+  }
+
   &__area {
     /deep/ .ql {
       &-editor { padding: 0px !important; }
@@ -95,6 +143,24 @@ export default {
         font-style: normal;
       }
     }
+  }
+
+  &__error {
+    background-color: var(--color-danger-fade);
+    display: flex;
+    align-items: center;
+    margin-top: .25rem;
+    font-size: .85rem;
+    color: var(--color-danger);
+    margin: 0 -1rem;
+    margin-bottom: -1rem;
+    padding: .5rem 1rem;
+  }
+
+  &__error-icon {
+    font-size: .7rem;
+    margin-right: .5rem;
+    transform: translateY(-1px);
   }
 }
 
