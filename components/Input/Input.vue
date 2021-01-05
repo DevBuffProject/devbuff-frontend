@@ -29,9 +29,9 @@
         v-else
         ref="field"
         :class="[
-        'input__field',
-        icon && 'input__field--icon',
-      ]"
+          'input__field',
+          icon && 'input__field--icon',
+        ]"
         :value="model"
         v-bind="$attrs"
         @input="input"
@@ -84,10 +84,7 @@ export default {
   data() {
     return {
       focused: false,
-      model: this.value,
-      inputType: this.type === 'date' && !this.value
-        ? 'text'
-        : this.type
+      model: this.value
     }
   },
 

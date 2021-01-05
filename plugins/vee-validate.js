@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { ValidationProvider, ValidationObserver, extend, localize } from 'vee-validate';
+import { ValidationProvider, ValidationObserver, extend, localize } from 'vee-validate'
 import * as rules from 'vee-validate/dist/rules'
 import en from 'vee-validate/dist/locale/en.json'
 import ru from 'vee-validate/dist/locale/ru.json'
