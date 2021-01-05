@@ -16,8 +16,11 @@ export const Default = () => ({
     placeholder: {
       default: text('Placeholder', 'Search')
     },
-    placeholderCentered: {
-      default: boolean('Center placeholder', false)
+    name: {
+      default: text('name', 'Search')
+    },
+    rules: {
+      default: text('rules', false)
     },
     icon: {
       default: array('Icon', ['fas', 'search'], ':')
@@ -28,8 +31,9 @@ export const Default = () => ({
       <v-input
         :type="type"
         :placeholder="placeholder"
-        :placeholder-centered="placeholderCentered"
+        :rules="rules"
         :icon="icon"
+        :name="name"
       />
     </v-app>
   `

@@ -41,6 +41,7 @@ const config = {
     { src: '~/plugins/api.js' },
     { src: '~/plugins/ui-setup.js' },
     { src: '~/plugins/fontawesome.js' },
+    { src: '~/plugins/vee-validate.js' },
     { src: '~/plugins/admin-auto-refresh.js', mode: 'client' },
   ],
 
