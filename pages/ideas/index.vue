@@ -20,7 +20,7 @@
                   'explore__filter-label',
                   (!filter.specialists || filter.specialists.length === 0) && 'explore__filter-label--active',
                 ]"
-                @click="excludeFilter(['specialists'])"
+                @click="excludeFilter(['specialists','languages'])"
               >
                 <v-chip
                   :text="$t('page.ideas.explore.filter.all')"
@@ -136,14 +136,6 @@ export default {
       }
     }
   },
-  watch: {
-    filter: {
-      deep: true,
-      handler() {
-        console.log("test222");
-      }
-    }
-  },
   computed: {
     ...mapGetters({
       ideas: 'ideas/list',
@@ -198,24 +190,36 @@ export default {
         if (this.filter[key] === undefined) {
           this.filter[key] = [];
         }
-        this.filter[key].push(filter[key])
+
+        if (Array.isArray(this.filter[key])) {
+          this.filter[key].push(filter[key]);
+        } else {
+          this.filter[key] = filter[key];
+        }
       }
 
       return await this.updateIdeas();
     },
     async updateIdeas() {
-      const newFilter = JSON.parse(JSON.stringify(this.filter));
+      const params = JSON.parse(JSON.stringify(this.filter));
 
-      if (Array.isArray(newFilter.specialists)) {
-        newFilter.specialists = newFilter.specialists.join(',')
+      if (params.specialists.length > 0) {
+        params.specialists = params.specialists.join(',')
+      } else {
+        delete params.specialists;
+      }
+
+      if (Array.isArray(params.languages) && params.languages.length > 0) {
+        params.languages = params.languages.join(',')
+      } else {
+        delete params.languages;
       }
 
       await this.loadIdeas()
       this.$router.replace({
         ...this.$route,
-        query: newFilter
-      }).catch(() => {
-      });
+        query: params
+      }).catch(()=>{});
     },
     async loadMore() {
       try {
