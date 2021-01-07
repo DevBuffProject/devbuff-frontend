@@ -23,5 +23,18 @@ $font-family: 'Nunito', sans-serif;
 }
 
 .codeblock {
+  background-color: #282c34;
+  color: #abb2bf;
   font-family: 'Fira Code', sans-serif;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.blockquote {
+  border-left: 2px solid var(--color-primary);
+  margin: 0;
+  padding-left: 1rem;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--color-text-tint);
 }

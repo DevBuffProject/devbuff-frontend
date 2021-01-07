@@ -6,28 +6,69 @@
       name="text"
       v-slot="{ errors }"
     >
-      <div id="toolbar" class="v-editor__toolbar">
+      <input
+        type="file"
+        accept=".jpg, .jpeg, .png"
+        style="display: none"
+        ref="imagePicker"
+        @change="_insertImage"
+      />
+
+      <div
+        id="toolbar"
+        ref="toolbar"
+        class="v-editor__toolbar"
+        :class="state.toolHover && 'v-editor__toolbar--hover'"
+      >
         <div class="v-editor__toolbar-hightlight" ref="highlight" />
 
         <div
-          v-for="(section, index) in state.tools"
+          v-for="(section, index) in state.tools.list.inline"
           :key="index"
           class="v-editor__toolbar-section"
         >
           <div
             v-for="tool in section"
             :key="tool.format"
+            ref="tools"
             class="v-editor__tool"
             :class="state.formats[tool.format] && 'v-editor__tool--active'"
+            :data-tool-name="tool.format"
             @click="toggleInlineFormat(tool.format)"
-            @mouseover="onToolMouseover"
+            @mouseover.self="onToolMouseover"
+            @mouseout.self="onToolMouseout"
           >
             <v-icon
+              @mouseover.stop.prevent
+              @mouseout.stop.prevent
               :icon="['fas', tool.icon]"
               class="v-editor__tool-icon"
             />
           </div>
-          <div v-if="index + 1 < state.tools.length" class="v-editor__tools-delimiter" />
+          <div v-if="index + 1 < state.tools.list.inline.length" class="v-editor__tools-delimiter" />
+        </div>
+
+        <div class="v-editor__tools-delimiter" />
+
+        <div class="v-editor__toolbar-section">
+          <div
+            v-for="tool in state.tools.list.embed"
+            :key="tool.format"
+            ref="tools"
+            class="v-editor__tool"
+            :class="state.formats[tool.type] && 'v-editor__tool--active'"
+            :data-tool-name="tool.type"
+            @click="insertEmbed(tool.type)"
+            @mouseover.self="onToolMouseover"
+            @mouseout.self="onToolMouseout"
+          >
+            <v-icon
+              @mouseover.stop.prevent
+              @mouseout.stop.prevent
+              :icon="['fas', tool.icon]"
+              class="v-editor__tool-icon"
+            />
+          </div>
         </div>
       </div>
 
@@ -44,25 +85,35 @@
 
 <script>
 import Quill from 'quill'
+import MagicUrl from 'quill-magic-url'
+import BlotFormatter from 'quill-blot-formatter'
+import ImageUploader from 'quill-image-uploader'
 import hljs from 'highlight.js'
-import { localize, extend } from 'vee-validate'
-import { required } from 'vee-validate/dist/rules'
-import 'highlight.js/styles/tomorrow-night.css'
+import { extend as veeExtend, localize as veeLocalize } from 'vee-validate'
+import { required as veeRuleRequired } from 'vee-validate/dist/rules'
+import 'highlight.js/styles/atom-one-dark.css'
 
-extend('quillRequired', { ...required });
+let highlightTimeout = 0
 
-localize({
-  en: {
-    messages:{
-      quillRequired: 'Text can\'t be empty'
-    }
-  },
-  ru: {
-    messages: {
-      quillRequired: 'Текст не может быть пустым'
-    }
-  }
+veeExtend('quillRequired', { ...veeRuleRequired });
+veeLocalize({
+  en: { messages:{ quillRequired: 'Text can\'t be empty' } },
+  ru: { messages: { quillRequired: 'Текст не может быть пустым' } }
 })
+
+Quill.register('modules/magicUrl', MagicUrl)
+Quill.register('modules/blotFormatter', BlotFormatter)
+Quill.register("modules/imageUploader", ImageUploader)
+
+const Codeblock = Quill.import('formats/code-block')
+const Quoteblock = Quill.import('formats/blockquote')
+const Header = Quill.import('formats/header')
+const List = Quill.import('formats/list')
+
+Codeblock.className = 'codeblock'
+Quoteblock.className = 'blockquote'
+Header.className = 'heading'
+List.className = 'list'
 
 export default {
   name: 'v-editor',
@@ -82,27 +133,73 @@ export default {
   data: () => ({
     quill: null,
     state: {
+      toolHover: false,
       text: null,
       formats: {},
-      tools: [
-        [
-          { format: 'bold', icon: 'bold' },
-          { format: 'italic', icon: 'italic' },
-          { format: 'underline', icon: 'underline' },
-        ],
-        [
-          { format: 'header', icon: 'heading' },
-        ],
-        [
-          { format: 'blockquote', icon: 'quote-right' },
-          { format: 'code-block', icon: 'code' },
-          { format: 'list', icon: 'list' },
-        ]
-      ]
+      tools: {
+        positions: {},
+        list: {
+          inline: [
+            [
+              { format: 'bold', icon: 'bold' },
+              { format: 'italic', icon: 'italic' },
+              { format: 'underline', icon: 'underline' },
+            ],
+            [
+              { format: 'header', icon: 'heading' },
+            ],
+            [
+              { format: 'blockquote', icon: 'quote-right' },
+              { format: 'code-block', icon: 'code' },
+              { format: 'list', icon: 'list' },
+            ]
+          ],
+          embed: [
+            { type: 'image', icon: 'file-image' },
+          ]
+        }
+      }
     },
   }),
 
   methods: {
+    init() {
+      const options = {
+        modules: {
+          toolbar: '#toolbar',
+          clipboard: true,
+          history: true,
+          magicUrl: true,
+          blotFormatter: true,
+          imageUploader: { upload: async file => await this.$store.dispatch('files/uploadImage', file) },
+          syntax: { highlight: text => hljs.highlightAuto(text).value }
+        }
+      }
+
+      const quill = new Quill('#editor', options)
+
+      quill.on('editor-change', this.onEditorChange)
+      quill.on('text-change', this.onTextChange)
+      quill.on('selection-change', this.onSelectionChange)
+      quill.root.addEventListener('blur', this.validate)
+
+      this.quill = quill
+
+      this.quill.pasteHTML(this.value)
+    },
+    computeToolsPositions() {
+      const tools = this.$refs.tools
+
+      tools.map(tool => {
+        const toolName = tool.getAttribute('data-tool-name')
+        const width = tool.offsetWidth
+        const left = tool.offsetLeft > 0
+          ? tool.offsetLeft - 1
+          : tool.offsetLeft
+
+        this.state.tools.positions[toolName] = { width, left }
+      })
+    },
     validate() {
       this.$refs.validator.validate()
     },
@@ -113,6 +210,15 @@ export default {
     },
     toggleInlineFormat(format) {
       this.quill.format(format, !this.state.formats[format])
+    },
+    insertEmbed(type) {
+      switch (type) {
+        case 'image': this._insertImage()
+      }
+    },
+    _insertImage(e) {
+      this.quill.focus()
+      this.quill.getModule('imageUploader').selectLocalImage()
     },
     onSelectionChange(range) {
       if (!range) {
@@ -125,53 +231,40 @@ export default {
       this.$emit('change', this.quill.container.firstChild.innerHTML)
     },
     onTextChange() {
-      const text = this.quill.getText().trim()
-      this.state.text = text
+      this.state.text = this.quill.getText().trim()
     },
     onToolMouseover(e) {
+      this.state.toolHover = true
       const highlight = this.$refs.highlight
-      const width = e.target.offsetWidth
-      const left = e.target.offsetLeft > 0
-        ? e.target.offsetLeft - 1
-        : e.target.offsetLeft
+      const toolName = e.target.getAttribute('data-tool-name')
+      const { width, left } = this.state.tools.positions[toolName]
 
       highlight.style.width = `${width}px`
       highlight.style.transform = `translateX(${left}px)`
+      this.$refs.toolbar.classList.add('v-editor__toolbar--hover')
+      setTimeout(() => this.$refs.toolbar.classList.add('v-editor__toolbar--anim'), 30)
+      clearTimeout(highlightTimeout)
+    },
+    onToolMouseout() {
+      this.$refs.toolbar.classList.remove('v-editor__toolbar--hover')
+      highlightTimeout = setTimeout(() => this.$refs.toolbar.classList.remove('v-editor__toolbar--anim'), 70)
     }
-  },
-
-  created() {
-    const Codeblock = Quill.import('formats/code-block')
-    const Quoteblock = Quill.import('formats/blockquote')
-    const Header = Quill.import('formats/header')
-    const List = Quill.import('formats/list')
-
-    Codeblock.className = 'codeblock'
-    Quoteblock.className = 'blockquote'
-    Header.className = 'heading'
-    List.className = 'list'
-
   },
 
   mounted() {
-    const options = {
-      modules: {
-        toolbar: '#toolbar',
-        syntax: { highlight: text => hljs.highlightAuto(text).value }
-      }
-    }
-
-    const quill = new Quill('#editor', options)
-
-    quill.on('editor-change', this.onEditorChange)
-    quill.on('text-change', this.onTextChange)
-    quill.on('selection-change', this.onSelectionChange)
-    quill.root.addEventListener('blur', this.validate)
-
-    this.quill = quill
+    this.init()
+    this.computeToolsPositions()
   }
 }
 </script>
+
+<style>
+.image-uploading::before {
+  border-color: transparent !important;
+  border-top-color: var(--color-primary) !important;
+  animation: spinner 5s linear infinite !important;
+}
+</style>
 
 <style lang="scss" scoped>
 .v-editor {
@@ -180,12 +273,11 @@ export default {
   border-radius: 8px;
 
   &--state-invalid {
-    box-shadow: inset 0 0px 0px 1px var(--color-danger);
+    box-shadow: inset 0 0 0 1px var(--color-danger);
   }
 
   &__toolbar {
     position: relative;
-    //background-color: var(--color-muted-accent);
     font-size: 1.2rem;
     border-radius: 4px;
     margin: -.25rem;
@@ -194,8 +286,13 @@ export default {
     align-items: center;
   }
 
-  &__toolbar:hover &__toolbar-hightlight {
-    opacity: 1;
+  &__toolbar--hover &__toolbar-hightlight {
+    opacity: 1 !important;
+  }
+
+  &__toolbar--anim &__toolbar-hightlight {
+    transition: .3s var(--base-transition) !important;
+    transition-property: opacity, transform;
   }
 
   &__toolbar-hightlight {
@@ -206,9 +303,8 @@ export default {
     opacity: 0;
     border-radius: 5px;
     box-sizing: border-box;
-    transition: .5s var(--base-transition);
-    transition-property: transform, width, opacity;
     z-index: 1;
+    transition: opacity .3s var(--base-transition);
   }
 
   &__toolbar-section {
@@ -228,7 +324,7 @@ export default {
     color: var(--color-text-tint);
     display: inline-flex;
     align-items: center;
-    padding: .5rem .5rem;
+    padding: .5rem .6rem;
     cursor: pointer;
     border-radius: 8px;
     width: 1rem;
@@ -237,12 +333,17 @@ export default {
     transition: background-color .3s var(--base-transition);
   }
 
-  &__tool:not(:last-of-type) {
-    margin-right: .25rem;
+  &__tool::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
   }
 
   &__tool--active {
-    background-color: var(--color-muted-accent);
+    //background-color: var(--color-muted-accent);
     color: var(--color-primary);
   }
 

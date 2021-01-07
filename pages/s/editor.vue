@@ -149,7 +149,8 @@ export default {
   created() {
     if (this.isEditMode) {
       const {description, text, name, specialist} = this.$store.getters['ideas/idea']
-      this.idea = {name, text, description, specialist}
+      console.log(text)
+      this.idea = { name, text, description, specialist }
     }
   },
 
