@@ -47,6 +47,7 @@ import Quill from 'quill'
 import hljs from 'highlight.js'
 import { localize, extend } from 'vee-validate'
 import { required } from 'vee-validate/dist/rules'
+import 'highlight.js/styles/tomorrow-night.css'
 
 extend('quillRequired', { ...required });
 
@@ -115,8 +116,8 @@ export default {
     },
     onSelectionChange(range) {
       if (!range) {
-        this.validate()
         this.quill.blur()
+        this.validate()
       }
     },
     onEditorChange() {
@@ -124,8 +125,9 @@ export default {
     },
     onTextChange() {
       this.$emit('change', this.quill.container.firstChild.innerHTML)
-      this.state.text = this.quill.getText().trim()
-      this.validate()
+
+      const text = this.quill.getText().trim()
+      this.state.text = text
     },
     onToolMouseover(e) {
       const highlight = this.$refs.highlight
@@ -153,11 +155,19 @@ export default {
   },
 
   mounted() {
-    const quill = new Quill('#editor')
+    const options = {
+      modules: {
+        toolbar: '#toolbar',
+        syntax: { highlight: text => hljs.highlightAuto(text).value }
+      }
+    }
+
+    const quill = new Quill('#editor', options)
 
     quill.on('editor-change', this.onEditorChange)
     quill.on('text-change', this.onTextChange)
     quill.on('selection-change', this.onSelectionChange)
+    quill.root.addEventListener('blur', this.validate)
 
     this.quill = quill
   }
