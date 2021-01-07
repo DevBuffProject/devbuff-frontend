@@ -32,9 +32,9 @@ $font-family: 'Nunito', sans-serif;
 
 .blockquote {
   border-left: 2px solid var(--color-primary);
-  margin: 0;
-  padding-left: 1rem;
+  color: var(--color-text-tint);
   font-size: 1rem;
   font-style: italic;
-  color: var(--color-text-tint);
+  margin: 0;
+  padding-left: 1rem;
 }
