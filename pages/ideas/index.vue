@@ -7,8 +7,6 @@
         </div>
       </div>
     </v-toolbar>
-    {{ filter }}<br>
-    {{ filteredLanguages }}
     <div class="container">
       <div class="explore__filter mb-3">
         <div class="mb-4">
