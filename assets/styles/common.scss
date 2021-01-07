@@ -19,7 +19,6 @@
     --color-#{$name}-darken: #{darken($color, 10%)};
     --color-#{$name}-tint: #{lighten($color, 20%)};
     --color-#{$name}-fade: #{transparentize($color, 0.85)};
-    --color-#{$name}-extra-fade: #{transparentize($color, 0.1)};
   }
 }
 
@@ -27,12 +26,16 @@ body {
   margin: 0;
   user-select: none;
   font-family: var(--font-family);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.5;
-  font-weight: 300;
+  font-weight: 400;
   font-variant: no-common-ligatures slashed-zero;
   -webkit-font-smoothing: antialiased;
   color: var(--text-color);
+}
+
+[contenteditable] {
+  outline: 0 solid transparent;
 }
 
 a {
