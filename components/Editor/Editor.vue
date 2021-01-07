@@ -122,10 +122,9 @@ export default {
     },
     onEditorChange() {
       this.updateState()
+      this.$emit('change', this.quill.container.firstChild.innerHTML)
     },
     onTextChange() {
-      this.$emit('change', this.quill.container.firstChild.innerHTML)
-
       const text = this.quill.getText().trim()
       this.state.text = text
     },
