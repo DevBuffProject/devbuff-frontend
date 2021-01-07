@@ -76,6 +76,8 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  name: 'editor',
+
   async middleware({ store, route }) {
     try {
       await store.dispatch('skills/getSkills')
@@ -127,6 +129,10 @@ export default {
 
           await this.$nextTick()
 
+          console.log(newIdea.id, this.localePath({
+            name: 'ideas-id',
+            params: { id: this.isEditMode ? queryId : newIdea.id }
+          }))
           this.$router.push(this.localePath({
             name: 'ideas-id',
             params: { id: this.isEditMode ? queryId : newIdea.id }
