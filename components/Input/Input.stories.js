@@ -1,4 +1,4 @@
-import { withKnobs, select, text, boolean, array } from '@storybook/addon-knobs'
+import { withKnobs, text, boolean, array } from '@storybook/addon-knobs'
 
 export default {
   title: 'Input',
