@@ -7,7 +7,8 @@
         </div>
       </div>
     </v-toolbar>
-
+    {{ filter }}<br>
+    {{ filteredLanguages }}
     <div class="container">
       <div class="explore__filter mb-3">
         <div class="mb-4">
@@ -17,13 +18,13 @@
                 :class="[
                   'mr-2',
                   'explore__filter-label',
-                  !filter.specialists && 'explore__filter-label--active',
+                  (!filter.specialists || filter.specialists.length === 0) && 'explore__filter-label--active',
                 ]"
                 @click="excludeFilter(['specialists'])"
               >
                 <v-chip
                   :text="$t('page.ideas.explore.filter.all')"
-                  :type="!filter.specialists ? 'auto' : null"
+                  :type="!filter.specialists || filter.specialists.length === 0 ? 'auto' : null"
                 />
               </span>
 
@@ -33,13 +34,13 @@
                 :class="[
                   'mr-2',
                   'explore__filter-label',
-                  (filter.specialists && filter.specialists === spec) && 'explore__filter-label--active',
+                  (filter.specialists && filter.specialists.indexOf(spec) > -1) && 'explore__filter-label--active',
                 ]"
-                @click="applyFilter({ specialists: spec })"
+                @click="(filter.specialists && filter.specialists.indexOf(spec) > -1) ? excludeFilter({ specialists: spec }): applyFilter({ specialists: spec })"
               >
                 <v-chip
                   :text="t('specializations.'+spec+'.title',spec)"
-                  :type="filter.specialists && filter.specialists === spec
+                  :type="filter.specialists && filter.specialists.indexOf(spec) > -1
                     ? 'auto'
                     : null
                   "
@@ -47,13 +48,24 @@
               </span>
             </v-label>
 
-            <v-label :name="$t('page.ideas.explore.filter.languages')+' — ' + langs.length">
+            <v-label v-if="filteredLanguages.length>0" :name="$t('page.ideas.explore.filter.languages')">
               <span
-                v-for="lang in langs"
+                v-for="lang in filteredLanguages"
                 :key="lang"
-                class="mr-2"
+                :class="[
+                  'mr-2',
+                  'explore__filter-label',
+                  (filter.languages && filter.languages.indexOf(lang) > -1) && 'explore__filter-label--active',
+                ]"
+                @click="(filter.languages && filter.languages.indexOf(lang) > -1) ? excludeFilter({ languages: lang }): applyFilter({ languages: lang })"
               >
-                <v-chip :text="t('languages.'+lang,lang)"/>
+                 <v-chip
+                   :text="t('languages.'+lang,lang)"
+                   :type="filter.languages && filter.languages.indexOf(lang) > -1
+                    ? 'auto'
+                    : null
+                  "
+                 />
               </span>
             </v-label>
           </div>
@@ -113,36 +125,97 @@ export default {
       filter: {
         page: 1,
         sortBy: 'date',
-        ...this.$route.query,
+        ...(function (val) {
+          if (val.specialists !== undefined && val.specialists !== null && val.specialists.length > 0) {
+            val.specialists = val.specialists.split(',');
+          } else {
+            val.specialists = [];
+          }
+          return val;
+        })(this.$route.query),
       }
     }
   },
-
+  watch: {
+    filter: {
+      deep: true,
+      handler() {
+        console.log("test222");
+      }
+    }
+  },
   computed: {
     ...mapGetters({
       ideas: 'ideas/list',
       langs: 'skills/languages',
+      skills: 'skills/skills',
       specs: 'skills/specializations'
-    })
+    }),
+    filteredLanguages() {
+      if (!Array.isArray(this.filter.specialists)) {
+        return [];
+      }
+
+      let languages = new Set();
+
+      for (let language of this.skills) {
+        for (let specialization of language.specializations) {
+          if (this.filter.specialists.indexOf(specialization.name) > -1) {
+            languages.add(language.name);
+          }
+        }
+      }
+
+      return Array.from(languages);
+    }
   },
 
   methods: {
     async excludeFilter(filters) {
-      filters.forEach(filter => delete this.filter[filter])
-      return await this.applyFilter()
+      if (Array.isArray(filters)) {
+        filters.forEach(filter => this.filter[filter] = [])
+      } else {
+        for (let key of Object.keys(filters)) {
+          let index = this.filter[key].indexOf(filters[key]);
+          if (index > -1) {
+            this.filter[key].splice(index, 1);
+          }
+        }
+        //Validate languages
+        if (Array.isArray(this.filter.languages)) {
+          this.filter.languages.forEach((lang, index, object) => {
+            if (this.filteredLanguages.indexOf(lang) === -1) {
+              object.splice(index, 1);
+            }
+          });
+        }
+
+      }
+      return await this.updateIdeas();
     },
     async applyFilter(filter = {}) {
-      const newFilter = this.filter = {
-        ...this.filter,
-        ...filter,
+      for (let key of Object.keys(filter)) {
+        if (this.filter[key] === undefined) {
+          this.filter[key] = [];
+        }
+        this.filter[key].push(filter[key])
+      }
+
+      return await this.updateIdeas();
+    },
+    async updateIdeas() {
+      const newFilter = JSON.parse(JSON.stringify(this.filter));
+
+      if (Array.isArray(newFilter.specialists)) {
+        newFilter.specialists = newFilter.specialists.join(',')
       }
 
       await this.loadIdeas()
-
       this.$router.replace({
         ...this.$route,
         query: newFilter
-      })
+      }).catch(() => {
+      });
     },
     async loadMore() {
       try {
