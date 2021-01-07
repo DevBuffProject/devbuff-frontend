@@ -56,11 +56,11 @@ export default {
   display: inline-flex;
   align-items: center;
   line-height: 1;
-  font-size: .7rem;
-  padding: 0 .7rem;
+  font-size: .75rem;
+  padding: 1px .75rem;
   height: 1rem;
   border-radius: 10rem;
-  font-weight: 400;
+  font-weight: 500;
   color: rgba(0, 0, 0, .5);
   transition: background-color .3s var(--base-transition);
 

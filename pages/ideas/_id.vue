@@ -73,9 +73,7 @@
       </div>
 
       <v-card class="mt-3">
-        <v-article>
-          <div v-html="idea.text"/>
-        </v-article>
+        <div v-html="idea.text"/>
       </v-card>
 
       <div class="mt-5">
@@ -252,11 +250,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
-
 .idea {
-  max-width: 1000px;
-
   &__title {
     font-family: 'Rubik Mono One', sans-serif;
     font-size: 1.5rem;
