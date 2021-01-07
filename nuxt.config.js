@@ -41,7 +41,7 @@ const config = {
     { src: '~/plugins/api.js' },
     { src: '~/plugins/ui-setup.js' },
     { src: '~/plugins/fontawesome.js' },
-    { src: '~/plugins/admin-auto-refresh.js', mode: 'client' },
+    { src: '~/plugins/vee-validate.js', mode: 'client' },
   ],
 
    modules: [
@@ -90,6 +90,9 @@ const config = {
   },
 
   build: {
+    transpile: [
+      "vee-validate/dist/rules"
+    ],
     extend (config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({

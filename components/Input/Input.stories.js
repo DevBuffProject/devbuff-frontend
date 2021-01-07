@@ -8,16 +8,19 @@ export default {
 export const Default = () => ({
   props: {
     type: {
-      default: select('Type', [
-        'text',
-        'textarea'
-      ])
+      default: text('Type', 'text')
+    },
+    textarea: {
+      default: boolean('textarea', false)
     },
     placeholder: {
       default: text('Placeholder', 'Search')
     },
-    placeholderCentered: {
-      default: boolean('Center placeholder', false)
+    name: {
+      default: text('name', 'Search')
+    },
+    rules: {
+      default: text('rules', false)
     },
     icon: {
       default: array('Icon', ['fas', 'search'], ':')
@@ -26,10 +29,12 @@ export const Default = () => ({
   template: `
     <v-app>
       <v-input
+        :textarea="textarea"
         :type="type"
         :placeholder="placeholder"
-        :placeholder-centered="placeholderCentered"
+        :rules="rules"
         :icon="icon"
+        :name="name"
       />
     </v-app>
   `

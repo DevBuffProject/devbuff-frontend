@@ -1,25 +1,56 @@
 <template>
-  <label class="input" @mousedown="focus">
-    <v-icon v-if="icon" :icon="icon" class="input__icon" />
-    <component
-      :is="type === 'textarea' ? 'textarea' : 'input'"
-      ref="field"
+  <ValidationProvider
+    :rules="rules"
+    v-slot="{ errors }"
+  >
+    <label
       :class="[
+      'input',
+      errors.length && 'input--invalid'
+    ]"
+      @mousedown="focus"
+    >
+      <v-icon v-if="icon" :icon="icon" class="input__icon" />
+      <textarea
+        v-if="textarea"
+        ref="field"
+        :class="[
         'input__field',
         icon && 'input__field--icon',
-        (type === 'textarea') && 'input__field--type-textarea'
       ]"
-      :type="inputType"
-      :value="model"
-      :placeholder="placeholder"
-      @input="input"
-      @focus="focus"
-      @blur="blur"
-    >{{ type === 'textarea' && value }}</component>
-  </label>
+        :value="model"
+        v-bind="$attrs"
+        @input="input"
+        @focus="focus"
+        @blur="blur"
+      >
+      </textarea>
+      <input
+        v-else
+        ref="field"
+        :class="[
+          'input__field',
+          icon && 'input__field--icon',
+        ]"
+        :value="model"
+        v-bind="$attrs"
+        @input="input"
+        @focus="focus"
+        @blur="blur"
+      />
+    </label>
+    <transition name="fade">
+      <div v-if="errors.length" class="input__error">
+        <v-icon :icon="['fas', 'exclamation']" class="input__error-icon" />
+        <span>{{ errors[0] }}</span>
+      </div>
+    </transition>
+  </ValidationProvider>
 </template>
 
 <script>
+import { localize } from 'vee-validate'
+
 export default {
   name: 'v-input',
 
@@ -28,7 +59,11 @@ export default {
       type: String,
       default: 'text'
     },
-    placeholder: {
+    textarea: {
+      type: Boolean,
+      default: false
+    },
+    rules: {
       type: String,
       default: null
     },
@@ -42,13 +77,14 @@ export default {
     }
   },
 
+  created() {
+    localize(this.$i18n.locale)
+  },
+
   data() {
     return {
       focused: false,
-      model: this.value,
-      inputType: this.type === 'date' && !this.value
-        ? 'text'
-        : this.type
+      model: this.value
     }
   },
 
@@ -89,7 +125,7 @@ export default {
   padding: .3rem 1rem;
   border-radius: 4px;
   box-sizing: border-box;
-  align-items: center;
+  align-items: baseline;
   cursor: text;
   transition: border-color .3s var(--base-transition);
 
@@ -97,7 +133,26 @@ export default {
     border-color: var(--color-primary) !important
   }
 
+  &--invalid {
+    border-color: var(--color-danger);
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    margin-top: .25rem;
+    font-size: .85rem;
+    color: var(--color-danger);
+  }
+
+  &__error-icon {
+    font-size: .7rem;
+    margin-right: .5rem;
+    transform: translateY(-1px);
+  }
+
   &__icon {
+    transform: translateY(4px);
     display: flex;
     margin-right: 1rem;
     align-items: center;
@@ -118,16 +173,20 @@ export default {
     min-width: 0;
     resize: none;
     box-sizing: border-box;
+    position: relative;
     &::placeholder {
+      position: absolute;
+      top: 2px;
+      left: 0;
       font-family: inherit;
       font-weight: 200;
       text-transform: lowercase;
       transition: .2s var(--base-transition);
-      transition-property: transform, opacity;
+      transition-property: left, opacity;
     }
     &:focus::placeholder {
       opacity: .35;
-      transform: translateX(5px);
+      left: 5px;
     }
   }
 }
