@@ -76,6 +76,8 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  name: 'editor',
+
   async middleware({ store, route }) {
     try {
       await store.dispatch('skills/getSkills')

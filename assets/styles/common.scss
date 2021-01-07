@@ -19,7 +19,6 @@
     --color-#{$name}-darken: #{darken($color, 10%)};
     --color-#{$name}-tint: #{lighten($color, 20%)};
     --color-#{$name}-fade: #{transparentize($color, 0.85)};
-    --color-#{$name}-extra-fade: #{transparentize($color, 0.1)};
   }
 }
 
@@ -33,6 +32,10 @@ body {
   font-variant: no-common-ligatures slashed-zero;
   -webkit-font-smoothing: antialiased;
   color: var(--text-color);
+}
+
+[contenteditable] {
+  outline: 0 solid transparent;
 }
 
 a {
