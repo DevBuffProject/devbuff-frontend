@@ -6,14 +6,6 @@
       name="text"
       v-slot="{ errors }"
     >
-      <input
-        type="file"
-        accept=".jpg, .jpeg, .png"
-        style="display: none"
-        ref="imagePicker"
-        @change="_insertImage"
-      />
-
       <div
         id="toolbar"
         ref="toolbar"
@@ -41,7 +33,7 @@
             <v-icon
               @mouseover.stop.prevent
               @mouseout.stop.prevent
-              :icon="['fas', tool.icon]"
+              :icon="tool.icon"
               class="v-editor__tool-icon"
             />
           </div>
@@ -52,25 +44,56 @@
 
         <div class="v-editor__toolbar-section">
           <div
-            v-for="tool in state.tools.list.embed"
+            v-for="tool in state.tools.list.media"
             :key="tool.format"
             ref="tools"
             class="v-editor__tool"
             :class="state.formats[tool.type] && 'v-editor__tool--active'"
             :data-tool-name="tool.type"
-            @click="insertEmbed(tool.type)"
+            @click="insertMedia(tool.type)"
             @mouseover.self="onToolMouseover"
             @mouseout.self="onToolMouseout"
           >
             <v-icon
               @mouseover.stop.prevent
               @mouseout.stop.prevent
-              :icon="['fas', tool.icon]"
+              :icon="tool.icon"
               class="v-editor__tool-icon"
             />
           </div>
         </div>
+
+        <div class="v-editor__toolbar-section">
+          <v-tooltip
+            v-for="tool in state.tools.list.embed"
+            :key="tool.format"
+            ref="tools"
+            :data-tool-name="tool.type"
+            @mouseover.self="onToolMouseover"
+            @mouseout.self="onToolMouseout"
+            class="v-editor__tool"
+            :class="state.formats[tool.type] && 'v-editor__tool--active'"
+            activate-by-click
+          >
+            <v-icon
+              @mouseover.stop.prevent
+              @mouseout.stop.prevent
+              :icon="tool.icon"
+              class="v-editor__tool-icon"
+            />
+
+            <template v-slot:tip="{ hide }">
+              <input
+                type="text"
+                placeholder="http://example.com"
+                @keydown.enter="insertEmbed(tool.type, $event.target.value) || hide()"
+                class="v-editor__shadow-input"
+              />
+            </template>
+          </v-tooltip>
+        </div>
       </div>
+
 
       <div id="editor" />
 
@@ -88,6 +111,7 @@ import Quill from 'quill'
 import MagicUrl from 'quill-magic-url'
 import BlotFormatter from 'quill-blot-formatter'
 import ImageUploader from 'quill-image-uploader'
+import TwitterBlot from './assets/Blots/twitter-blot'
 import hljs from 'highlight.js'
 import { extend as veeExtend, localize as veeLocalize } from 'vee-validate'
 import { required as veeRuleRequired } from 'vee-validate/dist/rules'
@@ -101,6 +125,7 @@ veeLocalize({
   ru: { messages: { quillRequired: 'Текст не может быть пустым' } }
 })
 
+Quill.register('formats/twitter', TwitterBlot)
 Quill.register('modules/magicUrl', MagicUrl)
 Quill.register('modules/blotFormatter', BlotFormatter)
 Quill.register("modules/imageUploader", ImageUploader)
@@ -111,6 +136,7 @@ const Header = Quill.import('formats/header')
 const List = Quill.import('formats/list')
 
 Codeblock.className = 'codeblock'
+Codeblock.tags = 'pre code'
 Quoteblock.className = 'blockquote'
 Header.className = 'heading'
 List.className = 'list'
@@ -141,21 +167,25 @@ export default {
         list: {
           inline: [
             [
-              { format: 'bold', icon: 'bold' },
-              { format: 'italic', icon: 'italic' },
-              { format: 'underline', icon: 'underline' },
+              { format: 'bold', icon: ['fas', 'bold'] },
+              { format: 'italic', icon: ['fas', 'italic'] },
+              { format: 'underline', icon: ['fas', 'underline'] },
             ],
             [
-              { format: 'header', icon: 'heading' },
+              { format: 'header', icon: ['fas', 'heading'] },
             ],
             [
-              { format: 'blockquote', icon: 'quote-right' },
-              { format: 'code-block', icon: 'code' },
-              { format: 'list', icon: 'list' },
+              { format: 'blockquote', icon: ['fas', 'quote-right'] },
+              { format: 'code-block', icon: ['fas', 'code'] },
+              { format: 'list', icon: ['fas', 'list'] },
             ]
           ],
+          media: [
+            { type: 'image', icon: ['fas', 'file-image'] },
+          ],
           embed: [
-            { type: 'image', icon: 'file-image' },
+            { type: 'video', icon: ['fab', 'youtube'] },
+            { type: 'twitter', icon: ['fab', 'twitter'] },
           ]
         }
       }
@@ -190,7 +220,8 @@ export default {
     computeToolsPositions() {
       const tools = this.$refs.tools
 
-      tools.map(tool => {
+      tools.map(t => {
+        const tool = t.$el || t
         const toolName = tool.getAttribute('data-tool-name')
         const width = tool.offsetWidth
         const left = tool.offsetLeft > 0
@@ -211,14 +242,41 @@ export default {
     toggleInlineFormat(format) {
       this.quill.format(format, !this.state.formats[format])
     },
-    insertEmbed(type) {
+    insertMedia(type) {
+      const quill = this.quill
+      const range = quill.getSelection()
+
+      quill.focus()
+
       switch (type) {
-        case 'image': this._insertImage()
+        case 'image': this._insertImage(range)
+              break;
+        // this architecture for future features
       }
     },
-    _insertImage(e) {
-      this.quill.focus()
+    _insertImage() {
       this.quill.getModule('imageUploader').selectLocalImage()
+    },
+    insertEmbed(type, option) {
+      const quill = this.quill
+
+      quill.focus()
+
+      const range = quill.getSelection()
+
+      switch (type) {
+        case 'video': this._insertVideo(range)
+              break;
+        case 'twitter': this._insertHtml(range, 'twitter', { url: option })
+      }
+    },
+    _insertVideo() {
+      const range = this.quill.getSelection()
+      this.quill.insertText(range.index,'insert an youtube video link', 'italic')
+    },
+    _insertHtml(range, type, args) {
+      console.log('TWITTER INSERT', range)
+      this.quill.insertEmbed(range.index, type, args)
     },
     onSelectionChange(range) {
       if (!range) {
@@ -234,6 +292,7 @@ export default {
       this.state.text = this.quill.getText().trim()
     },
     onToolMouseover(e) {
+      console.log(e)
       this.state.toolHover = true
       const highlight = this.$refs.highlight
       const toolName = e.target.getAttribute('data-tool-name')
@@ -264,16 +323,29 @@ export default {
   border-top-color: var(--color-primary) !important;
   animation: spinner 5s linear infinite !important;
 }
+.ql-clipboard { display: none }
 </style>
 
 <style lang="scss" scoped>
 .v-editor {
-  margin: -1rem;
+  background-color: var(--color-background-contrast);
   padding: 1rem;
   border-radius: 8px;
+  border: 1px solid var(--color-muted-accent);
+  border-bottom: 1px solid var(--color-muted);
+  box-shadow: 0 1px 1px 0 var(--color-muted);
+  overflow: hidden;
 
   &--state-invalid {
     box-shadow: inset 0 0 0 1px var(--color-danger);
+  }
+
+  &__shadow-input {
+    font-size: inherit;
+    background: transparent;
+    color: #fff;
+    border: none;
+    outline: none;
   }
 
   &__toolbar {
@@ -301,7 +373,7 @@ export default {
     height: 100%;
     top: 0;
     opacity: 0;
-    border-radius: 5px;
+    border-radius: 8px;
     box-sizing: border-box;
     z-index: 1;
     transition: opacity .3s var(--base-transition);
@@ -343,7 +415,8 @@ export default {
   }
 
   &__tool--active {
-    //background-color: var(--color-muted-accent);
+    background-color: var(--color-primary-fade);
+    border-radius: 8px;
     color: var(--color-primary);
   }
 
@@ -353,7 +426,7 @@ export default {
     align-items: center;
     font-size: .85rem;
     color: var(--color-danger);
-    margin: 0 -1rem;
+    margin: 0 calc(-1rem - 1px);
     margin-bottom: -1rem;
     margin-top: 1rem;
     padding: .5rem 1rem;

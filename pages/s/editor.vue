@@ -48,14 +48,10 @@
             </v-label>
           </div>
 
-          <div class="editor__form-input">
-            <v-label :name="$t('page.editor.idea.selectForFormat')">
-              <v-card class="mt-1">
-                <client-only>
-                  <lazy-v-editor :key="key" v-model="idea.text" />
-                </client-only>
-              </v-card>
-            </v-label>
+          <div class="mt-3 mb-3">
+            <client-only>
+              <lazy-v-editor :key="key" v-model="idea.text" />
+            </client-only>
           </div>
 
           <div v-if="!isEditMode" class="editor__form-input">
