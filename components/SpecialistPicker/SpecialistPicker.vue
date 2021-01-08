@@ -5,7 +5,7 @@
   >
     <input type="hidden" :value="pickedSpecialists.length" @input="validate"/>
     <div class="v-specialist">
-      <ul class="v-specialist__list">
+      <ul class="v-specialist__list" v-if="maxCountSpecialists > userSpecialists.length">
         <li
           v-for="(value, index) in specialistsMap"
           :key="index"
