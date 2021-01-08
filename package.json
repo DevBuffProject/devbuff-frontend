@@ -26,7 +26,7 @@
     "@nuxt/http": "0.6.2",
     "@nuxtjs/auth": "4.9.1",
     "@nuxtjs/axios": "5.12.5",
-    "@nuxtjs/pwa": "3.3.3",
+    "@nuxtjs/pwa": "3.3.4",
     "@sentry/browser": "5.29.2",
     "@sentry/integrations": "5.29.2",
     "@sentry/tracing": "5.29.2",
