@@ -3,7 +3,7 @@
     rules="min_specialists:1"
     v-slot="{ errors, validate }"
   >
-    <input type="hidden" :value="pickedSpecialists.length" @input="validate" />
+    <input type="hidden" :value="pickedSpecialists.length" @input="validate"/>
     <div class="v-specialist">
       <ul class="v-specialist__list">
         <li
@@ -98,7 +98,7 @@
 
     <transition name="fade">
       <div v-if="errors.length" class="v-specialist__error">
-        <v-icon :icon="['fas', 'exclamation']" class="v-specialist__error-icon" />
+        <v-icon :icon="['fas', 'exclamation']" class="v-specialist__error-icon"/>
         <span>{{ errors[0] }}</span>
       </div>
     </transition>
@@ -106,14 +106,14 @@
 </template>
 
 <script>
-import { extend, localize } from 'vee-validate'
-import { min_value } from 'vee-validate/dist/rules'
+import {extend, localize} from 'vee-validate'
+import {min_value} from 'vee-validate/dist/rules'
 
-extend('min_specialists', { ...min_value });
+extend('min_specialists', {...min_value});
 
 localize({
   en: {
-    messages:{
+    messages: {
       min_specialists: 'Select one or more specializations'
     }
   },
@@ -130,6 +130,10 @@ export default {
     specialists: {
       type: Array,
       default: null
+    },
+    userData: {
+      type: Array,
+      default: undefined
     }
   },
   data() {
@@ -143,6 +147,7 @@ export default {
     userSpecialists: {
       deep: true,
       handler() {
+        console.log(this.userSpecialists)
         const specialists = this.buildUserSpecialists()
         this.$emit('change', specialists)
       }
@@ -217,7 +222,9 @@ export default {
     addSpecialist: function (specialistCodeName) {
       let languages = this.specialistsMap[specialistCodeName];
       let userLanguages = [];
-
+      if (languages === undefined || languages === null) {
+        return;
+      }
       for (let language of languages) {
 
         let technologies = [];
@@ -235,12 +242,13 @@ export default {
         });
       }
 
-
-      this.userSpecialists.push({
+      const result = {
         name: specialistCodeName,
         languages: userLanguages,
         count: 1
-      });
+      };
+      this.userSpecialists.push(result);
+      return result;
     },
     buildUserSpecialists() {
       let result = [];
@@ -281,6 +289,38 @@ export default {
           ? fallbackStr
           : str
     },
+  },
+  created() {
+    if (!Array.isArray(this.userData)) {
+      return;
+    }
+
+    this.userData.forEach((userSpecialist => {
+      let data = this.addSpecialist(userSpecialist.name);
+      if (data !== undefined) {
+        if (Array.isArray(userSpecialist.languages)) {
+          for (let language of data.languages) {
+
+            for (let userLanguage of userSpecialist.languages) {
+              if (userLanguage.name === language.name) {
+                language.selected = true;
+
+                for (let technology of language.technologies) {
+                  for (let userTechnologies of userLanguage.frameworks) {
+                    if (technology.name === userTechnologies.name) {
+                      technology.selected = true;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        data.count = userSpecialist.count < 0 ? 1 : userSpecialist.count > this.maxCountSpecialist ? this.maxCountSpecialist : userSpecialist.count;
+      }
+    }));
+
+
   }
 }
 </script>
@@ -307,6 +347,7 @@ export default {
     font-weight: 500;
     font-size: .85rem;
     cursor: pointer;
+
     &:first-letter {
       text-transform: uppercase;
     }

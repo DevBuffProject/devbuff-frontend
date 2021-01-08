@@ -23,7 +23,6 @@
           <div class="editor__field editor__form-input">
             <v-label :name="$t('page.editor.idea.heading')">
               <v-input
-                v-if="!isEditMode"
                 class="w-100 mt-1"
                 :placeholder="$t('page.editor.idea.heading')"
                 :name="$t('page.editor.idea.heading')"
@@ -31,7 +30,6 @@
                 rules="required"
                 v-model="idea.name"
               />
-              <b v-else> {{ idea.name }} </b>
             </v-label>
           </div>
 
@@ -58,10 +56,11 @@
             </v-label>
           </div>
 
-          <div v-if="!isEditMode" class="editor__form-input">
+          <div class="editor__form-input">
             <v-label :name="$t('page.editor.idea.positions')">
               <v-specialist-picker
                 :specialists="systemSkills"
+                :userData="idea.specialist"
                 @change="idea.specialist = $event"
               />
             </v-label>
@@ -121,7 +120,12 @@ export default {
           this.loading = true
 
           if (this.isEditMode) {
-            const data = { text: this.idea.text, description: this.idea.description }
+            const data = {
+              name: this.idea.name,
+              text: this.idea.text,
+              description: this.idea.description,
+              specialist: this.idea.specialist
+            }
             await this.$store.dispatch('ideas/updateIdea', { id: queryId, data })
           } else {
             await this.$store.dispatch('ideas/appendIdea', this.idea)
