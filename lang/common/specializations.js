@@ -11,6 +11,12 @@ export default {
     },
     game: {
       title: "Game developer"
+    },
+    android: {
+      title: "Android Developer"
+    },
+    apple:{
+      title: "Apple Developer"
     }
   }
 }

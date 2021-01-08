@@ -309,6 +309,60 @@ export const Default = () => ({
           ]
         }
       ])
+    },
+    userData: {
+      default: array('User_Data', [
+        {
+          "name": "back-end",
+          "count": 12312,
+          "languages": [
+            {
+              "name": "Java",
+              "frameworks": [
+                {
+                  "name": "Spring Cloud"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "game",
+          "count": -124124,
+          "languages": []
+        },
+        {
+          "name": "desktop",
+          "count": 3,
+          "languages": [
+            {
+              "name": "Java",
+              "frameworks": [
+                {
+                  "name": "InvalidFramework"
+                },
+                {
+                  "name": "JavaFX"
+                }
+              ]
+            },
+            {
+              "name": "InvalidLang",
+              "frameworks": []
+            }
+          ]
+        },
+        {
+          "name": "InvalidSpec",
+          "count": 1,
+          "languages": [
+            {
+              "name": "Java",
+              "frameworks": []
+            }
+          ]
+        }
+      ])
     }
   },
   data: () => ({
@@ -323,12 +377,13 @@ export const Default = () => ({
     <v-app>
     <v-specialist-picker
       :specialists="specialists"
+      :userData="userData"
       @change="onChanged"
     />
 
     <hr>
     <h1>
-      Story data: {{result}}
+      Story data: {{ result }}
     </h1>
     </v-app>
   `
