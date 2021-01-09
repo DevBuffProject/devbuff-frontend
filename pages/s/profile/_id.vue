@@ -1,18 +1,15 @@
 <template>
   <div class="profile">
-    <v-toolbar class="profile__toolbar">
-      <div class="container toolbar__grid">
-        <div class="d-flex align-items-end pt-4 pl-4">
-          <div class="profile__name">
-            {{ profile.firstName }} {{ profile.lastName }}
-          </div>
-          <div class="ml-3 text-muted profile__username">
-            @{{ profile.userName }}
-          </div>
+    <v-toolbar hide-backlink class="profile__toolbar">
+      <div class="d-flex align-items-end pt-4 pl-4">
+        <div class="profile__name">
+          {{ profile.firstName }} {{ profile.lastName }}
         </div>
-        <div>
+        <div class="ml-3 text-muted profile__username">
+          @{{ profile.userName }}
         </div>
       </div>
+      <div />
     </v-toolbar>
     <div class="container d-flex">
       <div class="profile__sidebar">
@@ -231,10 +228,6 @@ export default {
     top: 5px;
   }
 
-  &__avatar {
-
-  }
-
   &__name {
     margin-left: var(--sidebar-width);
   }
@@ -242,10 +235,6 @@ export default {
   &__username {
     font-size: .7rem;
     margin-top: -.5rem;
-  }
-
-  &__socials {
-
   }
 
   &__socials-edit {

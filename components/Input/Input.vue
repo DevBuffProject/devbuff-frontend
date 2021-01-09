@@ -113,7 +113,7 @@ export default {
   width: 100%;
   display: inline-flex;
   border: 1px solid var(--color-muted);
-  padding: .3rem 1rem;
+  padding: .5rem 1rem;
   border-radius: 8px;
   box-sizing: border-box;
   align-items: baseline;
