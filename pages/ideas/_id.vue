@@ -1,17 +1,6 @@
 <template>
   <div class="container pt-4">
     <div class="idea">
-      <nuxt-link
-        :to="localePath({ name: 'ideas' })"
-        class="idea__back-link"
-      >
-        <v-icon
-          :icon="['fas', 'long-arrow-alt-left']"
-          class="idea__back-link-icon"
-        />
-        {{ $t('page.ideas.view.back') }}
-      </nuxt-link>
-
       <strong>
         <h1 class="idea__title m-0 p-0"> {{ idea.name }} </h1>
       </strong>
@@ -255,38 +244,6 @@ export default {
     font-family: 'Rubik Mono One', sans-serif;
     font-size: 1.5rem;
     font-weight: 500;
-  }
-
-  &__back-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    opacity: .5;
-    transition: opacity .3s var(--base-transition);
-    font-size: .8rem;
-    margin-bottom: 2rem;
-    font-weight: 600;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-
-  &__back-link-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1rem;
-    height: 1rem;
-    font-size: .5rem;
-    padding: .3rem;
-    margin-right: .5rem;
-    border-radius: 1rem;
-    transition: background-color .3s var(--base-transition);
-  }
-
-  &__back-link:hover &__back-link-icon {
-    background-color: var(--color-muted);
   }
 
   &__owner-username {

@@ -10,14 +10,10 @@
     <slot />
 
     <transition name="fade">
-      <div @click.stop v-if="show" class="v-tooltip__tip">
+      <div @click.prevent.stop v-if="show" class="v-tooltip__tip">
         <div class="v-tooltip__tip-triangle" />
-        <slot
-          v-if="$scopedSlots.tip"
-          name="tip"
-          :hide="hide"
-        />
-        <span v-else>{{ text }}</span>
+        <slot v-if="$scopedSlots.tip" name="tip" :hide="hide" />
+        <span v-else> {{ text }} </span>
       </div>
     </transition>
   </div>
@@ -79,13 +75,15 @@ export default {
 
   &__tip {
     background-color: var(--tooltip-color);
+    display: flex;
+    align-items: center;
     color: #fff;
     position: absolute;
     top: calc(100% + 10px);
     left: 50%;
     transform: translateX(-50%);
-    padding: .2rem 1.5rem;
-    border-radius: 100px;
+    padding: .5rem 1.5rem;
+    border-radius: 8px;
     z-index: 99999999;
   }
 }

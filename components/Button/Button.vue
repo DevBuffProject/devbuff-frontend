@@ -1,8 +1,8 @@
 <template>
   <button
     v-on="$listeners"
+    class="v-btn"
     :class="[
-      'v-btn',
       (flat && type) && 'v-btn--type-flat-' + type,
       !flat && 'v-btn--type-' + type,
       flat && 'v-btn--type-flat',
@@ -25,10 +25,8 @@
     <v-icon
       v-if="icon"
       :icon="icon"
-      :class="[
-        'v-btn__icon',
-        !$slots.default && 'v-btn__icon--nomargin'
-      ]"
+      class="v-btn__icon"
+      :class="!$slots.default && 'v-btn__icon--nomargin'"
     />
   </button>
 </template>
@@ -77,20 +75,8 @@ export default {
   @each $name, $color in map-get($default-colors, 'scheme' ) {
     &--type-#{$name} {
       color: #fff;
-      font-weight: 700;
+      font-weight: 500;
       background-color: var(--color-#{$name});
-
-      //&::before {
-      //  background-image: linear-gradient(135deg, var(--color-#{$name}-tint), var(--color-#{$name}));
-      //  position: absolute;
-      //  top: 0;
-      //  left: 0;
-      //  width: 100%;
-      //  height: 100%;
-      //  content: "";
-      //  opacity: 1;
-      //  transition: opacity .3s var(--base-transition);
-      //}
 
       &:hover {
         box-shadow: 0px 4px 10px -5px var(--color-#{$name}-tint);
@@ -101,10 +87,6 @@ export default {
       & /deep/ *:focus {
         box-shadow: 0px 0px 0px 4px var(--color-#{$name}-fade);
       }
-
-      //&:active::before {
-      //  opacity: 0
-      //}
     }
 
     &--type-flat-#{$name} {
@@ -122,7 +104,7 @@ export default {
   position: relative;
   background: none;
   font-family: inherit;
-  font-size: .9rem;
+  font-size: 1rem;
   padding: .2rem 1rem;
   text-transform: lowercase;
   display: inline-flex;
@@ -144,7 +126,7 @@ export default {
 
   &--size-small {
     font-size: .8rem;
-    padding: .1rem .8rem;
+    padding: .2rem .8rem;
   }
 
   &--disabled {
@@ -153,13 +135,13 @@ export default {
 
   &--type-muted {
     background-color: var(--color-muted);
-    font-weight: 600;
-    color: #000;
+    color: var(--color-text);
+    font-weight: 400;
   }
 
   &--type-dark {
     background-color: #000;
-    font-weight: 700;
+    font-weight: 500;
     color: #fff;
   }
 

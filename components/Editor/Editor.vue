@@ -124,7 +124,7 @@
               <template v-slot:tip="{ hide }">
                 <input
                   type="text"
-                  placeholder="http://example.com"
+                  :placeholder="tool.placeholder"
                   @keydown.enter.prevent.stop="insertEmbed(tool.type, $event.target.value) || hide()"
                   class="v-editor__shadow-input"
                 />
@@ -426,8 +426,10 @@ export default {
   }
 
   &__shadow-input {
+    background-color: transparent;
     font-size: inherit;
-    background: transparent;
+    font-size: .9rem;
+    min-width: 300px;
     color: #fff;
     border: none;
     outline: none;
@@ -459,8 +461,8 @@ export default {
   }
 
   &__history-help {
-    font-size: .5rem;
-    font-weight: 600;
+    font-size: .65rem;
+    font-weight: 500;
     text-transform: uppercase;
     color: var(--color-muted-darken);
   }
