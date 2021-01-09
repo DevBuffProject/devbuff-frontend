@@ -26,6 +26,7 @@
                 :name="$t('page.editor.idea.heading')"
                 type="text"
                 rules="required"
+                autofocus
                 v-model="idea.name"
               />
             </v-label>

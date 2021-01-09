@@ -32,7 +32,7 @@ class TwitterBlot extends BaseBlock {
           await window.twttr.widgets.load()
           node.style.display = 'flex'
           node.style.justifyContent = 'center'
-        }, 100)
+        }, 200)
       }
 
       try {

@@ -283,7 +283,8 @@ export default {
 
       this.quill = quill
 
-      this.quill.pasteHTML(this.value)
+      if (this.state.text?.length) this.quill.pasteHTML(this.value)
+      this.quill.blur()
     },
     undo() {
       this.quill.history.undo()
@@ -336,7 +337,7 @@ export default {
     _insertImage() {
       this.quill.getModule('imageUploader').selectLocalImage()
     },
-    insertEmbed(type, option) {
+    insertEmbed(type, option = null) {
       const quill = this.quill
 
       quill.focus()
@@ -344,14 +345,14 @@ export default {
       const range = quill.getSelection()
 
       switch (type) {
-        case 'video': this._insertVideo(range)
+        case 'video': quill.insertEmbed(range, 'video', option)
               break;
-        case 'twitter': this._insertHtml(range, 'twitter', { url: option })
+        case 'twitter': quill.insertEmbed(range, 'twitter', { url: option })
       }
     },
     _insertVideo() {
       const range = this.quill.getSelection()
-      this.quill.insertText(range.index,'insert an youtube video link', 'italic')
+      this.quill.insertText(range.index, 'insert an youtube video link', 'italic')
     },
     _insertHtml(range, type, args) {
       this.quill.insertEmbed(range.index, type, args)
