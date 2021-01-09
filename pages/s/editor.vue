@@ -23,7 +23,6 @@
           <div class="editor__field editor__form-input">
             <v-label :name="$t('page.editor.idea.heading')">
               <v-input
-                v-if="!isEditMode"
                 class="w-100 mt-1"
                 :placeholder="$t('page.editor.idea.heading')"
                 :name="$t('page.editor.idea.heading')"
@@ -31,17 +30,17 @@
                 rules="required"
                 v-model="idea.name"
               />
-              <b v-else> {{ idea.name }} </b>
             </v-label>
           </div>
 
           <div class="editor__field editor__form-input">
-            <v-label :name="$t('page.editor.idea.desc')">
+            <v-label class="w-100" :name="$t('page.editor.idea.desc')">
               <v-input
                 class="w-100 mt-1"
                 :placeholder="$t('page.editor.idea.desc')"
+                :label="$t('page.editor.idea.desc')"
                 :name="$t('page.editor.idea.desc')"
-                type="textarea"
+                textarea
                 rules="required"
                 v-model="idea.description"
               />
@@ -54,11 +53,11 @@
             </client-only>
           </div>
 
-          <div v-if="!isEditMode" class="editor__form-input">
+          <div class="editor__form-input">
             <v-label :name="$t('page.editor.idea.positions')">
               <v-specialist-picker
                 :specialists="systemSkills"
-                @change="idea.specialist = $event"
+                v-model="idea.specialist"
               />
             </v-label>
           </div>
@@ -109,7 +108,7 @@ export default {
     async save() {
       this.$refs.form.validate().then(async success => {
         if (!success) {
-          return;
+          return
         }
 
         try {
@@ -118,17 +117,11 @@ export default {
 
           if (this.isEditMode) {
             const data = { text: this.idea.text, description: this.idea.description }
-            await this.$store.dispatch('ideas/updateIdea', { id: queryId, data })
+            await this.$store.dispatch('ideas/updateIdea', { id: queryId, data: this.idea })
           } else {
-            await this.$store.dispatch('ideas/appendIdea', this.idea)
+            const newIdea = await this.$store.dispatch('ideas/appendIdea', this.idea)
           }
 
-          await this.$nextTick()
-
-          console.log(newIdea.id, this.localePath({
-            name: 'ideas-id',
-            params: { id: this.isEditMode ? queryId : newIdea.id }
-          }))
           this.$router.push(this.localePath({
             name: 'ideas-id',
             params: { id: this.isEditMode ? queryId : newIdea.id }
@@ -145,7 +138,6 @@ export default {
   created() {
     if (this.isEditMode) {
       const {description, text, name, specialist} = this.$store.getters['ideas/idea']
-      console.log(text)
       this.idea = { name, text, description, specialist }
     }
   },
@@ -171,7 +163,7 @@ export default {
 .editor {
   &__field {
     width: 100%;
-    max-width: 600px;
+    max-width: 450px;
   }
 
   &__form-input {
