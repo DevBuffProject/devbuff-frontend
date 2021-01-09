@@ -1,10 +1,8 @@
 <template>
   <div class="explore">
-    <v-toolbar class="mb-4">
-      <div class="container toolbar__grid">
-        <div class="d-flex">
-          <h3 class="m-0"> {{ $t('page.ideas.explore.ideas') }} </h3>
-        </div>
+    <v-toolbar hide-backlink class="mb-4">
+      <div class="d-flex">
+        <h3 class="m-0"> {{ $t('page.ideas.explore.ideas') }} </h3>
       </div>
     </v-toolbar>
     <div class="container">

@@ -23,8 +23,9 @@ export default {
 <style lang="scss" scoped>
 .v-label {
   &__name {
-    font-size: .7rem;
-    font-weight: 400;
+    color: var(--color-text);
+    font-size: .8rem;
+    font-weight: 300;
     opacity: .5;
     margin-bottom: .05rem;
   }

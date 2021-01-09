@@ -41,8 +41,6 @@
 export default {
   layout: 'white-screen',
 
-  // middleware: ['guest'],
-
   computed: {
     isAuthorized() {
       return this.$store.getters['user/isAuthorized']

@@ -64,6 +64,7 @@ export default {
   },
 
   methods: {
+    // TODO: Refactor
     updatePreview() {
       const url = this.url
 
@@ -93,10 +94,9 @@ export default {
 
 <style lang="scss" scoped>
 .og-preview {
-  --size: 50px;
+  --size: 60px;
 
   display: flex;
-  max-height: var(--size);
   height: 100%;
   overflow: hidden;
 
@@ -126,14 +126,14 @@ export default {
 
   &__link {
     font-size: .9rem;
-    font-weight: 600;
+    font-weight: 500;
   }
 
   &__desc {
     font-size: .8rem;
-    // color: var(--color-muted-darken);
+    color: var(--color-text);
     line-height: 1.1;
-    font-weight: 400;
+    font-weight: 300;
   }
 }
 </style>
