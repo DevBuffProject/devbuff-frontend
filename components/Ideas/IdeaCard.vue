@@ -19,28 +19,6 @@
       </div>
     </template>
 
-<!--    <v-label :name="$t('components.ideaCard.name')" class="w-100 mb-3">-->
-<!--      <div v-if="!linked"> {{ title }}</div>-->
-<!--      <div v-else class="d-flex align-items-center">-->
-<!--        <nuxt-link-->
-<!--          :to="localePath({ name: 'ideas-id', params: { id } })"-->
-<!--          :class="['idea__link', hover && 'idea__link&#45;&#45;hover']"-->
-<!--        >-->
-<!--          {{ title }}-->
-<!--        </nuxt-link>-->
-<!--        <v-icon-->
-<!--          :icon="['fas', 'long-arrow-alt-right']"-->
-<!--          :class="['ml-2', 'idea__link-icon', hover && 'idea__link-icon&#45;&#45;hover']"-->
-<!--        />-->
-<!--      </div>-->
-<!--    </v-label>-->
-
-<!--    <v-label v-if="publishDate" :name="$t('components.ideaCard.dateCreation')" class="w-100 mb-3">-->
-<!--      <div class="idea__date">-->
-<!--        {{ publishDate | toLocaleDateTime($i18n.locale) }}-->
-<!--      </div>-->
-<!--    </v-label>-->
-
     <div class="mb-4">
       <div v-if="!linked"> {{ title }}</div>
       <div v-else class="d-flex align-items-center">
@@ -70,7 +48,7 @@
       <v-label v-if="specialists.length" :name="$t('components.ideaCard.specialists')">
         <span
           v-for="(spec, key) in specialists"
-          :key="spec.name + key"
+          :key="spec + key + id"
           class="mr-2"
         >
           <v-chip :text="t('specializations.'+spec.name+'.title',spec.name)"/>
@@ -80,7 +58,7 @@
       <v-label v-if="technologies.length" :name="$t('components.ideaCard.technologies')" class="mt-3">
         <span
           v-for="(tech, key) in technologies"
-          :key="tech.name + key"
+          :key="tech + key + id"
           class="mr-2"
         >
           <v-chip :text="tech"/>
@@ -90,7 +68,7 @@
       <v-label v-if="languages.length" :name="$t('components.ideaCard.languages')" class="mt-3">
         <span
           v-for="(lang, key) in languages"
-          :key="lang.name + key"
+          :key="lang + key + id"
           class="mr-2"
         >
           <v-chip :text="t('languages.'+lang.name,lang.name)" :type="hover ? 'auto' : null"/>

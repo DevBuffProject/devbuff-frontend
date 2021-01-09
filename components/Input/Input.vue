@@ -2,36 +2,26 @@
   <ValidationProvider
     :rules="rules"
     v-slot="{ errors }"
+    tag="div"
   >
-    <label
-      :class="[
-      'input',
-      errors.length && 'input--invalid'
-    ]"
-      @mousedown="focus"
-    >
+    <label class="input" :class="errors.length && 'input--invalid'" @mousedown="focus">
       <v-icon v-if="icon" :icon="icon" class="input__icon" />
       <textarea
         v-if="textarea"
         ref="field"
-        :class="[
-        'input__field',
-        icon && 'input__field--icon',
-      ]"
+        class="input__field"
+        :class="icon && 'input__field--icon'"
         :value="model"
         v-bind="$attrs"
         @input="input"
         @focus="focus"
         @blur="blur"
-      >
-      </textarea>
+      />
       <input
         v-else
         ref="field"
-        :class="[
-          'input__field',
-          icon && 'input__field--icon',
-        ]"
+        class="input__field"
+        :class="icon && 'input__field--icon'"
         :value="model"
         v-bind="$attrs"
         @input="input"
@@ -39,6 +29,7 @@
         @blur="blur"
       />
     </label>
+
     <transition name="fade">
       <div v-if="errors.length" class="input__error">
         <v-icon :icon="['fas', 'exclamation']" class="input__error-icon" />
@@ -119,11 +110,11 @@ export default {
 .input {
   background-color: var(--color-background-contrast);
   position: relative;
-  width: fit-content;
+  width: 100%;
   display: inline-flex;
   border: 1px solid var(--color-muted);
   padding: .3rem 1rem;
-  border-radius: 4px;
+  border-radius: 8px;
   box-sizing: border-box;
   align-items: baseline;
   cursor: text;
