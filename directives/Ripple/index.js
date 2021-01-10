@@ -12,7 +12,6 @@ export const ripple = {
       const width = el.offsetWidth
       const height = el.offsetHeight
       const computedStyles = window.getComputedStyle(el)
-      console.log(computedStyles)
       // window.addEventListener('mousedown', rippleReset)
       // e.stopPropagation()
 

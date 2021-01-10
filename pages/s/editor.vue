@@ -3,8 +3,6 @@
     <v-toolbar class="mb-5">
       <div class="d-flex justify-content-between w-100">
         <h3 class="m-0"> {{ isEditMode ? $t('page.editor.title.ideaEdit') : $t('page.editor.title.ideaNew') }} </h3>
-      </div>
-      <div>
         <v-button
           :icon="['fas', 'plus']"
           :loading="loading"
