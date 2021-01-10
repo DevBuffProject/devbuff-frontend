@@ -56,7 +56,8 @@
             <v-label :name="$t('page.editor.idea.positions')">
               <v-specialist-picker
                 :specialists="systemSkills"
-                v-model="idea.specialist"
+                :userData="idea.specialist"
+                @change="idea.specialist = $event"
               />
             </v-label>
           </div>
@@ -115,8 +116,14 @@ export default {
           this.loading = true
 
           if (this.isEditMode) {
-            const data = { text: this.idea.text, description: this.idea.description }
-            await this.$store.dispatch('ideas/updateIdea', { id: queryId, data: this.idea })
+            const data = {
+              name: this.idea.name,
+              text: this.idea.text,
+              description: this.idea.description,
+              specialist: this.idea.specialist
+            }
+            await this.$store.dispatch('ideas/updateIdea', { id: queryId, data })
+
           } else {
             const newIdea = await this.$store.dispatch('ideas/appendIdea', this.idea)
           }
