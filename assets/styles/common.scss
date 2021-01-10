@@ -43,6 +43,10 @@ a {
   text-decoration: none;
 }
 
+svg {
+  pointer-events: none;
+}
+
 @each $name, $color in map-get($default-colors, 'scheme' ) {
   .color-#{$name} {
     color: var(--color-#{$name}) !important;
