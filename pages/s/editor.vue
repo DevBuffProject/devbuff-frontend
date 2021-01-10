@@ -1,19 +1,17 @@
 <template>
   <div class="editor">
     <v-toolbar class="mb-5">
-      <div class="container toolbar__grid">
-        <div class="d-flex">
-          <h3 class="m-0"> {{ isEditMode ? $t('page.editor.title.ideaEdit') : $t('page.editor.title.ideaNew') }} </h3>
-        </div>
-        <div>
-          <v-button
-            :icon="['fas', 'plus']"
-            :loading="loading"
-            @click="save"
-          >
-            {{$t('common.save')}}
-          </v-button>
-        </div>
+      <div class="d-flex justify-content-between w-100">
+        <h3 class="m-0"> {{ isEditMode ? $t('page.editor.title.ideaEdit') : $t('page.editor.title.ideaNew') }} </h3>
+      </div>
+      <div>
+        <v-button
+          :icon="['fas', 'plus']"
+          :loading="loading"
+          @click="save"
+        >
+          {{$t('common.save')}}
+        </v-button>
       </div>
     </v-toolbar>
 
@@ -28,32 +26,30 @@
                 :name="$t('page.editor.idea.heading')"
                 type="text"
                 rules="required"
+                autofocus
                 v-model="idea.name"
               />
             </v-label>
           </div>
 
           <div class="editor__field editor__form-input">
-            <v-label :name="$t('page.editor.idea.desc')">
+            <v-label class="w-100" :name="$t('page.editor.idea.desc')">
               <v-input
                 class="w-100 mt-1"
                 :placeholder="$t('page.editor.idea.desc')"
+                :label="$t('page.editor.idea.desc')"
                 :name="$t('page.editor.idea.desc')"
-                type="textarea"
+                textarea
                 rules="required"
                 v-model="idea.description"
               />
             </v-label>
           </div>
 
-          <div class="editor__form-input">
-            <v-label :name="$t('page.editor.idea.selectForFormat')">
-              <v-card class="mt-1">
-                <client-only>
-                  <lazy-v-editor :key="key" v-model="idea.text" />
-                </client-only>
-              </v-card>
-            </v-label>
+          <div class="mt-3 mb-3">
+            <client-only>
+              <lazy-v-editor :key="key" v-model="idea.text" />
+            </client-only>
           </div>
 
           <div class="editor__form-input">
@@ -112,7 +108,7 @@ export default {
     async save() {
       this.$refs.form.validate().then(async success => {
         if (!success) {
-          return;
+          return
         }
 
         try {
@@ -127,16 +123,11 @@ export default {
               specialist: this.idea.specialist
             }
             await this.$store.dispatch('ideas/updateIdea', { id: queryId, data })
+
           } else {
-            await this.$store.dispatch('ideas/appendIdea', this.idea)
+            const newIdea = await this.$store.dispatch('ideas/appendIdea', this.idea)
           }
 
-          await this.$nextTick()
-
-          console.log(newIdea.id, this.localePath({
-            name: 'ideas-id',
-            params: { id: this.isEditMode ? queryId : newIdea.id }
-          }))
           this.$router.push(this.localePath({
             name: 'ideas-id',
             params: { id: this.isEditMode ? queryId : newIdea.id }
@@ -153,7 +144,6 @@ export default {
   created() {
     if (this.isEditMode) {
       const {description, text, name, specialist} = this.$store.getters['ideas/idea']
-      console.log(text)
       this.idea = { name, text, description, specialist }
     }
   },
@@ -179,7 +169,7 @@ export default {
 .editor {
   &__field {
     width: 100%;
-    max-width: 600px;
+    max-width: 450px;
   }
 
   &__form-input {

@@ -1,34 +1,33 @@
 <template>
   <button
     v-on="$listeners"
+    class="v-button"
     :class="[
-      'v-btn',
-      (flat && type) && 'v-btn--type-flat-' + type,
-      !flat && 'v-btn--type-' + type,
-      flat && 'v-btn--type-flat',
-      rounded && 'v-btn--rounded',
-      disabled && 'v-btn--disabled',
-      loading && 'v-btn--loading',
-      small && 'v-btn--size-small'
+      (flat && type) && 'v-button--type-flat-' + type,
+      !flat && 'v-button--type-' + type,
+      flat && 'v-button--type-flat',
+      rounded && 'v-button--rounded',
+      disabled && 'v-button--disabled',
+      loading && 'v-button--loading',
+      small && 'v-button--size-small'
     ]"
     :disabled="disabled"
+    v-ripple=""
   >
     <div
       v-if="$slots.default"
-      :class="['v-btn__content', loading && 'v-btn__content--hidden']"
+      :class="['v-button__content', loading && 'v-button__content--hidden']"
     >
       <slot />
     </div>
-    <span v-if="loading" class="v-btn__loading">
+    <span v-if="loading" class="v-button__loading">
       <v-loading />
     </span>
     <v-icon
       v-if="icon"
       :icon="icon"
-      :class="[
-        'v-btn__icon',
-        !$slots.default && 'v-btn__icon--nomargin'
-      ]"
+      class="v-button__icon"
+      :class="!$slots.default && 'v-button__icon--nomargin'"
     />
   </button>
 </template>
@@ -77,20 +76,8 @@ export default {
   @each $name, $color in map-get($default-colors, 'scheme' ) {
     &--type-#{$name} {
       color: #fff;
-      font-weight: 700;
+      font-weight: 500;
       background-color: var(--color-#{$name});
-
-      //&::before {
-      //  background-image: linear-gradient(135deg, var(--color-#{$name}-tint), var(--color-#{$name}));
-      //  position: absolute;
-      //  top: 0;
-      //  left: 0;
-      //  width: 100%;
-      //  height: 100%;
-      //  content: "";
-      //  opacity: 1;
-      //  transition: opacity .3s var(--base-transition);
-      //}
 
       &:hover {
         box-shadow: 0px 4px 10px -5px var(--color-#{$name}-tint);
@@ -101,10 +88,6 @@ export default {
       & /deep/ *:focus {
         box-shadow: 0px 0px 0px 4px var(--color-#{$name}-fade);
       }
-
-      //&:active::before {
-      //  opacity: 0
-      //}
     }
 
     &--type-flat-#{$name} {
@@ -118,11 +101,11 @@ export default {
   }
 }
 
-.v-btn {
+.v-button {
   position: relative;
   background: none;
   font-family: inherit;
-  font-size: .9rem;
+  font-size: 1rem;
   padding: .2rem 1rem;
   text-transform: lowercase;
   display: inline-flex;
@@ -131,7 +114,6 @@ export default {
   border: 0;
   border-radius: 4px;
   text-decoration: none;
-  position: relative;
   cursor: pointer;
   line-height: 1.5;
   overflow: hidden;
@@ -144,7 +126,7 @@ export default {
 
   &--size-small {
     font-size: .8rem;
-    padding: .1rem .8rem;
+    padding: .2rem .8rem;
   }
 
   &--disabled {
@@ -153,13 +135,13 @@ export default {
 
   &--type-muted {
     background-color: var(--color-muted);
-    font-weight: 600;
-    color: #000;
+    color: var(--color-text);
+    font-weight: 400;
   }
 
   &--type-dark {
     background-color: #000;
-    font-weight: 700;
+    font-weight: 500;
     color: #fff;
   }
 
@@ -196,7 +178,6 @@ export default {
   }
 
   &__loading {
-    position: relative;
     position: absolute;
     top: 50%;
     transform: translateY(-50%) !important;

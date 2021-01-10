@@ -126,6 +126,12 @@ localize({
 
 export default {
   name: 'v-specialist-picker',
+
+  model: {
+    event: 'change',
+    prop: 'value'
+  },
+
   props: {
     specialists: {
       type: Array,
@@ -136,13 +142,13 @@ export default {
       default: undefined
     }
   },
-  data() {
-    return {
-      maxCountSpecialists: 10,
-      maxCountSpecialist: 5,
-      userSpecialists: []
-    }
-  },
+
+  data: () => ({
+    maxCountSpecialists: 10,
+    maxCountSpecialist: 5,
+    userSpecialists: [],
+  }),
+
   watch: {
     userSpecialists: {
       deep: true,
@@ -153,6 +159,7 @@ export default {
       }
     },
   },
+
   computed: {
     pickedSpecialists() {
       return this.buildUserSpecialists()
@@ -185,6 +192,7 @@ export default {
       return specialistsMap;
     },
   },
+
   methods: {
     alreadyHas(position, language, technology) {
       let buffer = new Set();

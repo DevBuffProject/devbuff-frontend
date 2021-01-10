@@ -72,7 +72,8 @@ const config = {
   },
 
   serverMiddleware: [
-    { path: '/_api/help/og', handler: '~endpoints/opengraph.js' }
+    { path: '/_api/help/og', handler: '~endpoints/opengraph.js' },
+    { path: '/_api/help/embed-tweet', handler: '~endpoints/twitter-embed.js' }
   ],
 
   publicRuntimeConfig: {
