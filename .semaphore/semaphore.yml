@@ -11,7 +11,7 @@ blocks:
         - name: 'Install and build'
           commands:
             - checkout
-            - sem-version node 14.15.4
+            - sem-version node 12
             - cache restore
             - yarn install
             - cache store
