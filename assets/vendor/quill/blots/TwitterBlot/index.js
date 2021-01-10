@@ -6,9 +6,9 @@ class TwitterBlot extends BaseBlock {
   static create(data) {
     const node = super.create(data)
     const fallbackHtml = `
-      <blockquote>
-        <i style="display: block"><a href="//${data.url}">view on twitter ➜</a></i>
-      </blockquote>
+        <blockquote>
+          <i style="display: block"><a href="//${data.url}">view on twitter ➜</a></i>
+        </blockquote>
     `
     const twitterEmbedActivator = `
       <img
@@ -39,9 +39,10 @@ class TwitterBlot extends BaseBlock {
         const response = await fetch(`/_api/help/embed-tweet?url=${data.url}`)
         const tweet = await response.json()
 
-        return tweet.html
-          ? tweet.html + twitterEmbedActivator
+         return tweet.html
+          ? `${tweet.html + twitterEmbedActivator}`
           : fallbackHtml
+
       } catch (e) {
         return fallbackHtml
       }
@@ -69,7 +70,7 @@ class TwitterBlot extends BaseBlock {
 }
 
 TwitterBlot.blotName = 'twitter'
-TwitterBlot.className = 'twitter'
+TwitterBlot.className = 'twitter-blot'
 TwitterBlot.tagName = 'div'
 
 export default TwitterBlot
