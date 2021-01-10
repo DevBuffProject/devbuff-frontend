@@ -4,7 +4,6 @@
       <strong>
         <h1 class="idea__title m-0 p-0"> {{ idea.name }} </h1>
       </strong>
-
       <div class="d-flex flex-wrap align-items-center justify-content-between mt-3">
         <div class="d-flex flex-wrap">
           <v-user
@@ -213,7 +212,7 @@ export default {
 
     mapFrameworks(languages) {
       return languages.length
-        ? languages.reduce((acc, lang) => lang.frameworks.map(f => f.name), [])
+        ? Array.from(new Set(languages.reduce((acc, lang) => acc.concat(lang.frameworks.map(f => f.name)), [])))
         : [];
     },
     t(str, fallbackStr) {
