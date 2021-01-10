@@ -1,7 +1,10 @@
 <template>
   <div class="v-toolbar">
     <div class="container v-toolbar__inner">
-      <div v-if="!hideBacklink" @click="$router.go(-1)" class="v-toolbar__back-link">
+      <div
+        v-show="!hideBacklink"
+        v-ripple="'var(--color-muted)'"
+        @click="$router.go(-1)" class="v-toolbar__back-link">
         <v-icon :icon="['fas', 'long-arrow-alt-left']" class="v-toolbar__back-link-icon"/>
       </div>
       <slot />
@@ -51,27 +54,24 @@ export default {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: opacity .3s var(--base-transition);
+    width: 1.2rem;
+    height: 1.2rem;
     font-size: .8rem;
     font-weight: 600;
     margin-right: 1rem;
     cursor: pointer;
+    padding: .5rem;
+    border-radius: 100px;
+    transition: opacity .3s var(--base-transition);
   }
 
   &__back-link-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.2rem;
-    height: 1.2rem;
-    font-size: .8rem;
-    padding: .5rem;
-    border-radius: 100px;
+    font-size: 1rem;
     transition: background-color .3s var(--base-transition);
   }
 
   &__back-link:hover &__back-link-icon {
-    background-color: var(--color-muted);
+    //background-color: var(--color-muted);
   }
 
   &__grid {
