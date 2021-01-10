@@ -8,13 +8,11 @@ blocks:
   - name: 'Frontend'
     task:
       jobs:
-        - name: 'Checkout and install deps'
+        - name: 'Install and build'
           commands:
             - checkout
             - sem-version node 14.15.4
             - cache restore
             - yarn install
             - cache store
-        - name: Build
-          commands:
             - yarn run build
