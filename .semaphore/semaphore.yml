@@ -5,14 +5,14 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: Build
+  - name: 'Frontend'
     task:
       jobs:
-        - name: Build
+        - name: 'Install and build'
           commands:
             - checkout
             - sem-version node 12
             - cache restore
-            - npm install
+            - yarn install
             - cache store
-            - npm run build --if-present
+            - yarn run build
