@@ -1,32 +1,33 @@
 <template>
   <button
     v-on="$listeners"
-    class="v-btn"
+    class="v-button"
     :class="[
-      (flat && type) && 'v-btn--type-flat-' + type,
-      !flat && 'v-btn--type-' + type,
-      flat && 'v-btn--type-flat',
-      rounded && 'v-btn--rounded',
-      disabled && 'v-btn--disabled',
-      loading && 'v-btn--loading',
-      small && 'v-btn--size-small'
+      (flat && type) && 'v-button--type-flat-' + type,
+      !flat && 'v-button--type-' + type,
+      flat && 'v-button--type-flat',
+      rounded && 'v-button--rounded',
+      disabled && 'v-button--disabled',
+      loading && 'v-button--loading',
+      small && 'v-button--size-small'
     ]"
     :disabled="disabled"
+    v-ripple=""
   >
     <div
       v-if="$slots.default"
-      :class="['v-btn__content', loading && 'v-btn__content--hidden']"
+      :class="['v-button__content', loading && 'v-button__content--hidden']"
     >
       <slot />
     </div>
-    <span v-if="loading" class="v-btn__loading">
+    <span v-if="loading" class="v-button__loading">
       <v-loading />
     </span>
     <v-icon
       v-if="icon"
       :icon="icon"
-      class="v-btn__icon"
-      :class="!$slots.default && 'v-btn__icon--nomargin'"
+      class="v-button__icon"
+      :class="!$slots.default && 'v-button__icon--nomargin'"
     />
   </button>
 </template>
@@ -100,7 +101,7 @@ export default {
   }
 }
 
-.v-btn {
+.v-button {
   position: relative;
   background: none;
   font-family: inherit;
@@ -113,7 +114,6 @@ export default {
   border: 0;
   border-radius: 4px;
   text-decoration: none;
-  position: relative;
   cursor: pointer;
   line-height: 1.5;
   overflow: hidden;
@@ -178,7 +178,6 @@ export default {
   }
 
   &__loading {
-    position: relative;
     position: absolute;
     top: 50%;
     transform: translateY(-50%) !important;
