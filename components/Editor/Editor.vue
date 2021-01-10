@@ -1,7 +1,7 @@
 <template>
   <div class="v-editor">
     <ValidationProvider
-      rules="quillRequired"
+      :rules="['quillRequired', 'max:15', rules].join('|')"
       ref="validator"
       name="text"
       v-slot="{ errors }"
@@ -9,7 +9,10 @@
     >
 
       <div class="v-editor__header">
-        <div class="v-editor__history v-editor__header-section">
+        <div
+          class="v-editor__history v-editor__header-section"
+          :class="state.historyMove && 'v-editor__history--move-active'"
+        >
           <div
             v-for="historyAction in ['undo', 'redo']"
             :key="historyAction"
@@ -40,11 +43,12 @@
               :key="tool.format"
               ref="tools"
               class="v-editor__tool"
+              v-ripple
               :class="state.formats[tool.format] && 'v-editor__tool--active'"
               :data-tool-name="tool.format"
-              @click="toggleInlineFormat(tool.format)"
-              @mouseover.self="onToolMouseover"
-              @mouseout.self="onToolMouseout"
+              @click.stop.prevent="toggleInlineFormat(tool.format)"
+              @mouseover="onToolMouseover"
+              @mouseout="onToolMouseout"
             >
               <v-icon
                 @mouseover.stop.prevent
@@ -63,6 +67,7 @@
               v-for="tool in state.tools.list.line"
               :key="tool.format + tool.value"
               ref="tools"
+              v-ripple
               class="v-editor__tool"
               :class="state.formats[tool.format] === tool.value && 'v-editor__tool--active'"
               :data-tool-name="`${tool.format}-${tool.value}`"
@@ -86,11 +91,12 @@
               v-for="tool in state.tools.list.media"
               :key="tool.format"
               ref="tools"
+              v-ripple
               class="v-editor__tool"
               :class="state.formats[tool.type] && 'v-editor__tool--active'"
               :data-tool-name="tool.type"
               @click="insertMedia(tool.type)"
-              @mouseover.self="onToolMouseover"
+              @mouseover="onToolMouseover"
               @mouseout.self="onToolMouseout"
             >
               <v-icon
@@ -107,6 +113,7 @@
               v-for="tool in state.tools.list.embed"
               :key="tool.format"
               ref="tools"
+              v-ripple
               :data-tool-name="tool.type"
               @mouseover.self="onToolMouseover"
               @mouseout.self="onToolMouseout"
@@ -144,28 +151,30 @@
         class="v-editor__area"
         @keydown.ctrl.90.exact="state.historyMove = 'undo'"
         @keydown.ctrl.shift.90="state.historyMove = 'redo'"
-        @keyup="state.historyMove = ''"
+        @keyup="state.historyMove = false"
       />
 
-      <input type="hidden" :value="state.text" @change="validate" />
+
+      <input type="hidden" name="Текст" :value="state.text" @change="validate" />
       <div v-if="errors.length" class="v-editor__error">
         <v-icon :icon="['fas', 'exclamation']" class="v-editor__error-icon" />
         <span>{{ errors[0] }}</span>
+      </div>
+
+      <div class="v-editor__statusline">
+        {{ state.text.length }}/15000
       </div>
     </ValidationProvider>
   </div>
 </template>
 
 <script>
-import Quill from 'quill'
-import hljs from 'highlight.js'
-import MagicUrl from 'quill-magic-url'
-import BlotFormatter from 'quill-blot-formatter'
-import ImageUploader from 'quill-image-uploader'
-import TwitterBlot from './assets/Blots/twitter-blot/index.js'
+import createQuill from '~/assets/vendor/quill'
 import { required as veeRuleRequired } from 'vee-validate/dist/rules'
 import { extend as veeExtend, localize as veeLocalize } from 'vee-validate'
 import 'highlight.js/styles/atom-one-dark.css'
+
+console.log('created')
 
 let highlightTimeout = 0
 
@@ -174,25 +183,6 @@ veeLocalize({
   en: { messages:{ quillRequired: 'Text can\'t be empty' } },
   ru: { messages: { quillRequired: 'Текст не может быть пустым' } }
 })
-
-Quill.register('formats/twitter', TwitterBlot)
-Quill.register('modules/magicUrl', MagicUrl)
-Quill.register('modules/blotFormatter', BlotFormatter)
-Quill.register("modules/imageUploader", ImageUploader)
-
-const Codeblock = Quill.import('formats/code-block')
-const Quoteblock = Quill.import('formats/blockquote')
-const Header = Quill.import('formats/header')
-const List = Quill.import('formats/list')
-const Align = Quill.import('attributors/style/align')
-
-Codeblock.className = 'codeblock'
-Codeblock.tags = 'pre code'
-Quoteblock.className = 'blockquote'
-Header.className = 'heading'
-List.className = 'list'
-
-Quill.register(Align, true)
 
 export default {
   name: 'v-editor',
@@ -204,6 +194,10 @@ export default {
 
   props: {
     value: {
+      type: String,
+      default: null,
+    },
+    rules: {
       type: String,
       default: null,
     },
@@ -220,9 +214,9 @@ export default {
   data: () => ({
     quill: null,
     state: {
-      historyMove: '',
+      historyMove: false,
       toolHover: false,
-      text: null,
+      text: '',
       formats: {},
       tools: {
         positions: {},
@@ -264,17 +258,11 @@ export default {
       const options = {
         placeholder: this.placeholder,
         modules: {
-          toolbar: '#toolbar',
-          clipboard: true,
-          history: true,
-          magicUrl: true,
-          blotFormatter: true,
           imageUploader: { upload: async file => await this.$store.dispatch('files/uploadImage', file) },
-          syntax: { highlight: text => hljs.highlightAuto(text).value }
         }
       }
 
-      const quill = new Quill('#editor', options)
+      const quill = createQuill('#editor', options)
 
       quill.on('editor-change', this.onEditorChange)
       quill.on('text-change', this.onTextChange)
@@ -319,7 +307,6 @@ export default {
       this.quill.format(format, !this.state.formats[format])
     },
     lineFormat(format, value) {
-      console.log(format, value)
       this.quill.format(format, value)
     },
     insertMedia(type) {
@@ -371,9 +358,13 @@ export default {
       this.state.text = this.quill.getText().trim()
     },
     onToolMouseover(e) {
+      console.log('mouseover')
       this.state.toolHover = true
       const highlight = this.$refs.highlight
       const toolName = e.target.getAttribute('data-tool-name')
+
+      if (!toolName) return
+
       const { width, height, left } = this.state.tools.positions[toolName]
 
       highlight.style.width = `${width}px`
@@ -383,7 +374,7 @@ export default {
       setTimeout(() => this.$refs.toolbar.classList.add('v-editor__toolbar--anim'), 30)
       clearTimeout(highlightTimeout)
     },
-    onToolMouseout() {
+    onToolMouseout(e) {
       this.$refs.toolbar.classList.remove('v-editor__toolbar--hover')
       highlightTimeout = setTimeout(() => this.$refs.toolbar.classList.remove('v-editor__toolbar--anim'), 70)
     }
@@ -403,24 +394,33 @@ export default {
   animation: spinner 5s linear infinite !important;
 }
 .ql-clipboard { display: none }
+.ql-editor.ql-blank {
+  position: relative;
+}
 .ql-editor.ql-blank::before {
   color: var(--color-muted-darken);
   content: attr(data-placeholder);
   pointer-events: none;
   position: absolute;
-  right: 15px;
+  width: 100%;
+  word-break: break-all;
 }
 </style>
 
 <style lang="scss" scoped>
+#editor::after {
+  content: "";
+  clear: both;
+  overflow: hidden;
+}
 .v-editor {
   background-color: var(--color-background-contrast);
+  overflow: hidden;
   padding: 1rem;
   padding-top: 0;
   border-radius: 16px;
   border: 1px solid var(--color-muted-accent);
-  border-bottom: 1px solid var(--color-muted);
-  box-shadow: 0 1px 1px 0 var(--color-muted);
+  border-bottom: 0;
 
   &--state-invalid {
     box-shadow: inset 0 0 0 1px var(--color-danger);
@@ -434,6 +434,8 @@ export default {
     color: #fff;
     border: none;
     outline: none;
+    margin: -.5rem -1.5rem;
+    padding: .5rem 1.5rem;
   }
 
   &__header {
@@ -441,6 +443,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.5rem;
+    padding: 0 1rem;
   }
 
   &__header-section {
@@ -456,7 +459,6 @@ export default {
     display: flex;
     align-items: flex-end;
     height: fit-content;
-    border-radius: 8px;
     margin-left: -.85rem;
     overflow: hidden;
   }
@@ -473,16 +475,24 @@ export default {
     display: flex;
     color: var(--color-text);
     cursor: pointer;
+    transition: .3s var(--base-transition);
   }
 
   &__history-control:active,
   &__history-control--active {
+    background-color: var(--color-primary-fade);
     color: var(--color-primary);
+    border-radius: 8px;
+  }
+
+  &__history--move-active &__history-control {
+    border-color: transparent !important;
   }
 
   &__history-control:not(:last-of-type) {
     border-right: 1px solid var(--color-muted);
   }
+
 
   &__toolbar {
     position: relative;
@@ -545,15 +555,6 @@ export default {
     transition: background-color .3s var(--base-transition);
   }
 
-  &__tool::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-  }
-
   &__tool--active {
     background-color: var(--color-primary-fade);
     border-radius: 8px;
@@ -575,6 +576,34 @@ export default {
     font-size: .7rem;
     margin-right: .5rem;
     transform: translateY(-1px);
+  }
+
+  &__statusline {
+    background-color: var(--color-muted-accent);
+    position: relative;
+    font-size: .8rem;
+    margin: -1rem;
+    margin-top: 0;
+    padding: .2rem 1.5rem;
+    padding-top: 1.2rem;
+    font-weight: 500;
+    color: var(--color-text-tint);
+  }
+
+  &__statusline::before {
+    $border-size: 2px;
+
+    content: "";
+    background: #fff;
+    border-radius: 0 0 20px 20px;
+    border: $border-size solid var(--color-muted);
+    position: absolute;
+    width: calc(100% + #{$border-size * 2});
+    height: 20px;
+    top: 0;
+    box-sizing: border-box;
+    border-top: 0;
+    left: -$border-size;
   }
 }
 </style>
