@@ -1,7 +1,7 @@
 <template>
   <div class="v-editor">
     <ValidationProvider
-      :rules="['quillRequired', 'max:15', rules].join('|')"
+      :rules="['quillRequired', 'max:15000', rules].join('|')"
       ref="validator"
       name="text"
       v-slot="{ errors }"
@@ -20,7 +20,7 @@
             class="v-editor__history-control"
             :class="state.historyMove === historyAction && 'v-editor__history-control--active'"
           >
-            <v-icon :icon="['fas', `${historyAction}-alt`]" />
+            <v-icon :icon="['fas', `${historyAction}-alt`]"/>
           </div>
           <span class="v-editor__history-help">ctrl + shift + z</span>
         </div>
@@ -31,7 +31,7 @@
           class="v-editor__toolbar"
           :class="state.toolHover && 'v-editor__toolbar--hover'"
         >
-          <div class="v-editor__toolbar-hightlight" ref="highlight" />
+          <div class="v-editor__toolbar-hightlight" ref="highlight"/>
 
           <div
             v-for="(section, index) in state.tools.list.inline"
@@ -57,10 +57,10 @@
                 class="v-editor__tool-icon"
               />
             </div>
-            <div v-if="index + 1 < state.tools.list.inline.length" class="v-editor__tools-delimiter" />
+            <div v-if="index + 1 < state.tools.list.inline.length" class="v-editor__tools-delimiter"/>
           </div>
 
-          <div class="v-editor__tools-delimiter" />
+          <div class="v-editor__tools-delimiter"/>
 
           <div class="v-editor__toolbar-section">
             <div
@@ -84,7 +84,7 @@
             </div>
           </div>
 
-          <div class="v-editor__tools-delimiter" />
+          <div class="v-editor__tools-delimiter"/>
 
           <div class="v-editor__toolbar-section">
             <div
@@ -141,7 +141,7 @@
         </div>
 
         <div class="v-editor__help v-editor__header-section">
-          <v-icon :icon="['fas', 'question-circle']" />
+          <v-icon :icon="['fas', 'question-circle']"/>
         </div>
       </div>
 
@@ -155,9 +155,9 @@
       />
 
 
-      <input type="hidden" name="Текст" :value="state.text" @change="validate" />
+      <input type="hidden" name="Текст" :value="state.text" @change="validate"/>
       <div v-if="errors.length" class="v-editor__error">
-        <v-icon :icon="['fas', 'exclamation']" class="v-editor__error-icon" />
+        <v-icon :icon="['fas', 'exclamation']" class="v-editor__error-icon"/>
         <span>{{ errors[0] }}</span>
       </div>
 
@@ -170,18 +170,18 @@
 
 <script>
 import createQuill from '~/assets/vendor/quill'
-import { required as veeRuleRequired } from 'vee-validate/dist/rules'
-import { extend as veeExtend, localize as veeLocalize } from 'vee-validate'
+import {required as veeRuleRequired} from 'vee-validate/dist/rules'
+import {extend as veeExtend, localize as veeLocalize} from 'vee-validate'
 import 'highlight.js/styles/atom-one-dark.css'
 
 console.log('created')
 
 let highlightTimeout = 0
 
-veeExtend('quillRequired', { ...veeRuleRequired });
+veeExtend('quillRequired', {...veeRuleRequired});
 veeLocalize({
-  en: { messages:{ quillRequired: 'Text can\'t be empty' } },
-  ru: { messages: { quillRequired: 'Текст не может быть пустым' } }
+  en: {messages: {quillRequired: 'Text can\'t be empty'}},
+  ru: {messages: {quillRequired: 'Текст не может быть пустым'}}
 })
 
 export default {
@@ -223,30 +223,30 @@ export default {
         list: {
           inline: [
             [
-              { format: 'bold', icon: ['fas', 'bold'] },
-              { format: 'italic', icon: ['fas', 'italic'] },
-              { format: 'underline', icon: ['fas', 'underline'] },
+              {format: 'bold', icon: ['fas', 'bold']},
+              {format: 'italic', icon: ['fas', 'italic']},
+              {format: 'underline', icon: ['fas', 'underline']},
             ],
             [
-              { format: 'header', icon: ['fas', 'heading'] },
+              {format: 'header', icon: ['fas', 'heading']},
             ],
             [
-              { format: 'blockquote', icon: ['fas', 'quote-right'] },
-              { format: 'code-block', icon: ['fas', 'code'] },
-              { format: 'list', icon: ['fas', 'list'] },
+              {format: 'blockquote', icon: ['fas', 'quote-right']},
+              {format: 'code-block', icon: ['fas', 'code']},
+              {format: 'list', icon: ['fas', 'list']},
             ]
           ],
           line: [
-            { format: 'align', value: false, icon: 'align-left' },
-            { format: 'align', value: 'center', icon: 'align-center' },
-            { format: 'align', value: 'right', icon: 'align-right' },
+            {format: 'align', value: false, icon: 'align-left'},
+            {format: 'align', value: 'center', icon: 'align-center'},
+            {format: 'align', value: 'right', icon: 'align-right'},
           ],
           media: [
-            { type: 'image', icon: ['fas', 'file-image'] },
+            {type: 'image', icon: ['fas', 'file-image']},
           ],
           embed: [
-            { type: 'video', icon: ['fab', 'youtube'], placeholder: 'ссылка на youtube или vimeo' },
-            { type: 'twitter', icon: ['fab', 'twitter'], placeholder: 'ссылка на твит' },
+            {type: 'video', icon: ['fab', 'youtube'], placeholder: 'ссылка на youtube или vimeo'},
+            {type: 'twitter', icon: ['fab', 'twitter'], placeholder: 'ссылка на твит'},
           ]
         }
       }
@@ -258,7 +258,7 @@ export default {
       const options = {
         placeholder: this.placeholder,
         modules: {
-          imageUploader: { upload: async file => await this.$store.dispatch('files/uploadImage', file) },
+          imageUploader: {upload: async file => await this.$store.dispatch('files/uploadImage', file)},
         }
       }
 
@@ -270,8 +270,10 @@ export default {
       quill.root.addEventListener('blur', this.validate)
 
       this.quill = quill
-
-      if (this.state.text?.length) this.quill.pasteHTML(this.value)
+      if (typeof this.value === "string" && this.value.length > 0) {
+        this.quill.pasteHTML(this.value);
+        this.state.text = this.quill.getText().trim();
+      }
       this.quill.blur()
     },
     undo() {
@@ -292,7 +294,7 @@ export default {
           ? tool.offsetLeft - 1
           : tool.offsetLeft
 
-        this.state.tools.positions[toolName] = { width, height, left }
+        this.state.tools.positions[toolName] = {width, height, left}
       })
     },
     validate() {
@@ -316,8 +318,9 @@ export default {
       quill.focus()
 
       switch (type) {
-        case 'image': this._insertImage(range)
-              break;
+        case 'image':
+          this._insertImage(range)
+          break;
         // this architecture for future features
       }
     },
@@ -332,9 +335,11 @@ export default {
       const range = quill.getSelection()
 
       switch (type) {
-        case 'video': quill.insertEmbed(range, 'video', option)
-              break;
-        case 'twitter': quill.insertEmbed(range, 'twitter', { url: option })
+        case 'video':
+          quill.insertEmbed(range, 'video', option)
+          break;
+        case 'twitter':
+          quill.insertEmbed(range, 'twitter', {url: option})
       }
     },
     _insertVideo() {
@@ -365,7 +370,7 @@ export default {
 
       if (!toolName) return
 
-      const { width, height, left } = this.state.tools.positions[toolName]
+      const {width, height, left} = this.state.tools.positions[toolName]
 
       highlight.style.width = `${width}px`
       highlight.style.height = `${height}px`
@@ -393,10 +398,15 @@ export default {
   border-top-color: var(--color-primary) !important;
   animation: spinner 5s linear infinite !important;
 }
-.ql-clipboard { display: none }
+
+.ql-clipboard {
+  display: none
+}
+
 .ql-editor.ql-blank {
   position: relative;
 }
+
 .ql-editor.ql-blank::before {
   color: var(--color-muted-darken);
   content: attr(data-placeholder);
@@ -413,6 +423,7 @@ export default {
   clear: both;
   overflow: hidden;
 }
+
 .v-editor {
   background-color: var(--color-background-contrast);
   overflow: hidden;
