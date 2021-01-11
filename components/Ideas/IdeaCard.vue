@@ -1,6 +1,7 @@
 <template>
   <v-card
     class="idea"
+    v-ripple
     @mouseover="hover = true"
     @mouseout="hover = false"
   >

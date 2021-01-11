@@ -29,11 +29,11 @@ export default {
 
 <style lang="scss" scoped>
   .card {
-    background-color: var(--color-background-contrast);
+    background-color: var(--color-background-accent);
     padding: 1rem;
     border-radius: 8px;
     // box-shadow: var(--box-shadow);
-    border: 1px solid var(--color-muted-accent);
+    border: 1px solid var(--color-muted);
     border-bottom: 1px solid var(--color-muted);
     box-shadow: 0 1px 1px 0 var(--color-muted);
     display: flex;
@@ -46,7 +46,7 @@ export default {
       margin: -1rem;
       margin-bottom: 1rem;
       padding: .5rem 1rem;
-      border-bottom: 1px solid var(--color-muted-accent);
+      border-bottom: 1px solid var(--color-muted);
     }
     &__footer {
       display: flex;
@@ -54,7 +54,7 @@ export default {
       margin: -1rem;
       margin-top: 1rem;
       padding: .5rem 1rem;
-      border-top: 1px solid var(--color-muted-accent);
+      border-top: 1px solid var(--color-muted);
     }
     &__content {
       height: 100%;

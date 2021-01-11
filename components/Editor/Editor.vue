@@ -1,11 +1,14 @@
 <template>
-  <div class="v-editor">
-    <ValidationProvider
-      :rules="['quillRequired', 'max:15', rules].join('|')"
-      ref="validator"
-      name="text"
-      v-slot="{ errors }"
-      tag="div"
+  <ValidationProvider
+    :rules="['quillRequired', 'max:15000', rules].join('|')"
+    ref="validator"
+    name="text"
+    v-slot="{ errors }"
+    tag="div"
+  >
+    <div
+      class="v-editor"
+      :class="errors.length && 'v-editor--state-invalid'"
     >
 
       <div class="v-editor__header">
@@ -31,112 +34,94 @@
           class="v-editor__toolbar"
           :class="state.toolHover && 'v-editor__toolbar--hover'"
         >
-          <div class="v-editor__toolbar-hightlight" ref="highlight" />
+          <div class="v-editor__toolbar-tools">
+            <div class="v-editor__toolbar-hightlight" ref="highlight" />
 
-          <div
-            v-for="(section, index) in state.tools.list.inline"
-            :key="index"
-            class="v-editor__toolbar-section"
-          >
             <div
-              v-for="tool in section"
-              :key="tool.format"
-              ref="tools"
-              class="v-editor__tool"
-              v-ripple
-              :class="state.formats[tool.format] && 'v-editor__tool--active'"
-              :data-tool-name="tool.format"
-              @click.stop.prevent="toggleInlineFormat(tool.format)"
-              @mouseover="onToolMouseover"
-              @mouseout="onToolMouseout"
+              v-for="(section, index) in state.tools.list.inline"
+              :key="index"
+              class="v-editor__toolbar-section"
             >
-              <v-icon
-                @mouseover.stop.prevent
-                @mouseout.stop.prevent
-                :icon="tool.icon"
-                class="v-editor__tool-icon"
-              />
+              <div
+                v-for="tool in section"
+                :key="tool.format"
+                ref="tools"
+                class="v-editor__tool"
+                v-ripple="'rgba(0, 0, 0, .05)'"
+                :class="state.formats[tool.format] && 'v-editor__tool--active'"
+                :data-tool-name="tool.format"
+                @click.stop.prevent="toggleInlineFormat(tool.format)"
+                @mouseover="onToolMouseover"
+                @mouseout="onToolMouseout"
+              >
+                <v-icon :icon="tool.icon" class="v-editor__tool-icon" />
+              </div>
+              <div v-if="index + 1 < state.tools.list.inline.length" class="v-editor__tools-delimiter" />
             </div>
-            <div v-if="index + 1 < state.tools.list.inline.length" class="v-editor__tools-delimiter" />
-          </div>
 
-          <div class="v-editor__tools-delimiter" />
+            <div class="v-editor__tools-delimiter" />
 
-          <div class="v-editor__toolbar-section">
-            <div
-              v-for="tool in state.tools.list.line"
-              :key="tool.format + tool.value"
-              ref="tools"
-              v-ripple
-              class="v-editor__tool"
-              :class="state.formats[tool.format] === tool.value && 'v-editor__tool--active'"
-              :data-tool-name="`${tool.format}-${tool.value}`"
-              @click="lineFormat(tool.format, tool.value)"
-              @mouseover.self="onToolMouseover"
-              @mouseout.self="onToolMouseout"
-            >
-              <v-icon
-                @mouseover.stop.prevent
-                @mouseout.stop.prevent
-                :icon="tool.icon"
-                class="v-editor__tool-icon"
-              />
+            <div class="v-editor__toolbar-section">
+              <div
+                v-for="tool in state.tools.list.line"
+                :key="tool.format + tool.value"
+                ref="tools"
+                v-ripple="'rgba(0, 0, 0, .05)'"
+                class="v-editor__tool"
+                :class="state.formats[tool.format] === tool.value && 'v-editor__tool--active'"
+                :data-tool-name="`${tool.format}-${tool.value}`"
+                @click="lineFormat(tool.format, tool.value)"
+                @mouseover.self="onToolMouseover"
+                @mouseout.self="onToolMouseout"
+              >
+                <v-icon :icon="tool.icon" class="v-editor__tool-icon" />
+              </div>
             </div>
-          </div>
 
-          <div class="v-editor__tools-delimiter" />
+            <div class="v-editor__tools-delimiter" />
 
-          <div class="v-editor__toolbar-section">
-            <div
-              v-for="tool in state.tools.list.media"
-              :key="tool.format"
-              ref="tools"
-              v-ripple
-              class="v-editor__tool"
-              :class="state.formats[tool.type] && 'v-editor__tool--active'"
-              :data-tool-name="tool.type"
-              @click="insertMedia(tool.type)"
-              @mouseover="onToolMouseover"
-              @mouseout.self="onToolMouseout"
-            >
-              <v-icon
-                @mouseover.stop.prevent
-                @mouseout.stop.prevent
-                :icon="tool.icon"
-                class="v-editor__tool-icon"
-              />
+            <div class="v-editor__toolbar-section">
+              <div
+                v-for="tool in state.tools.list.media"
+                :key="tool.format"
+                ref="tools"
+                v-ripple
+                class="v-editor__tool"
+                :class="state.formats[tool.type] && 'v-editor__tool--active'"
+                :data-tool-name="tool.type"
+                @click="insertMedia(tool.type)"
+                @mouseover="onToolMouseover"
+                @mouseout.self="onToolMouseout"
+              >
+                <v-icon :icon="tool.icon" class="v-editor__tool-icon" />
+              </div>
             </div>
-          </div>
 
-          <div class="v-editor__toolbar-section">
-            <v-tooltip
-              v-for="tool in state.tools.list.embed"
-              :key="tool.format"
-              ref="tools"
-              v-ripple
-              :data-tool-name="tool.type"
-              @mouseover.self="onToolMouseover"
-              @mouseout.self="onToolMouseout"
-              class="v-editor__tool"
-              :class="state.formats[tool.type] && 'v-editor__tool--active'"
-              activate-by-click
-            >
-              <v-icon
-                @mouseover.stop.prevent
-                @mouseout.stop.prevent
-                :icon="tool.icon"
-                class="v-editor__tool-icon"
-              />
+            <div class="v-editor__toolbar-section">
+              <v-tooltip
+                v-for="tool in state.tools.list.embed"
+                :key="tool.format"
+                ref="tools"
+                v-ripple="'rgba(0, 0, 0, .05)'"
+                :data-tool-name="tool.type"
+                @mouseover.self="onToolMouseover"
+                @mouseout.self="onToolMouseout"
+                class="v-editor__tool"
+                :class="state.formats[tool.type] && 'v-editor__tool--active'"
+                activate-by-click
+              >
+                <v-icon :icon="tool.icon" class="v-editor__tool-icon" />
 
-              <template v-slot:tip="{ hide }">
-                <input
-                  type="text"
-                  :placeholder="tool.placeholder"
-                  @keydown.enter.prevent.stop="insertEmbed(tool.type, $event.target.value) || hide()"
-                  class="v-editor__shadow-input"
-                />
-              </template>
-            </v-tooltip>
+                <template v-slot:tip="{ hide }">
+                  <input
+                    type="text"
+                    :placeholder="tool.placeholder"
+                    @keydown.enter.prevent.stop="insertEmbed(tool.type, $event.target.value) || hide()"
+                    class="v-editor__shadow-input"
+                  />
+                </template>
+              </v-tooltip>
+            </div>
           </div>
         </div>
 
@@ -154,7 +139,6 @@
         @keyup="state.historyMove = false"
       />
 
-
       <input type="hidden" name="Текст" :value="state.text" @change="validate" />
       <div v-if="errors.length" class="v-editor__error">
         <v-icon :icon="['fas', 'exclamation']" class="v-editor__error-icon" />
@@ -164,12 +148,12 @@
       <div class="v-editor__statusline">
         {{ state.text.length }}/15000
       </div>
-    </ValidationProvider>
-  </div>
+    </div>
+  </ValidationProvider>
 </template>
 
 <script>
-import createQuill from '~/assets/vendor/quill'
+import createQuill from '~/assets/js/quill'
 import { required as veeRuleRequired } from 'vee-validate/dist/rules'
 import { extend as veeExtend, localize as veeLocalize } from 'vee-validate'
 import 'highlight.js/styles/atom-one-dark.css'
@@ -271,8 +255,10 @@ export default {
 
       this.quill = quill
 
-      if (this.state.text?.length) this.quill.pasteHTML(this.value)
+      if (this.value?.length) this.quill.pasteHTML(this.value)
+
       this.quill.blur()
+      this.computeToolsPositions()
     },
     undo() {
       this.quill.history.undo()
@@ -369,7 +355,7 @@ export default {
 
       highlight.style.width = `${width}px`
       highlight.style.height = `${height}px`
-      highlight.style.transform = `translate(calc(${left}px - .5rem))`
+      highlight.style.transform = `translate(${left}px)`
       this.$refs.toolbar.classList.add('v-editor__toolbar--hover')
       setTimeout(() => this.$refs.toolbar.classList.add('v-editor__toolbar--anim'), 30)
       clearTimeout(highlightTimeout)
@@ -382,7 +368,6 @@ export default {
 
   mounted() {
     this.init()
-    this.computeToolsPositions()
   }
 }
 </script>
@@ -397,11 +382,15 @@ export default {
 .ql-editor.ql-blank {
   position: relative;
 }
+.ql-editor {
+  overflow: hidden;
+}
 .ql-editor.ql-blank::before {
   color: var(--color-muted-darken);
   content: attr(data-placeholder);
   pointer-events: none;
   position: absolute;
+  top: 1rem;
   width: 100%;
   word-break: break-all;
 }
@@ -414,16 +403,14 @@ export default {
   overflow: hidden;
 }
 .v-editor {
-  background-color: var(--color-background-contrast);
-  overflow: hidden;
+  background-color: var(--color-background-accent);
   padding: 1rem;
   padding-top: 0;
   border-radius: 16px;
-  border: 1px solid var(--color-muted-accent);
-  border-bottom: 0;
+  border: 1px solid var(--color-muted);
 
   &--state-invalid {
-    box-shadow: inset 0 0 0 1px var(--color-danger);
+    border-color: var(--color-danger);
   }
 
   &__shadow-input {
@@ -495,17 +482,18 @@ export default {
 
 
   &__toolbar {
-    position: relative;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
     padding: .5rem;
+    margin-top: -1px;
     width: fit-content;
-    border-style: solid;
-    border-width: 0 1px 1px 1px;
     border-radius: 0 0 8px 8px;
-    border-color: var(--color-muted);
+    border: 1px solid var(--color-muted);
+    border-top-color: var(--color-background);
     background-color: var(--color-background);
+  }
+
+  &--state-invalid &__toolbar {
+    border-color: var(--color-danger);
+    border-top: 1px solid var(--color-background);
   }
 
   &__toolbar--hover &__toolbar-hightlight {
@@ -517,21 +505,28 @@ export default {
     transition-property: opacity, transform;
   }
 
-  &__toolbar-hightlight {
-    position: absolute;
-    background-color: var(--color-muted-accent);
-    height: 1rem;
-    top: .5rem;
-    opacity: 0;
-    border-radius: 8px;
-    box-sizing: border-box;
-    z-index: 1;
-    transition: opacity .3s var(--base-transition);
+  &__toolbar-tools {
+    position: relative;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
   }
 
   &__toolbar-section {
     display: flex;
     align-items: center;
+  }
+
+  &__toolbar-hightlight {
+    background-color: var(--color-muted);
+    position: absolute;
+    height: 1rem;
+    opacity: 0;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transform: translate(calc(8px - 0.5rem));
+    transition: opacity .3s var(--base-transition);
+    z-index: 1;
   }
 
   &__tools-delimiter {
@@ -543,13 +538,14 @@ export default {
 
   &__tool {
     position: relative;
-    color: var(--color-text-tint);
+    color: var(--color-text);
     display: inline-flex;
     align-items: center;
     padding: .5rem .6rem;
     cursor: pointer;
     border-radius: 8px;
-    width: 1rem;
+    box-sizing: border-box;
+    width: 35px;
     justify-content: center;
     z-index: 2;
     transition: background-color .3s var(--base-transition);
@@ -579,15 +575,17 @@ export default {
   }
 
   &__statusline {
-    background-color: var(--color-muted-accent);
+    background-color: var(--color-muted);
     position: relative;
     font-size: .8rem;
+    font-weight: 500;
     margin: -1rem;
     margin-top: 0;
     padding: .2rem 1.5rem;
     padding-top: 1.2rem;
-    font-weight: 500;
-    color: var(--color-text-tint);
+    border-radius: 16px;
+    overflow: hidden;
+    color: var(--color-text);
   }
 
   &__statusline::before {

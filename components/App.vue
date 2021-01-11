@@ -1,5 +1,5 @@
 <template>
-  <div class="v-app">
+  <div class="v-app theme--light">
     <v-dialog />
       <div class="v-app__viewport">
         <slot />
@@ -16,11 +16,5 @@ export default {
 <style lang="scss" scoped>
 .v-app {
   background-color: var(--color-background);
-
-  &__viewport {
-    min-height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-  }
 }
 </style>

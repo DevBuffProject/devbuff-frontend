@@ -2,21 +2,18 @@ import './styles.scss'
 
 export const ripple = {
   bind: (el, binding) => {
-    const bgColor = binding?.value || 'rgba(0, 0, 0, .3)'
+    const computedStyles = window.getComputedStyle(el)
+    const bgColor = binding?.value || 'rgba(255, 255, 255, .5)'
+    const duration = 500
 
     const rippleStart = (e) => {
-      const duration = 800
+      const ripple = document.createElement('div')
+      const rippleContainer = document.createElement('div')
       const rect = el.getBoundingClientRect()
       const left = rect.left
       const top = rect.top
       const width = el.offsetWidth
       const height = el.offsetHeight
-      const computedStyles = window.getComputedStyle(el)
-      // window.addEventListener('mousedown', rippleReset)
-      // e.stopPropagation()
-
-      const ripple = document.createElement('div')
-      const rippleContainer = document.createElement('div')
 
       let rippleFinished = false
       let rippleFinishTimeout = 0
@@ -29,10 +26,11 @@ export const ripple = {
       const maxY = Math.max(dy, height - dy)
       const radius = Math.sqrt((maxX * maxX) + (maxY * maxY))
       const rippleReset = () => {
-        setTimeout(() => ripple.style.opacity = 0, !rippleFinished ? duration / 2 : 0)
-        setTimeout(() => rippleContainer.remove(), duration)
+        setTimeout(() => ripple.style.opacity = 0, !rippleFinished ? duration : 0)
+        setTimeout(() => rippleContainer.remove(), duration * 2)
       }
 
+      el.addEventListener('mouseover', rippleReset)
       el.addEventListener('mouseup', rippleReset)
 
       rippleContainer.className = 'v-ripple'
@@ -43,8 +41,8 @@ export const ripple = {
       ripple.className = 'v-ripple__ripple'
       ripple.style.background = bgColor
       ripple.style.transition = `
-        width ${duration}ms cubic-bezier(0.4, 0, 0.2, 1),
-        height ${duration}ms cubic-bezier(0.4, 0, 0.2, 1),
+        width ${duration}ms var(--base-transition),
+        height ${duration}ms var(--base-transition),
         opacity ${duration / 2}ms ease
       `
 
@@ -56,7 +54,7 @@ export const ripple = {
 
         if (position !== 'relative') el.style.position = 'relative'
 
-        ripple.style.opacity = 0.5
+        ripple.style.opacity = 1
         ripple.style.width = `${radius * 2}px`
         ripple.style.height = `${radius * 2}px`
         ripple.style.left = `${dx}px`

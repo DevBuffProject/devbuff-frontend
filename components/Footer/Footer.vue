@@ -36,8 +36,8 @@ export default {
 <style lang="scss" scoped>
   .v-footer {
     padding: 1rem 0;
-    border-top: 1px solid var(--color-muted-accent);
-    background-color: var(--color-background-contrast);
+    border-top: 1px solid var(--color-muted);
+    background-color: var(--color-background-accent);
 
     &__health-badge--fixed {
       position: fixed;

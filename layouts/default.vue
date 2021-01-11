@@ -1,19 +1,17 @@
 <template>
-  <v-app>
+  <v-app class="viewport">
     <v-header />
-    <main class="viewport">
+    <main>
       <nuxt />
     </main>
     <v-footer class="mt-3" />
   </v-app>
 </template>
 
-<script>
-export default {
-  mounted() {
-    this.$router.afterEach(() => {
-      console.log(this.$router.history)
-    })
-  }
+<style lang="scss" scoped>
+.viewport {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
-</script>
+</style>

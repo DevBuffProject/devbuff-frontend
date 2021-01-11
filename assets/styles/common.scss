@@ -3,6 +3,17 @@
 @import 'variables';
 @import 'typography';
 @import 'transitions';
+@import 'mixins';
+
+@mixin generate-theme($colors) {
+  @each $color-name, $color in $colors {
+    --color-#{$color-name}: #{$color};
+  }
+
+  --color-muted-lighten: #{lighten(map-get($colors, 'muted'), 5%)};
+  --color-muted-darken: #{darken(map-get($colors, 'muted'), 5%)};
+  //--color-muted-darken: darken($color, 20%);
+}
 
 :root {
   --header-height: 60px;
@@ -10,16 +21,22 @@
   --base-transition: #{$base-transition};
   --box-shadow: 0 3px 4px -3px rgba(0, 0, 0, .1);
 
-  @each $name, $color in map-get($default-colors, 'static' ) {
-    --color-#{$name}: #{$color};
-  }
+  @each $color-name, $color in $brand-colors {
+    --color-#{$color-name}: #{$color};
 
-  @each $name, $color in map-get($default-colors, 'scheme' ) {
-    --color-#{$name}: #{$color};
-    --color-#{$name}-darken: #{darken($color, 10%)};
-    --color-#{$name}-tint: #{lighten($color, 20%)};
-    --color-#{$name}-fade: #{transparentize($color, 0.85)};
+    @each $tone in 10 20 30 40 50 60 70 80 90 {
+      $dark-scale-value: lighten($color, $tone * 1%);
+      $light-scale-value: darken($color, $tone * 1%);
+      $transparent-scale-value: $tone / 100;
+      --color-#{$color-name}-fade-#{$tone}: #{transparentize($color, $transparent-scale-value)};
+      --color-#{$color-name}-lighten-#{$tone}: #{$dark-scale-value};
+      --color-#{$color-name}-darken-#{$tone}: #{$light-scale-value};
+    }
   }
+}
+
+.theme--light {
+  @include generate-theme($light-colors);
 }
 
 body {
@@ -31,7 +48,7 @@ body {
   font-weight: 300;
   font-variant: no-common-ligatures slashed-zero;
   -webkit-font-smoothing: antialiased;
-  color: var(--text-color);
+  color: var(--color-text);
 }
 
 [contenteditable] {
@@ -47,8 +64,8 @@ svg {
   pointer-events: none;
 }
 
-@each $name, $color in map-get($default-colors, 'scheme' ) {
-  .color-#{$name} {
-    color: var(--color-#{$name}) !important;
-  }
-}
+//@each $name, $color in map-get($default-colors, 'scheme' ) {
+//  .color-#{$name} {
+//    color: var(--color-#{$name}) !important;
+//  }
+//}

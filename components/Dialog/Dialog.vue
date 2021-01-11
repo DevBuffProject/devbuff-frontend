@@ -139,7 +139,7 @@ export default {
       // this.$refs.component.$el.classList.add('dialog__component--show')
 
       await this.$nextTick()
-      // HOTFIX: 
+      // HOTFIX:
       setTimeout(() => {
         this.$refs.component.$el.classList.add('dialog__component--show')
       }, 400)
@@ -177,7 +177,7 @@ export default {
   }
 
   &__window {
-    background-color: var(--color-background-contrast);
+    background-color: var(--color-background-accent);
     padding: 1.5rem;
     border-radius: 4px;
     overflow: hidden;

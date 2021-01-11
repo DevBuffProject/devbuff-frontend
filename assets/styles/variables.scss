@@ -1,21 +1,14 @@
-$default-colors: (
-  // Core colors
-  static: (
-    // only for app background
-    background: #f9f9f9,
-    background-contrast: #fff,
-    muted: #e1e1e1,
-    muted-accent: #e9e9e9,
-    muted-darken: #b9b9b9,
-  ),
+$brand-colors: (
+  primary: #488AFF,
+  success: #06B94E,
+  danger: #F93155,
+  warning: #FFBA00,
+);
 
-  // Colorful
-  scheme: (
-    text: #242424,
-    primary: #297eff,
-    success: #06b94e,
-    danger: #f93155,
-    warning: #ffba00,
-    black: #131313,
-  )
+$light-colors: (
+  muted: #E7E7E7,
+  text: #333,
+  text-muted: #979797,
+  background: #F9F9F9,
+  background-accent: #FFFFFF,
 );
