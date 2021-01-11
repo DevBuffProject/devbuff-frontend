@@ -24,7 +24,8 @@
         <div v-if="isAuthorized" class="d-flex align-items-center">
           <v-link
             v-if="isAdmin"
-            class="text header__link color-warning"
+            v-ripple="'var(--color-primary-fade-90)'"
+            class="text header__link"
             type="muted"
             :to="localePath({ name: 's-admin' })"
             :icon="['fas', 'crown']"
@@ -33,6 +34,7 @@
             <span class="ml-1" v-if="pendingIdeas.length > 0">({{ pendingIdeas.length }})</span>
           </v-link>
           <v-link
+            v-ripple="'var(--color-primary-fade-90)'"
             class="text header__link"
             active-class="header__link--active"
             type="muted"
@@ -43,7 +45,8 @@
             {{  $t('components.header.ideas')  }}
           </v-link>
           <v-link
-            class="text header__link"
+            v-ripple="'var(--color-primary-fade-90)'"
+            class="text header__link mr-3"
             active-class="header__link--active"
             type="muted"
             :to="localePath({ name: 's-dashboard' })"
@@ -60,7 +63,7 @@
             </v-button>
           </nuxt-link>
           <nuxt-link :to="localePath({ name: 's-profile' })">
-            <v-avatar :avatar="this.$store.getters['user/profile'].id" />
+            <v-avatar v-ripple :avatar="this.$store.getters['user/profile'].id" />
           </nuxt-link>
         </div>
 
@@ -134,10 +137,10 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  background-color: var(--color-background-contrast);
+  background-color: var(--color-background-accent);
   position: relative;
   height: var(--header-height);
-  border-bottom: 1px solid var(--color-muted-accent);
+  border-bottom: 1px solid var(--color-muted);
 
   &__logo {
     height: 30px;
@@ -155,21 +158,28 @@ export default {
   }
 
   &__link {
-    padding: 1rem 0;
+    padding: .25rem 0.5rem;
+    margin: 0 .25em;
+    border-radius: 8px;
     font-size: .9rem;
     text-transform: lowercase;
-    margin-right: 1.5rem;
     opacity: 0.5;
     font-weight: 400;
+    width: fit-content;
     transition-property: background-color, color, opacity;
     transition: .3s var(--base-transition);
 
+    &:last-of-type {
+      margin-right: 1rem;
+    }
+
     &:hover {
+      color: var(--color-primary) !important;
       opacity: 1;
     }
 
     &--active {
-      background-color: var(--color-primary-muted);
+      background-color: var(--color-primary-fade-90);
       color: var(--color-primary) !important;
       opacity: 1;
     }

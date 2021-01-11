@@ -1,66 +1,66 @@
 <template>
   <div class="container pt-4">
     <div class="idea">
-      <strong>
-        <h1 class="idea__title m-0 p-0"> {{ idea.name }} </h1>
-      </strong>
-      <div class="d-flex flex-wrap align-items-center justify-content-between mt-3">
-        <div class="d-flex flex-wrap">
-          <v-user
-            :user-id="idea.ownerIdea.id"
-            :firstname="idea.ownerIdea.firstName"
-            :lastname="idea.ownerIdea.lastName"
-            :username="idea.ownerIdea.userName"
-            class="mr-4"
-          />
+      <v-card class="mt-3">
+        <h1 class="idea__title mb-3 p-0"> {{ idea.name }} </h1>
+        <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
+          <div class="d-flex flex-wrap">
+            <v-user
+              :user-id="idea.ownerIdea.id"
+              :firstname="idea.ownerIdea.firstName"
+              :lastname="idea.ownerIdea.lastName"
+              :username="idea.ownerIdea.userName"
+              class="mr-4"
+            />
 
-          <v-label :name="$t('page.ideas.view.dateCreation')" class="mr-5">
-            {{ idea.lastUpdateDate | toLocaleDateTime($i18n.locale) }}
-          </v-label>
+            <v-label :name="$t('page.ideas.view.dateCreation')" class="mr-5">
+              {{ idea.lastUpdateDate | toLocaleDateTime($i18n.locale) }}
+            </v-label>
 
-          <v-label :name="$t('page.ideas.view.status.title')" class="mr-5">
-            {{ $t('page.ideas.view.status.' + idea.status) }}
-          </v-label>
+            <v-label :name="$t('page.ideas.view.status.title')" class="mr-5">
+              {{ $t('page.ideas.view.status.' + idea.status) }}
+            </v-label>
 
-          <v-label v-if="isOwner" :name="$t('page.ideas.view.statusModeration.title')">
-            {{
-              idea.waitingValidation ? $t('page.ideas.view.statusModeration.waitingValidation') : $t('page.ideas.view.statusModeration.alreadyApproved')
-            }}
+            <v-label v-if="isOwner" :name="$t('page.ideas.view.statusModeration.title')">
+              {{
+                idea.waitingValidation
+                  ? $t('page.ideas.view.statusModeration.waitingValidation')
+                  : $t('page.ideas.view.statusModeration.alreadyApproved')
+              }}
+            </v-label>
+          </div>
+
+          <v-label :name="$t('page.ideas.view.action.title')">
+            <v-button
+              v-if="isOwner"
+              class="mr-2"
+              :icon="['fas', 'edit']"
+              type="muted"
+              small
+              @click="$router.push(localePath({ name: 's-editor', query: { id: idea.id }}))"
+            >
+              {{ $t('page.ideas.view.action.change') }}
+            </v-button>
+
+            <v-button
+              v-if="isOwner || isAdmin"
+              type="danger"
+              small
+              @click="deleteIdea"
+            >
+              {{ $t('page.ideas.view.action.delete') }}
+            </v-button>
+
+            <v-button
+              v-if="!isOwner && !isAdmin"
+              type="primary"
+              small
+            >
+              {{ $t('page.ideas.view.action.respond') }}
+            </v-button>
           </v-label>
         </div>
 
-        <v-label :name="$t('page.ideas.view.action.title')">
-          <v-button
-            v-if="isOwner"
-            class="mr-2"
-            :icon="['fas', 'edit']"
-            type="muted"
-            small
-            @click="$router.push(localePath({ name: 's-editor', query: { id: idea.id }}))"
-          >
-            {{ $t('page.ideas.view.action.change') }}
-          </v-button>
-
-          <v-button
-            v-if="isOwner || isAdmin"
-            type="danger"
-            small
-            @click="deleteIdea"
-          >
-            {{ $t('page.ideas.view.action.delete') }}
-          </v-button>
-
-          <v-button
-            v-if="!isOwner && !isAdmin"
-            type="primary"
-            small
-          >
-            {{ $t('page.ideas.view.action.respond') }}
-          </v-button>
-        </v-label>
-      </div>
-
-      <v-card class="mt-3">
         <div v-html="idea.text"/>
       </v-card>
 
@@ -240,9 +240,8 @@ export default {
 <style lang="scss" scoped>
 .idea {
   &__title {
-    font-family: 'Rubik Mono One', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 500;
+    font-size: 2rem;
+    font-weight: 900;
   }
 
   &__owner-username {

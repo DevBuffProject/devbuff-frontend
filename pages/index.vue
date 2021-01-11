@@ -6,7 +6,7 @@
       </h1>
       <p class="present__app-desc my-5">
         <span class="present__app-name">DevBuff</span> — {{ $t('page.index.description') }}.
-        <v-link to="/about"> {{ $t('page.index.action.about') }}</v-link>
+        <v-link to="/about"> {{ $t('page.index.action.about') }} </v-link>
       </p>
       <div class="present__controls d-flex flex-column justify-content-center">
         <div class="w-100" v-if="!isAuthorized">

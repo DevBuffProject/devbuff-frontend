@@ -6,10 +6,8 @@
       :key="button.value"
       ref="button"
       @click="setValue(index)"
-      :class="[
-        'v-switcher__button',
-        activeIndex !== index && 'v-switcher__button--active'
-      ]"
+      class="v-switcher__button"
+      :class="activeIndex !== index && 'v-switcher__button--active'"
     >
       {{ button.title }}
     </div>
@@ -92,7 +90,7 @@ export default {
   display: inline-flex;
   border-radius: 4px;
   overflow: hidden;
-  background-color: var(--color-muted-accent);
+  background-color: var(--color-muted);
 
   &__button {
     position: relative;
@@ -115,13 +113,13 @@ export default {
 
   &__highlight {
     position: absolute;
-    background-color: var(--color-background-contrast);
+    background-color: var(--color-background-accent);
     height: 100%;
     width: 0px;
     top: 0;
     opacity: 0;
     border-radius: 5px;
-    border: 1px solid var(--color-muted-accent);
+    border: 1px solid var(--color-muted);
     box-sizing: border-box;
     transition: .5s var(--base-transition);
     transition-property: transform, width, opacity;

@@ -4,19 +4,19 @@
     class="v-button"
     :class="[
       (flat && type) && 'v-button--type-flat-' + type,
-      !flat && 'v-button--type-' + type,
-      flat && 'v-button--type-flat',
+      flat ? 'v-button--type-flat' : 'v-button--type-' + type,
       rounded && 'v-button--rounded',
       disabled && 'v-button--disabled',
       loading && 'v-button--loading',
       small && 'v-button--size-small'
     ]"
     :disabled="disabled"
-    v-ripple=""
+    v-ripple="'var(--ripple-bg-color)'"
   >
     <div
       v-if="$slots.default"
-      :class="['v-button__content', loading && 'v-button__content--hidden']"
+      class="v-button__content"
+      :class="loading && 'v-button__content--hidden'"
     >
       <slot />
     </div>
@@ -72,42 +72,13 @@ export default {
 <style lang="scss" scoped>
 @import '~/assets/styles/variables.scss';
 
-@mixin button-type () {
-  @each $name, $color in map-get($default-colors, 'scheme' ) {
-    &--type-#{$name} {
-      color: #fff;
-      font-weight: 500;
-      background-color: var(--color-#{$name});
-
-      &:hover {
-        box-shadow: 0px 4px 10px -5px var(--color-#{$name}-tint);
-      }
-
-      &:active,
-      &:focus,
-      & /deep/ *:focus {
-        box-shadow: 0px 0px 0px 4px var(--color-#{$name}-fade);
-      }
-    }
-
-    &--type-flat-#{$name} {
-      color: var(--color-#{$name});
-      font-weight: 600;
-      transition: background-color .5s var(--base-transition);
-      &:hover {
-        background-color: var(--color-#{$name}-fade);
-      }
-    }
-  }
-}
-
 .v-button {
+  background-color: var(--bg-color);
+  color: var(--text-color);
   position: relative;
-  background: none;
-  font-family: inherit;
+  font-family: var(--font-family);
   font-size: 1rem;
   padding: .2rem 1rem;
-  text-transform: lowercase;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -118,11 +89,35 @@ export default {
   line-height: 1.5;
   overflow: hidden;
   outline: none;
-  transition:
-    box-shadow .3s var(--base-transition),
-    background-color .5s var(--base-transition);
+  transition: background-color .5s var(--base-transition);
 
-  @include button-type();
+  &:hover {
+    background-color: var(--bg-color-hover);
+  }
+
+  @each $color-name, $color in $brand-colors {
+    &--type-#{$color-name} {
+      --bg-color: var(--color-#{$color-name});
+      --bg-color-hover: var(--color-#{$color-name}-lighten-10);
+      --ripple-bg-color: rgba(255, 255, 255, .4);
+      --text-color: #FFF;
+    }
+  }
+
+  &--type-muted {
+    --bg-color: var(--color-muted);
+    --bg-color-hover: var(--color-muted-darken);
+    --ripple-bg-color: rgba(0, 0, 0, .1);
+    --text-color: #000;
+
+    font-weight: 400;
+  }
+
+  &--type-dark {
+    background-color: #000;
+    font-weight: 500;
+    color: #fff;
+  }
 
   &--size-small {
     font-size: .8rem;
@@ -133,38 +128,8 @@ export default {
     opacity: .5;
   }
 
-  &--type-muted {
-    background-color: var(--color-muted);
-    color: var(--color-text);
-    font-weight: 400;
-  }
-
-  &--type-dark {
-    background-color: #000;
-    font-weight: 500;
-    color: #fff;
-  }
-
   &--rounded {
     border-radius: 50px;
-  }
-
-  &--loading {
-    background-image: linear-gradient(
-      -45deg,
-
-      rgba(255, 255, 255, 0.15) 25%,
-      transparent 25%,
-      transparent 50%,
-      rgba(255, 255, 255, 0.15) 50%,
-      rgba(255, 255, 255, 0.15) 75%,
-      transparent 75%
-    );
-    background-size: 2.5em 2.5em;
-    background-repeat: repeat-x;
-    animation: progress 0.7s linear infinite;
-
-    &::before { opacity: 0 }
   }
 
   &__content {
@@ -191,15 +156,6 @@ export default {
     &--nomargin {
       margin: 0;
     }
-  }
-}
-
-@keyframes progress {
-  0% {
-    background-position: 0px 0px;
-  }
-  100% {
-    background-position: 2.5em 0px;
   }
 }
 </style>

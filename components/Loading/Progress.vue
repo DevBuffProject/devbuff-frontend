@@ -25,7 +25,6 @@ export default {
     position: absolute;
     background: var(--color-primary);
     transition: transform .2s linear;
-    position: absolute;
     left: 0;
     top: 0;
     bottom: 0;

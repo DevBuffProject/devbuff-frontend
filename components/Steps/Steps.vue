@@ -51,12 +51,12 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    @each $name, $color in map-get($default-colors, 'scheme' ) {
-      &--type-#{$name} {
-        --step-color: var(--color-#{$name});
-      }
-    }
+    //
+    //@each $name, $color in map-get($default-colors, 'scheme' ) {
+    //  &--type-#{$name} {
+    //    --step-color: var(--color-#{$name});
+    //  }
+    //}
   }
 
   .v-steps__level-num {

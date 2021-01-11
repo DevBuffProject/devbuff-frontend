@@ -27,7 +27,7 @@ export default {
 
 <style lang="scss" scoped>
 .v-toolbar {
-  background-color: var(--color-background-contrast);
+  background-color: var(--color-background-accent);
   position: sticky;
   top: 0;
   z-index: 999;
@@ -36,7 +36,7 @@ export default {
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--color-muted-accent);
+  border-bottom: 1px solid var(--color-muted);
 
   @supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) {
     backdrop-filter: blur(10px);

@@ -13,6 +13,8 @@ export const Default = () => ({
     type: {
       default: select('Type', {
         primary: 'primary',
+        warning: 'warning',
+        danger: 'danger',
         dark: 'dark',
         muted: 'muted',
         flat: 'flat'

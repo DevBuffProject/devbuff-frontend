@@ -45,8 +45,12 @@
           </div>
 
           <div class="mt-3 mb-3">
-            <client-only>
-              <lazy-v-editor :key="key" v-model="idea.text" />
+            <client-only placeholder="Loading...">
+<!--              <lazy-v-editor v-model="idea.text" />-->
+              <component
+                :is="editor"
+                v-model="idea.text"
+              />
             </client-only>
           </div>
 
@@ -67,6 +71,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
+// import VEditor from '@/components/Editor/Editor'
+
+
 
 export default {
   name: 'editor',
@@ -80,6 +87,7 @@ export default {
 
   data() {
     return {
+      editor: () => process.client ? import('@/components/Editor/Editor') : {},
       key: 1,
       loading: false,
       title: `Devbuff :: ${this.$t('page.editor.title.publish')}`,

@@ -49,12 +49,12 @@ export default {
   }
 
   &__name {
-    font-weight: 600
+    font-weight: 400
   }
 
   &__username {
     font-size: .8rem;
-    color: var(--color-muted-darken);
+    color: var(--color-text-muted);
     font-weight: 400;
   }
 }
