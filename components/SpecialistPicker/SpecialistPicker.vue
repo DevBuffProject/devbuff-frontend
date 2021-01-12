@@ -37,11 +37,12 @@
               <h4 class="m-0">
                 {{ t(`specializations.${position.name}.title`, position.name) }}
               </h4>
-              <v-icon
-                icon="trash-alt"
-                @click="userSpecialists.splice(index,1)"
-                class="v-specialist__card-remove-icon"
-              />
+              <div @click="userSpecialists.splice(index,1)">
+                <v-icon
+                  icon="trash-alt"
+                  class="v-specialist__card-remove-icon"
+                />
+              </div>
             </div>
           </template>
 
