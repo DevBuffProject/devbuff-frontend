@@ -1,9 +1,42 @@
 import languages from './common/languages'
-import specializations from './common/specializations'
 
 export default {
   ...languages,
-  ...specializations,
+  specializations: {
+    "back-end": {
+      title: "Backend developer",
+      description: "Разработчики в этой сфере занимаются созданием функционала сервиса"
+    },
+    "ML": {
+      title: "Специалист по машинному обучению",
+      description: "Это специалист, эксперт в области искусственного интеллекта."
+    },
+    "android": {
+      title: "Android developer",
+      description: "Разработчики, которые пишут код под платформу Android"
+    },
+    "desktop": {
+      title: "Разработчик Desktop-приложений",
+      description: "Занимается разработкой приложений для компьютеров"
+    },
+    "apple": {
+      title: "Apple developer",
+      description: "Разработчики данной специализации создают приложения для таких OS, как IOS/MacOS/iPadOS"
+    },
+    "front-end": {
+      title: "Frontend developer",
+      description: "Frontend разработчики создают интерфейсы приложений"
+    },
+    "game": {
+      title: "Game developer",
+      description: "Разработчики из данной сферы занимаются созданием игр"
+    },
+    "microcontrollers": {
+      title: "Разработчики микроконтроллеров",
+      description: "Написание кода для микроконтроллеров"
+    }
+  },
+
   common: {
     cancel: 'отменить',
     save: 'сохранить',

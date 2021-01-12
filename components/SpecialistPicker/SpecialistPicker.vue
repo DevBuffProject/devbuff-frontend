@@ -12,11 +12,17 @@
           @click="addSpecialist(index)"
           class="v-specialist__spec"
         >
-          {{ t(`specializations.${index}.title`, index) }}
+          <v-tooltip>
+            {{ t(`specializations.${index}.title`, index) }}
+            <template v-slot:tip style="max-width: 200px">
+              {{ t(`specializations.${index}.description`, index) }}
+            </template>
+          </v-tooltip>
           <v-icon
             icon="plus"
             v-if="maxCountSpecialists > userSpecialists.length"
             class="v-specialist__icon"
+            style="color: black"
           />
         </li>
       </ul>
@@ -62,33 +68,39 @@
            :key="language.name"
          >
             <span v-if="language.selected">
+              <span v-for="technology of language.technologies" :key="technology.name">
               <span
-                v-for="technology of language.technologies"
-                :key="technology.name"
+                v-if="!alreadyHas(position, language, technology)"
                 @click="submitTechnology(position,technology)"
                 class="v-specialist__chip"
               >
                 <v-chip
-                  v-if="!alreadyHas(position, language, technology)"
                   :text="technology.name"
                   :type="technology.selected?'auto':'mutted'"
                 />
+              </span>
               </span>
             </span>
           </span>
           </v-label>
           <template #footer>
-            <v-label name="Количество">
-              <div>
-                <v-icon
-                  icon="minus"
-                  @click="position.count <= 1 ? position.count = 1 : position.count--"
-                />
-                {{ position.count }}
-                <v-icon
-                  icon="plus"
-                  @click="position.count >= maxCountSpecialist ? position.count = maxCountSpecialist: position.count++"
-                />
+            <v-label name="Количество" style="width: 100%">
+              <div style="display:flex; flex-direction:row; justify-content: space-between;">
+                <p style="margin: 0"
+                   @click="position.count <= 1 ? position.count = 1 : position.count--">
+                  <v-icon
+                    icon="minus"
+                    style="font-size: 10px;"
+                  />
+                </p>
+                <p style="margin: 0"> {{ position.count }}</p>
+                <p style="margin: 0"
+                   @click="position.count >= maxCountSpecialist ? position.count = maxCountSpecialist: position.count++">
+                  <v-icon
+                    icon="plus"
+                    style="font-size: 10px;"
+                  />
+                </p>
               </div>
             </v-label>
           </template>
@@ -153,7 +165,6 @@ export default {
     userSpecialists: {
       deep: true,
       handler() {
-        console.log(this.userSpecialists)
         const specialists = this.buildUserSpecialists()
         this.$emit('change', specialists)
       }
@@ -306,6 +317,7 @@ export default {
     this.userData.forEach((userSpecialist => {
       let data = this.addSpecialist(userSpecialist.name);
       if (data !== undefined) {
+        let selectedTechnologies = new Set();
         if (Array.isArray(userSpecialist.languages)) {
           for (let language of data.languages) {
 
@@ -317,9 +329,18 @@ export default {
                   for (let userTechnologies of userLanguage.frameworks) {
                     if (technology.name === userTechnologies.name) {
                       technology.selected = true;
+                      selectedTechnologies.add(technology.name);
                     }
                   }
                 }
+              }
+            }
+          }
+
+          for (let language of data.languages) {
+            for (let technology of language.technologies) {
+              if (selectedTechnologies.has(technology.name)) {
+                technology.selected = true;
               }
             }
           }
