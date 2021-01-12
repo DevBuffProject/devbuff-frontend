@@ -3,10 +3,16 @@ import './styles.scss'
 export const ripple = {
   bind: (el, binding) => {
     const computedStyles = window.getComputedStyle(el)
-    const bgColor = binding?.value || 'rgba(255, 255, 255, .5)'
+    const bgColor = binding?.value
+    const dark = binding.modifiers?.dark
     const duration = 500
 
     const rippleStart = (e) => {
+      let rippleFinished = false
+      let rippleFinishTimeout = 0
+
+      clearTimeout(rippleFinishTimeout)
+
       const ripple = document.createElement('div')
       const rippleContainer = document.createElement('div')
       const rect = el.getBoundingClientRect()
@@ -14,12 +20,6 @@ export const ripple = {
       const top = rect.top
       const width = el.offsetWidth
       const height = el.offsetHeight
-
-      let rippleFinished = false
-      let rippleFinishTimeout = 0
-
-      clearTimeout(rippleFinishTimeout)
-
       const dx = e.clientX - left
       const dy = e.clientY - top
       const maxX = Math.max(dx, width - dx)
@@ -38,8 +38,10 @@ export const ripple = {
       rippleContainer.style.width = `${width}px`
       rippleContainer.style.borderRadius = computedStyles.borderRadius
 
-      ripple.className = 'v-ripple__ripple'
-      ripple.style.background = bgColor
+      if (bgColor) ripple.style.background = bgColor
+      if (dark) ripple.classList.add('v-ripple__ripple--theme-dark')
+
+      ripple.classList.add('v-ripple__ripple')
       ripple.style.transition = `
         width ${duration}ms var(--base-transition),
         height ${duration}ms var(--base-transition),
@@ -49,19 +51,20 @@ export const ripple = {
       rippleContainer.appendChild(ripple)
       el.appendChild(rippleContainer)
 
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         const position = computedStyles.position
 
         if (position !== 'relative') el.style.position = 'relative'
 
-        ripple.style.opacity = 1
+        ripple.style.opacity = 0
+        requestAnimationFrame(() => ripple.style.opacity = null)
         ripple.style.width = `${radius * 2}px`
         ripple.style.height = `${radius * 2}px`
         ripple.style.left = `${dx}px`
         ripple.style.top = `${dy}px`
 
         rippleFinishTimeout = setTimeout(() => rippleFinished = true, duration - 250)
-      }, 0)
+      })
     }
 
     el.addEventListener('mousedown', rippleStart)

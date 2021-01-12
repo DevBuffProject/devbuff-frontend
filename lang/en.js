@@ -352,7 +352,7 @@ export default {
     },
     ideas: {
       explore: {
-        ideas: 'Ideas',
+        ideas: 'Idea',
         new: 'Create',
         filter: {
           all: 'All',

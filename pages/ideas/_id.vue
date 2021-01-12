@@ -1,10 +1,10 @@
 <template>
-  <div class="container pt-4">
+  <div class="container mx-auto pt-4">
     <div class="idea">
       <v-card class="mt-3">
         <h1 class="idea__title mb-3 p-0"> {{ idea.name }} </h1>
-        <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
-          <div class="d-flex flex-wrap">
+        <div class="flex flex-wrap items-center justify-between mb-3">
+          <div class="flex flex-wrap">
             <v-user
               :user-id="idea.ownerIdea.id"
               :firstname="idea.ownerIdea.firstName"
@@ -80,7 +80,7 @@
             </template>
 
             <template v-if="isAuthorized" #footer>
-              <div class="w-100 d-flex justify-content-between align-items-center">
+              <div class="w-full flex justify-between items-center">
                 <div>
                   {{ $t('page.ideas.view.team.countPositionsPerSpecialists') }}
                   <v-chip type="muted" :text="'' + position.count"/>

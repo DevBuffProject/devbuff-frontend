@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <v-toolbar hide-backlink class="profile__toolbar">
-      <div class="d-flex align-items-end pt-4 pl-4">
+      <div class="flex align-end pt-4 pl-4">
         <div class="profile__name">
           {{ profile.firstName }} {{ profile.lastName }}
         </div>
@@ -11,9 +11,9 @@
       </div>
       <div />
     </v-toolbar>
-    <div class="container d-flex">
+    <div class="container mx-auto flex">
       <div class="profile__sidebar">
-        <div class="profile__sidebar-content d-flex flex-column align-content-center">
+        <div class="profile__sidebar-content flex flex-column align-content-center">
           <v-avatar
             class="profile__avatar mb-3"
             :avatar="profile.id"
@@ -21,17 +21,17 @@
           />
           <v-button
             v-if="self"
-            type="dark"
-            :icon="['fas', 'edit']"
             rounded
+            type="contrast"
+            :icon="['fas', 'edit']"
             @click="edit"
           />
         </div>
       </div>
-      <div class="container pt-3 pl-4">
+      <div class="container mx-auto pt-3 pl-4">
         <div class="profile__container">
 
-          <div class="d-flex mb-3">
+          <div class="flex mb-3">
             <v-label v-if="profile.birthday" name="дата рождения" class="mr-5">
               {{ profile.birthday | toLocaleDateTime($i18n.locale) }}
             </v-label>
@@ -47,7 +47,7 @@
 
           <div v-if="profile.socialNetworks" class="profile__socials">
             <div v-if="profile.socialNetworks.vk" class="profile__social-contact mb-2">
-              <div class="mb-2 d-flex align-items-center profile__social-contact">
+              <div class="mb-2 flex items-center profile__social-contact">
                 <v-icon class="mr-2 profile__social-icon" :icon="['fab', 'vk']" />
                 <span class="text-muted mr-1">{{ profile.socialNetworks.vk }}</span>
                 <span class="mx-1">—</span>
@@ -61,7 +61,7 @@
             </div>
 
             <div v-if="profile.socialNetworks.telegram" class="profile__social-contact mb-2">
-              <div class="mb-2 d-flex align-items-center profile__social-contact">
+              <div class="mb-2 flex items-center profile__social-contact">
                 <v-icon class="mr-2 profile__social-icon" :icon="['fab', 'telegram']" />
                 <span class="text-muted">{{ profile.socialNetworks.telegram }}</span>
                 <span class="mx-1">—</span>
@@ -75,7 +75,7 @@
             </div>
 
             <div v-if="profile.socialNetworks.skype" class="profile__social-contact mb-2">
-              <div class="d-flex align-items-center profile__social-contact">
+              <div class="flex items-center profile__social-contact">
                 <v-icon class="mr-2 profile__social-icon" :icon="['fab', 'skype']" />
                 <span class="text-muted">{{ profile.socialNetworks.skype }}</span>
                 <span class="mx-1">—</span>
@@ -84,7 +84,7 @@
             </div>
 
             <div v-if="profile.socialNetworks.discord" class="profile__social-contact mb-4">
-              <div class="d-flex align-items-center profile__social-contact">
+              <div class="flex items-center profile__social-contact">
                 <v-icon class="mr-2 profile__social-icon" :icon="['fab', 'discord']" />
                 <span class="text-muted">{{ profile.socialNetworks.discord }}</span>
                 <span class="mx-1">—</span>
@@ -102,7 +102,7 @@
             />
             <div
               v-else
-              class="d-flex justify-content-center align-items-center"
+              class="flex justify-center items-center"
             >
               <span class="mr-3">{{ $t('page.profile.skillsLoading') }}</span>
               <v-loading />

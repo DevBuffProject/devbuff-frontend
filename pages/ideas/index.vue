@@ -1,103 +1,51 @@
 <template>
-  <div class="explore">
-    <v-toolbar hide-backlink class="mb-4">
+  <div class="ideas">
+    <v-toolbar hide-backlink class="mb-10">
       <h3 class="m-0"> {{ $t('page.ideas.explore.ideas') }} </h3>
     </v-toolbar>
-    <div class="container">
-      <div class="explore__filter mb-3">
-        <div class="mb-4">
-          <div class="d-flex">
-            <v-label :name="$t('page.ideas.explore.filter.specializations') + ' — '+ specs.length" class="mr-4">
-              <span
-                :class="[
-                  'mr-2',
-                  'explore__filter-label',
-                  (!filter.specialists || filter.specialists.length === 0) && 'explore__filter-label--active',
-                ]"
-                @click="excludeFilter(['specialists','languages'])"
-              >
-                <v-chip
-                  :text="$t('page.ideas.explore.filter.all')"
-                  :type="!filter.specialists || filter.specialists.length === 0 ? 'auto' : null"
-                />
-              </span>
+    <div class="container mx-auto">
+      <div class="ideas__grid">
+        <div class="ideas__grid-column-filter">
+          <v-card class="ideas__filter">
+            filter
+          </v-card>
+        </div>
 
-              <span
-                v-for="spec in specs"
-                :key="spec"
-                :class="[
-                  'mr-2',
-                  'explore__filter-label',
-                  (filter.specialists && filter.specialists.indexOf(spec) > -1) && 'explore__filter-label--active',
+        <div class="ideas__grid-column-ideas">
+          <div class="ideas__sort">
+            <v-label name="сортировка">
+              <v-switcher
+                :values="[
+                  { title: $t('page.ideas.explore.filter.datePublish'), value: 'date' },
+                  { title: $t('page.ideas.explore.filter.lastUpdate'), value: 'lastUpdate' }
                 ]"
-                @click="(filter.specialists && filter.specialists.indexOf(spec) > -1) ? excludeFilter({ specialists: spec }): applyFilter({ specialists: spec })"
-              >
-                <v-chip
-                  :text="t('specializations.'+spec+'.title',spec)"
-                  :type="filter.specialists && filter.specialists.indexOf(spec) > -1
-                    ? 'auto'
-                    : null
-                  "
-                />
-              </span>
+                :value="filter.sortBy"
+                @change="applyFilter({ sortBy: $event })"
+              />
             </v-label>
+            <transition name="fade">
+              <v-loading v-show="loading" class="ml-4 muted"/>
+            </transition>
+          </div>
 
-            <v-label v-if="filteredLanguages.length>0" :name="$t('page.ideas.explore.filter.languages')">
-              <span
-                v-for="lang in filteredLanguages"
-                :key="lang"
-                :class="[
-                  'mr-2',
-                  'explore__filter-label',
-                  (filter.languages && filter.languages.indexOf(lang) > -1) && 'explore__filter-label--active',
-                ]"
-                @click="(filter.languages && filter.languages.indexOf(lang) > -1) ? excludeFilter({ languages: lang }): applyFilter({ languages: lang })"
-              >
-                 <v-chip
-                   :text="t('languages.'+lang,lang)"
-                   :type="filter.languages && filter.languages.indexOf(lang) > -1
-                    ? 'auto'
-                    : null
-                  "
-                 />
-              </span>
-            </v-label>
+          <v-card v-if="ideas.length" class="ideas__list">
+            <v-idea
+              v-for="idea in ideas"
+              :key="idea.id"
+              :title="idea.name"
+              :publishDate="idea.publishDate || idea.datePublished"
+              :description="idea.description"
+              :specialists="idea.specialists"
+              :id="idea.id"
+              class="ideas__idea"
+            />
+          </v-card>
+          <div v-else class="p-5 ideas__no-ideas">
+            🤷 <span class="text-muted"> {{ $t('page.ideas.explore.notFound') }} </span>
           </div>
         </div>
 
-        <div class="explore__filter-sort d-flex align-items-center">
-          <v-switcher
-            :values="[
-              { title: $t('page.ideas.explore.filter.datePublish'), value: 'date' },
-              { title: $t('page.ideas.explore.filter.lastUpdate'), value: 'lastUpdate' }
-            ]"
-            :value="filter.sortBy"
-            @change="applyFilter({ sortBy: $event })"
-          />
-          <transition name="fade">
-            <v-loading v-show="loading" class="ml-4 muted"/>
-          </transition>
-        </div>
       </div>
-
-      <transition name="fade">
-        <div v-if="ideas.length" class="explore__ideas">
-          <v-idea-card
-            v-for="idea in ideas"
-            :key="idea.id"
-            :title="idea.name"
-            :publishDate="idea.publishDate || idea.datePublished"
-            :description="idea.description"
-            :specialists="idea.specialists"
-            :id="idea.id"
-            class="explore__idea"
-          />
-        </div>
-        <div v-else class="p-5 explore__no-ideas">
-          🤷 <span class="muted-text"> {{ $t('page.ideas.explore.notFound') }} </span>
-        </div>
-      </transition>
-
     </div>
   </div>
 </template>
@@ -272,38 +220,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.explore {
-  &__filter {
-    width: 100%;
-    max-width: 600px;
-  }
+@layer components {
+  .ideas {
+    &__grid {
+      @apply grid gap-4 grid-cols-8;
+    }
 
-  &__filter-label {
-    opacity: .6;
-    cursor: pointer;
-    transition: opacity .3s var(--base-transition);
-  }
+    &__grid-column-filter {
+      @apply col-span-2;
+    }
 
-  &__filter-label:hover,
-  &__filter-label--active {
-    opacity: 1
-  }
+    &__grid-column-ideas {
+      @apply col-span-6;
+    }
 
-  &__ideas {
-    display: grid;
-    grid-template-columns: repeat(4, 25%);
-    grid-gap: 1rem;
-  }
+    &__filter {
+      @apply w-auto sticky top-20 rounded-md col-span-2;
+    }
 
-  &__idea {
-    height: 100%;
-    box-sizing: border-box;
-    cursor: pointer;
-  }
+    &__sort {
+      @apply mb-4;
+    }
 
-  &__no-ideas {
-    font-size: 1.5rem;
-    font-weight: 100;
+    &__list {
+      @apply p-0 #{!important};
+    }
+
+    &__idea {
+      @apply border-b border-muted cursor-pointer border-b-0;
+    }
+
+    &__no-ideas {
+      @apply text-2xl font-light text-muted;
+    }
   }
 }
 </style>

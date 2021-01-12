@@ -1,6 +1,6 @@
 <template>
   <div class="logo">
-    <img src="/logos/logo.svg" alt="logo" class="logo__image" />
+    <img :src="src" alt="logo" class="logo__image" />
   </div>
 </template>
 
@@ -8,7 +8,8 @@
 export default {
   props: {
     'beta-label': Boolean,
-    'alpha-label': Boolean
+    'alpha-label': Boolean,
+    src: String
   }
 }
 </script>

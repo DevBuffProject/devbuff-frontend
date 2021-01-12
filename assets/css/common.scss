@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100;300;400;600;900&display=swap');
+@import './tailwind.css';
+
+:root {
+  --header-height: 60px;
+  --font-family: 'Fira Sans';
+  --base-transition: cubic-bezier(.28, .98, .44, 1);
+}
+
+body {
+  margin: 0;
+  user-select: none;
+  font-family: var(--font-family);
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 300;
+  font-variant: no-common-ligatures slashed-zero;
+  -webkit-font-smoothing: antialiased;
+  color: var(--color-text);
+}
+
+[contenteditable] {
+  outline: 0 solid transparent;
+}
+
+.codeblock {
+  background-color: #282c34;
+  color: #abb2bf;
+  font-family: 'Fira Code', sans-serif;
+  padding: 1rem;
+  font-size: .8rem;
+  border-radius: 8px;
+}
+
+.blockquote {
+  border-left: 2px solid var(--color-primary);
+  color: var(--color-text);
+  font-size: 1rem;
+  font-style: italic;
+  margin: 0;
+  padding-left: 1rem;
+}
+
+svg {
+  pointer-events: none;
+}

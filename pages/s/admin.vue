@@ -1,14 +1,14 @@
 <template>
   <div class="dashboard">
     <v-toolbar class="mb-4">
-      <div class="container toolbar__grid">
-        <div class="d-flex">
+      <div class="container mx-auto toolbar__grid">
+        <div class="flex">
           <h3 class="m-0"> Модерация </h3>
         </div>
       </div>
     </v-toolbar>
 
-    <div class="container">
+    <div class="container mx-auto">
       <div
         v-if="ideas && ideas.length"
         class="dashboard__ideas"
@@ -21,7 +21,7 @@
           class="dashboard__idea"
           @click="viewIdea(idea.id)"
         >
-          <v-idea-card
+          <v-idea
             :linked="false"
             :title="idea.name"
             :description="idea.description"
@@ -31,7 +31,7 @@
       </div>
       <div
         v-else
-        class="d-flex flex-column align-items-center"
+        class="flex flex-column items-center"
         style="width: 500px;"
       >
         <span class="text-muted"> 🤷 {{ $t('page.dashboard.noIdeas') }} </span>

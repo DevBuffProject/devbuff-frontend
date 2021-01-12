@@ -10,7 +10,7 @@ require('@fortawesome/fontawesome-svg-core/styles.css')
 config.autoAddCss = false
 
 // You can add your icons directly in this plugin. See other examples for how you
-// can add other styles or just individual icons.
+// can add other css or just individual icons.
 library.add(fas)
 library.add(fab)
 

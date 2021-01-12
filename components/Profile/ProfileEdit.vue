@@ -1,6 +1,6 @@
 <template>
   <v-dialog-viewport class="profile-socials-dialog">
-    <div class="profile-edit__cover d-flex align-items-center">
+    <div class="profile-edit__cover flex items-center">
       <v-avatar
         class="profile-edit__avatar"
         :avatar="$store.getters['user/profile'].id"
@@ -19,26 +19,26 @@
     <v-input
       :icon="['fas', 'at']"
       :placeholder="$t('page.profile.userName')"
-      class="w-100 mb-2 mt-5"
+      class="w-full mb-2 mt-5"
       v-model="profile.userName"
     />
-    <div class="d-flex mb-2">
+    <div class="flex mb-2">
       <v-input
         :icon="['fas', 'signature']"
         :placeholder="$t('page.profile.firstName')"
-        class="w-100 mr-2"
+        class="w-full mr-2"
         v-model="profile.firstName"
       />
       <v-input
         :icon="['fas', 'signature']"
         :placeholder="$t('page.profile.lastName')"
-        class="w-100"
+        class="w-full"
         v-model="profile.lastName"
       />
     </div>
     <v-input
       :placeholder="$t('page.profile.about')"
-      class="w-100 mb-2"
+      class="w-full mb-2"
       type="textarea"
       v-model="profile.bio"
     />
@@ -46,7 +46,7 @@
     <v-input
       :icon="['fas', 'calendar']"
       :placeholder="$t('page.profile.birthdate')"
-      class="w-100 mt-3"
+      class="w-full mt-3"
       type="date"
       v-model="profile.birthday"
     />
@@ -54,24 +54,24 @@
     <v-dropdown
       :icon="['fas', 'globe']"
       :placeholder="$t('page.profile.country')"
-      class="w-100 mb-2 mt-4"
+      class="w-full mb-2 mt-4"
       :options="countries"
       v-model="profile.country"
     />
     <v-input
       :icon="['fas', 'city']"
       :placeholder="$t('page.profile.city')"
-      class="w-100 mb-2"
+      class="w-full mb-2"
       v-model="profile.city"
     />
 
     <v-input
       :icon="['fas', 'mail']"
       placeholder="mail@example.com"
-      class="w-100 mt-3"
+      class="w-full mt-3"
       v-model="profile.email"
     />
-    <div class="d-flex align-items-center mt-1 profile-edit__email-status">
+    <div class="flex items-center mt-1 profile-edit__email-status">
       {{ emailStatusText }}
       <a
         v-show="!profile.statusEmailConfirm && !verifyRequestSent"
@@ -91,7 +91,7 @@
       :icon="['fab', 'vk']"
       :placeholder="$t('page.profile.vk')"
       @input="setContact('vk', $event)"
-      class="w-100 mb-2"
+      class="w-full mb-2"
     />
     <v-og-preview :key="1" v-if="profile.socialNetworks.vk" class="mb-4" :url="urls.vk" />
 
@@ -100,7 +100,7 @@
       :icon="['fab', 'telegram']"
       placeholder="@telegram"
       @input="setContact('telegram', $event)"
-      class="w-100 mb-2"
+      class="w-full mb-2"
     />
     <div class="">
       <v-og-preview :key="2" v-if="profile.socialNetworks.telegram" class="mb-4" :url="urls.telegram" />
@@ -110,11 +110,11 @@
       v-model="profile.socialNetworks.skype"
       :icon="['fab', 'skype']"
       placeholder="Skype"
-      class="w-100 mb-2"
+      class="w-full mb-2"
     />
     <v-input
       v-model="profile.socialNetworks.discord"
-      class="w-100 mb-2"
+      class="w-full mb-2"
       :icon="['fab', 'discord']"
       placeholder="Discord"
     />

@@ -1,19 +1,6 @@
 <template>
-  <span
-    :class="[
-      'image',
-      tile && 'image--tile'
-    ]"
-  >
-    <img
-      v-if="ready"
-      :src="src"
-      class="image__img"
-    />
-    <v-loading
-      v-else
-      class="image__loading"
-    />
+  <span class="v-image" :style="ready && { 'background-image': `url(${src})` }">
+    <v-loading v-if="!ready" class="image__loading" />
   </span>
 </template>
 
@@ -27,20 +14,12 @@ export default {
       default: null,
       required: true
     },
-    cover: {
-      type: String,
-      default: null,
-    },
-    tile: {
-      type: Boolean,
-      default: false
-    }
   },
-  data() {
-    return {
-      ready: false
-    }
-  },
+
+  data: () => ({
+    ready: false
+  }),
+
   mounted() {
     const buffer = new Image()
 
@@ -53,29 +32,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.image {
-  background-size: cover;
-  background-position: center;
-  background-color: var(--color-muted);
-  width: 100px;
-  height: 100px;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 4px;
-  overflow: hidden;
+@layer components {
+  .v-image {
+    @apply bg-cover bg-center bg-muted inline-flex justify-center items-center rounded;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
 
-  &--tile {
-    border-radius: 0;
-  }
-
-  &__loading {
-    opacity: .5;
-  }
-
-  &__img {
-    width: 100%;
-    height: 100%;
+    &__loading {
+      @apply opacity-50;
+    }
   }
 }
 </style>

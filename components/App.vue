@@ -1,9 +1,7 @@
 <template>
-  <div class="v-app theme--light">
+  <div class="bg-background">
     <v-dialog />
-      <div class="v-app__viewport">
-        <slot />
-      </div>
+    <div> <slot /> </div>
   </div>
 </template>
 
@@ -12,9 +10,3 @@ export default {
   name: 'v-app',
 }
 </script>
-
-<style lang="scss" scoped>
-.v-app {
-  background-color: var(--color-background);
-}
-</style>

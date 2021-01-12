@@ -1,17 +1,17 @@
 <template>
   <v-dialog-viewport style="max-width: 600px;" class="v-admin-idea">
     <div v-if="idea">
-      <v-label name="название" class="w-100 mb-3">
-        <div class="d-flex align-items-center">
+      <v-label name="название" class="w-full mb-3">
+        <div class="flex items-center">
           <h3 class="m-0">{{ idea.name }}</h3>
         </div>
       </v-label>
 
-      <v-label name="краткое описание" class="w-100 mb-3">
+      <v-label name="краткое описание" class="w-full mb-3">
         {{ idea.description }}
       </v-label>
 
-      <v-label name="текст идеи" class="w-100">
+      <v-label name="текст идеи" class="w-full">
         <v-article>
           <div v-html="idea.text" />
         </v-article>

@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind screens;
+@tailwind utilities;
+
+@layer utilities {
+  .h-fit {
+    height: fit-content;
+  }
+
+  .w-fit {
+    width: fit-content;
+  }
+
+  @variants responsive {
+    .scroll-snap-none {
+      scroll-snap-type: none;
+    }
+    .scroll-snap-x {
+      scroll-snap-type: x;
+    }
+    .scroll-snap-y {
+      scroll-snap-type: y;
+    }
+  }
+}
+
+@layer utilities {
+}
+
+@layer base {
+  h1 {
+    @apply text-5xl font-bold;
+  }
+
+  h2 {
+    @apply text-4xl font-semibold;
+  }
+
+  h3 {
+    @apply text-3xl font-medium;
+  }
+}

@@ -6,8 +6,8 @@
       :key="button.value"
       ref="button"
       @click="setValue(index)"
-      class="v-switcher__button"
-      :class="activeIndex !== index && 'v-switcher__button--active'"
+      class="v-switcher__switch"
+      :class="activeIndex !== index && 'v-switcher__switch--state_active'"
     >
       {{ button.title }}
     </div>
@@ -85,45 +85,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.v-switcher {
-  position: relative;
-  display: inline-flex;
-  border-radius: 4px;
-  overflow: hidden;
-  background-color: var(--color-muted);
+ @layer components {
+  .v-switcher {
+    @apply relative inline-flex rounded bg-gray-200 text-black dark:bg-gray-700;
 
-  &__button {
-    position: relative;
-    padding: .2rem 1rem;
-    font-size: .8rem;
-    font-weight: 400;
-    cursor: pointer;
-    z-index: 10;
-    transition: transform 1s var(--base-transition);
-  }
+    &__switch {
+      @apply py-1 px-5 cursor-pointer relative z-10 text-sm font-normal text-black dark:text-white;
+    }
+    &__switch--state_active {
+      @apply text-gray-500 dark:text-gray-400;
+    }
 
-  &__button--active {
-    opacity: .5;
-    color: var(--color-text) !important;
-  }
-
-  &__button:active {
-    transform: scale(.95);
-  }
-
-  &__highlight {
-    position: absolute;
-    background-color: var(--color-background-accent);
-    height: 100%;
-    width: 0px;
-    top: 0;
-    opacity: 0;
-    border-radius: 5px;
-    border: 1px solid var(--color-muted);
-    box-sizing: border-box;
-    transition: .5s var(--base-transition);
-    transition-property: transform, width, opacity;
-    z-index: 9;
+    &__highlight {
+      @apply absolute z-0 top-0 left-0 h-full bg-white border-gray-200 text-black border rounded transition-all;
+      @apply dark:bg-gray-400 dark:border-gray-700 dark:text-white
+    }
   }
 }
 </style>

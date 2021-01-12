@@ -1,10 +1,11 @@
 <template>
-  <div class="v-label">
-    <div class="v-label__name"> {{ name }} </div>
-    <div>
-      <slot />
+  <label class="v-label">
+    <div class="v-label__name">
+      <slot v-if="$slots.label" />
+      <span v-else> {{ name }} </span>
     </div>
-  </div>
+    <slot />
+  </label>
 </template>
 
 <script>
@@ -21,12 +22,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.v-label {
-  &__name {
-    color: var(--color-text-muted);
-    font-size: .8rem;
-    font-weight: 300;
-    margin-bottom: .05rem;
+@layer components {
+  .v-label {
+    &__name {
+      @apply text-gray-400 text-sm mb-1;
+      font-weight: 300;
+    }
   }
 }
 </style>

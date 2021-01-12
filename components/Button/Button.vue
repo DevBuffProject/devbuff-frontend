@@ -2,16 +2,9 @@
   <button
     v-on="$listeners"
     class="v-button"
-    :class="[
-      (flat && type) && 'v-button--type-flat-' + type,
-      flat ? 'v-button--type-flat' : 'v-button--type-' + type,
-      rounded && 'v-button--rounded',
-      disabled && 'v-button--disabled',
-      loading && 'v-button--loading',
-      small && 'v-button--size-small'
-    ]"
-    :disabled="disabled"
-    v-ripple="'var(--ripple-bg-color)'"
+    :class="classes"
+    v-bind="$attrs"
+    v-ripple
   >
     <div
       v-if="$slots.default"
@@ -33,128 +26,71 @@
 </template>
 
 <script>
+const TYPES = [
+  'muted', 'contrast',
+  'primary', 'primary-flat',
+  'success', 'success-flat',
+  'warning', 'warning-flat',
+  'danger', 'danger-flat'
+]
+
 export default {
   name: 'v-button',
 
   props: {
-    flat: {
-      type: Boolean,
-      default: false
-    },
-    small: {
-      type: Boolean,
-      default: false
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    rounded: {
-      type: Boolean,
-      default: false
-    },
     type: {
       type: String,
       default: 'primary',
+      validate: v => TYPES.includes(v)
     },
-    icon: {
-      type: [ Array, String ],
-      default: null
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    },
+    rounded: Boolean,
+    icon: [ Array, String ],
+    loading: Boolean
   },
+
+  data() {
+    return {
+      classes: {
+        ...TYPES.reduce((acc, type) => {
+          acc[`v-button--type_${type}`] = type === this.type
+          return acc
+        }, {}),
+        'v-button--rounded': this.rounded
+      }
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '~/assets/styles/variables.scss';
+@layer components {
+  .v-button {
+    @apply py-1 px-5 flex items-center overflow-hidden rounded font-medium outline-none transition-colors;
 
-.v-button {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  position: relative;
-  font-family: var(--font-family);
-  font-size: 1rem;
-  padding: .2rem 1rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 0;
-  border-radius: 4px;
-  text-decoration: none;
-  cursor: pointer;
-  line-height: 1.5;
-  overflow: hidden;
-  outline: none;
-  transition: background-color .5s var(--base-transition);
-
-  &:hover {
-    background-color: var(--bg-color-hover);
-  }
-
-  @each $color-name, $color in $brand-colors {
-    &--type-#{$color-name} {
-      --bg-color: var(--color-#{$color-name});
-      --bg-color-hover: var(--color-#{$color-name}-lighten-10);
-      --ripple-bg-color: rgba(255, 255, 255, .4);
-      --text-color: #FFF;
+    &--type_contrast {
+      @apply text-white bg-black hover:bg-gray-900 dark:text-black dark:bg-white hover:bg-gray-50;
     }
-  }
 
-  &--type-muted {
-    --bg-color: var(--color-muted);
-    --bg-color-hover: var(--color-muted-darken);
-    --ripple-bg-color: rgba(0, 0, 0, .1);
-    --text-color: #000;
+    &--type_muted {
+      @apply text-black bg-gray-200 hover:bg-gray-300 dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600;
+    }
 
-    font-weight: 400;
-  }
+    @each $type in primary success warning danger {
+      &--type_#{$type} {
+        @apply text-white bg-#{$type};
+      }
 
-  &--type-dark {
-    background-color: #000;
-    font-weight: 500;
-    color: #fff;
-  }
+      &--type_#{$type}-flat {
+        @apply text-#{$type} bg-#{$type} bg-opacity-10 hover:bg-opacity-20;
+      }
+    }
 
-  &--size-small {
-    font-size: .8rem;
-    padding: .2rem .8rem;
-  }
+    &--rounded {
+      @apply rounded-full #{!important};
+    }
 
-  &--disabled {
-    opacity: .5;
-  }
-
-  &--rounded {
-    border-radius: 50px;
-  }
-
-  &__content {
-    position: relative;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  &__content--hidden {
-    opacity: 0;
-  }
-
-  &__loading {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%) !important;
-  }
-
-  &__icon {
-    position: relative;
-    margin-left: 8px;
-    width: 1em !important;
-    height: 1em !important;
-    &--nomargin {
-      margin: 0;
+    &__icon {
+      @apply ml-4;
     }
   }
 }

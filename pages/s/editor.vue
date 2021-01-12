@@ -1,7 +1,7 @@
 <template>
   <div class="editor">
     <v-toolbar class="mb-5">
-      <div class="d-flex justify-content-between w-100">
+      <div class="flex justify-between w-full">
         <h3 class="m-0"> {{ isEditMode ? $t('page.editor.title.ideaEdit') : $t('page.editor.title.ideaNew') }} </h3>
         <v-button
           :icon="['fas', 'plus']"
@@ -15,36 +15,29 @@
 
     <div class="editor__form">
       <ValidationObserver ref="form">
-        <div class="container mb-4">
-          <div class="editor__field editor__form-input">
-            <v-label :name="$t('page.editor.idea.heading')">
-              <v-input
-                class="w-100 mt-1"
-                :placeholder="$t('page.editor.idea.heading')"
-                :name="$t('page.editor.idea.heading')"
-                type="text"
-                rules="required"
-                autofocus
-                v-model="idea.name"
-              />
-            </v-label>
-          </div>
+        <div class="container mx-auto mb-4">
+          <v-input
+            class="w-1/2 mb-4"
+            :placeholder="$t('page.editor.idea.heading')"
+            :label="$t('page.editor.idea.heading')"
+            :name="$t('page.editor.idea.heading')"
+            type="text"
+            rules="required"
+            autofocus
+            v-model="idea.name"
+          />
 
-          <div class="editor__field editor__form-input">
-            <v-label class="w-100" :name="$t('page.editor.idea.desc')">
-              <v-input
-                class="w-100 mt-1"
-                :placeholder="$t('page.editor.idea.desc')"
-                :label="$t('page.editor.idea.desc')"
-                :name="$t('page.editor.idea.desc')"
-                textarea
-                rules="required"
-                v-model="idea.description"
-              />
-            </v-label>
-          </div>
+          <v-input
+            class="w-1/2 mb-4"
+            :placeholder="$t('page.editor.idea.desc')"
+            :label="$t('page.editor.idea.desc')"
+            :name="$t('page.editor.idea.desc')"
+            textarea
+            rules="required"
+            v-model="idea.description"
+          />
 
-          <div class="mt-3 mb-3">
+          <div class="my-10">
             <client-only placeholder="Loading...">
 <!--              <lazy-v-editor v-model="idea.text" />-->
               <component
@@ -71,9 +64,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import VEditor from '@/components/Editor/Editor'
-
-
 
 export default {
   name: 'editor',
@@ -172,26 +162,7 @@ export default {
 </script>
 
 <style lang="scss">
-.editor {
-  &__field {
-    width: 100%;
-    max-width: 450px;
-  }
+@layer components {
 
-  &__form-input {
-    font-family: inherit;
-    font-size: 1rem;
-    display: block;
-    border: 0;
-    resize: none;
-    border-left: 2px solid var(--color-muted);
-    padding: .3rem 1rem;
-    margin-bottom: 1rem;
-    outline: none;
-    &::placeholder {
-      font: inherit;
-      font-weight: 200;
-    }
-  }
 }
 </style>

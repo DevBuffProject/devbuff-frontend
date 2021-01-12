@@ -4,7 +4,7 @@
       <slot name="header" />
     </div>
     <slot />
-    <div class="d-flex justify-content-end mt-4">
+    <div class="flex justify-end mt-4">
       <slot name="controls" />
     </div>
   </div>

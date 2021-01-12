@@ -6,7 +6,7 @@
     >
       <swiper-slide style="height: auto">
         <ul class="list-group">
-          <li class="list-group-item d-flex text-muted">
+          <li class="list-group-item flex text-muted">
             <div class="mr-auto">{{ $t('components.skillEditor.header.languagesSlide.language') }}</div>
             <div class="ml-auto text-lef text-right">
               {{ $t('components.skillEditor.header.languagesSlide.specialization') }}
@@ -312,7 +312,7 @@ export default {
   margin-right: auto !important;
 }
 
-.d-flex {
+.flex {
   display: -ms-flexbox !important;
   display: flex !important;
 }
@@ -374,7 +374,7 @@ export default {
  */
 
 /* Checkmark style starts */
-/*Checkboxes styles*/
+/*Checkboxes css*/
 input[type="checkbox"] {
   display: none;
 }

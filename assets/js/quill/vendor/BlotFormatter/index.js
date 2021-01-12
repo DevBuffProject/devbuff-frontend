@@ -8,11 +8,11 @@ const buildSvg = ({ icon }) => {
         aria-hidden="true"
         focusable="false"
         data-prefix="fas"
-        data-icon="align-center"
+        data-icon="items-center"
         role="img"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 ${icon[0]} ${icon[1]}"
-        class="svg-inline--fa fa-align-center fa-w-14"
+        class="svg-inline--fa fa-items-center fa-w-14"
       >
       <path d="${icon[4]}"></path>
     </svg>

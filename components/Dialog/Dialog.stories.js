@@ -24,7 +24,7 @@ export const Default = () => {
           {{ content }}
         </div>
 
-        <div class="d-flex justify-content-end mt-4">
+        <div class="flex justify-end mt-4">
           <v-button class="mr-2" type="muted" @click="reject('rejected from window')"> Отмена </v-button>
           <v-button type="primary" @click="resolve('resolved from window')"> OK </v-button>
         </div>

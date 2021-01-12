@@ -1,4 +1,4 @@
-import { withKnobs, text, select, array, boolean } from '@storybook/addon-knobs'
+import { withKnobs, text, select, array } from '@storybook/addon-knobs'
 
 export default {
   title: 'Button',
@@ -7,36 +7,33 @@ export default {
 
 export const Default = () => ({
   props: {
-    label: {
+    text: {
       default: text('Label', 'Button')
     },
     type: {
       default: select('Type', {
-        primary: 'primary',
-        warning: 'warning',
-        danger: 'danger',
-        dark: 'dark',
-        muted: 'muted',
-        flat: 'flat'
+        'contrast': 'contrast',
+        'primary flat': 'primary-flat',
+        'warning flat': 'warning-flat',
+        'danger flat': 'danger-flat',
+        'primary': 'primary',
+        'warning': 'warning',
+        'danger': 'danger',
+        'dark': 'dark',
+        'muted': 'muted',
       })
     },
     icon: {
       default: array('Icon', ['fas', 'plus'], ':')
     },
-    loading: {
-      default: boolean('Loading', false)
-    },
-    rounded: {
-      default: boolean('Rounded', false)
-    },
-    disabled: {
-      default: boolean('Disabled', false)
-    }
   },
   template: `
     <v-app>
-      <v-button v-bind="$props">
-        {{ label }}
+      <v-button
+        :type="type"
+        :icon="icon"
+      >
+        {{ text }}
       </v-button>
     </v-app>
   `

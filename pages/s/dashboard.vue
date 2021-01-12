@@ -1,21 +1,21 @@
 <template>
   <div class="dashboard">
     <v-toolbar class="mb-4">
-      <div class="container toolbar__grid">
-        <div class="d-flex">
+      <div class="container mx-auto toolbar__grid">
+        <div class="flex">
           <h3 class="m-0"> {{ $t('page.dashboard.title') }} </h3>
         </div>
       </div>
     </v-toolbar>
 
-    <div class="container">
+    <div class="container mx-auto">
       <div style="width: 500px;">
         <v-input
           v-model="search"
           type="search"
           :placeholder="$t('page.dashboard.search')"
           :icon="['fas', 'search']"
-          class="dashboard__search w-100"
+          class="dashboard__search w-full"
         />
       </div>
 
@@ -36,7 +36,7 @@
                 inspectedIdeaId === idea.id && 'dashboard__idea--inspected'
               ]"
             >
-              <v-idea-card
+              <v-idea
                 :title="idea.name"
                 :publishDate="idea.publishDate || idea.datePublished"
                 :description="idea.description"
@@ -48,7 +48,7 @@
           </div>
           <div
             v-else
-            class="d-flex flex-column align-items-center"
+            class="flex flex-column items-center"
             style="width: 500px;"
           >
             <span class="text-muted"> 🤷 {{ $t('page.dashboard.noIdeas') }} </span>
@@ -65,7 +65,7 @@
 
 
         <div class="dashboard__detail">
-          <div class="d-flex align-items-baseline mb-3">
+          <div class="flex align-baseline mb-3">
             <h3 class="my-0 mr-3">{{ $t('page.dashboard.respond.title') }}</h3>
             <v-link
               :to="localePath({ name: 'ideas-id', params: { id: inspectedIdeaId }})"
@@ -81,7 +81,7 @@
                 class="mb-4"
               >
                 <template #header>
-                  <div class="d-flex w-100">
+                  <div class="flex w-full">
                     <v-user
                       :user-id="spec.userEntity.id"
                       :firstname="spec.userEntity.firstName"
@@ -100,7 +100,7 @@
                     </v-label>
                     <div>
                       <div v-if="spec.userEntity.vk" class="mb-2">
-                        <div class="mb-2 d-flex align-items-center">
+                        <div class="mb-2 flex items-center">
                           <v-icon class="mr-2" :icon="['fab', 'vk']"/>
                           <span class="text-muted mr-1">{{ spec.userEntity.vk }}</span>
                           <span class="mx-1">—</span>
@@ -109,7 +109,7 @@
                       </div>
 
                       <div v-if="spec.userEntity.telegram" class="mb-2">
-                        <div class="mb-2 d-flex align-items-center">
+                        <div class="mb-2 flex items-center">
                           <v-icon class="mr-2" :icon="['fab', 'telegram']"/>
                           <span class="text-muted">{{ spec.userEntity.telegram }}</span>
                           <span class="mx-1">—</span>
@@ -118,7 +118,7 @@
                       </div>
 
                       <div v-if="spec.userEntity.skype" class="mb-2">
-                        <div class="d-flex align-items-center">
+                        <div class="flex items-center">
                           <v-icon class="mr-2" :icon="['fab', 'skype']"/>
                           <span class="text-muted">{{ spec.userEntity.skype }}</span>
                           <span class="mx-1">—</span>
@@ -127,7 +127,7 @@
                       </div>
 
                       <div v-if="spec.userEntity.discord">
-                        <div class="d-flex align-items-center">
+                        <div class="flex items-center">
                           <v-icon class="mr-2" :icon="['fab', 'discord']"/>
                           <span class="text-muted">{{ spec.userEntity.discord }}</span>
                           <span class="mx-1">—</span>
@@ -139,7 +139,7 @@
                 </template>
 
                 <template #footer>
-                  <div class="w-100 d-flex align-items-center justify-content-end">
+                  <div class="w-full flex items-center justify-end">
                     <v-button> {{ $t('page.dashboard.respond.accept') }}</v-button>
                   </div>
                 </template>

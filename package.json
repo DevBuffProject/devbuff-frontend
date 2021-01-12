@@ -54,17 +54,21 @@
     "quill-blot-formatter": "1.0.5",
     "quill-image-uploader": "1.2.2",
     "quill-magic-url": "2.1.5",
-    "vue-quill-editor": "3.0.6",
     "snyk": "1.437.3",
     "swiper": "6.4.5",
     "tls": "0.0.1",
     "vee-validate": "3.4.5",
-    "vue-awesome-swiper": "4.1.1"
+    "vue-awesome-swiper": "4.1.1",
+    "vue-quill-editor": "3.0.6"
   },
   "devDependencies": {
     "@babel/runtime-corejs3": "7.12.5",
     "@nuxtjs/storybook": "3.3.0",
+    "@nuxtjs/tailwindcss": "^3.4.2",
     "@storybook/addon-knobs": "6.1.11",
+    "@tailwindcss/postcss7-compat": "^2.0.2",
+    "@tailwindcss/typography": "^0.3.1",
+    "autoprefixer": "^9.8.6",
     "babel-eslint": "10.1.0",
     "chromatic": "5.5.0",
     "core-js": "3.8.2",
@@ -73,7 +77,9 @@
     "eslint-loader": "4.0.2",
     "eslint-plugin-vue": "7.4.1",
     "node-sass": "5.0.0",
-    "sass-loader": "10.1.0"
+    "postcss": "^7.0.35",
+    "sass-loader": "10.1.0",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2"
   },
   "snyk": true
 }

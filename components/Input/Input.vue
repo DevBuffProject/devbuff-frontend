@@ -4,35 +4,46 @@
     v-slot="{ errors }"
     tag="div"
   >
-    <label class="input" :class="errors.length && 'input--invalid'" @mousedown="focus">
-      <v-icon v-if="icon" :icon="icon" class="input__icon" />
-      <textarea
-        v-if="textarea"
-        ref="field"
-        class="input__field"
-        :class="icon && 'input__field--icon'"
-        :value="model"
-        v-bind="$attrs"
-        @input="input"
-        @focus="focus"
-        @blur="blur"
-      />
-      <input
-        v-else
-        ref="field"
-        class="input__field"
-        :class="icon && 'input__field--icon'"
-        :value="model"
-        v-bind="$attrs"
-        @input="input"
-        @focus="focus"
-        @blur="blur"
-      />
-    </label>
+    <v-label :name="label">
+      <div
+        class="v-input"
+        :class="{
+          'v-input--state_invalid': errors.length,
+          'v-input--state_focus': focused
+        }"
+        @mousedown="focus"
+      >
+        <v-icon v-if="icon" :icon="icon" class="v-input__icon" />
+        <textarea
+          v-if="textarea"
+          ref="field"
+          class="v-input__field"
+          :class="icon && 'input__field--icon'"
+          :value="value"
+          v-bind="$attrs"
+          autocomplete="off"
+          @input="input"
+          @focus="focus"
+          @blur="blur"
+        />
+        <input
+          v-else
+          ref="field"
+          class="v-input__field"
+          :class="icon && 'input__field--icon'"
+          :value="value"
+          v-bind="$attrs"
+          autocomplete="off"
+          @input="input"
+          @focus="focus"
+          @blur="blur"
+        />
+      </div>
+    </v-label>
 
     <transition name="fade">
-      <div v-if="errors.length" class="input__error">
-        <v-icon :icon="['fas', 'exclamation']" class="input__error-icon" />
+      <div v-if="errors.length" class="v-input__error">
+        <v-icon :icon="['fas', 'exclamation']" class="v-input__error-icon" />
         <span>{{ errors[0] }}</span>
       </div>
     </transition>
@@ -50,34 +61,20 @@ export default {
       type: String,
       default: 'text'
     },
-    textarea: {
-      type: Boolean,
-      default: false
-    },
-    rules: {
-      type: String,
-      default: null
-    },
-    value: {
-      type: [ String, Number ],
-      default: null
-    },
-    icon: {
-      type: [ String, Array ],
-      default: null
-    }
+    label: String,
+    textarea: Boolean,
+    rules: [ String, Array, Function ],
+    value: [ String, Number ],
+    icon:  [ String, Array ],
   },
 
   created() {
     localize(this.$i18n.locale)
   },
 
-  data() {
-    return {
-      focused: false,
-      model: this.value
-    }
-  },
+  data: () => ({
+    focused: false,
+  }),
 
   methods: {
     focus() {
@@ -107,77 +104,69 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.input {
-  background-color: var(--color-background-accent);
-  position: relative;
-  width: 100%;
-  display: inline-flex;
-  border: 1px solid var(--color-muted);
-  padding: .5rem 1rem;
-  border-radius: 8px;
-  box-sizing: border-box;
-  align-items: baseline;
-  cursor: text;
-  transition: border-color .3s var(--base-transition);
+@layer components {
+  .v-input {
+    @apply relative w-full inline-flex border rounded overflow-hidden;
 
-  &--focused {
-    border-color: var(--color-primary) !important
-  }
-
-  &--invalid {
-    border-color: var(--color-danger);
-  }
-
-  &__error {
-    display: flex;
-    align-items: center;
-    margin-top: .25rem;
-    font-size: .85rem;
-    color: var(--color-danger);
-  }
-
-  &__error-icon {
-    font-size: .7rem;
-    margin-right: .5rem;
-    transform: translateY(-1px);
-  }
-
-  &__icon {
-    transform: translateY(4px);
-    display: flex;
-    margin-right: 1rem;
-    align-items: center;
-    color: var(--color-muted);
-    width: 1.2rem;
-    font-size: 1.2rem;
-    transition: .2s var(--base-transition);
-    transition-property: transform, left;
-  }
-
-  &__field {
-    outline: none;
-    font-family: inherit;
-    font-size: 1rem;
-    border: 0;
-    outline: 0;
-    width: 100%;
-    min-width: 0;
-    resize: none;
+    //theming
+    @apply border-muted bg-white;
+    //padding: .5rem 1rem;
+    border-radius: 8px;
     box-sizing: border-box;
-    position: relative;
-    &::placeholder {
-      position: absolute;
-      top: 2px;
-      left: 0;
-      font-family: inherit;
-      font-weight: 200;
-      text-transform: lowercase;
-      transition: .2s var(--base-transition);
-      transition-property: left, opacity;
+    align-items: baseline;
+    cursor: text;
+    transition: border-color .3s var(--base-transition);
+
+    &--state_focus {
+      @apply border-primary;
     }
-    &:focus::placeholder {
-      opacity: .35;
-      left: 5px;
+
+    &--state_invalid {
+      @apply border-danger;
+    }
+
+    &__field {
+      @apply py-2 px-4;
+    }
+
+    &__error {
+      @apply flex items-center mt-1 text-sm text-danger;
+    }
+
+    &__error-icon {
+      font-size: .7rem;
+      margin-right: .5rem;
+      transform: translateY(-1px);
+    }
+
+    &__icon {
+      transform: translateY(4px);
+      display: flex;
+      margin-right: 1rem;
+      align-items: center;
+      color: var(--color-muted);
+      width: 1.2rem;
+      font-size: 1.2rem;
+      transition: .2s var(--base-transition);
+      transition-property: transform, left;
+    }
+
+    &__field {
+      @apply bg-white outline-none w-full resize-none;
+      &::placeholder {
+        position: absolute;
+        top: 2px;
+        left: 0;
+        font-family: inherit;
+        font-weight: 200;
+        text-transform: lowercase;
+        transition: .2s var(--base-transition);
+        transition-property: left, opacity;
+      }
+      &:focus::placeholder {
+        opacity: .35;
+        left: 5px;
+      }
     }
   }
 }

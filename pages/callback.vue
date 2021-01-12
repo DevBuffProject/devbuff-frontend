@@ -1,7 +1,7 @@
 <template>
   <div class="callback-auth font-thin">
     <div v-if="error">
-      <div class="callback-auth__error d-flex align-items-baseline">
+      <div class="callback-auth__error flex align-baseline">
         <span class="callback-auth__emoji mr-3"> 😬 </span>
         <span class="callback-auth__status-text"> {{ $t('page.callback.status.error.text') }} </span>
       </div>
@@ -16,9 +16,9 @@
 
     <div
       v-else-if="success"
-      class="d-flex align-items-center"
+      class="flex items-center"
     >
-      <div class="d-flex align-items-baseline mb-4">
+      <div class="flex align-baseline mb-4">
         <span class="callback-auth__emoji mr-3"> 👌 </span>
         <span class="callback-auth__status-text mr-4"> {{ $t('page.callback.success.text') }} </span>
       </div>
@@ -26,9 +26,9 @@
 
     <div
       v-else
-      class="d-flex align-items-center"
+      class="flex items-center"
     >
-      <div class="d-flex align-items-baseline mb-4">
+      <div class="flex align-baseline mb-4">
         <span class="callback-auth__emoji mr-3"> ⏳ </span>
         <span class="callback-auth__status-text mr-4">
           {{ $t('page.callback.processing.text') }} <span class="callback-auth__dots"/>

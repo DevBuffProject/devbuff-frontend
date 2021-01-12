@@ -1,6 +1,6 @@
 <template>
   <footer class="v-footer">
-    <div class="container">
+    <div class="container mx-auto">
       <v-status-badge
         v-if="health.status"
         :indicator="health.status.indicator"
@@ -9,7 +9,7 @@
       />
     </div>
     <div class="v-footer__content">
-      <div class="container d-flex align-items-center justify-content-between">
+      <div class="container mx-auto flex items-center justify-between">
         <section class="">
 
         </section>

@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~/assets/styles/variables.scss';
+@import '~/assets/css/variables.scss';
 
 .v-steps {
   display: flex;

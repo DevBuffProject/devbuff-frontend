@@ -8,11 +8,11 @@
         <span class="present__app-name">DevBuff</span> — {{ $t('page.index.description') }}.
         <v-link to="/about"> {{ $t('page.index.action.about') }} </v-link>
       </p>
-      <div class="present__controls d-flex flex-column justify-content-center">
-        <div class="w-100" v-if="!isAuthorized">
+      <div class="present__controls flex flex-column justify-center">
+        <div class="w-full" v-if="!isAuthorized">
           <v-button
-            class="w-100"
-            type="dark"
+            class="w-full"
+            type="contrast"
             :icon="['fab', 'github']"
             rounded
             @click="authorize"
@@ -26,8 +26,8 @@
         >
           <v-button
             type="muted"
-            :icon="['fas', 'long-arrow-alt-right']"
             rounded
+            :icon="['fas', 'long-arrow-alt-right']"
           >
             {{ $t('page.index.action.projects') }}
           </v-button>

@@ -1,75 +1,54 @@
 <template>
-  <header class="header d-flex align-items-center">
-    <div class="header__container container">
-      <div class="header__section">
-        <div class="d-flex align-items-center">
-          <div class="mr-3">
-            <v-logo class="header__logo" />
-          </div>
-          <v-switcher
-            class="header__lang-switcher"
-            :values="availableLocales"
-            :value="locale"
-            @change="setLocale"
-          />
-          <transition name="fade">
-            <v-loading class="muted ml-3" v-show="localeLoading" />
-          </transition>
-        </div>
+  <header class="dark header flex items-center bg-gray-900">
+    <div class="container mx-auto flex items-center">
+      <div class="flex items-center">
+        <v-logo src="/logos/logo-white.svg" class="header__logo mr-3" />
+<!--          <v-switcher-->
+<!--            class="header__lang-switcher"-->
+<!--            :values="availableLocales"-->
+<!--            :value="locale"-->
+<!--            @change="setLocale"-->
+<!--          />-->
       </div>
-      <!-- <div class="header__section d-flex justify-content-center">
-
-      </div> -->
-      <div class="header__section d-flex align-items-center justify-content-end">
-        <div v-if="isAuthorized" class="d-flex align-items-center">
-          <v-link
+      <div class="header__section">
+        <nav v-if="isAuthorized" class="flex items-center">
+          <nuxt-link
             v-if="isAdmin"
-            v-ripple="'var(--color-primary-fade-90)'"
-            class="text header__link"
-            type="muted"
+            v-ripple
+            class="header__link"
             :to="localePath({ name: 's-admin' })"
-            :icon="['fas', 'crown']"
           >
             admin
             <span class="ml-1" v-if="pendingIdeas.length > 0">({{ pendingIdeas.length }})</span>
-          </v-link>
-          <v-link
-            v-ripple="'var(--color-primary-fade-90)'"
-            class="text header__link"
+          </nuxt-link>
+          <nuxt-link
+            v-ripple
+            class="header__link"
             active-class="header__link--active"
-            type="muted"
             :exact="false"
             :to="localePath({ name: 'ideas' })"
-            :icon="['fas', 'lightbulb']"
           >
             {{  $t('components.header.ideas')  }}
-          </v-link>
-          <v-link
-            v-ripple="'var(--color-primary-fade-90)'"
-            class="text header__link mr-3"
+          </nuxt-link>
+          <nuxt-link
+            v-ripple
+            class="header__link mr-3"
             active-class="header__link--active"
-            type="muted"
             :to="localePath({ name: 's-dashboard' })"
-            :icon="['fas', 'project-diagram']"
           >
             {{ $t('components.header.dashboard') }}
-          </v-link>
-          <nuxt-link
-            class="mr-4 mt-1 text header__create-btn"
-            :to="localePath({ name: 's-editor' })"
-          >
-            <v-button type="muted" :icon="['fas', 'plus']">
-              {{ $t('components.header.create') }}
-            </v-button>
+          </nuxt-link>
+          <nuxt-link class="header__new-btn" :to="localePath({ name: 's-editor' })">
+            <v-button type="muted" :icon="['fas', 'plus']"> {{ $t('components.header.create') }} </v-button>
           </nuxt-link>
           <nuxt-link :to="localePath({ name: 's-profile' })">
             <v-avatar v-ripple :avatar="this.$store.getters['user/profile'].id" />
           </nuxt-link>
-        </div>
+        </nav>
 
-        <div v-else class="d-flex align-items-center">
+        <div v-else class="flex items-center">
           <v-button
-            type="dark"
+            type="contrast"
             :icon="['fab', 'github']"
             rounded
             @click="authorize"
@@ -136,62 +115,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.header {
-  background-color: var(--color-background-accent);
-  position: relative;
-  height: var(--header-height);
-  border-bottom: 1px solid var(--color-muted);
+//@import '@/assets/css/tailwind';
+@layer components {
+  .header {
+    @apply relative;
+    height: var(--header-height);
 
-  &__logo {
-    height: 30px;
-    width: auto;
-  }
-
-  &__container {
-    display: flex;
-    align-items: center;
-  }
-
-  &__section {
-    width: 100%;
-    display: flex;
-  }
-
-  &__link {
-    padding: .25rem 0.5rem;
-    margin: 0 .25em;
-    border-radius: 8px;
-    font-size: .9rem;
-    text-transform: lowercase;
-    opacity: 0.5;
-    font-weight: 400;
-    width: fit-content;
-    transition-property: background-color, color, opacity;
-    transition: .3s var(--base-transition);
-
-    &:last-of-type {
-      margin-right: 1rem;
+    &__link {
+      --ripple-color: theme('colors.primary.DEFAULT');
+      --ripple-weight: .1;
+      @apply px-3 py-1 font-medium transition-colors rounded;
+      @apply hover:text-primary text-gray-600 #{!important};
+    }
+    &__link--active {
+      @apply bg-primary bg-opacity-10 text-primary #{!important};
     }
 
-    &:hover {
-      color: var(--color-primary) !important;
-      opacity: 1;
+    &__new-btn {
+      @apply mr-4 pl-4 border-l border-gray-700;
     }
 
-    &--active {
-      background-color: var(--color-primary-fade-90);
-      color: var(--color-primary) !important;
-      opacity: 1;
+    &__section {
+      @apply flex items-center justify-end w-full;
     }
-  }
 
-  &__create-btn {
-    padding-left: 1rem;
-    border-left: 1px solid var(--color-muted);
-  }
-
-  &__lang-switcher {
-    transform: scale(.85);
+    &__logo {
+      height: 30px;
+      @apply w-auto;
+    }
   }
 }
 </style>

@@ -22,7 +22,7 @@ const config = {
     ]
   },
   css: [
-    { src: '~/assets/styles/common.scss', lang: 'sass' }
+    { src: '~/assets/css/common.scss', lang: 'sass' }
   ],
 
   loading: '~/page-loading.vue',
@@ -50,6 +50,8 @@ const config = {
     'nuxt-i18n',
     'cookie-universal-nuxt'
   ],
+
+  buildModules: ['@nuxtjs/tailwindcss'],
 
   i18n : {
     locales: [

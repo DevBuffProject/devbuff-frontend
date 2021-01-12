@@ -1,7 +1,7 @@
 <template>
   <div class="error-page font-thin">
     <div v-if="screen">
-      <div class="d-flex align-items-baseline">
+      <div class="d-flex align-baseline">
         <span class="error-page__emoji mr-3"> {{ screen.emoji }} </span>
         <span class="error-page__message">
           <span> {{ screen.message }} </span>
@@ -34,7 +34,7 @@
     </div>
 
     <div v-else>
-      <div class="d-flex align-items-baseline">
+      <div class="d-flex align-baseline">
         <span class="error-page__emoji mr-3"> 🤕 </span>
         <span class="error-page__message"> что-то пошло не так </span>
       </div>
