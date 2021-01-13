@@ -1,5 +1,13 @@
 <template>
-  <span class="v-image" :style="ready && { 'background-image': `url(${src})` }">
+  <span
+    class="v-image"
+    :class="{ 'rounded-full': rounded }"
+    :style="[
+      ready && { 'background-image': `url(${src})` },
+      { width: size, height: size, flex: `0 0 ${size}` }
+    ]"
+    v-bind="$attrs"
+  >
     <v-loading v-if="!ready" class="image__loading" />
   </span>
 </template>
@@ -9,11 +17,16 @@ export default {
   name: 'v-image',
 
   props: {
+    rounded: Boolean,
+    size: {
+      type: String,
+      default: '100px'
+    },
     src: {
       type: String,
       default: null,
       required: true
-    },
+    }
   },
 
   data: () => ({

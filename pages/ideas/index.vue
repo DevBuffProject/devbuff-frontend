@@ -12,21 +12,22 @@
         </div>
 
         <div class="ideas__grid-column-ideas">
-          <div class="ideas__sort">
-            <v-label name="сортировка">
+          <v-label name="сортировка">
+            <div class="ideas__sort">
               <v-switcher
                 :values="[
-                  { title: $t('page.ideas.explore.filter.datePublish'), value: 'date' },
-                  { title: $t('page.ideas.explore.filter.lastUpdate'), value: 'lastUpdate' }
-                ]"
+                { title: $t('page.ideas.explore.filter.datePublish'), value: 'date' },
+                { title: $t('page.ideas.explore.filter.lastUpdate'), value: 'lastUpdate' }
+              ]"
                 :value="filter.sortBy"
                 @change="applyFilter({ sortBy: $event })"
               />
-            </v-label>
-            <transition name="fade">
-              <v-loading v-show="loading" class="ml-4 muted"/>
-            </transition>
-          </div>
+
+              <transition name="fade">
+                <v-loading v-show="loading" class="ml-4 opacity-50"/>
+              </transition>
+            </div>
+          </v-label>
 
           <v-card v-if="ideas.length" class="ideas__list">
             <v-idea
@@ -235,15 +236,16 @@ export default {
     }
 
     &__filter {
-      @apply w-auto sticky top-20 rounded-md col-span-2;
+      @apply w-auto sticky top-20 col-span-2;
+      @apply rounded-xl #{!important};
     }
 
     &__sort {
-      @apply mb-4;
+      @apply mb-4 flex items-center;
     }
 
     &__list {
-      @apply p-0 #{!important};
+      @apply p-0 border-0 #{!important};
     }
 
     &__idea {

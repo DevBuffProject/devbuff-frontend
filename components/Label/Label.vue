@@ -24,8 +24,10 @@ export default {
 <style lang="scss" scoped>
 @layer components {
   .v-label {
+    @apply block;
+
     &__name {
-      @apply text-gray-400 text-sm mb-1;
+      @apply text-gray-400 text-xs mb-1;
       font-weight: 300;
     }
   }

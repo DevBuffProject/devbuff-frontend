@@ -1,6 +1,6 @@
 @layer base {
   :root {
-    --ripple-color: rgba(255, 255, 255, .25);
+    --ripple-color: rgba(255, 255, 255, .3);
     --ripple-weight: .5;
   }
 }
@@ -16,7 +16,7 @@
     }
 
     &__ripple--theme-dark {
-      --ripple-color: rgba(0, 0, 0, .25);
+      --ripple-color: rgba(0, 0, 0, .3);
     }
   }
 }

@@ -1,138 +1,66 @@
 <template>
-  <div class="v-idea" @mouseover="hover = true" @mouseout="hover = false">
-    <v-image class="v-idea__image" :src="'//source.unsplash.com/random?logo&key' + id" />
-
-    <div>
-      <div v-if="!linked"> {{ title }}</div>
-      <div v-else class="flex items-center">
+  <div
+    class="v-idea"
+    :class="{ 'v-idea--state_hover': hover }"
+    @mouseover="hover = true"
+    @mouseout="hover = false"
+  >
+    <div class="flex">
+      <v-image size="75px" class="v-idea__image" :src="'//source.unsplash.com/random?logo&key' + id" />
+      <div class="w-full">
+        <div v-if="!linked"> {{ title }}</div>
         <nuxt-link
           :to="localePath({ name: 'ideas-id', params: { id } })"
           class="v-idea__link"
-          :class="{ 'v-idea__link--hover': hover }"
+          :class="{ 'v-idea__link--state_hover': hover }"
         >
           {{ title }}
         </nuxt-link>
-      </div>
-
-
-      <div class="">
-        <div class="v-idea__description"> {{ description }} </div>
-
-        <div v-if="specialists.length || technologies.length || languages.length">
-          <v-label v-if="specialists.length" :name="$t('components.ideaCard.specialists')" class="mb-4 mt-4">
-            <span
-              v-for="(spec, key) in specialists"
-              :key="spec + key + id"
-              class="mr-2"
-            >
-              <v-chip :text="t('specializations.'+spec.name+'.title',spec.name)"/>
-            </span>
-          </v-label>
-
-          <v-label v-if="technologies.length" :name="$t('components.ideaCard.technologies')" class="mt-3">
-          <span
-            v-for="(tech, key) in technologies"
-            :key="tech + key + id"
-            class="mr-2"
-          >
-            <v-chip :text="tech"/>
-          </span>
-          </v-label>
-
-          <v-label v-if="languages.length" :name="$t('components.ideaCard.languages')" class="mt-3">
-          <span
-            v-for="(lang, key) in languages"
-            :key="lang + key + id"
-            class="mr-2"
-          >
-            <v-chip :text="t('languages.'+lang.name,lang.name)" :type="hover ? 'auto' : null"/>
-          </span>
-          </v-label>
-
+        <div class="v-idea__publish-date">
+          {{ publishDate | toLocaleDateTime($i18n.locale) }}
         </div>
 
+        <div class="v-idea__description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc velit felis, lobortis ut purus ut, molestie suscipit sapien. Nulla nec vehicula metus, ut lacinia augue. Mauris quam risus, vulputate luctus velit sit amet, rhoncus sollicitudin enim. In varius rutrum tellus, ac viverra eros hendrerit eu. Nunc quis metus vitae velit molestie semper </div>
+
+        <div v-if="specialists.length || technologies.length || languages.length" class="flex w-full">
+          <v-label v-if="specialists.length" :name="$t('components.ideaCard.specialists')" class="v-idea__labels">
+            <div class="v-idea__labels-list">
+              <v-chip
+                v-for="(spec, key) in specialists"
+                :key="spec + key + id"
+                :text="t('specializations.'+spec.name+'.title',spec.name)"
+                class="v-idea__label"
+              />
+            </div>
+          </v-label>
+
+          <v-label v-if="technologies.length" :name="$t('components.ideaCard.technologies')" class="v-idea__labels">
+            <div class="v-idea__labels-list">
+              <v-chip
+                v-for="(tech, key) in technologies"
+                :key="tech + key + id"
+                :text="tech"
+                class="v-idea__label"
+              />
+            </div>
+          </v-label>
+
+          <v-label v-if="languages.length" :name="$t('components.ideaCard.languages')" class="v-idea__labels">
+            <div class="v-idea__labels-list">
+              <v-chip
+                v-for="(lang, key) in languages"
+                :key="lang + key + id"
+                :text="t('languages.'+lang.name,lang.name)"
+                type="auto"
+                class="v-idea__label"
+              />
+            </div>
+          </v-label>
+        </div>
       </div>
     </div>
+
   </div>
-<!--  <v-card-->
-<!--    class="idea"-->
-<!--    v-ripple-->
-<!--    @mouseover="hover = true"-->
-<!--    @mouseout="hover = false"-->
-<!--  >-->
-<!--    <template #footer>-->
-<!--      <div class="flex items-center justify-between w-full">-->
-<!--        <div class="idea__date muted">-->
-<!--          {{ publishDate | toLocaleDateTime($i18n.locale) }}-->
-<!--        </div>-->
-<!--        <v-link-->
-<!--          v-if="linked"-->
-<!--          :to="localePath({ name: 'ideas-id', params: { id } })"-->
-<!--          :icon="['fas', 'angle-right']"-->
-<!--        >-->
-<!--          посмотреть-->
-<!--        </v-link>-->
-<!--      </div>-->
-<!--    </template>-->
-
-<!--    <div class="mb-4">-->
-<!--      <div v-if="!linked"> {{ title }}</div>-->
-<!--      <div v-else class="flex items-center">-->
-<!--        <nuxt-link-->
-<!--          :to="localePath({ name: 'ideas-id', params: { id } })"-->
-<!--          :class="['idea__link', hover && 'idea__link&#45;&#45;hover']"-->
-<!--        >-->
-<!--          {{ title }}-->
-<!--        </nuxt-link>-->
-<!--        <v-icon-->
-<!--          :icon="['fas', 'long-arrow-alt-right']"-->
-<!--          :class="['ml-2', 'idea__link-icon', hover && 'idea__link-icon&#45;&#45;hover']"-->
-<!--        />-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    <v-label :name="$t('components.ideaCard.description')" class="w-full">-->
-<!--      <div class="idea__description">-->
-<!--        {{ description }}-->
-<!--      </div>-->
-<!--    </v-label>-->
-
-<!--    <div-->
-<!--      v-if="specialists.length || technologies.length || languages.length"-->
-<!--      class="mt-4"-->
-<!--    >-->
-<!--      <v-label v-if="specialists.length" :name="$t('components.ideaCard.specialists')">-->
-<!--        <span-->
-<!--          v-for="(spec, key) in specialists"-->
-<!--          :key="spec + key + id"-->
-<!--          class="mr-2"-->
-<!--        >-->
-<!--          <v-chip :text="t('specializations.'+spec.name+'.title',spec.name)"/>-->
-<!--        </span>-->
-<!--      </v-label>-->
-
-<!--      <v-label v-if="technologies.length" :name="$t('components.ideaCard.technologies')" class="mt-3">-->
-<!--        <span-->
-<!--          v-for="(tech, key) in technologies"-->
-<!--          :key="tech + key + id"-->
-<!--          class="mr-2"-->
-<!--        >-->
-<!--          <v-chip :text="tech"/>-->
-<!--        </span>-->
-<!--      </v-label>-->
-
-<!--      <v-label v-if="languages.length" :name="$t('components.ideaCard.languages')" class="mt-3">-->
-<!--        <span-->
-<!--          v-for="(lang, key) in languages"-->
-<!--          :key="lang + key + id"-->
-<!--          class="mr-2"-->
-<!--        >-->
-<!--          <v-chip :text="t('languages.'+lang.name,lang.name)" :type="hover ? 'auto' : null"/>-->
-<!--        </span>-->
-<!--      </v-label>-->
-
-<!--    </div>-->
-<!--  </v-card>-->
 </template>
 
 <script>
@@ -140,17 +68,14 @@ export default {
   name: 'v-idea',
 
   props: {
+    publishDate: String,
     linked: {
       type: Boolean,
       default: true,
     },
     id: {
-      type: [String, Number],
-      required: true
-    },
-    publishDate: {
       type: String,
-      default: null
+      required: true
     },
     title: {
       type: String,
@@ -202,19 +127,38 @@ export default {
 <style lang="scss" scoped>
 @layer components {
   .v-idea {
-    @apply p-4 flex transition-all transition-shadow;
+    @apply relative p-4 transition-all transition-shadow;
 
-    &:hover {
-      box-shadow: inset 2px 0 0 theme('colors.primary.DEFAULT');
+    &__link {
+      @apply text-primary inline-block mb-1 text-xl font-normal transition-colors;
     }
 
-    &__image {
+    &__publish-date {
+      @apply text-xs text-gray-400 mb-3;
+    }
+
+      &__image {
       @apply mr-4;
-      flex-basis: 100px;
+      @apply rounded-full #{!important};
     }
 
     &__description {
-      @apply max-w-lg w-full mr-4;
+      @apply font-normal w-full mb-3;
+    }
+
+    &__labels {
+      @apply pr-6 my-2 mr-6 w-1/3 border-r border-muted;
+      &:last-of-type {
+        @apply border-0 #{!important};
+      }
+    }
+
+    &__labels-list {
+      @apply flex flex-wrap;
+    }
+
+    &__label {
+      @apply mr-2 mb-2;
     }
   }
 }

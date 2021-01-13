@@ -1,3 +1,16 @@
+<template>
+  <span
+    class="v-chip"
+    :class="{ [`v-chip--type_${type}`]: type }"
+    :style="type === 'auto' && {
+      backgroundColor: colors.bg,
+      color: colors.text
+    }"
+  >
+    {{ text }}
+  </span>
+</template>
+
 <script>
 import Color from '~/helpers/colors.js'
 
@@ -18,54 +31,31 @@ const getTextBasedColors = text => {
 export default {
   name: 'v-chip',
 
-  functional: true,
-
   props: {
-    text: {
-      type: [String],
-      default: null
-    },
-    type: {
-      type: String,
-      default: null
-    }
+    text: String,
+    type: String,
+    class: [ String, Array, Object ]
   },
 
-  render(h, { props }) {
-    const colors = getTextBasedColors(props.text)
-
-    return h('span', {
-        class: [
-          'chip',
-          props.type && 'chip--type-' + props.type,
-        ],
-        style: props.type === 'auto' && {
-          backgroundColor: colors.bg,
-          color: colors.text
-        }
-      },
-      props.text
-    )
+  computed: {
+    colors() {
+      return getTextBasedColors(this.text)
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.chip {
-  background-color: var(--color-muted);
-  display: inline-flex;
-  align-items: center;
-  line-height: 1;
-  font-size: .75rem;
-  padding: 1px .75rem;
-  height: 1rem;
-  border-radius: 10rem;
-  font-weight: 500;
-  color: rgba(0, 0, 0, .5);
-  transition: background-color .3s var(--base-transition);
+@layer components {
+  .v-chip {
+    @apply bg-muted text-xs px-4 py-0.5 font-normal rounded;
 
-  &--type-muted {
-    background-color: var(--color-muted);
+    color: rgba(0, 0, 0, .5);
+    transition: background-color .3s var(--base-transition);
+
+    &--type-muted {
+      @apply bg-muted;
+    }
   }
 }
 </style>
