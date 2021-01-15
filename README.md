@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-  <a href='https://7architect.semaphoreci.com/projects/devbuff-frontend'><img src='https://DevBuffProject.semaphoreci.com/badges/devbuff-frontend/branches/develop.svg?key=710bba83-3085-419c-9304-df54d3d7467f' alt='Build Status'></a>
+  <a href='https://devbuff.semaphoreci.com/badges/devbuff-frontend/branches/master.svg'> <img src='https://devbuff.semaphoreci.com/badges/devbuff-frontend/branches/master.svg' alt='Build Status'></a>
   <a href="https://lgtm.com/projects/g/DevBuffProject/devbuff-frontend/context:javascript"><img alt="LGTM Grade" src="https://img.shields.io/lgtm/grade/javascript/github/7architect/devbuff-frontend?label=LGTM%20quality%3A%20js&logo=lgtm&style=flat-square"></a>
 </p>
 
