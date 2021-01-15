@@ -1,13 +1,11 @@
 
 <p align="center">
-  <img src="https://github.com/7architect/devbuff-frontend/raw/develop/static/logos/Logo@small.png" alt="Logo">
+  <img src="https://github.com/DevBuffProject/devbuff-frontend/raw/develop/static/logos/Logo@small.png" alt="Logo">
 </p>
 
 <p align="center">
-  <a href='https://7architect.semaphoreci.com/projects/devbuff-frontend'><img src='https://7architect.semaphoreci.com/badges/devbuff-frontend/branches/develop.svg?key=710bba83-3085-419c-9304-df54d3d7467f' alt='Build Status'></a>
-  <a href="https://app.circleci.com/pipelines/github/7architect/devbuff-frontend"><img alt="CircleCI" src="https://img.shields.io/circleci/build/github/7architect/devbuff-frontend/develop?label=CircleCI&logo=circleCI&style=flat-square"></a>
-	<a href="https://www.codefactor.io/repository/github/7architect/devbuff-frontend"><img alt="CodeFactor Grade" src="https://img.shields.io/codefactor/grade/github/7architect/devbuff-frontend/develop?label=Codefactor%20quality%3A%20js&logo=codefactor&logoColor=%23fff&style=flat-square"></a>
-  <a href="https://lgtm.com/projects/g/7architect/devbuff-frontend/context:javascript"><img alt="LGTM Grade" src="https://img.shields.io/lgtm/grade/javascript/github/7architect/devbuff-frontend?label=LGTM%20quality%3A%20js&logo=lgtm&style=flat-square"></a>
+  <a href='https://7architect.semaphoreci.com/projects/devbuff-frontend'><img src='https://DevBuffProject.semaphoreci.com/badges/devbuff-frontend/branches/develop.svg?key=710bba83-3085-419c-9304-df54d3d7467f' alt='Build Status'></a>
+  <a href="https://lgtm.com/projects/g/DevBuffProject/devbuff-frontend/context:javascript"><img alt="LGTM Grade" src="https://img.shields.io/lgtm/grade/javascript/github/7architect/devbuff-frontend?label=LGTM%20quality%3A%20js&logo=lgtm&style=flat-square"></a>
 </p>
 
 ## Build Setup
