@@ -1,7 +1,6 @@
 <template>
   <span
-    class="v-chip"
-    :class="{ [`v-chip--type_${type}`]: type }"
+    class="text-xs px-4 py-0.5 font-normal rounded bg-gray-200 text-gray-500 dark:bg-blueGray-700 text-blueGray-300"
     :style="type === 'auto' && {
       backgroundColor: colors.bg,
       color: colors.text
@@ -12,7 +11,7 @@
 </template>
 
 <script>
-import Color from '~/helpers/colors.js'
+import Color from 'assets/js/colors.js'
 
 const cachedColors = {}
 const getTextBasedColors = text => {
@@ -21,8 +20,8 @@ const getTextBasedColors = text => {
 
   const colorInstance = Color(Color.generateFromString(text))
   const colors = {
-    text: colorInstance.luminate(.15),
-    bg: colorInstance.luminate(.85)
+    text: colorInstance.luminate(.1),
+    bg: colorInstance.luminate(.9)
   }
 
   return cachedColors[text] = colors
@@ -34,7 +33,6 @@ export default {
   props: {
     text: String,
     type: String,
-    class: [ String, Array, Object ]
   },
 
   computed: {

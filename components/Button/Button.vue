@@ -1,26 +1,30 @@
 <template>
   <button
     v-on="$listeners"
-    class="v-button"
-    :class="classes"
+    class="py-1 px-4 self-start overflow-hidden rounded font-medium transition-colors outline-none"
+    :class="type === 'muted'
+      ? 'text-black bg-gray-200 hover:bg-gray-300 dark:text-gray-300 dark:bg-blueGray-700 dark:hover:bg-blueGray-600'
+      : {
+          [`text-white bg-${type}`]: TYPES.includes(type),
+          [`text-${type} bg-${type} bg-opacity-10 hover:bg-opacity-20`]: TYPES.includes(type) && type.includes('flat'),
+          ['text-white bg-black hover:bg-gray-900 dark:text-black dark:bg-white hover:bg-gray-50']: type === 'contrast',
+        }
+    "
     v-bind="$attrs"
     v-ripple
   >
-    <div
-      v-if="$slots.default"
-      class="v-button__content"
-      :class="loading && 'v-button__content--hidden'"
-    >
+    <div v-if="$slots.default" :class="{ invisible: loading }">
       <slot />
+      <v-icon
+        v-if="icon"
+        :icon="icon"
+        class="ml-4"
+        :class="{ 'm-0': !$slots.default }"
+      />
     </div>
-    <span v-if="loading" class="v-button__loading">
-      <v-loading />
-    </span>
-    <v-icon
-      v-if="icon"
-      :icon="icon"
-      class="v-button__icon"
-      :class="!$slots.default && 'v-button__icon--nomargin'"
+    <v-loading
+      v-if="loading"
+      class="absolute left-1/2 transform -translate-x-1/2"
     />
   </button>
 </template>
@@ -49,49 +53,7 @@ export default {
   },
 
   data() {
-    return {
-      classes: {
-        ...TYPES.reduce((acc, type) => {
-          acc[`v-button--type_${type}`] = type === this.type
-          return acc
-        }, {}),
-        'v-button--rounded': this.rounded
-      }
-    }
+    return { TYPES }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@layer components {
-  .v-button {
-    @apply py-1 px-5 flex items-center overflow-hidden rounded font-medium outline-none transition-colors;
-
-    &--type_contrast {
-      @apply text-white bg-black hover:bg-gray-900 dark:text-black dark:bg-white hover:bg-gray-50;
-    }
-
-    &--type_muted {
-      @apply text-black bg-gray-200 hover:bg-gray-300 dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600;
-    }
-
-    @each $type in primary success warning danger {
-      &--type_#{$type} {
-        @apply text-white bg-#{$type};
-      }
-
-      &--type_#{$type}-flat {
-        @apply text-#{$type} bg-#{$type} bg-opacity-10 hover:bg-opacity-20;
-      }
-    }
-
-    &--rounded {
-      @apply rounded-full #{!important};
-    }
-
-    &__icon {
-      @apply ml-4;
-    }
-  }
-}
-</style>

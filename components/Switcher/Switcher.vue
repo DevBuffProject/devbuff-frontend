@@ -1,13 +1,21 @@
 <template>
-  <div class="v-switcher">
-    <div class="v-switcher__highlight" ref="highlight" />
+  <div class="relative inline-flex rounded bg-gray-200 text-black dark:bg-blueGray-800">
+    <div
+      class="
+        absolute z-0 top-0 left-0 h-full bg-white border-gray-200 text-black border border-2 rounded transition-all
+        dark:bg-blueGray-700 dark:border-blueGray-700 dark:text-white
+      "
+      ref="highlight" />
     <div
       v-for="(button, index) in values"
       :key="button.value"
       ref="button"
       @click="setValue(index)"
-      class="v-switcher__switch"
-      :class="activeIndex !== index && 'v-switcher__switch--state_active'"
+      class="py-1 px-5 cursor-pointer relative z-10 text-sm font-normal"
+      :class="{
+        'text-gray-500 dark:text-blueGray-500': activeIndex !== index,
+        'text-black dark:text-blueGray-100': activeIndex === index
+      }"
     >
       {{ button.title }}
     </div>
@@ -83,23 +91,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
- @layer components {
-  .v-switcher {
-    @apply relative inline-flex rounded bg-gray-200 text-black dark:bg-gray-700;
-
-    &__switch {
-      @apply py-1 px-5 cursor-pointer relative z-10 text-sm font-normal text-black dark:text-white;
-    }
-    &__switch--state_active {
-      @apply text-gray-500 dark:text-gray-400;
-    }
-
-    &__highlight {
-      @apply absolute z-0 top-0 left-0 h-full bg-white border-gray-200 text-black border rounded transition-all;
-      @apply dark:bg-gray-400 dark:border-gray-700 dark:text-white
-    }
-  }
-}
-</style>

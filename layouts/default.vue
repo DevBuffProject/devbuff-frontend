@@ -1,11 +1,13 @@
 <template>
-  <v-app class="viewport">
-    <v-header />
-    <main>
-      <nuxt />
-    </main>
-    <v-footer class="mt-3" />
-  </v-app>
+  <div>
+    <v-app class="viewport">
+      <v-header />
+      <main>
+        <nuxt />
+      </main>
+      <v-footer class="mt-3" />
+    </v-app>
+  </div>
 </template>
 
 <style lang="scss" scoped>

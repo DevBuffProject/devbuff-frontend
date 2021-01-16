@@ -130,7 +130,7 @@
 
 <script>
 import { debounce } from 'lodash'
-import { codes } from '~/helpers/countries'
+import { codes } from 'assets/js/countries'
 import WindowAbstract from '~/components/Dialog/Window'
 
 export default {

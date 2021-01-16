@@ -8,6 +8,8 @@ export default {
     cancel: 'cancel',
     save: 'save',
     apply: 'apply',
+    specializations: 'Specializations',
+    languages: 'Laguages'
   },
   country: {
     default: "Not selected",

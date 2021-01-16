@@ -48,10 +48,22 @@ const config = {
     '@nuxtjs/pwa',
     '@nuxtjs/axios',
     'nuxt-i18n',
-    'cookie-universal-nuxt'
+    'cookie-universal-nuxt',
   ],
 
-  buildModules: ['@nuxtjs/tailwindcss'],
+  buildModules: [
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/color-mode'
+  ],
+
+  colorMode: {
+    preference: 'system', // default value of $colorMode.preference
+    fallback: 'dark', // fallback value if not system preference found
+    hid: 'remix-color-mode-script',
+    classPrefix: '',
+    classSuffix: '',
+    storageKey: 'remix-color-mode'
+  },
 
   i18n : {
     locales: [
@@ -72,11 +84,11 @@ const config = {
       '@storybook/addon-knobs'
     ]
   },
-
-  serverMiddleware: [
-    { path: '/_api/help/og', handler: '~endpoints/opengraph.js' },
-    { path: '/_api/help/embed-tweet', handler: '~endpoints/twitter-embed.js' }
-  ],
+  //
+  // serverMiddleware: [
+  //   { path: '/_api/help/og', handler: '~endpoints/opengraph.js' },
+  //   { path: '/_api/help/embed-tweet', handler: '~endpoints/twitter-embed.js' }
+  // ],
 
   publicRuntimeConfig: {
     // Proxy env to runtime

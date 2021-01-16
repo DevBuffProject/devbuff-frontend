@@ -1,21 +1,24 @@
 <template>
-  <header class="dark header flex items-center bg-gray-900">
+  <header class="flex items-center bg-blueGray-800 py-4">
     <div class="container mx-auto flex items-center">
       <div class="flex items-center">
-        <v-logo src="/logos/logo-white.svg" class="header__logo mr-3" />
-<!--          <v-switcher-->
-<!--            class="header__lang-switcher"-->
-<!--            :values="availableLocales"-->
-<!--            :value="locale"-->
-<!--            @change="setLocale"-->
-<!--          />-->
+        <nuxt-link :to="localePath({ name: 'ideas' })">
+          <v-logo src="/logos/logo-white.svg" class="h-10" />
+        </nuxt-link>
+        <div
+          v-ripple
+          class="cursor-pointer text-lg w-12 h-8 flex items-center justify-center rounded ml-6 text-purple-500 dark:text-yellow-500"
+          @click="toggleDarkMode"
+        >
+          <v-icon :icon="['fas', $colorMode.preference === 'light' ? 'moon' : 'sun']" />
+        </div>
       </div>
-      <div class="header__section">
+      <div :class="[$style.section, 'dark']">
         <nav v-if="isAuthorized" class="flex items-center">
           <nuxt-link
             v-if="isAdmin"
             v-ripple
-            class="header__link"
+            :class="$style.link"
             :to="localePath({ name: 's-admin' })"
           >
             admin
@@ -23,8 +26,8 @@
           </nuxt-link>
           <nuxt-link
             v-ripple
-            class="header__link"
-            active-class="header__link--active"
+            :class="$style.link"
+            :active-class="$style.link_active"
             :exact="false"
             :to="localePath({ name: 'ideas' })"
           >
@@ -32,25 +35,25 @@
           </nuxt-link>
           <nuxt-link
             v-ripple
-            class="header__link mr-3"
-            active-class="header__link--active"
+            :class="[$style.link, 'mr-3']"
+            :active-class="$style.link_active"
             :to="localePath({ name: 's-dashboard' })"
           >
             {{ $t('components.header.dashboard') }}
           </nuxt-link>
-          <nuxt-link class="header__new-btn" :to="localePath({ name: 's-editor' })">
+          <nuxt-link :class="$style.new" :to="localePath({ name: 's-editor' })">
             <v-button type="muted" :icon="['fas', 'plus']"> {{ $t('components.header.create') }} </v-button>
           </nuxt-link>
           <nuxt-link :to="localePath({ name: 's-profile' })">
-            <v-avatar v-ripple :avatar="this.$store.getters['user/profile'].id" />
+            <v-avatar v-ripple.dark :avatar="this.$store.getters['user/profile'].id" />
           </nuxt-link>
         </nav>
 
         <div v-else class="flex items-center">
           <v-button
+            rounded
             type="contrast"
             :icon="['fab', 'github']"
-            rounded
             @click="authorize"
           >
             {{ $t('page.index.oAuth.gitHub') }}
@@ -97,6 +100,9 @@ export default {
     authorize() {
       this.$store.dispatch('auth/authorize')
     },
+    toggleDarkMode(e) {
+      this.$colorMode.preference = this.$colorMode.preference === 'dark' ? 'light' : 'dark'
+    },
     async setLocale(locale) {
       try {
         this.$router.beforeEach((to, from, next) => {
@@ -114,35 +120,27 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-//@import '@/assets/css/tailwind';
-@layer components {
-  .header {
-    @apply relative;
-    height: var(--header-height);
+<style module>
+.link {
+  --ripple-color: theme('colors.primary.DEFAULT');
+  --ripple-weight: .1;
+  @apply px-4 py-1 ml-1 font-medium transition-colors rounded;
+  @apply hover:text-primary text-blueGray-50 !important;
+}
+.link_active {
+  @apply bg-primary bg-opacity-10 text-primary !important;
+}
 
-    &__link {
-      --ripple-color: theme('colors.primary.DEFAULT');
-      --ripple-weight: .1;
-      @apply px-3 py-1 font-medium transition-colors rounded;
-      @apply hover:text-primary text-gray-600 #{!important};
-    }
-    &__link--active {
-      @apply bg-primary bg-opacity-10 text-primary #{!important};
-    }
+.new {
+  @apply mr-4 pl-4 border-l border-gray-700;
+}
 
-    &__new-btn {
-      @apply mr-4 pl-4 border-l border-gray-700;
-    }
+.section {
+  @apply flex items-center justify-end w-full;
+}
 
-    &__section {
-      @apply flex items-center justify-end w-full;
-    }
-
-    &__logo {
-      height: 30px;
-      @apply w-auto;
-    }
-  }
+.logo {
+  height: 30px;
+  @apply w-auto;
 }
 </style>

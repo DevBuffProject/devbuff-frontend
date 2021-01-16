@@ -1,5 +1,5 @@
 <template>
-  <div class="v-toolbar">
+  <div class="py-3 bg-white border-b border-gray-200 dark:text-blueGray-100 dark:bg-blueGray-900 dark:border-blueGray-800">
     <div class="v-toolbar__container">
       <div
         v-show="!hideBacklink"
@@ -28,7 +28,7 @@ export default {
 <style lang="scss" scoped>
 @layer components {
   .v-toolbar {
-    @apply py-3 bg-background-contrast border-b border-muted sticky top-0 z-50;
+    @apply py-3  border-b border-muted sticky top-0 z-50;
     @apply dark:border-gray-900;
 
     @supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) {

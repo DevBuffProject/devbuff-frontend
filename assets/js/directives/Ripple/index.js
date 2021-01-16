@@ -30,7 +30,7 @@ export const ripple = {
         setTimeout(() => rippleContainer.remove(), duration * 2)
       }
 
-      el.addEventListener('mouseover', rippleReset)
+      el.addEventListener('mouseout', rippleReset)
       el.addEventListener('mouseup', rippleReset)
 
       rippleContainer.className = 'v-ripple'

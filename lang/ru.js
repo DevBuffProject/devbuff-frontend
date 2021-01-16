@@ -8,6 +8,8 @@ export default {
     cancel: 'отменить',
     save: 'сохранить',
     apply: 'применить',
+    specializations: 'Специализации',
+    languages: 'Языки программирования'
   },
   country: {
     default: 'Не выбрана',

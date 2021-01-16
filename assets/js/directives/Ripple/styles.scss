@@ -1,22 +1,18 @@
-@layer base {
-  :root {
-    --ripple-color: rgba(255, 255, 255, .3);
-    --ripple-weight: .5;
-  }
+:root {
+  --ripple-color: rgba(0, 0, 0, .3);
+  --ripple-weight: .5;
 }
 
-@layer components {
-  .v-ripple {
-    @apply absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none;
+.v-ripple {
+  @apply absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none;
 
-    &__ripple {
-      background-color: var(--ripple-color);
-      opacity: var(--ripple-weight);
-      @apply absolute rounded-full transform -translate-y-1/2 transform -translate-x-1/2 w-0 h-0;
-    }
+  &__ripple {
+    background-color: var(--ripple-color);
+    opacity: var(--ripple-weight);
+    @apply absolute rounded-full transform -translate-y-1/2 transform -translate-x-1/2 w-0 h-0;
+  }
 
-    &__ripple--theme-dark {
-      --ripple-color: rgba(0, 0, 0, .3);
-    }
+  .dark &__ripple {
+    --ripple-color: rgba(255, 255, 255, .3);
   }
 }

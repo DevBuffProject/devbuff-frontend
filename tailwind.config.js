@@ -1,52 +1,6 @@
 const colors = require('tailwindcss/colors')
 const typography = require('@tailwindcss/typography')
 
-const baseColors = {
-  white: colors.white,
-  black: colors.black,
-  gray: colors.gray,
-  primary: {
-    DEFAULT: colors.blue['500'],
-    ...colors.blue
-  },
-  success: {
-    DEFAULT: colors.green['500'],
-    ...colors.green
-  },
-  danger: {
-    DEFAULT: colors.rose['500'],
-    ...colors.rose
-  },
-  warning: {
-    DEFAULT: colors.orange['500'],
-    ...colors.orange
-  },
-}
-
-const darkModeColors = {
-  // muted: {
-  //   DEFAULT: colors.gray['200']
-  // },
-  // background: {
-  //   DEFAULT: colors.gray['100'],
-  //   contrast: colors.white
-  // },
-  'background-dark': {
-    DEFAULT: colors.gray['700'],
-    contrast: colors.gray['800']
-  },
-}
-
-const lightModeColors = {
-  muted: {
-    DEFAULT: colors.gray['200']
-  },
-  background: {
-    DEFAULT: colors.gray['100'],
-    contrast: colors.white
-  },
-}
-
 module.exports = {
   purge: [
     './components/**/*.{vue,js}',
@@ -59,9 +13,45 @@ module.exports = {
   theme: {
     extend: {},
     colors: {
-      ...baseColors,
-      ...darkModeColors,
-      ...lightModeColors,
+      transparent: 'transparent',
+      white: colors.white,
+      black: colors.black,
+      gray: colors.gray,
+      purple: colors.purple,
+      yellow: colors.yellow,
+      blueGray: {
+        50: '#f0f6fc',
+        100: '#c9d1d9',
+        200: '#b1bac4',
+        300: '#8b949e',
+        400: '#6e7681',
+        500: '#484f58',
+        600: '#30363d',
+        700: '#21262d',
+        800: '#161b22',
+        900: '#0d1117',
+      },
+      muted: colors.gray[500],
+      primary: {
+        DEFAULT: colors.blue['500'],
+        ...colors.blue
+      },
+      secondary: {
+        DEFAULT: colors.yellow['500'],
+        ...colors.yellow
+      },
+      success: {
+        DEFAULT: colors.green['500'],
+        ...colors.green
+      },
+      danger: {
+        DEFAULT: colors.rose['500'],
+        ...colors.rose
+      },
+      warning: {
+        DEFAULT: colors.orange['500'],
+        ...colors.orange
+      },
     },
     screens: {
       '2xs': '320px',
@@ -74,7 +64,7 @@ module.exports = {
   },
   variants: {
     extend: {
-      backgroundColor: ['dark']
+      backgroundColor: ['active']
     },
   },
   plugins: [

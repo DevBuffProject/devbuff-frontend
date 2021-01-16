@@ -1,10 +1,10 @@
 <template>
   <div class="container mx-auto pt-4">
     <div class="idea">
-      <v-card class="mt-3">
+      <div class="mt-3">
         <h1 class="idea__title mb-3 p-0"> {{ idea.name }} </h1>
         <div class="flex flex-wrap items-center justify-between mb-3">
-          <div class="flex flex-wrap">
+          <div class="flex flex-wrap items-start">
             <v-user
               :user-id="idea.ownerIdea.id"
               :firstname="idea.ownerIdea.firstName"
@@ -31,38 +31,30 @@
           </div>
 
           <v-label :name="$t('page.ideas.view.action.title')">
-            <v-button
-              v-if="isOwner"
-              class="mr-2"
-              :icon="['fas', 'edit']"
-              type="muted"
-              small
-              @click="$router.push(localePath({ name: 's-editor', query: { id: idea.id }}))"
-            >
-              {{ $t('page.ideas.view.action.change') }}
-            </v-button>
+            <div class="flex items-center">
+              <v-button
+                v-if="isOwner"
+                class="mr-2"
+                :icon="['fas', 'edit']"
+                type="muted"
+                @click="$router.push(localePath({ name: 's-editor', query: { id: idea.id }}))"
+              >
+                {{ $t('page.ideas.view.action.change') }}
+              </v-button>
 
-            <v-button
-              v-if="isOwner || isAdmin"
-              type="danger"
-              small
-              @click="deleteIdea"
-            >
-              {{ $t('page.ideas.view.action.delete') }}
-            </v-button>
+              <a v-if="isOwner || isAdmin" type="danger" class="text-danger" @click="deleteIdea">
+                {{ $t('page.ideas.view.action.delete') }}
+              </a>
 
-            <v-button
-              v-if="!isOwner && !isAdmin"
-              type="primary"
-              small
-            >
-              {{ $t('page.ideas.view.action.respond') }}
-            </v-button>
+              <v-button v-if="!isOwner && !isAdmin" type="primary">
+                {{ $t('page.ideas.view.action.respond') }}
+              </v-button>
+            </div>
           </v-label>
         </div>
 
         <div v-html="idea.text"/>
-      </v-card>
+      </div>
 
       <div class="mt-5">
         <h3 class="text-muted text-thin">{{

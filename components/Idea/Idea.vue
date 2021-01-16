@@ -1,66 +1,70 @@
 <template>
-  <div
-    class="v-idea"
-    :class="{ 'v-idea--state_hover': hover }"
-    @mouseover="hover = true"
-    @mouseout="hover = false"
-  >
-    <div class="flex">
-      <v-image size="75px" class="v-idea__image" :src="'//source.unsplash.com/random?logo&key' + id" />
-      <div class="w-full">
-        <div v-if="!linked"> {{ title }}</div>
-        <nuxt-link
-          :to="localePath({ name: 'ideas-id', params: { id } })"
-          class="v-idea__link"
-          :class="{ 'v-idea__link--state_hover': hover }"
-        >
-          {{ title }}
-        </nuxt-link>
-        <div class="v-idea__publish-date">
-          {{ publishDate | toLocaleDateTime($i18n.locale) }}
-        </div>
+  <v-card>
+    <div>
+      <v-image
+        v-if="id !== '775cfa3c-311e-4ce0-977e-1c68001b317b'"
+        size="50px"
+        class="mb-2 block rounded-full"
+        :src="'//source.unsplash.com/random?logo&key' + id"
+      />
 
-        <div class="v-idea__description"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc velit felis, lobortis ut purus ut, molestie suscipit sapien. Nulla nec vehicula metus, ut lacinia augue. Mauris quam risus, vulputate luctus velit sit amet, rhoncus sollicitudin enim. In varius rutrum tellus, ac viverra eros hendrerit eu. Nunc quis metus vitae velit molestie semper </div>
+      <div v-if="!linked"> {{ title }}</div>
+      <nuxt-link
+        :to="localePath({ name: 'ideas-id', params: { id } })"
+        class="v-idea__link"
+        :class="{ 'v-idea__link--state_hover': hover }"
+      >
+        {{ title }}
+      </nuxt-link>
 
-        <div v-if="specialists.length || technologies.length || languages.length" class="flex w-full">
-          <v-label v-if="specialists.length" :name="$t('components.ideaCard.specialists')" class="v-idea__labels">
-            <div class="v-idea__labels-list">
-              <v-chip
-                v-for="(spec, key) in specialists"
-                :key="spec + key + id"
-                :text="t('specializations.'+spec.name+'.title',spec.name)"
-                class="v-idea__label"
-              />
-            </div>
-          </v-label>
-
-          <v-label v-if="technologies.length" :name="$t('components.ideaCard.technologies')" class="v-idea__labels">
-            <div class="v-idea__labels-list">
-              <v-chip
-                v-for="(tech, key) in technologies"
-                :key="tech + key + id"
-                :text="tech"
-                class="v-idea__label"
-              />
-            </div>
-          </v-label>
-
-          <v-label v-if="languages.length" :name="$t('components.ideaCard.languages')" class="v-idea__labels">
-            <div class="v-idea__labels-list">
-              <v-chip
-                v-for="(lang, key) in languages"
-                :key="lang + key + id"
-                :text="t('languages.'+lang.name,lang.name)"
-                type="auto"
-                class="v-idea__label"
-              />
-            </div>
-          </v-label>
-        </div>
+      <div
+        v-if="publishDate"
+        class="mb-3 text-xs text-gray-400 dark:text-blueGray-500"
+      >
+        {{ publishDate | toLocaleDateTime($i18n.locale) }}
       </div>
     </div>
 
-  </div>
+    <v-label>
+      <div class="v-idea__description my-4"> {{ description }} </div>
+    </v-label>
+
+    <v-label v-if="specialists.length" :name="$t('components.ideaCard.specialists')" class="v-idea__labels">
+      <div class="v-idea__labels-list">
+        <v-chip
+          v-for="(spec, key) in specialists"
+          :key="spec + key + id"
+          :text="t('specializations.'+spec.name+'.title',spec.name)"
+          class="v-idea__label"
+        />
+      </div>
+    </v-label>
+
+
+    <v-label v-if="technologies.length" :name="$t('components.ideaCard.technologies')" class="v-idea__labels">
+      <div class="v-idea__labels-list">
+        <v-chip
+          v-for="(tech, key) in technologies"
+          :key="tech + key + id"
+          :text="tech"
+          class="v-idea__label"
+        />
+      </div>
+    </v-label>
+
+    <v-label v-if="languages.length" :name="$t('components.ideaCard.languages')" class="v-idea__labels">
+      <div class="v-idea__labels-list">
+        <v-chip
+          v-for="(lang, key) in languages"
+          :key="lang + key + id"
+          :text="t('languages.'+lang.name,lang.name)"
+          type="auto"
+          class="v-idea__label"
+        />
+      </div>
+    </v-label>
+
+  </v-card>
 </template>
 
 <script>
@@ -130,12 +134,9 @@ export default {
     @apply relative p-4 transition-all transition-shadow;
 
     &__link {
-      @apply text-primary inline-block mb-1 text-xl font-normal transition-colors;
+      @apply text-primary text-xl block font-light transition-colors;
     }
 
-    &__publish-date {
-      @apply text-xs text-gray-400 mb-3;
-    }
 
       &__image {
       @apply mr-4;
@@ -143,14 +144,11 @@ export default {
     }
 
     &__description {
-      @apply font-normal w-full mb-3;
+      @apply w-full mb-3;
     }
 
     &__labels {
-      @apply pr-6 my-2 mr-6 w-1/3 border-r border-muted;
-      &:last-of-type {
-        @apply border-0 #{!important};
-      }
+      @apply pr-6 my-2 mr-6;
     }
 
     &__labels-list {

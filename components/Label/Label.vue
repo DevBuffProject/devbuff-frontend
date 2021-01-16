@@ -1,6 +1,6 @@
 <template>
-  <label class="v-label">
-    <div class="v-label__name">
+  <label class="block mt-4">
+    <div class="text-xs mb-1 text-gray-400 dark:text-blueGray-500">
       <slot v-if="$slots.label" />
       <span v-else> {{ name }} </span>
     </div>
@@ -13,23 +13,7 @@ export default {
   name: 'v-label',
 
   props: {
-    name: {
-      type: String,
-      required: true
-    }
+    name: String,
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@layer components {
-  .v-label {
-    @apply block;
-
-    &__name {
-      @apply text-gray-400 text-xs mb-1;
-      font-weight: 300;
-    }
-  }
-}
-</style>

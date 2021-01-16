@@ -1,5 +1,8 @@
 <template>
-  <div class="v-card" v-on="$listeners">
+  <div
+    class="p-3 rounded-xl bg-white border border-gray-200 dark:border-blueGray-700 dark:bg-blueGray-900"
+    v-on="$listeners"
+  >
     <div v-if="$slots.header" class="v-card__header">
       <slot name="header" />
     </div>
@@ -17,11 +20,3 @@ export default {
   name: 'v-card',
 }
 </script>
-
-<style lang="scss" scoped>
-@layer components {
-  .v-card {
-    @apply bg-background-contrast p-4 rounded-md border border-muted;
-  }
-}
-</style>

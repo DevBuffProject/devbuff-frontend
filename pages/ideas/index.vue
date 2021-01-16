@@ -6,30 +6,26 @@
     <div class="container mx-auto">
       <div class="ideas__grid">
         <div class="ideas__grid-column-filter">
-          <v-card class="ideas__filter">
-            filter
-          </v-card>
+          <v-filter :fields="_filterSpecs" />
         </div>
 
         <div class="ideas__grid-column-ideas">
-          <v-label name="сортировка">
-            <div class="ideas__sort">
-              <v-switcher
-                :values="[
-                { title: $t('page.ideas.explore.filter.datePublish'), value: 'date' },
-                { title: $t('page.ideas.explore.filter.lastUpdate'), value: 'lastUpdate' }
-              ]"
-                :value="filter.sortBy"
-                @change="applyFilter({ sortBy: $event })"
-              />
+          <div class="ideas__sort">
+            <v-switcher
+              :values="[
+              { title: $t('page.ideas.explore.filter.datePublish'), value: 'date' },
+              { title: $t('page.ideas.explore.filter.lastUpdate'), value: 'lastUpdate' }
+            ]"
+              :value="filter.sortBy"
+              @change="applyFilter({ sortBy: $event })"
+            />
 
-              <transition name="fade">
-                <v-loading v-show="loading" class="ml-4 opacity-50"/>
-              </transition>
-            </div>
-          </v-label>
+            <transition name="fade">
+              <v-loading v-show="loading" class="ml-4 opacity-50"/>
+            </transition>
+          </div>
 
-          <v-card v-if="ideas.length" class="ideas__list">
+          <div v-if="ideas.length" class="ideas__list grid grid-cols-3 gap-4">
             <v-idea
               v-for="idea in ideas"
               :key="idea.id"
@@ -40,7 +36,7 @@
               :id="idea.id"
               class="ideas__idea"
             />
-          </v-card>
+          </div>
           <div v-else class="p-5 ideas__no-ideas">
             🤷 <span class="text-muted"> {{ $t('page.ideas.explore.notFound') }} </span>
           </div>
@@ -86,6 +82,18 @@ export default {
       skills: 'skills/skills',
       specs: 'skills/specializations'
     }),
+    _filterSpecs() {
+      return [
+        {
+          name: this.t('common.specializations'),
+          params: this.specs
+        },
+        {
+          name: this.t('components.ideaCard.languages'),
+          params: this.langs
+        }
+      ]
+    },
     filteredLanguages() {
       if (!Array.isArray(this.filter.specialists)) {
         return [];
@@ -224,7 +232,7 @@ export default {
 @layer components {
   .ideas {
     &__grid {
-      @apply grid gap-4 grid-cols-8;
+      @apply grid gap-6 grid-cols-10;
     }
 
     &__grid-column-filter {
@@ -232,7 +240,7 @@ export default {
     }
 
     &__grid-column-ideas {
-      @apply col-span-6;
+      @apply col-span-8;
     }
 
     &__filter {
@@ -246,10 +254,6 @@ export default {
 
     &__list {
       @apply p-0 border-0 #{!important};
-    }
-
-    &__idea {
-      @apply border-b border-muted cursor-pointer border-b-0;
     }
 
     &__no-ideas {

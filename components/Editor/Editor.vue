@@ -7,32 +7,41 @@
     tag="div"
   >
     <div
-      class="v-editor"
-      :class="errors.length && 'v-editor--state-invalid'"
+      :class="[
+        {
+          'border-danger': errors.length,
+          'border-gray-200 dark:border-blueGray-700': errors.length === 0
+        },
+        'p-4 pb-0 rounded-lg border bg-white dark:bg-blueGray-800',
+      ]"
     >
 
-      <div class="v-editor__header">
-        <div
-          class="v-editor__history v-editor__header-section"
-          :class="state.historyMove && 'v-editor__history--move-active'"
-        >
+      <div class="flex justify-between items-center -mt-4 mb-6 px-0 pt-0 py-4">
+        <div class="v-editor__header-section overflow-hidden -ml-3.5 flex items-center">
           <div
             v-for="historyAction in ['undo', 'redo']"
             :key="historyAction"
             @click="historyAction === 'undo' ? undo : redo"
-            class="v-editor__history-control"
-            :class="state.historyMove === historyAction && 'v-editor__history-control--active'"
+            :class="[
+              { 'v-editor__history-control--active': state.historyMove === historyAction },
+              'v-editor__history-control'
+            ]"
           >
             <v-icon :icon="['fas', `${historyAction}-alt`]" />
           </div>
-          <span class="v-editor__history-help">ctrl + shift + z</span>
+          <span class="text-xs font-medium uppercase text-gray-500 dark:text-blueGray-500">ctrl + (shift) + z</span>
         </div>
 
         <div
           id="toolbar"
           ref="toolbar"
-          class="v-editor__toolbar"
-          :class="state.toolHover && 'v-editor__toolbar--hover'"
+          :class="[
+            {
+              'border-gray-100 dark:border-blueGray-700': errors.length === 0,
+              'border-danger border-t-gray-200': errors.length
+            },
+            'rounded-lg rounded-t-none border border-t-0 -mt-px bg-gray-100 dark:bg-blueGray-900 pb-2 px-4'
+          ]"
         >
           <div class="v-editor__toolbar-tools">
             <div class="v-editor__toolbar-hightlight" ref="highlight" />
@@ -47,7 +56,7 @@
                 :key="tool.format"
                 ref="tools"
                 class="v-editor__tool"
-                v-ripple="'rgba(0, 0, 0, .05)'"
+                v-ripple
                 :class="state.formats[tool.format] && 'v-editor__tool--active'"
                 :data-tool-name="tool.format"
                 @click.stop.prevent="toggleInlineFormat(tool.format)"
@@ -66,7 +75,7 @@
                 v-for="tool in state.tools.list.line"
                 :key="tool.format + tool.value"
                 ref="tools"
-                v-ripple="'rgba(0, 0, 0, .05)'"
+                v-ripple
                 class="v-editor__tool"
                 :class="state.formats[tool.format] === tool.value && 'v-editor__tool--active'"
                 :data-tool-name="`${tool.format}-${tool.value}`"
@@ -102,7 +111,7 @@
                 v-for="tool in state.tools.list.embed"
                 :key="tool.format"
                 ref="tools"
-                v-ripple="'rgba(0, 0, 0, .05)'"
+                v-ripple
                 :data-tool-name="tool.type"
                 @mouseover.self="onToolMouseover"
                 @mouseout.self="onToolMouseout"
@@ -157,8 +166,6 @@ import createQuill from '~/assets/js/quill'
 import { required as veeRuleRequired } from 'vee-validate/dist/rules'
 import { extend as veeExtend, localize as veeLocalize } from 'vee-validate'
 import 'highlight.js/styles/atom-one-dark.css'
-
-console.log('created')
 
 let highlightTimeout = 0
 
@@ -222,7 +229,7 @@ export default {
           ],
           line: [
             { format: 'align', value: false, icon: 'align-left' },
-            { format: 'align', value: 'center', icon: 'items-center' },
+            { format: 'align', value: 'center', icon: 'align-center' },
             { format: 'align', value: 'right', icon: 'align-right' },
           ],
           media: [
@@ -375,7 +382,7 @@ export default {
 <style>
 .image-uploading::before {
   border-color: transparent !important;
-  border-top-color: var(--color-primary) !important;
+  border-top-color: theme('colors.primary.DEFAULT') !important;
   animation: spinner 5s linear infinite !important;
 }
 .ql-clipboard { display: none }
@@ -390,7 +397,6 @@ export default {
   content: attr(data-placeholder);
   pointer-events: none;
   position: absolute;
-  top: 1rem;
   width: 100%;
   word-break: break-all;
 }
@@ -399,19 +405,6 @@ export default {
 <style lang="scss" scoped>
 @layer components {
   .v-editor {
-    $self: &;
-
-    @apply bg-white p-4 pb-0 rounded-2xl border border-gray-200;
-
-    &--state-invalid {
-      @apply border-danger;
-
-      #{$self} &__toolbar {
-        border-color: var(--color-danger);
-        border-top: 1px solid var(--color-background);
-      }
-    }
-
     &__error  {
       @apply text-danger;
     }
@@ -428,10 +421,6 @@ export default {
       padding: .5rem 1.5rem;
     }
 
-    &__header {
-      @apply flex justify-between items-center -mt-4 mb-6 px-0 pt-0 py-4;
-    }
-
     &__header-section {
       @apply flex w-full;
     }
@@ -440,37 +429,19 @@ export default {
       @apply justify-end;
     }
 
-    &__history {
-      @apply flex items-end overflow-hidden -ml-3.5;
-    }
-
-    &__history-help {
-      @apply text-xs font-medium uppercase text-gray-500;
-    }
 
     &__history-control {
-      padding: .5rem .85rem;
-      display: flex;
-      color: var(--color-text);
-      cursor: pointer;
-      transition: .3s var(--base-transition);
+      @apply py-2 px-3 my-1 cursor-pointer transition-colors flex text-gray-900 dark:text-blueGray-400 hover:text-primary;
+    }
+
+    &__history-control:first-of-type {
+      @apply border-r border-gray-200 dark:border-blueGray-700;
     }
 
     &__history-control:active,
     &__history-control--active {
-      background-color: var(--color-primary-fade);
-      color: var(--color-primary);
-      border-radius: 8px;
+      @apply text-primary #{!important};
     }
-
-    &__history--move-active &__history-control {
-      border-color: transparent !important;
-    }
-
-    &__history-control:not(:last-of-type) {
-      border-right: 1px solid var(--color-muted);
-    }
-
 
     &__toolbar {
       padding: .5rem;
@@ -504,22 +475,15 @@ export default {
     }
 
     &__toolbar-hightlight {
-      background-color: var(--color-muted);
-      position: absolute;
-      height: 1rem;
-      opacity: 0;
-      border-radius: 8px;
-      box-sizing: border-box;
+      @apply bg-gray-300 dark:bg-blueGray-700 absolute h-4 opacity-0 rounded-md box-border;
+
       transform: translate(calc(8px - 0.5rem));
       transition: opacity .3s var(--base-transition);
       z-index: 1;
     }
 
     &__tools-delimiter {
-      background-color: var(--color-muted-darken);
-      margin: 0 1rem;
-      height: 1rem;
-      width: 1px;
+      @apply h-4 w-px bg-gray-300 dark:bg-blueGray-700 mx-4;
     }
 
     &__tool {
@@ -538,44 +502,12 @@ export default {
     }
 
     &__tool--active {
-      background-color: var(--color-primary-fade);
-      border-radius: 8px;
-      color: var(--color-primary);
+      @apply text-primary;
     }
 
     &__area /deep/ .ql-editor {
       min-height: 100px;
     }
-
-    //&__statusline {
-    //  background-color: var(--color-muted);
-    //  position: relative;
-    //  font-size: .8rem;
-    //  font-weight: 500;
-    //  margin: -1rem;
-    //  margin-top: 0;
-    //  padding: .2rem 1.5rem;
-    //  padding-top: 1.2rem;
-    //  border-radius: 16px;
-    //  overflow: hidden;
-    //  color: var(--color-text);
-    //}
-
-    //&__statusline::before {
-    //  $border-size: 2px;
-    //
-    //  content: "";
-    //  background: #fff;
-    //  border-radius: 0 0 20px 20px;
-    //  border: $border-size solid var(--color-muted);
-    //  position: absolute;
-    //  width: calc(100% + #{$border-size * 2});
-    //  height: 20px;
-    //  top: 0;
-    //  box-sizing: border-box;
-    //  border-top: 0;
-    //  left: -$border-size;
-    //}
   }
 }
 </style>
