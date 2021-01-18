@@ -23,7 +23,7 @@
                 :placeholder="$t('page.editor.idea.heading')"
                 :name="$t('page.editor.idea.heading')"
                 type="text"
-                rules="required"
+                :rules="{ required: true, regex: /^([A-zА-яЁё\.\,\-\s]{3,30})$/ }"
                 autofocus
                 v-model="idea.name"
               />
@@ -38,7 +38,7 @@
                 :label="$t('page.editor.idea.desc')"
                 :name="$t('page.editor.idea.desc')"
                 textarea
-                rules="required"
+                :rules="{ required: true, regex: /^([A-zА-яЁё\.\,\;\:\!\?\-\s]{15,300})$/ }"
                 v-model="idea.description"
               />
             </v-label>
@@ -46,7 +46,6 @@
 
           <div class="mt-3 mb-3">
             <client-only placeholder="Loading...">
-<!--              <lazy-v-editor v-model="idea.text" />-->
               <component
                 :is="editor"
                 v-model="idea.text"
