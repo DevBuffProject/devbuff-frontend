@@ -55,7 +55,7 @@ export default {
       default: false
     },
     rules: {
-      type: String,
+      type: [Object, String],
       default: null
     },
     value: {
