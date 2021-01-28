@@ -1,8 +1,0 @@
-$base-transition: cubic-bezier(.28,.98,.43,.99);
-
-.fade-enter-active, .fade-leave-active {
-  transition: .2s var(--base-transition);
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
