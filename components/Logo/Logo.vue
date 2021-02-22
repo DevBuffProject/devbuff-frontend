@@ -1,10 +1,13 @@
 <template>
-  <div class="logo">
-    <img :src="src" alt="logo" class="logo__image" />
-  </div>
+  <kinesis-container>
+    <kinesis-element :strength="8" type="depth" :class="$style.wrapper" >
+      <img :src="src" alt="logo" :class="$style.image" />
+    </kinesis-element>
+  </kinesis-container>
 </template>
 
 <script>
+
 export default {
   props: {
     'beta-label': Boolean,
@@ -14,13 +17,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&display=swap');
-
-.logo {
-  &__image {
-    width: inherit;
-    height: inherit;
-  }
+<style module>
+.wrapper, .image {
+  width: inherit;
+  height: inherit;
 }
 </style>

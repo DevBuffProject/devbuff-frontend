@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app class="viewport">
+    <v-app :class="$style.viewport">
       <v-header />
       <main>
         <nuxt />
@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style module>
 .viewport {
   min-height: 100vh;
   display: grid;

@@ -1,7 +1,13 @@
 <template>
   <span
-    class="v-image"
-    :class="{ 'rounded-full': rounded }"
+    class="
+      overflow-hidden bg-cover bg-center inline-flex justify-center items-center
+      bg-gray-200 dark:bg-blueGray-600
+    "
+    :class="{
+      'rounded': !rounded,
+      'rounded-full': rounded
+    }"
     :style="[
       ready && { 'background-image': `url(${src})` },
       { width: size, height: size, flex: `0 0 ${size}` }
@@ -17,7 +23,10 @@ export default {
   name: 'v-image',
 
   props: {
-    rounded: Boolean,
+    rounded: {
+      type: Boolean,
+      default: false,
+    },
     size: {
       type: String,
       default: '100px'

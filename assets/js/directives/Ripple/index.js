@@ -28,6 +28,8 @@ export const ripple = {
       const rippleReset = () => {
         setTimeout(() => ripple.style.opacity = 0, !rippleFinished ? duration : 0)
         setTimeout(() => rippleContainer.remove(), duration * 2)
+        el.removeEventListener('mouseout', rippleReset)
+        el.removeEventListener('mouseup', rippleReset)
       }
 
       el.addEventListener('mouseout', rippleReset)

@@ -1,43 +1,24 @@
-@tailwind base;
-@tailwind components;
-@tailwind screens;
-@tailwind utilities;
+/**
+ * This injects Tailwind's base styles, which is a combination of
+ * Normalize.css and some additional base styles.
+ */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import 'tailwindcss/screens';
 
-@layer utilities {
-  .h-fit {
-    height: fit-content;
-  }
 
-  .w-fit {
-    width: fit-content;
-  }
-
-  @variants responsive {
-    .scroll-snap-none {
-      scroll-snap-type: none;
-    }
-    .scroll-snap-x {
-      scroll-snap-type: x;
-    }
-    .scroll-snap-y {
-      scroll-snap-type: y;
-    }
-  }
-}
-
-@layer utilities {
-}
-
-@layer base {
+@layer components {
   h1 {
-    @apply text-5xl font-bold;
+    @apply text-xl;
   }
-
   h2 {
-    @apply text-4xl font-semibold;
+    @apply text-lg;
   }
-
   h3 {
-    @apply text-3xl font-medium;
+    @apply text-sm;
+  }
+  h4 {
+    @apply text-base;
   }
 }

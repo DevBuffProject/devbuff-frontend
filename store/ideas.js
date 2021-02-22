@@ -1,3 +1,5 @@
+import { qs } from '~/assets/js/url'
+
 export const state = () => ({
   list: [],
   own: [],
@@ -40,7 +42,7 @@ export const actions = {
   },
 
   async updateIdea(ctx, { id, data }) {
-    return await await this.$api.latest.put(`idea/${id}`, data)
+    return await this.$api.latest.put(`idea/${id}`, data)
   },
 
   async deleteIdea(ctx, id) {
@@ -54,17 +56,16 @@ export const actions = {
     return ideas
   },
 
-  async getIdeas({ commit, state }, params, rewrite) {
+  async getIdeas({ commit, state }, params) {
     const finalParams = {
       page: 1,
       sortBy: 'date',
       ...params
     }
-
-    const query = new URLSearchParams
-    Object.keys(finalParams).forEach(param => query.append(param, finalParams[param]));
-
-    const ideas = await this.$api.latest.get(`/idea/?${query}`)
+    const query = qs.stringify(finalParams)
+    console.log(['/idea/', query].join('?'))
+    // const query = ''
+    const ideas = await this.$api.latest.get(['/idea/', query].join('?'))
     commit('setIdeas', ideas)
 
     return ideas

@@ -15,15 +15,15 @@ export default {
 .progress {
   --progress-time: 3s;
 
-  // background: var(--color-primary-fade);
+  @apply bg-purple-500;
   height: 2px;
   position: relative;
   overflow: hidden;
   animation: start .3s ease-in;
 
   &__bar {
+    @apply bg-primary;
     position: absolute;
-    background: var(--color-primary);
     transition: transform .2s linear;
     left: 0;
     top: 0;

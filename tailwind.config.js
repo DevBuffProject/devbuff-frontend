@@ -2,13 +2,18 @@ const colors = require('tailwindcss/colors')
 const typography = require('@tailwindcss/typography')
 
 module.exports = {
-  purge: [
-    './components/**/*.{vue,js}',
-    './layouts/**/*.vue',
-    './pages/**/*.vue',
-    './plugins/**/*.js',
-    './nuxt.config.js',
-  ],
+  future: {
+    removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true,
+  },
+  purge: {
+    enabled: process.env.NODE_ENV === 'production',
+    content: [
+      './components/**/*.{vue,js}',
+      './layouts/**/*.vue',
+      './pages/**/*.vue',
+    ],
+  },
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {},

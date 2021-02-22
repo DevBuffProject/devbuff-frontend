@@ -17,9 +17,9 @@ export default ({ $loading, $cookies, $config, $axios, store, error }, inject) =
 
     // eject data
     axios.onResponse(response => response.data)
-    axios.onError(createError)
-    axios.onResponseError(createError)
-    axios.onRequestError(createError)
+    // axios.onError(createError)
+    // axios.onResponseError(createError)
+    // axios.onRequestError(createError)
 
     return axios
   }

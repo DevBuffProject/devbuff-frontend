@@ -17,7 +17,7 @@
         ]"
         @mousedown="focus"
       >
-        <v-icon v-if="icon" :icon="icon" />
+        <v-icon v-if="icon" :icon="icon" class="ml-4 mt-1" />
         <textarea
           v-if="textarea"
           ref="field"

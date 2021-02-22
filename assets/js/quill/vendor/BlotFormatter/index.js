@@ -1,6 +1,7 @@
 import BaseBlotFormatter from 'quill-blot-formatter'
 import Specs from './specs'
 import { faAlignLeft, faAlignCenter, faAlignRight } from '@fortawesome/free-solid-svg-icons'
+import theme from '~/tailwind.config'
 
 const buildSvg = ({ icon }) => {
   return `
@@ -28,8 +29,8 @@ export default class BlotFormatter extends BaseBlotFormatter {
         style: {
           position: 'absolute',
           boxSizing: 'content-box',
-          border: '2px solid var(--color-primary)',
-          padding: '5px',
+          border: `2px solid ${theme.theme.colors.primary.DEFAULT}`,
+          padding: '2px',
           borderRadius: '8px',
           transform: 'translate(-6px, -6px)'
         },

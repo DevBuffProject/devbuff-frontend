@@ -22,7 +22,7 @@ const config = {
     ]
   },
   css: [
-    { src: '~/assets/css/common.scss', lang: 'sass' }
+    { src: '~/assets/css/common.css', lang: 'sass' }
   ],
 
   loading: '~/page-loading.vue',
@@ -45,7 +45,7 @@ const config = {
   ],
 
    modules: [
-    '@nuxtjs/pwa',
+    // '@nuxtjs/pwa',
     '@nuxtjs/axios',
     'nuxt-i18n',
     'cookie-universal-nuxt',
@@ -96,7 +96,7 @@ const config = {
     STATUSPAGE_BASE_URL: process.env.STATUSPAGE_BASE_URL
   },
 
-  modern: !dev,
+  // modern: true,
 
   router: {
     middleware: [
@@ -105,6 +105,9 @@ const config = {
   },
 
   build: {
+    parallel: true,
+    // hardSource: true,
+    // extractCSS: true,
     transpile: [
       "vee-validate/dist/rules"
     ],

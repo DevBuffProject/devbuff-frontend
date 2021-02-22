@@ -6,7 +6,7 @@
     <div class="container mx-auto">
       <div class="ideas__grid">
         <div class="ideas__grid-column-filter">
-          <v-filter :fields="_filterSpecs" />
+          <v-filter :fields="filterOptions" v-model="filter.params" />
         </div>
 
         <div class="ideas__grid-column-ideas">
@@ -16,8 +16,7 @@
               { title: $t('page.ideas.explore.filter.datePublish'), value: 'date' },
               { title: $t('page.ideas.explore.filter.lastUpdate'), value: 'lastUpdate' }
             ]"
-              :value="filter.sortBy"
-              @change="applyFilter({ sortBy: $event })"
+              v-model="filter.sort"
             />
 
             <transition name="fade">
@@ -48,7 +47,8 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
+import { qs } from '~/assets/js/url'
 
 export default {
   async middleware({store, route}) {
@@ -57,21 +57,28 @@ export default {
   },
 
   data() {
+    const query = Object.entries(qs.parse(this.$route.fullPath.split('?')[1]))
+      .reduce((acc, [key, params]) => {
+        acc[key] = !Array.isArray(params) ? [params] : params
+        return acc
+      }, {})
+
     return {
       moreLoading: false,
       noMoreLoaded: false,
       loading: false,
       filter: {
         page: 1,
-        sortBy: 'date',
-        ...(function (val) {
-          if (val.specialists !== undefined && val.specialists !== null && val.specialists.length > 0) {
-            val.specialists = val.specialists.split(',');
-          } else {
-            val.specialists = [];
-          }
-          return val;
-        })(this.$route.query),
+        sort: 'date',
+        params: query
+      }
+    }
+  },
+  watch: {
+    filter: {
+      deep: true,
+      handler() {
+        this.applyFilter()
       }
     }
   },
@@ -82,129 +89,36 @@ export default {
       skills: 'skills/skills',
       specs: 'skills/specializations'
     }),
-    _filterSpecs() {
+    filterOptions() {
       return [
         {
           name: this.t('common.specializations'),
+          value: 'specialists',
           params: this.specs
         },
         {
           name: this.t('components.ideaCard.languages'),
+          value: 'languages',
           params: this.langs
         }
       ]
     },
-    filteredLanguages() {
-      if (!Array.isArray(this.filter.specialists)) {
-        return [];
-      }
-
-      let languages = new Set();
-
-      for (let language of this.skills) {
-        for (let specialization of language.specializations) {
-          if (this.filter.specialists.indexOf(specialization.name) > -1) {
-            languages.add(language.name);
-          }
-        }
-      }
-
-      return Array.from(languages);
-    }
   },
 
   methods: {
-    async excludeFilter(filters) {
-      if (Array.isArray(filters)) {
-        filters.forEach(filter => this.filter[filter] = [])
-      } else {
-        for (let key of Object.keys(filters)) {
-          let index = this.filter[key].indexOf(filters[key]);
-          if (index > -1) {
-            this.filter[key].splice(index, 1);
-          }
-        }
-        //Validate languages
-        if (Array.isArray(this.filter.languages)) {
-          this.filter.languages.forEach((lang, index, object) => {
-            if (this.filteredLanguages.indexOf(lang) === -1) {
-              object.splice(index, 1);
-            }
-          });
-        }
-
+    applyFilter() {
+      const filter = {
+        sortBy: this.filter.sort,
+        page: this.filter.page,
+        ...this.filter.params
       }
-      return await this.updateIdeas();
-    },
-    async applyFilter(filter = {}) {
-      for (let key of Object.keys(filter)) {
-        if (this.filter[key] === undefined) {
-          this.filter[key] = [];
-        }
-
-        if (Array.isArray(this.filter[key])) {
-          this.filter[key].push(filter[key]);
-        } else {
-          this.filter[key] = filter[key];
-        }
-      }
-
-      return await this.updateIdeas();
-    },
-    async updateIdeas() {
-      const params = JSON.parse(JSON.stringify(this.filter));
-
-      if (params.specialists.length > 0) {
-        params.specialists = params.specialists.join(',')
-      } else {
-        delete params.specialists;
-      }
-
-      if (Array.isArray(params.languages) && params.languages.length > 0) {
-        params.languages = params.languages.join(',')
-      } else {
-        delete params.languages;
-      }
-
-      await this.loadIdeas()
-      this.$router.replace({
-        ...this.$route,
-        query: params
-      }).catch(()=>{});
-    },
-    async loadMore() {
-      try {
-        this.filter.page++
-        this.moreLoading = true
-
-        const ideas = await this.loadIdeas()
-
-        this.moreLoading = false
-
-        if (ideas.length === 0) {
-          this.filter.page--
-          this.noMoreLoaded = true
-        }
-      } catch (e) {
-        this.noMoreLoaded = true
-        this.moreLoading = false
-      }
-    },
-    async loadIdeas() {
-      try {
-        this.loading = true
-        this.$nuxt.$loading.start()
-
-        const ideas = await this.$store.dispatch('ideas/getIdeas', this.filter)
-
-        this.loading = false
-        this.$nuxt.$loading.finish()
-
-        return ideas
-      } catch (e) {
-        this.loading = false
-        this.$nuxt.$loading.finish()
-      }
+      const query = qs.stringify(filter)
+      history.replaceState(
+        null,
+        null,
+        `${window.location.origin + window.location.pathname}?${query}`
+      )
+      this.$store.dispatch('ideas/getIdeas', filter)
     },
     t(str, fallbackStr) {
       return this.$t && this.$te

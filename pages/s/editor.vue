@@ -39,7 +39,6 @@
 
           <div class="my-10">
             <client-only placeholder="Loading...">
-<!--              <lazy-v-editor v-model="idea.text" />-->
               <component
                 :is="editor"
                 v-model="idea.text"
@@ -138,13 +137,14 @@ export default {
   },
 
   created() {
-    if (this.isEditMode) {
-      const {description, text, name, specialist} = this.$store.getters['ideas/idea']
-      this.idea = { name, text, description, specialist }
-    }
   },
 
   mounted() {
+    if (this.isEditMode) {
+      const { description, text, name, specialist } = this.$store.getters['ideas/idea']
+      this.idea = { name, text, description, specialist }
+    }
+
     let showIdeaName = false
 
     setInterval(() => {

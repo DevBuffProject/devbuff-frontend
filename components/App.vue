@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden bg-gray-100 dark:bg-blueGray-900">
+  <div class="bg-gray-100 dark:bg-blueGray-900">
     <v-dialog />
     <div> <slot /> </div>
   </div>

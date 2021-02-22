@@ -37,7 +37,7 @@
           ref="toolbar"
           :class="[
             {
-              'border-gray-100 dark:border-blueGray-700': errors.length === 0,
+              'border-gray-200 dark:border-blueGray-700': errors.length === 0,
               'border-danger border-t-gray-200': errors.length
             },
             'rounded-lg rounded-t-none border border-t-0 -mt-px bg-gray-100 dark:bg-blueGray-900 pb-2 px-4'
@@ -154,7 +154,7 @@
         <span>{{ errors[0] }}</span>
       </div>
 
-      <div class="v-editor__statusline">
+      <div class="text-xs py-3">
         {{ state.text.length }}/15000
       </div>
     </div>

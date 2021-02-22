@@ -166,7 +166,7 @@ export default {
     },
 
     isIdeaPending() {
-      return this.isAdmin && this.pending.find(idea => idea.id === this.idea.id)
+      return !!this.isAdmin && this.pending.find(idea => idea.id === this.idea.id)
     },
   },
 
