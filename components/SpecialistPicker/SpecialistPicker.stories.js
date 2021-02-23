@@ -1,4 +1,4 @@
-import {withKnobs, array} from '@storybook/addon-knobs'
+import {withKnobs, array} from '@storybook/addon-knobs';
 
 export default {
   title: 'SpecialistPicker',
@@ -370,7 +370,7 @@ export const Default = () => ({
   }),
   methods: {
     onChanged(data) {
-      this.result = data
+      this.result = data;
     }
   },
   template: `
@@ -387,4 +387,4 @@ export const Default = () => ({
     </h1>
     </v-app>
   `
-})
+});
