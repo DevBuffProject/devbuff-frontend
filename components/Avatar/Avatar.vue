@@ -8,6 +8,7 @@
       backgroundImage: 'url(' + avatarUrl + ')',
       width: size,
       height: size,
+      backgroundColor: 'white',
       flex: `0 0 ${size}`
     }"
   >
