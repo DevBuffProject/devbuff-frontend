@@ -47,8 +47,8 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import {qs} from '~/assets/js/url'
+import { mapGetters } from 'vuex'
+import { qs } from '~/assets/js/url'
 
 export default {
   async middleware({store, route}) {
@@ -145,7 +145,7 @@ export default {
     return {
       title: 'Devbuff :: Проекты',
       meta: [
-        {hid: 'description', name: 'description', content: 'Список проектов'}
+        { hid: 'description', name: 'description', content: 'Список проектов' }
       ]
     }
   }
