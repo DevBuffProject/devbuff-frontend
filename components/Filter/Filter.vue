@@ -17,7 +17,7 @@
         <ul class="px-4 font-normal text-xs">
           <li
             v-for="param in field.params"
-            :key="param"
+            :key="param.value"
           >
             <v-checkbox
               v-ripple.dark
@@ -25,18 +25,18 @@
                 'flex items-center cursor-pointer rounded p-1 px-2 mb-1 transition-colors',
                 {
                   'text-gray-500 hover:bg-gray-100 dark:text-blueGray-300':
-                    !state[field.value] || !state[field.value].includes(param),
+                    !state[field.value] || !state[field.value].includes(param.value),
                   'dark:text-blueGray-300 dark:hover:bg-blueGray-800':
-                    !state[field.value] || !state[field.value].includes(param),
+                    !state[field.value] || !state[field.value].includes(param.value),
                   'bg-primary text-white':
-                    state[field.value] && state[field.value].includes(param),
+                    state[field.value] && state[field.value].includes(param.value),
                 }
               ]"
               v-model="state[field.value]"
-              :value="param"
+              :value="param.value"
             >
               <v-icon :icon="['fas', 'plus']" class="mr-2 opacity-30" />
-              <div class="ml-1 group-active:text-white"> {{ param }} </div>
+              <div class="ml-1 group-active:text-white"> {{ param.name }} </div>
             </v-checkbox>
           </li>
         </ul>

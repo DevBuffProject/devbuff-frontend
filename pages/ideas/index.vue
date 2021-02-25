@@ -6,7 +6,7 @@
     <div class="container mx-auto">
       <div class="ideas__grid">
         <div class="ideas__grid-column-filter">
-          <v-filter :fields="filterOptions" v-model="filter.params" />
+          <v-filter :fields="filterOptions" v-model="filter.params"/>
         </div>
 
         <div class="ideas__grid-column-ideas">
@@ -94,12 +94,22 @@ export default {
         {
           name: this.t('common.specializations'),
           value: 'specialists',
-          params: this.specs
+          params: this.specs.map(value => {
+            return {
+              value: value,
+              name: this.t('specializations.' + value + '.title', value)
+            }
+          })
         },
         {
           name: this.t('components.ideaCard.languages'),
           value: 'languages',
-          params: this.langs
+          params: this.langs.map(value => {
+            return {
+              value: value,
+              name: this.t('languages.' + value, value)
+            }
+          })
         }
       ]
     },
@@ -135,7 +145,7 @@ export default {
     return {
       title: 'Devbuff :: Проекты',
       meta: [
-        {hid: 'description', name: 'description', content: 'Список проектов'}
+        { hid: 'description', name: 'description', content: 'Список проектов' }
       ]
     }
   }
