@@ -98,6 +98,7 @@
             <v-label
               :name="$t('page.ideas.view.team.languages')"
               class="mb-3"
+              v-if="position.languages.length > 0"
             >
               <v-chip
                 v-for="language in position.languages"
