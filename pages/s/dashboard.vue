@@ -140,7 +140,9 @@
 
                 <template #footer>
                   <div class="w-full flex items-center justify-end">
-                    <v-button> {{ $t('page.dashboard.respond.accept') }}</v-button>
+                    <v-button v-on:click="accept(idea.id, spec.specialisationId, spec.userEntity.id)">
+                      {{ $t('page.dashboard.respond.accept') }}
+                    </v-button>
                   </div>
                 </template>
 
@@ -166,7 +168,7 @@
               />
             </v-card>
           </div>
-          <v-skeleton-paragraph v-else-if="inspectedIdeaId && loading" />
+          <v-skeleton-paragraph v-else-if="inspectedIdeaId && loading"/>
           <div v-else class="muted mt-4">
             {{ $t('page.dashboard.respond.notFound') }}
           </div>
@@ -215,6 +217,21 @@ export default {
   },
 
   methods: {
+    async accept(ideaId, specializationId, userId) {
+      this.loading = true
+      try {
+        await this.$store.dispatch('ideas/acceptUser', {
+            userId: userId,
+            specializationId: specializationId,
+            ideaId: ideaId
+          }
+        )
+      } catch (e) {
+        this.loading = false
+      } finally {
+        this.loading = false
+      }
+    },
     getPositionName(positionId) {
       const idea = this.$store.getters['ideas/idea']
 

@@ -396,7 +396,8 @@ export default {
           statusPending: {
             not: 'Respond',
             pending: 'Your already pending',
-            ownerIdea: 'Your owner of idea'
+            ownerIdea: 'Your owner of idea',
+            accepted: 'You in the team'
           }
         }
       }

@@ -344,7 +344,7 @@ export default {
       respond: {
         title: 'Отклики',
         viewIdea: 'Просмотреть идею',
-        specialization:'Специальность',
+        specialization: 'Специальность',
         contacts: {
           vk: "ВКонтакте"
         },
@@ -396,7 +396,8 @@ export default {
           statusPending: {
             not: 'Откликнуться',
             pending: 'Вы откликнулись',
-            ownerIdea: 'Вы создатель идеи'
+            ownerIdea: 'Вы создатель идеи',
+            accepted: 'Вы в команде'
           }
         }
       }
