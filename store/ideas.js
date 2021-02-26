@@ -13,7 +13,15 @@ export const mutations = {
   setOwnIdeas: (state, list) => state.own = list,
   setIdea: (state, idea) => state.idea = idea,
   setPendingUsers: (state, pendingUsers) => state.pendingUsers = pendingUsers,
-  setStatusPositions: (state, statusPositions) => state.statusPositions = statusPositions
+  setStatusPositions: (state, statusPositions) => state.statusPositions = statusPositions,
+  deletePendingUser: (state, data)=>{
+    state.pendingUsers.forEach((currentValue, index, object) => {
+      if (currentValue.specialisationId === data.specializationId &&
+        currentValue.userEntity.id === data.userId) {
+        state.pendingUsers.splice(index, 1);
+      }
+    });
+  }
 }
 
 export const actions = {
@@ -38,7 +46,15 @@ export const actions = {
   },
 
   async appendIdea(ctx, data) {
-    return await this.$api.latest.post('idea', { ...data })
+
+    let formData = new FormData();
+    formData.append("name",data.name);
+    formData.append("description",data.description);
+    formData.append("specialist",JSON.stringify(data.specialist));
+    formData.append("text",data.text);
+    //TODO logo
+
+    return await this.$api.latest.post('idea', formData);
   },
 
   async updateIdea(ctx, { id, data }) {
@@ -76,6 +92,11 @@ export const actions = {
     commit('setIdea', idea)
 
     return idea
+  },
+
+  async acceptUser({commit}, data){
+    await this.$api.latest.put(`/idea/approve/${data.ideaId}/${data.specializationId}/${data.userId}`);
+    commit('deletePendingUser',data);
   }
 }
 

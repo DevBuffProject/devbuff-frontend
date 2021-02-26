@@ -83,13 +83,18 @@
                 <v-button
                   v-else-if="statusPositions
                     .find(s => s.specializationId === position.id)
-                    .positionStatus !== 'PENDING'
+                    .positionStatus === 'NONE'
                   "
                   flat
                   @click="respondPosition(position.id)"
                 >
                   {{ $t('page.ideas.view.team.statusPending.not') }}
                 </v-button>
+                <div v-else-if="statusPositions
+                    .find(s => s.specializationId === position.id)
+                    .positionStatus === 'ACCEPTED'">
+                  {{ $t('page.ideas.view.team.statusPending.accepted') }}
+                </div>
                 <div v-else class="idea__position-status">
                   {{ $t('page.ideas.view.team.statusPending.pending') }}
                 </div>
