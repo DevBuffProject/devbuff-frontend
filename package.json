@@ -46,7 +46,7 @@
     "mitt": "2.1.0",
     "net": "1.0.2",
     "newrelic": "7.1.0",
-    "nuxt": "2.14.12",
+    "nuxt": "2.15.2",
     "nuxt-i18n": "6.17.0",
     "nuxt-vuex-localstorage": "1.2.7",
     "open-graph-scraper": "4.7.1",
