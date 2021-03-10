@@ -29,95 +29,106 @@
               }}
             </v-label>
           </div>
-
-          <v-label :name="$t('page.ideas.view.action.title')">
-            <div class="flex items-center">
-              <v-button
-                v-if="isOwner"
-                class="mr-2"
-                :icon="['fas', 'edit']"
-                type="muted"
-                @click="$router.push(localePath({ name: 's-editor', query: { id: idea.id }}))"
-              >
-                {{ $t('page.ideas.view.action.change') }}
-              </v-button>
-
-              <a v-if="isOwner || isAdmin" type="danger" class="text-danger" @click="deleteIdea">
-                {{ $t('page.ideas.view.action.delete') }}
-              </a>
-
-              <v-button v-if="!isOwner && !isAdmin" type="primary">
-                {{ $t('page.ideas.view.action.respond') }}
-              </v-button>
-            </div>
-          </v-label>
         </div>
 
-        <div v-html="idea.text"/>
-      </div>
-
-      <div class="mt-5">
-        <h3 class="text-muted text-thin">{{
-            $t('page.ideas.view.team.countSpecialists') + '—' + idea.specialist.length
-          }}</h3>
-        <div class="idea__positions">
-          <v-card
-            v-for="position in idea.specialist"
-            :key="position.name"
-            class="mr-2"
-          >
-            <template #header>
-              <h4 class="m-0">
-                {{ t('specializations.' + position.name + ".title", position.name) }}</h4>
-            </template>
-
-            <template v-if="isAuthorized" #footer>
-              <div class="w-full flex justify-between items-center">
-                <div>
-                  {{ $t('page.ideas.view.team.countPositionsPerSpecialists') }}
-                  <v-chip type="muted" :text="'' + position.count"/>
-                </div>
-
-                <div v-if="isOwner">
-                </div>
-                <v-button
-                  v-else-if="statusPositions
-                    .find(s => s.specializationId === position.id)
-                    .positionStatus !== 'PENDING'
-                  "
-                  flat
-                  @click="respondPosition(position.id)"
+        <div class="grid grid-cols-7 gap-5">
+          <v-card class="p-8 col-span-5" v-html="idea.text" />
+          <div class="self-start col-span-2">
+            <v-card class="overflow-hidden">
+              <div class="flex justify-center items-center">
+                <div
+                  v-if="isOwner"
+                  type="muted"
+                  v-ripple
+                  :class="[$style.action_button, 'text-primary hover:bg-primary-100 dark:hover:bg-blueGray-700']"
+                  @click="$router.push(localePath({ name: 's-editor', query: { id: idea.id }}))"
                 >
-                  {{ $t('page.ideas.view.team.statusPending.not') }}
-                </v-button>
-                <div v-else class="idea__position-status">
-                  {{ $t('page.ideas.view.team.statusPending.pending') }}
+                  <v-icon class="ml-2" :icon="['fas', 'edit']" />
+                  <span>{{ $t('page.ideas.view.action.change') }}</span>
+                </div>
+                <i class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10" />
+                <div
+                  v-if="isOwner || isAdmin"
+                  v-ripple
+                  :class="[$style.action_button, 'text-danger hover:bg-danger-100 dark:hover:bg-blueGray-700']"
+                  @click="deleteIdea"
+                >
+                  <v-icon :icon="['fas', 'trash']" />
+                  <span>{{ $t('page.ideas.view.action.delete') }}</span>
                 </div>
               </div>
-            </template>
-            <v-label
-              :name="$t('page.ideas.view.team.languages')"
-              class="mb-3"
-            >
-              <v-chip
-                v-for="language in position.languages"
-                :key="language.name"
-                :text="t('languages.' + language.name, language.name)"
-                type="auto"
-              />
-            </v-label>
 
-            <v-label v-if="mapFrameworks(position.languages).length" :name="$t('page.ideas.view.team.technologies')">
-              <v-chip
-                v-for="framework in mapFrameworks(position.languages)"
-                :key="framework"
-                :text="framework"
-                type="auto"
-              />
-            </v-label>
-          </v-card>
+<!--              <v-button v-if="!isOwner && !isAdmin" type="primary">-->
+<!--                {{ $t('page.ideas.view.action.respond') }}-->
+<!--              </v-button>-->
+            </v-card>
+            <v-card class="mt-4">
+              <h3 class="text-muted text-thin mb-4">
+                {{ `${$t('page.ideas.view.team.countSpecialists')} — ${idea.specialist.length}` }}
+              </h3>
+
+              <div
+                v-for="(position, index) in idea.specialist"
+                :key="position.name"
+              >
+                <div class="flex justify-between items-center w-full">
+                  <h2 class="text-primary">
+                    {{ t(`specializations.${position.name}.title`, position.name) }}
+                  </h2>
+                  <v-chip type="muted" :text="position.count" />
+                </div>
+
+                <v-label
+                  :name="$t('page.ideas.view.team.languages')"
+                  class="mb-3"
+                >
+                  <v-chip
+                    v-for="language in position.languages"
+                    :key="language.name"
+                    :text="t(`languages.${language.name}`, language.name)"
+                    type="auto"
+                    class="mr-2"
+                  />
+                </v-label>
+
+                <v-label v-if="mapFrameworks(position.languages).length" :name="$t('page.ideas.view.team.technologies')">
+                  <v-chip
+                    v-for="framework in mapFrameworks(position.languages)"
+                    :key="framework"
+                    :text="framework"
+                    type="auto"
+                    class="mr-2"
+                  />
+                </v-label>
+
+                <template v-if="isAuthorized">
+                  <div class="w-full flex justify-between items-center">
+                    <div
+                      v-if="statusPositions.find(s => s.specializationId === position.id).positionStatus !== 'PENDING'"
+                      @click="respondPosition(position.id)"
+                      v-ripple
+                      :class="[
+                        'bg-gray-100 dark:bg-blueGray-800 dark:hover:bg-blueGray-700',
+                        'cursor-pointer text-primary font-medium mt-6 p-2',
+                        'transition-colors rounded flex justify-center items-center w-full'
+                      ]"
+                    >
+                      <span>{{ $t('page.ideas.view.team.statusPending.not') }}</span>
+                      <v-icon :icon="['fas', 'bullhorn']" class="ml-2" />
+                    </div>
+                    <div v-else class="idea__position-status">
+                      {{ $t('page.ideas.view.team.statusPending.pending') }}
+                    </div>
+                  </div>
+                </template>
+
+                <v-delimiter v-if="index < idea.specialist.length" class="my-6" />
+              </div>
+            </v-card>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -229,6 +240,13 @@ export default {
 }
 </script>
 
+<style lang="scss" module>
+.action_button {
+  @apply px-5 py-2 flex items-center rounded w-full;
+  @apply transition-colors cursor-pointer flex flex-col justify-center items-center;
+}
+</style>
+
 <style lang="scss" scoped>
 .idea {
   &__title {
@@ -240,11 +258,6 @@ export default {
     margin-top: .1rem;
     font-size: .8rem;
     opacity: .5;
-  }
-
-  &__positions {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
   }
 
   &__position-status {

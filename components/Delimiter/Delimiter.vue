@@ -1,39 +1,20 @@
 <template>
-  <div class="delimiter">
-    <span class="delimiter__text">
-      {{ text }}
-    </span>
+  <div class="flex items-center w-full">
+    <i class="border-b border-gray-200 dark:border-blueGray-600 w-full h-px" />
+    <span v-if="text" class="mx-4">{{ text }}</span>
+    <i class="border-b border-gray-200 dark:border-blueGray-600 w-full h-px" />
   </div>
 </template>
 
 <script>
 export default {
   name: 'v-delimiter',
-  
+
   props: {
     text: {
       type: String,
-      default: 'или'
+      default: ''
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.delimiter {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin: 16px 0;
-  &:after,
-  &:before {
-    content: '';
-    border-bottom: 1px solid var(--color-muted);
-    width: 100%;
-    transform: translateY(1px);
-  }
-  &__text {
-    margin: 0 10px;
-  }
-}
-</style>
