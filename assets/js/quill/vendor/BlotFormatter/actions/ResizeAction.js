@@ -5,7 +5,9 @@ export default class AlignAction extends BaseResizeAction {
     super.onUpdate()
     const target = this.formatter.currentSpec.getTargetElement()
 
-    if (!target) return false
+    if (!target) {
+      return false
+    }
 
     setTimeout(() => {
       target.style.width = target.getAttribute('width') + 'px'

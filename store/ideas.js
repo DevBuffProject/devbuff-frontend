@@ -5,15 +5,16 @@ export const state = () => ({
   own: [],
   idea: {},
   statusPositions: [],
-  pendingUsers: []
+  pendingUsers: [],
 })
 
 export const mutations = {
-  setIdeas: (state, list) => state.list = list,
-  setOwnIdeas: (state, list) => state.own = list,
-  setIdea: (state, idea) => state.idea = idea,
-  setPendingUsers: (state, pendingUsers) => state.pendingUsers = pendingUsers,
-  setStatusPositions: (state, statusPositions) => state.statusPositions = statusPositions
+  setIdeas: (state, list) => (state.list = list),
+  setOwnIdeas: (state, list) => (state.own = list),
+  setIdea: (state, idea) => (state.idea = idea),
+  setPendingUsers: (state, pendingUsers) => (state.pendingUsers = pendingUsers),
+  setStatusPositions: (state, statusPositions) =>
+    (state.statusPositions = statusPositions),
 }
 
 export const actions = {
@@ -26,7 +27,9 @@ export const actions = {
   },
 
   async getStatusPositions({ commit }, ideaId) {
-    const statusPositions = await this.$api.latest.get(`idea/${ideaId}/statusPositions`)
+    const statusPositions = await this.$api.latest.get(
+      `idea/${ideaId}/statusPositions`
+    )
 
     commit('setStatusPositions', statusPositions)
 
@@ -60,7 +63,7 @@ export const actions = {
     const finalParams = {
       page: 1,
       sortBy: 'date',
-      ...params
+      ...params,
     }
     const query = qs.stringify(finalParams)
     console.log(['/idea/', query].join('?'))
@@ -76,18 +79,20 @@ export const actions = {
     commit('setIdea', idea)
 
     return idea
-  }
+  },
 }
 
 export const getters = {
-  list: state => state.list,
-  own: state => state.own,
-  idea: state => state.idea,
-  pendingUsers: state => state.pendingUsers,
-  statusPositions: state => state.statusPositions,
-  isUserResponded: state => specializationId => {
-    const pos = state.statusPositions.find(s => s.specializationId === specializationId)
+  list: (state) => state.list,
+  own: (state) => state.own,
+  idea: (state) => state.idea,
+  pendingUsers: (state) => state.pendingUsers,
+  statusPositions: (state) => state.statusPositions,
+  isUserResponded: (state) => (specializationId) => {
+    const pos = state.statusPositions.find(
+      (s) => s.specializationId === specializationId
+    )
 
     return pos.positionStatus === 'PENDING'
-  }
+  },
 }

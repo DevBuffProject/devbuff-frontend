@@ -3,6 +3,6 @@ import Actions from '../actions'
 
 export default class ImageSpec extends BaseImageSpec {
   getActions() {
-    return [ Actions.ResizeAction, Actions.AlignAction ]
+    return [Actions.ResizeAction, Actions.AlignAction]
   }
 }

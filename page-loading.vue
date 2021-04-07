@@ -1,24 +1,24 @@
 <template>
-  <div class="page-loading">
-    <v-progress v-show="show" />
-  </div>
+  <i />
 </template>
 
 <script>
+import bus from '@/app/event-bus'
+
 export default {
   data() {
     return {
-      show: false
+      show: false,
     }
   },
   methods: {
     start() {
-      this.show = true
+      bus.emit('progress:start')
     },
     finish() {
-      this.show = false
-    }
-  }
+      bus.emit('progress:finish')
+    },
+  },
 }
 </script>
 

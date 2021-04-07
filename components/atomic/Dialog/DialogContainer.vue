@@ -1,0 +1,72 @@
+<template>
+  <div
+    v-if="dialogs.length"
+    :class="[
+      'absolute top-0 left-0 overflow-auto h-screen w-screen bg-black bg-opacity-75 z-50',
+      'flex items-center justify-center',
+    ]"
+  >
+    <div class="max-h-screen">
+      <div
+        class="bg-white dark:bg-blueGray-700 rounded my-10 py-6 px-12 relative"
+        style="min-width: 320px; max-width: 600px; width: fit-content"
+      >
+        <component
+          :is="lastDialog.component"
+          v-if="dialogs.length"
+          v-bind="lastDialog.props"
+        />
+
+        <v-material-icon
+          name="close"
+          type="round"
+          :class="[
+            'absolute right-0 top-0 cursor-pointer mt-6 mr-6 p-4 text-lg rounded-full',
+            'bg-gray-200 dark:bg-blueGray-800 cursor-pointer opacity-50',
+            'transition-opacity hover:opacity-100',
+          ]"
+          @click="close"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import bus from '~/app/event-bus'
+
+export default {
+  name: 'VDialogContainer',
+  data: () => ({ dialogs: [] }),
+  computed: {
+    lastDialog() {
+      return this.dialogs[this.dialogs.length - 1]
+    },
+  },
+  watch: {
+    dialogs: {
+      handler() {
+        if (process.client)
+          window.document.documentElement.style.overflow =
+            this.dialogs.length > 0 ? 'hidden' : 'overlay'
+      },
+    },
+  },
+  created() {
+    bus.on('dialog:push', (dialog) => this.dialogs.push(dialog))
+    bus.on('dialog:close', () => this.dialogs.pop())
+    bus.on('dialog:kill', () => (this.dialogs = []))
+  },
+  methods: {
+    push(dialog) {
+      bus.emit('dialog:push', dialog)
+    },
+    close() {
+      bus.emit('dialog:close')
+    },
+    kill() {
+      bus.emit('dialog:kill')
+    },
+  },
+}
+</script>

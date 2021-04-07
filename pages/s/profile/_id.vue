@@ -13,7 +13,9 @@
     </v-toolbar>
     <div class="container mx-auto flex">
       <div class="profile__sidebar">
-        <div class="profile__sidebar-content flex flex-column align-content-center">
+        <div
+          class="profile__sidebar-content flex flex-column align-content-center"
+        >
           <v-avatar
             class="profile__avatar mb-3"
             :avatar="profile.id"
@@ -30,7 +32,6 @@
       </div>
       <div class="container mx-auto pt-3 pl-4">
         <div class="profile__container">
-
           <div class="flex mb-3">
             <v-label v-if="profile.birthday" name="дата рождения" class="mr-5">
               {{ profile.birthday | toLocaleDateTime($i18n.locale) }}
@@ -46,10 +47,18 @@
           </v-label>
 
           <div v-if="profile.socialNetworks" class="profile__socials">
-            <div v-if="profile.socialNetworks.vk" class="profile__social-contact mb-2">
+            <div
+              v-if="profile.socialNetworks.vk"
+              class="profile__social-contact mb-2"
+            >
               <div class="mb-2 flex items-center profile__social-contact">
-                <v-icon class="mr-2 profile__social-icon" :icon="['fab', 'vk']" />
-                <span class="text-muted mr-1">{{ profile.socialNetworks.vk }}</span>
+                <v-icon
+                  class="mr-2 profile__social-icon"
+                  :icon="['fab', 'vk']"
+                />
+                <span class="text-muted mr-1">{{
+                  profile.socialNetworks.vk
+                }}</span>
                 <span class="mx-1">—</span>
                 {{ $t('page.profile.vk') }}
               </div>
@@ -60,10 +69,18 @@
               />
             </div>
 
-            <div v-if="profile.socialNetworks.telegram" class="profile__social-contact mb-2">
+            <div
+              v-if="profile.socialNetworks.telegram"
+              class="profile__social-contact mb-2"
+            >
               <div class="mb-2 flex items-center profile__social-contact">
-                <v-icon class="mr-2 profile__social-icon" :icon="['fab', 'telegram']" />
-                <span class="text-muted">{{ profile.socialNetworks.telegram }}</span>
+                <v-icon
+                  class="mr-2 profile__social-icon"
+                  :icon="['fab', 'telegram']"
+                />
+                <span class="text-muted">{{
+                  profile.socialNetworks.telegram
+                }}</span>
                 <span class="mx-1">—</span>
                 tetegram
               </div>
@@ -74,19 +91,35 @@
               />
             </div>
 
-            <div v-if="profile.socialNetworks.skype" class="profile__social-contact mb-2">
+            <div
+              v-if="profile.socialNetworks.skype"
+              class="profile__social-contact mb-2"
+            >
               <div class="flex items-center profile__social-contact">
-                <v-icon class="mr-2 profile__social-icon" :icon="['fab', 'skype']" />
-                <span class="text-muted">{{ profile.socialNetworks.skype }}</span>
+                <v-icon
+                  class="mr-2 profile__social-icon"
+                  :icon="['fab', 'skype']"
+                />
+                <span class="text-muted">{{
+                  profile.socialNetworks.skype
+                }}</span>
                 <span class="mx-1">—</span>
                 skype
               </div>
             </div>
 
-            <div v-if="profile.socialNetworks.discord" class="profile__social-contact mb-4">
+            <div
+              v-if="profile.socialNetworks.discord"
+              class="profile__social-contact mb-4"
+            >
               <div class="flex items-center profile__social-contact">
-                <v-icon class="mr-2 profile__social-icon" :icon="['fab', 'discord']" />
-                <span class="text-muted">{{ profile.socialNetworks.discord }}</span>
+                <v-icon
+                  class="mr-2 profile__social-icon"
+                  :icon="['fab', 'discord']"
+                />
+                <span class="text-muted">{{
+                  profile.socialNetworks.discord
+                }}</span>
                 <span class="mx-1">—</span>
                 discord
               </div>
@@ -96,14 +129,11 @@
           <div v-if="self" class="profile__skills">
             <v-skills-editor
               v-if="systemSkills"
-              :userSkills="profile.skills"
+              :user-skills="profile.skills"
               :skills="systemSkills"
               @change="changeSkills"
             />
-            <div
-              v-else
-              class="flex justify-center items-center"
-            >
+            <div v-else class="flex justify-center items-center">
               <span class="mr-3">{{ $t('page.profile.skillsLoading') }}</span>
               <v-loading />
             </div>
@@ -123,7 +153,9 @@
               :key="skill.name"
               class="profile__skill"
             >
-              <div class="profile__skill-name"> {{ $t('languages.' + skill.name) }}</div>
+              <div class="profile__skill-name">
+                {{ $t('languages.' + skill.name) }}
+              </div>
               <div
                 v-for="spec in skill.specializations"
                 :key="spec.name"
@@ -135,7 +167,7 @@
                     :key="framework.name"
                     :text="framework.name"
                     type="auto"
-                    mixClass=" profile__skill-technology"
+                    mix-class=" profile__skill-technology"
                   />
                 </span>
               </div>
@@ -150,19 +182,21 @@
 <script>
 import { mapGetters } from 'vuex'
 
-const ProfileEdit = () => import('~/components/Profile/ProfileEdit.vue')
+const ProfileEdit = () => import('~/components/widgets/Profile/ProfileEdit.vue')
 
 export default {
   mounted() {
     const { act } = this.$route.query
 
     // show settings dialog
-    if (act === 'edit') this.edit()
+    if (act === 'edit') {
+      this.edit()
+    }
   },
 
   computed: {
     ...mapGetters({
-      systemSkills: 'skills/skills'
+      systemSkills: 'skills/skills',
     }),
 
     profile() {
@@ -178,19 +212,27 @@ export default {
     },
 
     urls() {
-      if (!this.profile.socialNetworks) return false
+      if (!this.profile.socialNetworks) {
+        return false
+      }
 
       return {
-        vk: this.profile.socialNetworks.vk && `https://vk.com/${this.profile.socialNetworks.vk}`,
-        telegram: this.profile.socialNetworks.telegram && `https://t.me/${this.profile.socialNetworks.telegram}`,
+        vk:
+          this.profile.socialNetworks.vk &&
+          `https://vk.com/${this.profile.socialNetworks.vk}`,
+        telegram:
+          this.profile.socialNetworks.telegram &&
+          `https://t.me/${this.profile.socialNetworks.telegram}`,
       }
-    }
+    },
   },
 
   methods: {
     edit() {
       this.$dialog
-        .push(ProfileEdit, { dataProfile: JSON.parse(JSON.stringify(this.profile)) })
+        .push(ProfileEdit, {
+          dataProfile: JSON.parse(JSON.stringify(this.profile)),
+        })
         .then(() => {
           this.$router.replace({ ...this.$route, query: {} })
         })
@@ -198,8 +240,8 @@ export default {
 
     changeSkills(skills) {
       this.$store.dispatch('user/update', { skills })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -233,12 +275,12 @@ export default {
   }
 
   &__username {
-    font-size: .7rem;
-    margin-top: -.5rem;
+    font-size: 0.7rem;
+    margin-top: -0.5rem;
   }
 
   &__socials-edit {
-    font-size: .75rem !important;
+    font-size: 0.75rem !important;
     font-weight: 300 !important;
     padding: 0 !important;
     color: var(--color-muted-darken);
@@ -259,7 +301,7 @@ export default {
     padding: 1rem;
     margin: -1rem;
     border-radius: 4px;
-    transition: background-color .3s var(--base-transition);
+    transition: background-color 0.3s var(--base-transition);
 
     &:hover {
       background-color: var(--color-muted-accent);
@@ -278,15 +320,14 @@ export default {
   }
 
   &__skill-name {
-    font-size: .85rem;
+    font-size: 0.85rem;
     border-bottom: 1px solid var(--color-muted);
-    margin-bottom: .8rem;
+    margin-bottom: 0.8rem;
     font-weight: 300;
   }
 
   /deep/ &__skill-technology {
-    margin: 0 .5rem .3rem 0;
+    margin: 0 0.5rem 0.3rem 0;
   }
-
 }
 </style>

@@ -3,10 +3,10 @@ import Actions from '../actions'
 
 export default class TwitterSpec extends UnclickableBlotSpec {
   constructor(formatter) {
-    super(formatter,  '.twitter-blot')
+    super(formatter, '.twitter-blot')
   }
 
   getActions() {
-    return [ Actions.DeleteAction ]
+    return [Actions.DeleteAction]
   }
 }

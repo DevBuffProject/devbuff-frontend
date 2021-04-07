@@ -4,18 +4,20 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setProfile: (state, profile) => state.profile = profile,
-  setUser: (state, user) => state.user = user
+  setProfile: (state, profile) => (state.profile = profile),
+  setUser: (state, user) => (state.user = user),
 }
 
 export const actions = {
   async resendVerifyMail() {
-    return await this.$api.latest.post(`profile/resendEmail`)
+    return await this.$api.latest.post('profile/resendEmail')
   },
 
   async getProfile({ commit }, uuid) {
     const { API_BASE_URL } = this.$config
-    const profile = await this.$api.latest.get(uuid ? `profile/${uuid}` : 'profile')
+    const profile = await this.$api.latest.get(
+      uuid ? `profile/${uuid}` : 'profile'
+    )
 
     profile.avatar = `${API_BASE_URL}/photo/profile/${profile.id}`
 
@@ -27,18 +29,18 @@ export const actions = {
   async update({ dispatch, state }, data) {
     const profile = { ...state.profile }
 
-    Object.keys(data).forEach(key => {
+    Object.keys(data).forEach((key) => {
       // patch state
       profile[key] = data[key]
-    });
+    })
 
     await this.$api.latest.post('profile', profile)
     await dispatch('getProfile')
-  }
+  },
 }
 
 export const getters = {
-  profile: state => state.profile,
-  user: state => state.user,
-  isAuthorized: state => !!state.profile
+  profile: (state) => state.profile,
+  user: (state) => state.user,
+  isAuthorized: (state) => !!state.profile,
 }

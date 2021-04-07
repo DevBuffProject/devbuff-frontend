@@ -1,46 +1,45 @@
 <template>
-  <div class="ideas">
-    <v-toolbar hide-backlink class="mb-10">
-      <h3 class="m-0"> {{ $t('page.ideas.explore.ideas') }} </h3>
-    </v-toolbar>
-    <div class="container mx-auto">
-      <div class="ideas__grid">
-        <div class="ideas__grid-column-filter">
-          <v-filter :fields="filterOptions" v-model="filter.params" />
-        </div>
+  <div class="container mx-auto mt-4">
+    <div class="grid gap-6 grid-cols-10">
+      <div class="col-span-2">
+        <v-filter v-model="filter.params" :fields="filterOptions" />
+      </div>
 
-        <div class="ideas__grid-column-ideas">
-          <div class="ideas__sort">
-            <v-switcher
-              :values="[
-              { title: $t('page.ideas.explore.filter.datePublish'), value: 'date' },
-              { title: $t('page.ideas.explore.filter.lastUpdate'), value: 'lastUpdate' }
+      <div class="col-span-8">
+        <div class="mb-4 flex items-center">
+          <v-switcher
+            v-model="filter.sort"
+            :values="[
+              {
+                title: $t('page.ideas.explore.filter.datePublish'),
+                value: 'date',
+              },
+              {
+                title: $t('page.ideas.explore.filter.lastUpdate'),
+                value: 'lastUpdate',
+              },
             ]"
-              v-model="filter.sort"
-            />
-
-            <transition name="fade">
-              <v-loading v-show="loading" class="ml-4 opacity-50"/>
-            </transition>
-          </div>
-
-          <div v-if="ideas.length" class="ideas__list grid grid-cols-3 gap-4">
-            <v-idea
-              v-for="idea in ideas"
-              :key="idea.id"
-              :title="idea.name"
-              :publishDate="idea.publishDate || idea.datePublished"
-              :description="idea.description"
-              :specialists="idea.specialists"
-              :id="idea.id"
-              class="ideas__idea"
-            />
-          </div>
-          <div v-else class="p-5 ideas__no-ideas">
-            🤷 <span class="text-muted"> {{ $t('page.ideas.explore.notFound') }} </span>
-          </div>
+          />
         </div>
 
+        <div v-if="ideas.length" class="grid grid-cols-3 gap-4">
+          <v-idea
+            v-for="(idea, index) in ideas"
+            :id="idea.id"
+            :key="index"
+            :title="idea.name"
+            :publish-date="idea.publishDate || idea.datePublished"
+            :description="idea.description"
+            :specialists="idea.specialists"
+            class="ideas__idea"
+          />
+        </div>
+        <div v-else class="p-5">
+          🤷
+          <span class="text-muted">
+            {{ $t('page.ideas.explore.notFound') }}
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -51,27 +50,34 @@ import { mapGetters } from 'vuex'
 import { qs } from '~/assets/js/url'
 
 export default {
-  async middleware({store, route}) {
+  async middleware({ store, route }) {
     await store.dispatch('ideas/getIdeas', route.query)
     await store.dispatch('skills/getSkills')
   },
 
   data() {
-    const query = Object.entries(qs.parse(this.$route.fullPath.split('?')[1]))
-      .reduce((acc, [key, params]) => {
-        acc[key] = !Array.isArray(params) ? [params] : params
-        return acc
-      }, {})
+    const query = Object.entries(
+      qs.parse(this.$route.fullPath.split('?')[1])
+    ).reduce((acc, [key, params]) => {
+      acc[key] = !Array.isArray(params) ? [params] : params
+      return acc
+    }, {})
 
     return {
-      moreLoading: false,
-      noMoreLoaded: false,
       loading: false,
       filter: {
         page: 1,
         sort: 'date',
-        params: query
-      }
+        params: query,
+      },
+    }
+  },
+  head() {
+    return {
+      title: 'Devbuff :: Проекты',
+      meta: [
+        { hid: 'description', name: 'description', content: 'Список проектов' },
+      ],
     }
   },
   watch: {
@@ -79,28 +85,28 @@ export default {
       deep: true,
       handler() {
         this.applyFilter()
-      }
-    }
+      },
+    },
   },
   computed: {
     ...mapGetters({
       ideas: 'ideas/list',
       langs: 'skills/languages',
       skills: 'skills/skills',
-      specs: 'skills/specializations'
+      specs: 'skills/specializations',
     }),
     filterOptions() {
       return [
         {
           name: this.t('common.specializations'),
           value: 'specialists',
-          params: this.specs
+          params: this.specs,
         },
         {
           name: this.t('components.ideaCard.languages'),
           value: 'languages',
-          params: this.langs
-        }
+          params: this.langs,
+        },
       ]
     },
   },
@@ -110,7 +116,7 @@ export default {
       const filter = {
         sortBy: this.filter.sort,
         page: this.filter.page,
-        ...this.filter.params
+        ...this.filter.params,
       }
       const query = qs.stringify(filter)
       history.replaceState(
@@ -125,54 +131,8 @@ export default {
         ? this.$te(str)
           ? this.$t(str)
           : fallbackStr
-        : fallbackStr
-          ? fallbackStr
-          : str
+        : fallbackStr || str
     },
   },
-
-  head() {
-    return {
-      title: 'Devbuff :: Проекты',
-      meta: [
-        {hid: 'description', name: 'description', content: 'Список проектов'}
-      ]
-    }
-  }
 }
 </script>
-
-<style lang="scss" scoped>
-@layer components {
-  .ideas {
-    &__grid {
-      @apply grid gap-6 grid-cols-10;
-    }
-
-    &__grid-column-filter {
-      @apply col-span-2;
-    }
-
-    &__grid-column-ideas {
-      @apply col-span-8;
-    }
-
-    &__filter {
-      @apply w-auto sticky top-20 col-span-2;
-      @apply rounded-xl #{!important};
-    }
-
-    &__sort {
-      @apply mb-4 flex items-center;
-    }
-
-    &__list {
-      @apply p-0 border-0 #{!important};
-    }
-
-    &__no-ideas {
-      @apply text-2xl font-light text-muted;
-    }
-  }
-}
-</style>

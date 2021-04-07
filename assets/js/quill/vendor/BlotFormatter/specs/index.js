@@ -5,5 +5,5 @@ import ImageSpec from './ImageSpec'
 export default {
   VideoSpec,
   ImageSpec,
-  TwitterSpec
+  TwitterSpec,
 }

@@ -39,40 +39,40 @@ module.exports = {
       muted: colors.gray[500],
       primary: {
         DEFAULT: colors.blue['500'],
-        ...colors.blue
+        ...colors.blue,
       },
       secondary: {
         DEFAULT: colors.yellow['500'],
-        ...colors.yellow
+        ...colors.yellow,
       },
       success: {
         DEFAULT: colors.green['500'],
-        ...colors.green
+        ...colors.green,
       },
       danger: {
         DEFAULT: colors.rose['500'],
-        ...colors.rose
+        ...colors.rose,
       },
       warning: {
         DEFAULT: colors.orange['500'],
-        ...colors.orange
+        ...colors.orange,
       },
     },
     screens: {
       '2xs': '320px',
-      'xs': '384px',
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
-    }
+      xs: '384px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+    },
   },
   variants: {
     extend: {
-      backgroundColor: ['active']
+      backgroundColor: ['active'],
+      scale: ['active'],
+      display: ['dark'],
     },
   },
-  plugins: [
-    typography
-  ],
+  plugins: [typography],
 }

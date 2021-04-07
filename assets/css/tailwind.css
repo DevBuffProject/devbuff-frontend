@@ -7,6 +7,25 @@
 @import 'tailwindcss/utilities';
 @import 'tailwindcss/screens';
 
+@layer utilities {
+  .gradientLaguna {
+    --tw-gradient-from: #007CF0;
+    --tw-gradient-to: #00DFD8;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  }
+
+  .gradientLuna {
+    --tw-gradient-from: #C781FF;
+    --tw-gradient-to: #3C72FF;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  }
+
+  .gradientAutumn {
+    --tw-gradient-from: #FF4D4D;
+    --tw-gradient-to: #F9CB28;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  }
+}
 
 @layer components {
   h1 {

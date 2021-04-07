@@ -2,9 +2,9 @@ export const state = () => ({})
 
 export const actions = {
   async uploadImage(ctx, image) {
-    const data = new FormData();
+    const data = new FormData()
 
-    data.append('image', image, image.fileName);
+    data.append('image', image, image.fileName)
 
     const { imagePath } = await this.$api.latest.post('image', data)
 

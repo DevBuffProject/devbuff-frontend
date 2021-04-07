@@ -3,6 +3,6 @@ import Actions from '../actions'
 
 export default class VideoSpec extends BaseVideoSpec {
   getActions() {
-    return [ Actions.ResizeAction, Actions.AlignAction, Actions.DeleteAction ]
+    return [Actions.ResizeAction, Actions.AlignAction, Actions.DeleteAction]
   }
 }

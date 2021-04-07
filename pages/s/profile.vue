@@ -5,7 +5,6 @@
 </template>
 
 <script>
-
 export default {
   async middleware({ store, route, error }) {
     try {

@@ -5,5 +5,5 @@ import DeleteAction from './DeleteAction'
 export default {
   ResizeAction,
   AlignAction,
-  DeleteAction
+  DeleteAction,
 }

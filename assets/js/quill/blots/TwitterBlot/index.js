@@ -16,17 +16,20 @@ class TwitterBlot extends BaseBlock {
         style="display: none"
       />
     `
-    const buildInnerHtml = async data => {
+    const buildInnerHtml = async (data) => {
       window.twitter = async () => {
-        const loadScript = async url => new Promise((resolve, reject) => {
-          const script = document.createElement('script')
-          script.src = url
-          script.onload = resolve
-          script.onerror = reject
-          document.head.appendChild(script)
-        })
+        const loadScript = (url) =>
+          new Promise((resolve, reject) => {
+            const script = document.createElement('script')
+            script.src = url
+            script.onload = resolve
+            script.onerror = reject
+            document.head.appendChild(script)
+          })
 
-        if (!window.twttr) await loadScript('//platform.twitter.com/widgets.js')
+        if (!window.twttr) {
+          await loadScript('//platform.twitter.com/widgets.js')
+        }
 
         setTimeout(async () => {
           await window.twttr.widgets.load()
@@ -39,10 +42,9 @@ class TwitterBlot extends BaseBlock {
         const response = await fetch(`/_api/help/embed-tweet?url=${data.url}`)
         const tweet = await response.json()
 
-         return tweet.html
+        return tweet.html
           ? `${tweet.html + twitterEmbedActivator}`
           : fallbackHtml
-
       } catch (e) {
         return fallbackHtml
       }
@@ -50,7 +52,7 @@ class TwitterBlot extends BaseBlock {
 
     node.innerHTML = fallbackHtml
 
-    buildInnerHtml(data).then(html => {
+    buildInnerHtml(data).then((html) => {
       node.innerHTML = html
 
       if (!node.children[0].classList.contains('blockquote')) {

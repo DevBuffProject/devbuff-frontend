@@ -1,12 +1,21 @@
 <template>
-  <div class="bg-gray-100 dark:bg-blueGray-900">
-    <v-dialog />
-    <div> <slot /> </div>
+  <div class="bg-gray-50 dark:bg-blueGray-900 min-h-screen">
+    <v-dialog-container />
+    <div :class="$style.Grid">
+      <slot />
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'v-app',
+  name: 'VApp',
 }
 </script>
+
+<style module>
+.Grid {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+</style>

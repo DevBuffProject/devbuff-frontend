@@ -1,142 +1,66 @@
 <template>
-  <div class="callback-auth font-thin">
-    <div v-if="error">
-      <div class="callback-auth__error flex align-baseline">
-        <span class="callback-auth__emoji mr-3"> 😬 </span>
-        <span class="callback-auth__status-text"> {{ $t('page.callback.status.error.text') }} </span>
-      </div>
-      <v-button
-        class="callback-auth__retry"
-        type="muted"
-        @click="retryAuth"
-      >
+  <div
+    class="h-screen w-full mx-auto my-0 flex items-center justify-center font-thin"
+    style="max-width: 450px"
+  >
+    <div v-if="status === false">
+      <span>
+        {{ $t('page.callback.status.error.text') }}
+      </span>
+      <v-button type="muted" @click="retryAuth">
         {{ $t('page.callback.status.error.retryButton') }}
       </v-button>
     </div>
 
-    <div
-      v-else-if="success"
-      class="flex items-center"
-    >
-      <div class="flex align-baseline mb-4">
-        <span class="callback-auth__emoji mr-3"> 👌 </span>
-        <span class="callback-auth__status-text mr-4"> {{ $t('page.callback.success.text') }} </span>
-      </div>
+    <div v-else-if="status === true">
+      {{ $t('page.callback.success.text') }}
     </div>
 
-    <div
-      v-else
-      class="flex items-center"
-    >
-      <div class="flex align-baseline mb-4">
-        <span class="callback-auth__emoji mr-3"> ⏳ </span>
-        <span class="callback-auth__status-text mr-4">
-          {{ $t('page.callback.processing.text') }} <span class="callback-auth__dots"/>
-        </span>
-      </div>
+    <div v-else>
+      {{ $t('page.callback.processing.text') }}
     </div>
-
   </div>
 </template>
 
 <script>
 export default {
   layout: 'white-screen',
-
   data: () => ({
-    error: false,
-    success: false,
+    status: null,
   }),
-
+  created() {
+    this.getToken()
+  },
   methods: {
     retryAuth() {
       this.$store.dispatch('auth/authorize')
     },
 
-    getToken() {
+    async getToken() {
       const { $store, $route, $router } = this
       const grant = $route.query.code
+      const visited = localStorage.getItem('visited')
 
-      $store.dispatch('auth/getToken', { grant })
-        .then(() => {
-          // $store.dispatch('user/getProfile')
+      try {
+        await $store.dispatch('auth/getToken', { grant })
+        this.status = true
+      } catch (e) {
+        this.status = false
+      }
+
+      let redirectPath = this.localePath({ name: 's-dashboard' })
+
+      if (!visited) {
+        redirectPath = this.localePath({
+          name: 's-profile',
+          query: { act: 'edit' },
         })
-        .then(() => {
-          this.success = true
-          let redirectPath = this.localePath({ name: 's-dashboard' })
-          const visited = localStorage.getItem('visited')
 
-          if (!visited) {
-            redirectPath = this.localePath({
-              name: 's-profile',
-              query: { act: 'edit' }
-            })
+        localStorage.setItem('visited', true)
+      }
 
-            localStorage.setItem('visited', true)
-          }
-
-          setTimeout(() => $router.push(redirectPath), 1000)
-        })
-        .catch(error => this.error = error)
-    }
+      setTimeout(() => $router.push(redirectPath), 1000)
+    },
   },
-
-  mounted() {
-    this.getToken()
-  }
 }
 </script>
-
-<style lang="scss" scoped>
-.callback-auth {
-  --emoji-size: 4rem;
-
-  height: 100vh;
-  max-width: 450px;
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &__retry {
-    margin-left: calc(1rem + var(--emoji-size));
-  }
-
-  &__status-text {
-    position: relative;
-    font-size: 2.3rem;
-  }
-
-  &__dots {
-    position: absolute;
-    right: -1rem;
-    width: 1rem;
-
-    &:after {
-      content: ".";
-      animation: dots 3s linear infinite;
-      animation-delay: 1s;
-    }
-  }
-
-  &__emoji {
-    font-size: var(--emoji-size);
-  }
-
-  @keyframes dots {
-    0% {
-      content: "."
-    }
-    25% {
-      content: ".."
-    }
-    50% {
-      content: "..."
-    }
-    75% {
-      content: "...."
-    }
-  }
-}
-</style>

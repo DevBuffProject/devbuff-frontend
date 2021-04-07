@@ -5,10 +5,9 @@
         <span class="error-page__emoji mr-3"> {{ screen.emoji }} </span>
         <span class="error-page__message">
           <span> {{ screen.message }} </span>
-          <div
-            v-if="isDev"
-            class="mb-3 error-page__status-text"
-          >{{ error.message }}</div>
+          <div v-if="isDev" class="mb-3 error-page__status-text">
+            {{ error.message }}
+          </div>
         </span>
       </div>
 
@@ -17,17 +16,14 @@
         :icon="['fab', 'github']"
         type="dark"
         rounded
-        @click="$store.dispatch('auth/authorize')"
         class="error-page__button"
+        @click="$store.dispatch('auth/authorize')"
       >
         {{ $t('layouts.error.oAuth.gitHub') }}
       </v-button>
 
       <nuxt-link v-else to="/">
-        <v-button
-          class="error-page__button"
-          type="muted"
-        >
+        <v-button class="error-page__button" type="muted">
           {{ $t('layouts.error.action.index') }}
         </v-button>
       </nuxt-link>
@@ -38,41 +34,42 @@
         <span class="error-page__emoji mr-3"> 🤕 </span>
         <span class="error-page__message"> что-то пошло не так </span>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    props: ['error'],
-    layout: 'white-screen',
+export default {
+  layout: 'white-screen',
+  props: ['error'],
 
-    data: () => ({
-      errors: {
-        401: {
-          emoji: '🛡',
-          message: 'нужно авторизоваться'
-        },
-        404: {
-          emoji: '🤷',
-          message: 'не найдено'
-        }
-      }
-    }),
-
-    computed: {
-      screen() {
-        return this.errors[this.error.statusCode] || {
-          emoji: '🤕',
-          message: 'произошло что-то плохое'
-        }
+  data: () => ({
+    errors: {
+      401: {
+        emoji: '🛡',
+        message: 'нужно авторизоваться',
       },
-      isDev() {
-        return this.$config.isDev
-      }
-    }
-  }
+      404: {
+        emoji: '🤷',
+        message: 'не найдено',
+      },
+    },
+  }),
+
+  computed: {
+    screen() {
+      return (
+        this.errors[this.error.statusCode] || {
+          emoji: '🤕',
+          message: 'произошло что-то плохое',
+        }
+      )
+    },
+    isDev() {
+      return this.$config.isDev
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>

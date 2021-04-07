@@ -1,20 +1,11 @@
 <template>
   <div class="dashboard">
-    <v-toolbar class="mb-4">
-      <div class="container mx-auto toolbar__grid">
-        <div class="flex">
-          <h3 class="m-0"> Модерация </h3>
-        </div>
-      </div>
-    </v-toolbar>
-
     <div class="container mx-auto">
       <div
         v-if="ideas && ideas.length"
         class="dashboard__ideas"
-        style="width: 500px;"
+        style="width: 500px"
       >
-
         <div
           v-for="idea in ideas"
           :key="idea.id"
@@ -22,18 +13,14 @@
           @click="viewIdea(idea.id)"
         >
           <v-idea
+            :id="idea.id"
             :linked="false"
             :title="idea.name"
             :description="idea.description"
-            :id="idea.id"
           />
         </div>
       </div>
-      <div
-        v-else
-        class="flex flex-column items-center"
-        style="width: 500px;"
-      >
+      <div v-else class="flex flex-column items-center" style="width: 500px">
         <span class="text-muted"> 🤷 {{ $t('page.dashboard.noIdeas') }} </span>
       </div>
     </div>
@@ -41,7 +28,8 @@
 </template>
 
 <script>
-const ideaFastViewDialog = () => import('~/components/Admin/ViewIdeaDialog.vue')
+const ideaFastViewDialog = () =>
+  import('~/components/widgets/Admin/ViewIdeaDialog.vue')
 
 export default {
   middleware: 'is-admin',
@@ -52,22 +40,18 @@ export default {
     return { ideas }
   },
 
+  created() {},
+
   methods: {
     async refresh() {
-      return this.ideas = await this.$store.dispatch('admin/getPendingIdeas')
+      return (this.ideas = await this.$store.dispatch('admin/getPendingIdeas'))
     },
 
     async viewIdea(id) {
       const idea = await this.$store.dispatch('ideas/getIdea', id)
-      this.$dialog
-        .push(ideaFastViewDialog, { idea })
-        .then(this.refresh)
-    }
+      this.$dialog.push(ideaFastViewDialog, { idea }).then(this.refresh)
+    },
   },
-
-  created() {
-
-  }
 }
 </script>
 

@@ -1,6 +1,10 @@
 import BaseBlotFormatter from 'quill-blot-formatter'
+import {
+  faAlignLeft,
+  faAlignCenter,
+  faAlignRight,
+} from '@fortawesome/free-solid-svg-icons'
 import Specs from './specs'
-import { faAlignLeft, faAlignCenter, faAlignRight } from '@fortawesome/free-solid-svg-icons'
 import theme from '~/tailwind.config'
 
 const buildSvg = ({ icon }) => {
@@ -23,7 +27,7 @@ const buildSvg = ({ icon }) => {
 export default class BlotFormatter extends BaseBlotFormatter {
   constructor(quill) {
     const options = {
-      specs: [ Specs.VideoSpec, Specs.TwitterSpec, Specs.ImageSpec ],
+      specs: [Specs.VideoSpec, Specs.TwitterSpec, Specs.ImageSpec],
       overlay: {
         className: 'blot-formatter__overlay',
         style: {
@@ -32,7 +36,7 @@ export default class BlotFormatter extends BaseBlotFormatter {
           border: `2px solid ${theme.theme.colors.primary.DEFAULT}`,
           padding: '2px',
           borderRadius: '8px',
-          transform: 'translate(-6px, -6px)'
+          transform: 'translate(-6px, -6px)',
         },
       },
       resize: {
@@ -40,14 +44,14 @@ export default class BlotFormatter extends BaseBlotFormatter {
           background: 'var(--color-background-contrast)',
           borderRadius: '10px',
           border: '2px solid var(--color-primary)',
-          opacity: 1
+          opacity: 1,
         },
       },
       align: {
         icons: {
           left: buildSvg(faAlignLeft),
           center: buildSvg(faAlignCenter),
-          right: buildSvg(faAlignRight)
+          right: buildSvg(faAlignRight),
         },
         toolbar: {
           buttonStyle: {
@@ -60,16 +64,16 @@ export default class BlotFormatter extends BaseBlotFormatter {
             width: '30px',
             height: '20px',
             margin: '0 .5rem',
-            padding: '5px'
+            padding: '5px',
           },
           svgStyle: {
             border: 0,
             width: '15px',
             height: '20px',
-            fill: 'var(--color-text)'
-          }
-        }
-      }
+            fill: 'var(--color-text)',
+          },
+        },
+      },
     }
 
     super(quill, options)
