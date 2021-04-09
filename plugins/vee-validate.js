@@ -12,10 +12,8 @@ import ru from 'vee-validate/dist/locale/ru.json'
 // Install English and Arabic locales.
 localize({ en, ru })
 
-Object.keys(rules).forEach((rule) => {
-  // eslint-disable-next-line import/namespace
-  extend(rule, rules[rule])
-})
+// eslint-disable-next-line import/namespace
+Object.keys(rules).forEach((rule) => extend(rule, rules[rule]))
 
 // Register it globally
 Vue.component('ValidationObserver', ValidationObserver)

@@ -1,8 +1,8 @@
 <template>
   <div
     :class="[
-      'bg-white border border-gray-100 dark:border-blueGray-700 dark:bg-blueGray-900',
-      'grid p-3 rounded-xl',
+      'bg-white border-2 border-gray-200 dark:border-blueGray-700 dark:bg-blueGray-900',
+      'grid p-3 rounded-md border-opacity-0 shadow',
     ]"
     v-on="$listeners"
   >

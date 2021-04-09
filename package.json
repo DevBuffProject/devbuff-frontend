@@ -15,7 +15,6 @@
     "precommit": "npm run lint",
     "storybook": "npx nuxt storybook",
     "build-storybook": "npx nuxt storybook build",
-    "chromatic": "npx chromatic",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
   },
@@ -47,7 +46,6 @@
     "cookie-universal-nuxt": "2.1.4",
     "dedent": "0.7.0",
     "highlight.js": "10.5.0",
-    "http2": "3.3.7",
     "lodash": "4.17.20",
     "material-design-icons": "^3.0.1",
     "mitt": "^2.1.0",
@@ -60,10 +58,8 @@
     "quill-blot-formatter": "1.0.5",
     "quill-image-uploader": "1.2.2",
     "quill-magic-url": "2.1.5",
-    "snyk": "1.437.3",
-    "swiper": "6.4.5",
-    "vee-validate": "3.4.5",
-    "vue-awesome-swiper": "4.1.1"
+    "snyk": "^1.529.0",
+    "vee-validate": "3.4.5"
   },
   "devDependencies": {
     "@babel/runtime-corejs3": "7.12.5",
@@ -78,7 +74,6 @@
     "@tailwindcss/typography": "^0.3.1",
     "autoprefixer": "^9.8.6",
     "babel-eslint": "10.1.0",
-    "chromatic": "^5.6.1",
     "core-js": "3.8.2",
     "eslint": "^7.17.0",
     "eslint-config-prettier": "^6.12.0",
@@ -94,6 +89,7 @@
     "stylelint": "^13.7.2",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^20.0.0",
+    "stylelint-scss": "^3.19.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2"
   },
   "snyk": true

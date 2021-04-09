@@ -1,20 +1,5 @@
 <template>
-  <div class="flex items-center w-full">
-    <i class="border-b border-gray-200 dark:border-blueGray-600 w-full h-px" />
-    <span v-if="text" class="mx-4">{{ text }}</span>
-    <i class="border-b border-gray-200 dark:border-blueGray-600 w-full h-px" />
-  </div>
+  <em
+    class="block border-b border-gray-200 dark:border-blueGray-800 w-full h-px my-4"
+  />
 </template>
-
-<script>
-export default {
-  name: 'VDelimiter',
-
-  props: {
-    text: {
-      type: String,
-      default: '',
-    },
-  },
-}
-</script>

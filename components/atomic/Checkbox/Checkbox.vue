@@ -1,5 +1,25 @@
 <template>
-  <div @click="updateInput" @touchdown="updateInput">
+  <div
+    class="group"
+    @click="updateInput"
+    @touchend="updateInput"
+    v-on="$listeners"
+  >
+    <div v-if="!$slots.default">
+      <div class="text-2xl">
+        <v-material-icon
+          :name="icon"
+          type="round"
+          :class="[
+            'transition-colors cursor-pointer',
+            isChecked
+              ? 'text-primary'
+              : 'text-gray-300 dark:text-blueGray-500 group-hover:text-primary',
+          ]"
+        />
+      </div>
+      <span> {{ label }} </span>
+    </div>
     <slot />
   </div>
 </template>
@@ -12,6 +32,10 @@ export default {
     prop: 'checked',
   },
   props: {
+    isIntermedia: {
+      type: Boolean,
+      default: false,
+    },
     label: {
       type: String,
       default: null,
@@ -32,29 +56,17 @@ export default {
       type: [Boolean, String, Number],
       default: null,
     },
-    type: {
-      type: String,
-      default: null,
-    },
-    icon: {
-      type: String,
-      default: null,
-    },
-    color: {
-      type: String,
-      default: null,
-    },
-  },
-  data() {
-    return {
-      hover: false,
-    }
   },
   computed: {
+    icon() {
+      return this.isIntermedia
+        ? 'indeterminate_check_box'
+        : this.isChecked
+        ? 'check_box'
+        : 'check_box_outline_blank'
+    },
     isChecked() {
-      if (Array.isArray(this.checked)) {
-        return this.checked.includes(this.value)
-      }
+      if (Array.isArray(this.checked)) return this.checked.includes(this.value)
       return this.checked === this.trueValue
     },
   },

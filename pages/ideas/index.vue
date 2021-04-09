@@ -1,27 +1,23 @@
 <template>
-  <div class="container mx-auto mt-4">
-    <div class="grid gap-6 grid-cols-10">
-      <div class="col-span-2">
-        <v-filter v-model="filter.params" :fields="filterOptions" />
-      </div>
+  <div>
+    <div class="mb-4 flex items-center">
+      <v-switcher
+        v-model="filter.sort"
+        :values="[
+          {
+            title: $t('page.ideas.explore.filter.datePublish'),
+            value: 'date',
+          },
+          {
+            title: $t('page.ideas.explore.filter.lastUpdate'),
+            value: 'lastUpdate',
+          },
+        ]"
+      />
+    </div>
 
-      <div class="col-span-8">
-        <div class="mb-4 flex items-center">
-          <v-switcher
-            v-model="filter.sort"
-            :values="[
-              {
-                title: $t('page.ideas.explore.filter.datePublish'),
-                value: 'date',
-              },
-              {
-                title: $t('page.ideas.explore.filter.lastUpdate'),
-                value: 'lastUpdate',
-              },
-            ]"
-          />
-        </div>
-
+    <div class="grid grid-cols-4 gap-6">
+      <div class="col-span-3">
         <div v-if="ideas.length" class="grid grid-cols-3 gap-4">
           <v-idea
             v-for="(idea, index) in ideas"
@@ -41,6 +37,9 @@
           </span>
         </div>
       </div>
+      <div class="col-span-1">
+        <v-filter v-model="filter.params" :fields="filterOptions" />
+      </div>
     </div>
   </div>
 </template>
@@ -54,7 +53,6 @@ export default {
     await store.dispatch('ideas/getIdeas', route.query)
     await store.dispatch('skills/getSkills')
   },
-
   data() {
     const query = Object.entries(
       qs.parse(this.$route.fullPath.split('?')[1])

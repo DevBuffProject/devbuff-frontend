@@ -1,5 +1,5 @@
 <template>
-  <div class="progress">
+  <div class="progress h-px relative overflow-hidden bg-purple-500">
     <div class="progress__bar progress__bar1" />
     <div class="progress__bar progress__bar2" />
   </div>

@@ -1,13 +1,5 @@
 <template>
-  <span
-    :class="[
-      $style.icon,
-      type ? `material-icons-${type}` : 'material-icons',
-      'flex items-center justify-center',
-    ]"
-    v-on="$listeners"
-    v-text="name"
-  />
+  <span :class="$style.Icon" v-on="$listeners" v-text="name" />
 </template>
 
 <script>
@@ -29,11 +21,14 @@ export default {
 </script>
 
 <style module>
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-.icon {
-  font-family: 'Material Icons', sans-serif;
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons+Outlined');
+.Icon {
+  font-family: 'Material Icons Outlined', sans-serif;
   width: 1.5rem;
   height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex: 0 0 1.5rem;
 }
 </style>

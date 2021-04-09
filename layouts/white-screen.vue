@@ -1,5 +1,7 @@
 <template>
-  <div class="white-screen">
+  <div
+    class="bg-gray-50 dark:bg-blueGray-900 h-screen w-full flex justify-center items-center"
+  >
     <div class="white-screen__container">
       <nuxt />
     </div>

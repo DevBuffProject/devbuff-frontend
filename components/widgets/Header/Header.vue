@@ -1,5 +1,8 @@
 <template>
-  <header class="flex flex-col items-center bg-white dark:bg-blueGray-800">
+  <header
+    class="flex flex-col items-center bg-white dark:bg-blueGray-800"
+    style="box-shadow: 0 5px 8px #00098000, 0 5px 16px rgb(0 9 128 / 5%)"
+  >
     <div class="container mx-auto flex items-center py-4">
       <div class="flex items-center w-full">
         <nuxt-link :to="localePath({ name: 'ideas' })">

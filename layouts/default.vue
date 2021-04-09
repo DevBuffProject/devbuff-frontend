@@ -1,12 +1,17 @@
 <template>
-  <div :class="[$style.Grid, 'bg-gray-50 dark:bg-blueGray-900']">
+  <div :class="[$style.Grid, 'bg-white dark:bg-blueGray-900']">
     <div>
       <v-dialog-container />
       <v-header :progress="progress" />
-      <v-subheader :nav="nav" />
+      <!--      <v-subheader :nav="nav" />-->
     </div>
-    <main class="mt-8">
-      <nuxt />
+    <main class="mt-10 grid gap-6 grid-cols-10 container mx-auto">
+      <div class="col-span-2">
+        <v-sidebar />
+      </div>
+      <div class="col-span-8">
+        <nuxt />
+      </div>
     </main>
     <v-footer class="mt-3" />
   </div>
@@ -22,6 +27,7 @@ export default {
   }),
   computed: {
     ...mapGetters('auth', ['isAdmin']),
+    ...mapGetters('user', ['isAuthorized', 'profile', 'fullName']),
     nav() {
       const nav = [
         {
@@ -30,19 +36,20 @@ export default {
           to: this.localePath({ name: 'ideas' }),
           exact: true,
         },
-        {
+      ]
+
+      if (this.isAuthorized)
+        nav.push({
           title: this.$t('components.header.dashboard'),
           to: this.localePath({ name: 's-dashboard' }),
           exact: true,
-        },
-      ]
+        })
 
-      if (this.isAdmin) {
+      if (this.isAdmin)
         nav.push({
           title: 'admin',
-          to: this.localePath({ name: 's-admin' }),
+          to: this.localePath({ name: 'a' }),
         })
-      }
 
       return nav
     },

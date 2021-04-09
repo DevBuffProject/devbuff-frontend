@@ -1,11 +1,11 @@
 <template>
   <v-card class="relative p-4">
     <div>
-      <v-image
-        size="4rem"
-        class="mb-2 inline-block"
-        :src="'//source.unsplash.com/random?logo&key' + id"
-      />
+      <!--      <v-image-->
+      <!--        size="4rem"-->
+      <!--        class="mb-2 inline-block"-->
+      <!--        :src="'//source.unsplash.com/random?logo&key' + id"-->
+      <!--      />-->
 
       <div v-if="!linked" class="text-primary text-xl block font-light">
         {{ title }}
@@ -17,10 +17,6 @@
       >
         {{ title }}
       </nuxt-link>
-
-      <!--      <div v-if="publishDate" class="mb-3 text-xs text-gray-400 dark:text-blueGray-500">-->
-      <!--        {{ publishDate | toLocaleDateTime($i18n.locale) }}-->
-      <!--      </div>-->
     </div>
 
     <div class="mt-2 text-sm text-gray-500 h-10 leading-5">

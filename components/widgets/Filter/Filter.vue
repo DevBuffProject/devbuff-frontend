@@ -1,15 +1,19 @@
 <template>
-  <v-card class="relative">
+  <div class="relative">
     <a
       v-if="Object.values(state).flat().length"
-      class="absolute text-xs text-primary font-medium cursor-pointer hover:underline right-4 top-4 mt-0.5 pt-px pl-4 border-l border-gray-200 dark:border-blueGray-600"
+      :class="[
+        'absolute right-4 top-5 pt-px pl-4 cursor-pointer',
+        'text-xs text-primary font-medium hover:underline',
+        'border-l border-gray-200 dark:border-blueGray-600',
+      ]"
       @click="state = {}"
     >
       сбросить
     </a>
     <ul class="rounded-lg -m-2">
       <li v-for="field in fields" :key="field.name" class="mb-2">
-        <div class="font-normal p-3 text-black dark:text-blueGray-50">
+        <div class="font-normal p-4 text-black dark:text-blueGray-50">
           {{ field.name }}
         </div>
         <ul class="px-4 font-normal text-xs">
@@ -38,18 +42,16 @@
         </ul>
       </li>
     </ul>
-  </v-card>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'VFilter',
-
   model: {
     prop: 'selected',
     event: 'change',
   },
-
   props: {
     fields: {
       type: Array,
@@ -60,11 +62,9 @@ export default {
       default: () => ({}),
     },
   },
-
   data() {
     return { state: this.selected }
   },
-
   watch: {
     state: {
       deep: true,

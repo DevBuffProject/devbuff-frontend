@@ -75,6 +75,7 @@ export const actions = {
 
 export const getters = {
   token: (state) => state.token,
+  isAuth: (state) => !!state.token,
   refreshToken: (state) => state.refreshToken,
   status: (state) => state.status,
   isAdmin: (state) =>

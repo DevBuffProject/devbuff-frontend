@@ -1,11 +1,11 @@
 <template>
-  <div class="error-page font-thin">
+  <div class="font-thin">
     <div v-if="screen">
       <div class="d-flex align-baseline">
-        <span class="error-page__emoji mr-3"> {{ screen.emoji }} </span>
-        <span class="error-page__message">
+        <span class="text-3xl mr-3"> {{ screen.emoji }} </span>
+        <span class="text-4xl">
           <span> {{ screen.message }} </span>
-          <div v-if="isDev" class="mb-3 error-page__status-text">
+          <div v-if="isDev" class="mb-3">
             {{ error.message }}
           </div>
         </span>
@@ -66,45 +66,8 @@ export default {
       )
     },
     isDev() {
-      return this.$config.isDev
+      return this.$config.IS_DEV
     },
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.error-page {
-  --emoji-size: 4rem;
-
-  height: 100vh;
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &__button {
-    margin-left: calc(1rem + var(--emoji-size));
-  }
-
-  &__message {
-    position: relative;
-    font-size: 2.3rem;
-  }
-
-  &__emoji {
-    font-size: var(--emoji-size);
-  }
-
-  &__status-text {
-    font-size: 1rem;
-    color: var(--color-danger);
-    max-width: 400px;
-    max-height: 200px;
-    overflow: scroll;
-    white-space: pre;
-    border-radius: 4px;
-    border: 1px dashed;
-  }
-}
-</style>
