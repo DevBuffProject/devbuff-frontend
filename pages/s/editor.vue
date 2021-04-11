@@ -1,20 +1,13 @@
 <template>
   <div class="editor">
-    <v-toolbar class="mb-5">
-      <div class="flex justify-between w-full">
-        <h3 class="m-0">
-          {{
-            isEditMode
-              ? $t('page.editor.title.ideaEdit')
-              : $t('page.editor.title.ideaNew')
-          }}
-        </h3>
-        <v-button :icon="['fas', 'plus']" :loading="loading" @click="save">
-          {{ $t('common.save') }}
-        </v-button>
-      </div>
-    </v-toolbar>
-
+    <v-breadcrumbs :items="breadcrumbs" />
+    <h1>
+      {{
+        isEditMode
+          ? $t('page.editor.title.ideaEdit')
+          : $t('page.editor.title.ideaNew')
+      }}
+    </h1>
     <div class="editor__form">
       <ValidationObserver ref="form">
         <div class="container mx-auto mb-4">
@@ -91,6 +84,19 @@ export default {
   },
   computed: {
     ...mapGetters('skills', ['skills']),
+    breadcrumbs() {
+      return [
+        {
+          title: 'Главная',
+          to: this.localePath({ name: 'index' }),
+        },
+        {
+          title: 'Идеи',
+          to: this.localePath({ name: 'ideas' }),
+        },
+        { title: 'Новая идея' },
+      ]
+    },
     isEditMode() {
       return !!this.$route.query.id
     },

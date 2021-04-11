@@ -1,5 +1,6 @@
 const IS_DEV = process.env.NODE_ENV !== 'production'
-const config = {
+// eslint-disable-next-line nuxt/no-cjs-in-config
+module.exports = {
   server: {
     host: '0.0.0.0',
     port: 3000,
@@ -13,18 +14,18 @@ const config = {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
       {
-        src: 'https://6yzwffsm5625.statuspage.io/embed/script.js',
+        src: 'https://ssmr5v2lldg4.statuspage.io/embed/script.js',
         body: true,
         defer: true,
       },
     ],
   },
   css: [{ src: '~/assets/css/common.css', lang: 'sass' }],
-  loading: '~/page-loading.vue',
+  loading: '~/page-loading.js',
   components: [
     {
       path: '~/components/',
-      ignore: ['_**'],
+      ignore: ['~/components/dialogs'],
       prefix: 'v',
     },
   ],
@@ -33,12 +34,16 @@ const config = {
     { src: '~/plugins/setup.js' },
     { src: '~/plugins/fontawesome.js' },
     { src: '~/plugins/vee-validate.js' },
+    { src: '~/plugins/vuex-persist.js' },
+    { src: '~/plugins/vue-scroll.js' },
   ],
   modules: [
     // '@nuxtjs/pwa',
     '@nuxtjs/axios',
     'nuxt-i18n',
     'cookie-universal-nuxt',
+    // https://github.com/nuxt-community/proxy-module
+    '@nuxtjs/proxy',
   ],
   buildModules: [
     '@nuxtjs/eslint-module',
@@ -47,6 +52,21 @@ const config = {
     '@nuxtjs/tailwindcss',
     '@nuxtjs/color-mode',
   ],
+  proxy: {
+    [process.env.VK_PROXY_PATH]: {
+      logLevel: IS_DEV ? 'debug' : 'info',
+      target: process.env.VK_BASE_URL,
+      pathRewrite: { [`^${process.env.VK_PROXY_PATH}`]: '' },
+      onProxyReq(proxyReq) {
+        proxyReq.setHeader(
+          'Authorization',
+          `Bearer ${process.env.VK_SERVICE_TOKEN}`
+        )
+        proxyReq.setHeader('Content-Type', 'application/json')
+        proxyReq.setHeader('Accept', 'application/json')
+      },
+    },
+  },
   colorMode: {
     preference: 'system', // default value of $colorMode.preference
     fallback: 'dark', // fallback value if not system preference found
@@ -68,15 +88,23 @@ const config = {
     lazy: true,
     langDir: 'lang/',
   },
-  storybook: {
-    addons: ['@storybook/addon-knobs'],
+  privateRuntimeConfig: {
+    VK_CLIENT_ID: '7820928',
+    VK_TOKEN: '6j8Yj9ymxXhMRJsWwid9',
+    VK_SERVICE_TOKEN:
+      '4a7af3284a7af3284a7af328cf4a0da5a844a7a4a7af3282a09fa8d57bf84db3e5379d2',
   },
   publicRuntimeConfig: {
     // Proxy env to runtime
+    IS_DEV,
+    SESSION_COOKIE_KEY: 'remix_dvbff',
+    VK_PROXY_PATH: '/api/vkdata',
+    VK_BASE_URL: 'https://api.vk.com/method/',
+    VK_API_VERSION: '5.130',
     API_BASE_URL: process.env.API_BASE_URL,
     STATUSPAGE_BASE_URL: process.env.STATUSPAGE_BASE_URL,
   },
-  // modern: true,
+  modern: !IS_DEV,
   router: {
     middleware: ['restore-profile'],
   },
@@ -97,10 +125,3 @@ const config = {
     },
   },
 }
-
-if (!IS_DEV) {
-  config.plugins.push({ src: '~/plugins/sentry.js' })
-}
-// Proxy dev prop to publicRuntimeConfig
-config.publicRuntimeConfig.IS_DEV = IS_DEV
-module.exports = config

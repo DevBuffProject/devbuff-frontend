@@ -1,6 +1,6 @@
 export default async ({ store, req, error }) => {
-  const token = store.getters['auth/token']
-  const refreshToken = store.getters['auth/refreshToken']
+  const token = store.getters['session/token']
+  const refreshToken = store.getters['session/refreshToken']
   const createError = (message) =>
     error({
       statusCode: 401,

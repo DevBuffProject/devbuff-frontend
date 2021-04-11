@@ -1,5 +1,5 @@
 export default ({ store, error }) => {
-  const isAdmin = store.getters['auth/isAdmin']
+  const isAdmin = store.getters['session/isAdmin']
 
   if (!isAdmin) {
     return error({

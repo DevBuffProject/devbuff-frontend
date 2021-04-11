@@ -4,7 +4,10 @@
       'py-1 px-5 overflow-hidden rounded-full outline-none relative',
       'transform transition-all active:scale-95 border-2',
       isMuted
-        ? 'bg-gray-200 dark:bg-blueGray-600 border-gray-200 dark:border-blueGray-600'
+        ? [
+            'bg-gray-200 dark:bg-blueGray-600 border-gray-200 dark:border-blueGray-600',
+            'bg-opacity-50 dark:bg-opacity-100 border-opacity-10',
+          ]
         : [
             `bg-${type} border-${type} text-white`,
             isOutline ? `bg-opacity-0 hover:bg-opacity-10 text-${type}` : '',

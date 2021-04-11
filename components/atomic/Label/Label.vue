@@ -13,7 +13,10 @@ export default {
   name: 'VLabel',
 
   props: {
-    name: String,
+    name: {
+      type: String,
+      default: '',
+    },
   },
 }
 </script>

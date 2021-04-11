@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     retryAuth() {
-      this.$store.dispatch('auth/authorize')
+      this.$store.dispatch('session/authorize')
     },
 
     async getToken() {
@@ -42,7 +42,7 @@ export default {
       const visited = localStorage.getItem('visited')
 
       try {
-        await $store.dispatch('auth/getToken', { grant })
+        await $store.dispatch('session/getToken', { grant })
         this.status = true
       } catch (e) {
         this.status = false

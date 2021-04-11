@@ -70,6 +70,7 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ['active'],
+      backgroundOpacity: ['dark', 'active', 'hover'],
       scale: ['active'],
       display: ['dark'],
     },

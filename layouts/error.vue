@@ -41,8 +41,12 @@
 <script>
 export default {
   layout: 'white-screen',
-  props: ['error'],
-
+  props: {
+    error: {
+      type: [Object, String],
+      default: () => {},
+    },
+  },
   data: () => ({
     errors: {
       401: {
@@ -55,7 +59,6 @@ export default {
       },
     },
   }),
-
   computed: {
     screen() {
       return (

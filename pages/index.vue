@@ -25,6 +25,10 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   layout: 'white-screen',
+  async middleware({ store, redirect, app }) {
+    if (store.getters['user/isAuthorized'])
+      await redirect(app.localePath({ name: 'ideas' }))
+  },
   computed: {
     ...mapGetters('user', ['isAuthorized']),
   },

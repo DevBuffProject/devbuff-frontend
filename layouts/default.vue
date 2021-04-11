@@ -1,13 +1,12 @@
 <template>
-  <div :class="[$style.Grid, 'bg-white dark:bg-blueGray-900']">
+  <div :class="[$style.Grid, 'bg-gray-50 dark:bg-blueGray-900 bg-opacity-90']">
     <div>
-      <v-dialog-container />
+      <v-dialog-container :preloaded-dialog="queryActionDialog" />
       <v-header :progress="progress" />
-      <!--      <v-subheader :nav="nav" />-->
     </div>
     <main class="mt-10 grid gap-6 grid-cols-10 container mx-auto">
       <div class="col-span-2">
-        <v-sidebar />
+        <v-sidebar class="sticky top-8" />
       </div>
       <div class="col-span-8">
         <nuxt />
@@ -24,10 +23,17 @@ import bus from '~/app/event-bus'
 export default {
   data: () => ({
     progress: false,
+    dialogs: {
+      settings: () => import('~/components/dialogs/User/Settings.vue'),
+    },
   }),
   computed: {
     ...mapGetters('auth', ['isAdmin']),
     ...mapGetters('user', ['isAuthorized', 'profile', 'fullName']),
+    queryActionDialog() {
+      const { act } = this.$route.query
+      return this.dialogs[act]
+    },
     nav() {
       const nav = [
         {
@@ -52,6 +58,15 @@ export default {
         })
 
       return nav
+    },
+  },
+  watch: {
+    async '$route.query'() {
+      const { queryActionDialog } = this
+      if (!queryActionDialog) return false
+
+      await this.$dialog.push(queryActionDialog)
+      await this.$router.back()
     },
   },
   created() {

@@ -2,21 +2,25 @@
   <aside>
     <nav>
       <nuxt-link
-        v-if="isAuthorized"
+        v-if="isAuth"
         :to="localePath({ name: 's-profile' })"
-        :class="[
-          'flex items-center rounded-full px-4 mb-5 cursor-pointer',
-          'transition-colors hover:dark:bg-blueGray',
-        ]"
+        class="mb-8 block"
       >
-        <v-avatar :avatar="$store.getters['user/profile'].id" class="mr-4" />
-        <div>
-          <div class="text-md font-semibold">{{ profile.firstName }}</div>
-          <div class="text-xs mt-1 text-gray-500 dark:text-blueGray-700">
-            @{{ profile.userName }}
-          </div>
-        </div>
+        <v-user
+          avatar-gradient-border
+          :user-id="profile.id"
+          :firstname="profile.firstName"
+          :lastname="profile.lastName"
+          :username="profile.userName"
+        />
       </nuxt-link>
+      <div v-else class="p-5 mb-5 bg-primary bg-opacity-10 rounded-xl">
+        <v-button class="w-full" @click="authorize">Войти</v-button>
+        <div class="mt-2 text-xs font-medium">
+          Чтобы публиковать проекты, собирать команду и откликаться на идеи
+          пользователей
+        </div>
+      </div>
 
       <template v-for="(section, index) in nav">
         <nuxt-link
@@ -31,23 +35,30 @@
               'flex items-center rounded-full px-4 py-1.5 mb-2 cursor-pointer',
               'transition-all hover:bg-gray-100 dark:hover:bg-blueGray-800',
               'transform active:scale-95',
-              isActive
+              link.activeState !== false && isActive
                 ? 'text-primary'
-                : 'text-gray-900 dark:text-blueGray-500',
+                : 'text-gray-900 dark:text-blueGray-300',
             ]"
-            @click="navigate"
+            @click="goNavigate($event, link.to, navigate)"
           >
-            <v-material-icon :name="link.icon" class="text-2xl mr-4" />
+            <div class="mr-4 w-6 h-6 flex items-center justify-center">
+              <v-loading v-if="link.to === loadingRoute" />
+              <v-material-icon v-else :name="link.icon" class="text-2xl" />
+            </div>
             <span class="text-md font-semibold"> {{ link.title }} </span>
           </a>
         </nuxt-link>
-        <div v-if="index < nav.length - 1" :key="index" class="mx-10">
+        <div v-if="index < nav.length - 1" :key="index" class="mx-10 my-4">
           <v-delimiter />
         </div>
       </template>
-
+      <div class="mx-10 my-4">
+        <v-delimiter />
+      </div>
       <div
+        v-if="isAuth"
         :class="[
+          'sticky bottom-10',
           'flex items-center rounded-full px-4 py-1.5 mb-2 cursor-pointer',
           'transition-colors hover:bg-danger text-danger hover:bg-opacity-10',
         ]"
@@ -60,12 +71,15 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
+  data: () => ({
+    loadingRoute: {},
+  }),
   computed: {
-    ...mapGetters('auth', ['isAdmin']),
-    ...mapGetters('user', ['isAuthorized', 'profile', 'fullName']),
+    ...mapGetters('session', ['isAdmin', 'isAuth']),
+    ...mapGetters('user', ['profile', 'fullName']),
     nav() {
       const main = [
         {
@@ -79,29 +93,45 @@ export default {
       const adminNav = []
       const userNav = []
 
-      if (this.isAuthorized) {
-        main.push({
-          title: this.$t('components.header.dashboard'),
-          icon: 'space_dashboard',
-          to: this.localePath({ name: 's-dashboard' }),
-          exact: true,
-        })
-        userNav.push({
-          title: 'Настройки',
-          icon: 'settings',
-          to: this.localePath({ name: 's-profile' }),
-          exact: true,
-        })
+      if (this.isAuth) {
+        main.push(
+          {
+            title: this.$t('components.header.dashboard'),
+            icon: 'space_dashboard',
+            to: this.localePath({ name: 's-dashboard' }),
+            exact: true,
+          },
+          {
+            title: 'Настройки',
+            icon: 'settings',
+            to: this.localePath({ ...this.$route, query: { act: 'settings' } }),
+            activeState: false,
+          }
+        )
       }
 
       if (this.isAdmin)
         adminNav.push({
           title: 'admin',
           icon: 'admin_panel_settings',
-          to: this.localePath({ name: 'a' }),
+          to: this.localeRoute({ name: 'a' }),
         })
 
-      return Object.values({ main, userNav, adminNav })
+      return Object.values({ main, userNav, adminNav }).filter(
+        (nav) => nav.length > 0
+      )
+    },
+  },
+  created() {
+    this.$router.afterEach((to) => {
+      this.loadingRoute = {}
+    })
+  },
+  methods: {
+    ...mapActions('session', ['authorize']),
+    async goNavigate(event, route, next) {
+      this.loadingRoute = route
+      await next(event)
     },
   },
 }

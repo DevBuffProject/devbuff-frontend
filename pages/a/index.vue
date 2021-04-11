@@ -1,98 +1,76 @@
 <template>
-  <div class="dashboard">
-    <div class="container mx-auto">
-      <div v-if="pendingIdeas.length" style="width: 700px">
-        <div class="flex items-center mb-10">
-          <v-checkbox
-            :checked="checked.length === pendingIdeas.length"
-            :is-intermedia="
-              checked.length > 0 && checked.length !== pendingIdeas.length
-            "
-            class="mr-6 ml-px pl-3"
-            @click="toggleCheckAll"
-          />
-
-          <div
-            :class="[
-              'flex items-center transition-opacity mr-4 text-xs',
-              checked.length < 1 && 'opacity-20',
-            ]"
-          >
-            <button
-              class="mr-2 inline-flex items-center"
-              @click="applyActionDialog('accept')"
-            >
-              <v-material-icon name="done_all" class="text-xl text-success" />
-              <span class="ml-2 font-semibold">Одобрить все</span>
-            </button>
-            <em class="mx-2 w-px h-6 bg-gray-300 dark:bg-blueGray-700 block" />
-            <button
-              class="mr-2 inline-flex items-center"
-              @click="applyActionDialog('delete')"
-            >
-              <v-material-icon
-                name="delete_forever"
-                class="text-xl text-danger"
-              />
-              <span class="ml-2 font-semibold">Удалить все</span>
-            </button>
-          </div>
-        </div>
-
-        <v-card
-          v-for="idea in pendingIdeas"
-          :key="idea.id"
-          class="mb-4"
-          :class="
-            checked.indexOf(idea.id) > -1 &&
-            'border-primary dark:border-primary border-opacity-100'
+  <div>
+    <v-breadcrumbs :items="breadcrumbs" />
+    <h1>Модерация</h1>
+    <div v-if="pendingIdeas.length" style="width: 700px">
+      <div class="flex items-center mb-6">
+        <v-checkbox
+          :checked="checked.length === pendingIdeas.length"
+          :is-intermedia="
+            checked.length > 0 && checked.length !== pendingIdeas.length
           "
+          class="mr-6 ml-px pl-3"
+          @click="toggleCheckAll"
+        />
+
+        <div
+          :class="[
+            'flex items-center transition-opacity mr-4 text-xs',
+            checked.length < 1 && 'opacity-20',
+          ]"
+        >
+          <button
+            class="mr-2 inline-flex items-center"
+            @click="applyActionDialog('accept')"
+          >
+            <v-material-icon name="done_all" class="text-xl text-success" />
+            <span class="ml-2 font-semibold">Одобрить все</span>
+          </button>
+          <em class="mx-2 w-px h-6 bg-gray-300 dark:bg-blueGray-700 block" />
+          <button
+            class="mr-2 inline-flex items-center"
+            @click="applyActionDialog('delete')"
+          >
+            <v-material-icon
+              name="delete_forever"
+              class="text-xl text-danger"
+            />
+            <span class="ml-2 font-semibold">Удалить все</span>
+          </button>
+        </div>
+      </div>
+
+      <v-card class="overflow-hidden">
+        <div
+          v-for="(idea, index) in pendingIdeas"
+          :key="idea.id"
+          :class="[
+            checked.indexOf(idea.id) > -1 &&
+              'bg-gray-100 bg-opacity-50 dark:bg-blueGray-800 dark:bg-opacity-50',
+            '-mx-4 px-4 pt-4',
+          ]"
         >
           <div class="group flex" @click="toggleCheck(idea)">
             <v-checkbox :checked="checked" :value="idea.id" class="mr-4" />
-            <div class="flex justify-between items-center w-full">
-              <div class="w-full">
-                <div
-                  :to="
-                    localePath({ name: 'ideas-id', params: { id: idea.id } })
-                  "
-                  class="text-base block font-semibold"
-                >
-                  {{ idea.name }}
-                </div>
-
-                <div class="mt-2 text-sm text-gray-500 leading-5">
-                  {{ idea.description }}
-                </div>
-              </div>
-              <div
-                class="text-xs w-full flex justify-end items-center"
-                @click.stop.prevent
+            <div class="flex flex-col w-full">
+              <nuxt-link
+                :to="localePath({ name: 'ideas-id', params: { id: idea.id } })"
+                class="text-primary hover:underline w-min whitespace-nowrap"
               >
-                <div
-                  class="flex items-center transition-opacity opacity-0 group-hover:opacity-100 mr-4"
-                >
-                  <button class="mr-2 inline-flex items-center text-success">
-                    <v-material-icon name="done" class="text-xl" />
-                    <span class="ml-1">одобрить</span>
-                  </button>
-                  <em
-                    class="mx-2 w-px h-4 bg-gray-200 dark:bg-blueGray-600 block"
-                  />
-                  <button class="mr-2 inline-flex items-center text-danger">
-                    <v-material-icon name="clear" class="text-xl" />
-                    <span class="ml-1">Удалить</span>
-                  </button>
-                </div>
-                <v-button type="muted">посмотреть</v-button>
+                {{ idea.name }}
+              </nuxt-link>
+
+              <div class="mt-1 text-sm text-gray-500 leading-5">
+                {{ idea.description }}
               </div>
             </div>
           </div>
-        </v-card>
-      </div>
-      <div v-else class="flex flex-column items-center" style="width: 500px">
-        <span class="text-muted"> 🤷 {{ $t('page.dashboard.noIdeas') }} </span>
-      </div>
+          <v-delimiter v-if="index < pendingIdeas.length - 1" class="mt-4" />
+        </div>
+      </v-card>
+    </div>
+    <div v-else class="flex flex-column items-center" style="width: 500px">
+      <span class="text-muted"> 🤷 {{ $t('page.dashboard.noIdeas') }} </span>
     </div>
   </div>
 </template>
@@ -104,11 +82,40 @@ export default {
   async middleware({ store }) {
     await store.dispatch('admin/getPendingIdeas')
   },
-  data: () => ({ checked: [] }),
+  data: () => ({
+    checked: [],
+    queue: {},
+  }),
   computed: {
     ...mapGetters('admin', ['pendingIdeas']),
+    breadcrumbs() {
+      return [
+        {
+          title: 'Главная',
+          to: this.localePath({ name: 'index' }),
+        },
+        { title: 'Модерация' },
+      ]
+    },
+  },
+  created() {
+    if (process.client) {
+      // eslint-disable-next-line nuxt/no-globals-in-created
+      window.addEventListener('beforeunload', () => {
+        console.log('unload')
+      })
+    }
+  },
+  beforeDestroy() {
+    alert()
   },
   methods: {
+    enQueue({ id, method }) {
+      this.queue[id] = method
+    },
+    unQueue(id) {
+      delete this.queue[id]
+    },
     applyActionDialog(act) {
       const accept = confirm(
         `${act === 'accept' ? 'Одобрить' : 'Удалить'} выделенные?`

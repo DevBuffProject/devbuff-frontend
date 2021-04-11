@@ -1,19 +1,43 @@
 <template>
-  <div
-    :class="[
-      'bg-white border-2 border-gray-200 dark:border-blueGray-700 dark:bg-blueGray-900',
-      'grid p-3 rounded-md border-opacity-0 shadow',
-    ]"
-    v-on="$listeners"
-  >
-    <div v-if="$slots.header" class="v-card__header">
-      <slot name="header" />
+  <div>
+    <div
+      :class="[
+        'bg-white border border-gray-300 border-opacity-30 dark:border-blueGray-700 dark:bg-blueGray-900',
+        'grid p-4 rounded-xl relative',
+        $style.CardShadow,
+      ]"
+      v-bind="$attrs"
+      v-on="$listeners"
+    >
+      <template v-if="$slots.bottom">
+        <em
+          :class="[
+            $style.Triangle_border,
+            'border-gray-300 dark:border-blueGray-700 dark:bg-blueGray-900',
+          ]"
+        />
+        <em
+          :class="[$style.Triangle, 'border-white dark:border-blueGray-900']"
+        />
+      </template>
+      <div v-if="$slots.header">
+        <slot name="header" />
+      </div>
+      <div><slot /></div>
+      <div
+        v-if="$slots.footer || $slots.controls"
+        class="border-t border-gray-200 self-end mt-4 -mb-4 py-2.5"
+      >
+        <div v-if="$slots.footer">
+          <slot name="footer" />
+        </div>
+        <div v-if="$slots.controls">
+          <slot name="controls" />
+        </div>
+      </div>
     </div>
-    <div class="v-card__content">
-      <slot />
-    </div>
-    <div v-if="$slots.footer" class="mt-4 self-end">
-      <slot name="footer" />
+    <div v-if="$slots.bottom" class="mt-2 ml-px pl-4">
+      <slot name="bottom" />
     </div>
   </div>
 </template>
@@ -23,3 +47,38 @@ export default {
   name: 'VCard',
 }
 </script>
+
+<style module>
+.CardShadow {
+  box-shadow: 0px 10px 25px -5px rgb(0 0 0 / 7%);
+}
+/* this CS forms the triangles */
+.Triangle,
+.Triangle_border {
+  display: block;
+  position: absolute;
+  top: 100%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+/* this border color controlls the color of the triangle (what looks like the fill of the triangle) */
+.Triangle {
+  border-right-color: transparent !important;
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-width: 7px;
+  left: 17px;
+}
+
+/* this border color controlls the outside, thin border */
+.Triangle_border {
+  display: none;
+  border-right-color: transparent !important;
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-width: 8px;
+  left: 16px;
+}
+</style>

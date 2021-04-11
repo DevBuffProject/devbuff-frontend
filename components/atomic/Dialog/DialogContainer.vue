@@ -6,15 +6,14 @@
       'flex items-center justify-center',
     ]"
   >
-    <div class="max-h-screen">
+    <div class="max-h-screen w-full" style="min-width: 320px; max-width: 600px">
       <div
-        class="bg-white dark:bg-blueGray-700 rounded my-10 py-6 px-12 relative"
-        style="min-width: 320px; max-width: 600px; width: fit-content"
+        class="bg-white dark:bg-blueGray-800 rounded my-10 py-6 px-12 relative"
       >
         <component
-          :is="lastDialog.component"
-          v-if="dialogs.length"
-          v-bind="lastDialog.props"
+          :is="dialog.component"
+          v-if="dialog.component"
+          v-bind="dialog.props"
         />
 
         <v-material-icon
@@ -22,7 +21,7 @@
           type="round"
           :class="[
             'absolute right-0 top-0 cursor-pointer mt-6 mr-6 p-4 text-lg rounded-full',
-            'bg-gray-200 dark:bg-blueGray-800 cursor-pointer opacity-50',
+            'bg-gray-200 dark:bg-blueGray-900 cursor-pointer opacity-50',
             'transition-opacity hover:opacity-100',
           ]"
           @click="close"
@@ -37,9 +36,15 @@ import bus from '~/app/event-bus'
 
 export default {
   name: 'VDialogContainer',
+  props: {
+    preloadedDialog: {
+      type: [Object, Function],
+      default: null,
+    },
+  },
   data: () => ({ dialogs: [] }),
   computed: {
-    lastDialog() {
+    dialog() {
       return this.dialogs[this.dialogs.length - 1]
     },
   },
@@ -53,6 +58,9 @@ export default {
     },
   },
   created() {
+    if (this.preloadedDialog)
+      this.dialogs.push({ component: this.preloadedDialog })
+
     bus.on('dialog:push', (dialog) => this.dialogs.push(dialog))
     bus.on('dialog:close', () => this.dialogs.pop())
     bus.on('dialog:kill', () => (this.dialogs = []))

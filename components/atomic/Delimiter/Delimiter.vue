@@ -1,5 +1,3 @@
 <template>
-  <em
-    class="block border-b border-gray-200 dark:border-blueGray-800 w-full h-px my-4"
-  />
+  <em class="block bg-gray-200 dark:bg-blueGray-800 w-full h-px" />
 </template>

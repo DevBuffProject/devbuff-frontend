@@ -13,15 +13,12 @@ export const actions = {
     commit('setHealth', data, { root: true })
     return data
   },
-  nuxtServerInit({ commit, dispatch }, { $cookies, $api, error }) {
-    const token = $cookies.get('remix_token')
-    const refreshToken = $cookies.get('remix_refresh_token')
-
-    if (token && refreshToken) {
-      $api.latest.setToken(token, 'Bearer')
-      commit('auth/setToken', token)
-      commit('auth/setRefreshToken', refreshToken)
-    }
+  nuxtServerInit({ commit }, { $config, $cookies }) {
+    const { SESSION_COOKIE_KEY } = $config
+    // https://github.com/championswimmer/vuex-persist#tips-for-nuxt
+    const cookieSession = $cookies.get(SESSION_COOKIE_KEY)
+    console.log(cookieSession)
+    if (cookieSession) commit('session/setSession', cookieSession)
   },
 }
 

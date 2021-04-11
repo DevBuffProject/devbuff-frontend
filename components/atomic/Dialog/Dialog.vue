@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="$style.DialogWindow">
     <div v-if="title" class="mt-2 mb-6 text-xl font-semibold" v-text="title" />
     <slot />
     <div
@@ -22,3 +22,10 @@ export default {
   },
 }
 </script>
+
+<style module>
+.DialogWindow {
+  max-width: inherit;
+  width: 100%;
+}
+</style>

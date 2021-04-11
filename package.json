@@ -1,7 +1,7 @@
 {
   "name": "devbuff",
-  "version": "1.0.0",
-  "description": "Devbuff",
+  "version": "2.0.0",
+  "description": "DevBuff",
   "author": "DevBuff, Alexander Katkov <katkov.alexander@yahoo.com>",
   "private": true,
   "scripts": {
@@ -12,11 +12,7 @@
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore . --fix",
     "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore --fix",
     "lint": "npm run lint:js && npm run lint:style",
-    "precommit": "npm run lint",
-    "storybook": "npx nuxt storybook",
-    "build-storybook": "npx nuxt storybook build",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "precommit": "npm run lint"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint",
@@ -34,42 +30,36 @@
     "@fortawesome/free-regular-svg-icons": "5.15.1",
     "@fortawesome/free-solid-svg-icons": "5.15.1",
     "@fortawesome/vue-fontawesome": "2.0.2",
-    "@nuxtjs/auth": "4.9.1",
     "@nuxtjs/axios": "5.12.5",
+    "@nuxtjs/proxy": "^2.1.0",
     "@nuxtjs/pwa": "3.3.4",
-    "@sentry/browser": "5.29.2",
-    "@sentry/integrations": "5.29.2",
-    "@sentry/tracing": "5.29.2",
-    "animejs": "3.2.1",
     "axios": "0.21.1",
     "color": "3.1.3",
     "cookie-universal-nuxt": "2.1.4",
     "dedent": "0.7.0",
     "highlight.js": "10.5.0",
-    "lodash": "4.17.20",
+    "lodash": "^4.17.20",
+    "masonry-layout": "^4.2.2",
     "material-design-icons": "^3.0.1",
     "mitt": "^2.1.0",
     "nuxt": "2.14.12",
     "nuxt-i18n": "6.17.0",
-    "nuxt-vuex-localstorage": "^1.0.4",
-    "open-graph-scraper": "4.7.1",
     "query-string": "^6.13.8",
     "quill": "1.3.7",
     "quill-blot-formatter": "1.0.5",
     "quill-image-uploader": "1.2.2",
     "quill-magic-url": "2.1.5",
-    "snyk": "^1.529.0",
-    "vee-validate": "3.4.5"
+    "vee-validate": "3.4.5",
+    "vuescroll": "^4.17.3",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "@babel/runtime-corejs3": "7.12.5",
     "@nuxtjs/color-mode": "^2.0.2",
     "@nuxtjs/eslint-config": "^6.0.0",
     "@nuxtjs/eslint-module": "^3.0.2",
-    "@nuxtjs/storybook": "3.3.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@nuxtjs/tailwindcss": "^3.4.2",
-    "@storybook/addon-knobs": "6.1.11",
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "@tailwindcss/typography": "^0.3.1",
     "autoprefixer": "^9.8.6",
@@ -91,6 +81,5 @@
     "stylelint-config-standard": "^20.0.0",
     "stylelint-scss": "^3.19.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2"
-  },
-  "snyk": true
+  }
 }

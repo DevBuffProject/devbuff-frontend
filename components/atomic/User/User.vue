@@ -1,23 +1,27 @@
 <template>
-  <div class="v-user">
-    <nuxt-link
-      :to="localePath({ name: 's-profile-id', params: { id: userId } })"
-      class="v-user__link"
-    >
-      <v-avatar :avatar="userId" class="v-user__avatar" />
-      <div>
-        <div class="v-user__name">{{ firstname }} {{ lastname }}</div>
-        <div class="v-user__username">@{{ username }}</div>
+  <div class="flex items-center">
+    <v-avatar
+      :gradient-border="avatarGradientBorder"
+      :avatar="userId"
+      class="mr-2"
+    />
+    <div>
+      <div class="font-semibold">{{ firstname }} {{ lastname }}</div>
+      <div class="text-xs text-gray-500 dark:text-blueGray-400">
+        @{{ username }}
       </div>
-    </nuxt-link>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'VUser',
-
   props: {
+    avatarGradientBorder: {
+      type: Boolean,
+      default: false,
+    },
     userId: {
       type: String,
       default: null,
@@ -37,25 +41,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-.v-user {
-  &__link {
-    display: flex;
-  }
-
-  &__avatar {
-    margin-right: 0.5rem;
-  }
-
-  &__name {
-    font-weight: 400;
-  }
-
-  &__username {
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-    font-weight: 400;
-  }
-}
-</style>

@@ -1,12 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Nunito:wght@300;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
   --header-height: 60px;
-  --font-family: 'Inter';
+  --font-family: 'Rubik';
   --base-transition: cubic-bezier(.28, .98, .44, 1);
 }
 
@@ -24,8 +21,8 @@ body {
   user-select: none;
   font-family: var(--font-family);
   font-size: 15px;
-  line-height: 1.5;
-  font-weight: 300;
+  line-height: 1.2;
+  font-weight: 400;
   font-variant: no-common-ligatures slashed-zero;
   -webkit-font-smoothing: antialiased;
 }
@@ -54,4 +51,8 @@ body {
 
 svg {
   pointer-events: none;
+}
+
+*[disabled] {
+  @apply opacity-70 pointer-events-none cursor-default;
 }

@@ -1,5 +1,8 @@
 <template>
-  <v-card class="relative p-4">
+  <v-card class="relative">
+    <template v-if="$slots.user" #bottom>
+      <slot name="user" />
+    </template>
     <div>
       <!--      <v-image-->
       <!--        size="4rem"-->
@@ -28,12 +31,12 @@
       :name="$t('components.ideaCard.specialists')"
       class="mt-4"
     >
-      <div :class="$style.labels_list">
+      <div :class="$style.Labels_list">
         <v-chip
-          v-for="spec in specialists"
-          :key="spec"
+          v-for="(spec, index) in specialists"
+          :key="'spec' + spec.name + index"
           :text="t(`specializations.${spec.name}.title`, spec.name)"
-          :class="$style.label"
+          :class="$style.Label"
         />
       </div>
     </v-label>
@@ -43,12 +46,12 @@
       :name="$t('components.ideaCard.technologies')"
       class="mt-2"
     >
-      <div :class="$style.labels_list">
+      <div :class="$style.Labels_list">
         <v-chip
-          v-for="tech in technologies"
-          :key="tech"
+          v-for="(tech, index) in new Set(technologies)"
+          :key="'tech' + tech + index"
           :text="tech"
-          :class="$style.label"
+          :class="$style.Label"
         />
       </div>
     </v-label>
@@ -58,13 +61,13 @@
       :name="$t('components.ideaCard.languages')"
       class="mt-2"
     >
-      <div :class="$style.labels_list">
+      <div :class="$style.Labels_list">
         <v-chip
           v-for="{ name } in languages"
           :key="name"
           :text="t(`languages.${name}`, name)"
           type="auto"
-          :class="$style.label"
+          :class="$style.Label"
         />
       </div>
     </v-label>
@@ -74,9 +77,11 @@
 <script>
 export default {
   name: 'VIdea',
-
   props: {
-    publishDate: String,
+    date: {
+      type: String,
+      default: '',
+    },
     linked: {
       type: Boolean,
       default: true,
@@ -98,11 +103,6 @@ export default {
       default: () => [],
     },
   },
-
-  data: () => ({
-    hover: false,
-  }),
-
   computed: {
     languages() {
       return this.specialists.length
@@ -134,15 +134,15 @@ export default {
 </script>
 
 <style module>
-.labels {
+.Labels {
   @apply pr-6 my-2 mr-6;
 }
 
-.labels_list {
+.Labels_list {
   @apply flex flex-wrap;
 }
 
-.label {
+.Label {
   @apply mr-2 mb-2;
 }
 </style>
