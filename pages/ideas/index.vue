@@ -19,11 +19,16 @@
             ]"
           />
           <div>
-            <v-material-icon
-              :name="inlineView ? 'view_quilt' : 'view_list'"
-              class="text-3xl cursor-pointer hover:text-primary"
+            <div
+              :class="[
+                'text-3xl cursor-pointer h-10 w-10 p-2 rounded-full flex items-center justify-center',
+                'transition-all hover:bg-primary hover:text-primary hover:bg-opacity-10',
+                'transform active:scale-90',
+              ]"
               @click="toggleInlineView"
-            />
+            >
+              <svg-icon :name="inlineView ? 'edit/layout' : 'menu/menu'" />
+            </div>
           </div>
         </div>
         <div v-if="ideas.length" ref="ideas" class="ideas">
@@ -70,7 +75,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { qs } from '~/assets/js/url'
+import qs from '~/app/utils/url'
 
 export default {
   async middleware({ store, route }) {
@@ -161,19 +166,28 @@ export default {
       this.masonryGrid = new Masonry('.ideas', { gutter: 16, stagger: 20 })
       window.msnry = this.masonryGrid
     },
-    async toggleInlineView() {
+    async reloadMasonryGrid() {
+      await this.$nextTick()
+
+      this.masonryGrid.reloadItems()
       const ideasGrid = this.$refs.ideas
       ideasGrid.style.transition = 'none'
       ideasGrid.style.transform = 'scale(0.95)'
       ideasGrid.style.opacity = 0
-      this.inlineView = !this.inlineView
+
       await this.$nextTick()
+
       this.masonryGrid.layout()
       setTimeout(() => {
         ideasGrid.style.transition = 'all 300ms ease'
         ideasGrid.style.transform = 'scale(1)'
         ideasGrid.style.opacity = 1
       }, 200)
+    },
+    async toggleInlineView() {
+      this.inlineView = !this.inlineView
+      await this.$nextTick()
+      await this.reloadMasonryGrid()
     },
     async applyFilter() {
       const filter = {
@@ -188,7 +202,7 @@ export default {
         `${window.location.origin + window.location.pathname}?${query}`
       )
       await this.$store.dispatch('ideas/getIdeas', filter)
-      await this.createMasonryGrid()
+      await this.reloadMasonryGrid()
     },
     t(str, fallbackStr) {
       return this.$t && this.$te

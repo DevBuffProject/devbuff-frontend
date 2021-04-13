@@ -6,7 +6,7 @@ Vue.use(vuescroll, {
     bar: {
       background: '#000',
       keepShow: true,
-      minSize: '30%',
+      minSize: '30px',
     },
     vuescroll: {
       sizeStrategy: 'number',

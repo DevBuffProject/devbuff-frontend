@@ -94,6 +94,7 @@ export default {
   },
   methods: {
     selectOption(option) {
+      this.searchValue = ''
       this.$emit('change', option.value)
       this.$emit('selected', option.value)
     },
@@ -118,6 +119,6 @@ export default {
   opacity: 1;
 }
 .Input input:focus::placeholder {
-  opacity: 0.5;
+  opacity: 0.7;
 }
 </style>

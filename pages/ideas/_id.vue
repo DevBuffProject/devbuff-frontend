@@ -35,7 +35,6 @@
       </div>
 
       <div class="grid grid-cols-7 gap-5">
-        <!-- eslint-disable-next-line -->
         <v-card class="p-8 col-span-5" v-html="idea.text" />
         <div class="self-start col-span-2">
           <v-card class="overflow-hidden">
@@ -150,6 +149,18 @@ export default {
   data: () => ({
     responded: [],
   }),
+  head() {
+    return {
+      title: this.idea.name,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.idea.description,
+        },
+      ],
+    }
+  },
   computed: {
     ...mapGetters({
       idea: 'ideas/idea',
@@ -232,18 +243,6 @@ export default {
           : fallbackStr
         : fallbackStr || str
     },
-  },
-  head() {
-    return {
-      title: this.idea.name,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.idea.description,
-        },
-      ],
-    }
   },
 }
 </script>

@@ -12,7 +12,8 @@
 }
 
 html {
-  overflow: overlay;
+  overflow-y: overlay;
+  overflow-x: hidden !important;
 }
 
 body {
@@ -25,6 +26,10 @@ body {
   font-weight: 400;
   font-variant: no-common-ligatures slashed-zero;
   -webkit-font-smoothing: antialiased;
+}
+
+svg.dbff-svg-sprite {
+  @apply w-5 h-5 inline-flex items-center justify-center;
 }
 
 [contenteditable] {
@@ -55,4 +60,21 @@ svg {
 
 *[disabled] {
   @apply opacity-70 pointer-events-none cursor-default;
+}
+
+
+.scale-enter-active, .scale-leave-active {
+  transition: all .15s ease;
+}
+.scale-enter, .scale-leave-to {
+  transform: scale(0.95);
+  opacity: 0;
+  overflow: hidden;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }

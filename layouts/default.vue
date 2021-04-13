@@ -19,6 +19,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import bus from '~/app/event-bus'
+// import qs from '~/app/utils/url'
 
 export default {
   data: () => ({
@@ -66,7 +67,13 @@ export default {
       if (!queryActionDialog) return false
 
       await this.$dialog.push(queryActionDialog)
-      await this.$router.back()
+
+      console.log(window.history)
+      if (window.history.length > 2) {
+        this.$router.back()
+      } else {
+        console.log('LOOOG')
+      }
     },
   },
   created() {

@@ -4,7 +4,7 @@
       <nuxt-link
         v-if="isAuth"
         :to="localePath({ name: 's-profile' })"
-        class="mb-8 block"
+        class="mb-8 ml-4 block"
       >
         <v-user
           avatar-gradient-border
@@ -43,9 +43,9 @@
           >
             <div class="mr-4 w-6 h-6 flex items-center justify-center">
               <v-loading v-if="link.to === loadingRoute" />
-              <v-material-icon v-else :name="link.icon" class="text-2xl" />
+              <svg-icon v-else :name="link.icon" />
             </div>
-            <span class="text-md font-semibold"> {{ link.title }} </span>
+            <span class="text-md font-medium"> {{ link.title }} </span>
           </a>
         </nuxt-link>
         <div v-if="index < nav.length - 1" :key="index" class="mx-10 my-4">
@@ -58,13 +58,14 @@
       <div
         v-if="isAuth"
         :class="[
-          'sticky bottom-10',
           'flex items-center rounded-full px-4 py-1.5 mb-2 cursor-pointer',
           'transition-colors hover:bg-danger text-danger hover:bg-opacity-10',
         ]"
       >
-        <v-material-icon name="logout" class="text-2xl mr-4" />
-        <span class="text-md font-semibold"> Выйти </span>
+        <div>
+          <svg-icon name="account/log-out" class="mr-4" />
+        </div>
+        <span class="text-md font-medium"> Выйти </span>
       </div>
     </nav>
   </aside>
@@ -84,7 +85,7 @@ export default {
       const main = [
         {
           title: this.$t('components.header.overview'),
-          icon: 'search',
+          icon: 'net/search',
           to: this.localePath({ name: 'ideas' }),
           exact: true,
         },
@@ -97,14 +98,17 @@ export default {
         main.push(
           {
             title: this.$t('components.header.dashboard'),
-            icon: 'space_dashboard',
+            icon: 'edit/layout',
             to: this.localePath({ name: 's-dashboard' }),
             exact: true,
           },
           {
             title: 'Настройки',
-            icon: 'settings',
-            to: this.localePath({ ...this.$route, query: { act: 'settings' } }),
+            icon: 'menu/settings',
+            to: this.localePath({
+              ...this.$route,
+              query: { ...this.$route.query, act: 'settings' },
+            }),
             activeState: false,
           }
         )
@@ -113,8 +117,8 @@ export default {
       if (this.isAdmin)
         adminNav.push({
           title: 'admin',
-          icon: 'admin_panel_settings',
-          to: this.localeRoute({ name: 'a' }),
+          icon: 'security/shield',
+          to: this.localePath({ name: 'a' }),
         })
 
       return Object.values({ main, userNav, adminNav }).filter(
@@ -123,13 +127,14 @@ export default {
     },
   },
   created() {
-    this.$router.afterEach((to) => {
+    this.$router.afterEach(() => {
       this.loadingRoute = {}
     })
   },
   methods: {
     ...mapActions('session', ['authorize']),
     async goNavigate(event, route, next) {
+      if (this.$route.path === route) return event.preventDefault()
       this.loadingRoute = route
       await next(event)
     },

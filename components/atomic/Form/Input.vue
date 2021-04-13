@@ -1,8 +1,12 @@
 <template>
   <div class="relative">
     <ValidationProvider v-slot="{ errors }" :rules="rules" tag="div">
-      <label class="block">
-        <div v-if="label" class="font-medium text-xs mt-2 mb-1">
+      <label :class="['block', inlineLabel && 'flex items-center']">
+        <div
+          v-if="label"
+          class="font-medium text-xs mt-2 mb-1 mr-6"
+          style="min-width: 70px; max-width: 150px"
+        >
           {{ label }}
         </div>
         <div
@@ -89,6 +93,10 @@ export default {
     label: {
       type: String,
       default: '',
+    },
+    inlineLabel: {
+      type: Boolean,
+      default: false,
     },
     textarea: {
       type: Boolean,

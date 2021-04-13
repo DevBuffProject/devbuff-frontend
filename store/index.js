@@ -15,9 +15,9 @@ export const actions = {
   },
   nuxtServerInit({ commit }, { $config, $cookies }) {
     const { SESSION_COOKIE_KEY } = $config
-    // https://github.com/championswimmer/vuex-persist#tips-for-nuxt
     const cookieSession = $cookies.get(SESSION_COOKIE_KEY)
-    console.log(cookieSession)
+    const token = cookieSession?.session.auth.token
+    this.$api.latest.setToken(token, 'Bearer')
     if (cookieSession) commit('session/setSession', cookieSession)
   },
 }

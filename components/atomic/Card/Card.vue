@@ -11,6 +11,7 @@
     >
       <template v-if="$slots.bottom">
         <em
+          v-if="this.$colorMode.preference === 'dark'"
           :class="[
             $style.Triangle_border,
             'border-gray-300 dark:border-blueGray-700 dark:bg-blueGray-900',
@@ -74,7 +75,7 @@ export default {
 
 /* this border color controlls the outside, thin border */
 .Triangle_border {
-  display: none;
+  display: block;
   border-right-color: transparent !important;
   border-bottom-color: transparent !important;
   border-left-color: transparent !important;

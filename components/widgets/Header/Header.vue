@@ -42,22 +42,7 @@
               </span>
             </div>
           </nuxt-link>
-
-          <nuxt-link :to="localePath({ name: 's-profile' })">
-            <v-avatar :avatar="$store.getters['user/profile'].id" />
-          </nuxt-link>
         </nav>
-
-        <div v-else class="flex items-center">
-          <v-button
-            rounded
-            type="contrast"
-            :icon="['fab', 'github']"
-            @click="authorize"
-          >
-            {{ $t('page.index.oAuth.gitHub') }}
-          </v-button>
-        </div>
       </div>
     </div>
     <i class="w-full h-px">

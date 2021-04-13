@@ -9,19 +9,22 @@ export const mutations = {
 }
 
 export const actions = {
+  async updateAvatar(_, image) {
+    const formData = new FormData()
+    formData.append('image', image)
+    return await this.$api.latest.put('photo/profile', formData)
+  },
   async resendVerifyMail() {
     return await this.$api.latest.post('profile/resendEmail')
   },
   async getProfile({ commit }, uuid) {
-    const { API_BASE_URL } = this.$config
     const profile = await this.$api.latest.get(
       uuid ? `profile/${uuid}` : 'profile'
     )
-    profile.avatar = `${API_BASE_URL}/photo/profile/${profile.id}`
     commit(uuid ? 'setUser' : 'setProfile', profile)
     return profile
   },
-  async update({ dispatch, state }, data) {
+  async updateProfile({ dispatch, state }, data) {
     const profile = { ...state.profile }
     Object.keys(data).forEach((key) => {
       // patch state
@@ -34,7 +37,7 @@ export const actions = {
 
 export const getters = {
   profile: (state) => state.profile,
-  fullName: (_, gettrers) => `${getters.lastName} ${getters.firstName}`.trim(),
+  fullName: (_, getters) => `${getters.lastName} ${getters.firstName}`.trim(),
   user: (state) => state.user,
   isAuthorized: (state) => !!state.profile,
 }
