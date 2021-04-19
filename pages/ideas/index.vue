@@ -27,7 +27,7 @@
               ]"
               @click="toggleInlineView"
             >
-              <svg-icon :name="inlineView ? 'edit/layout' : 'menu/menu'" />
+              <svg-icon :name="grid.inlineView ? 'edit/layout' : 'menu/menu'" />
             </div>
           </div>
         </div>
@@ -41,7 +41,7 @@
             :description="idea.description"
             :specialists="idea.specialists"
             class="idea mb-6"
-            :style="{ width: inlineView ? '100%' : 'calc(50% - 8px)' }"
+            :style="{ width: grid.inlineView ? '100%' : 'calc(50% - 8px)' }"
           >
             <template #user>
               <div class="flex items-center mt-3">
@@ -91,8 +91,11 @@ export default {
     }, {})
 
     return {
-      inlineView: false,
-      masonryGrid: null,
+      grid: {
+        inlineView: false,
+        masonryGrid: null,
+        isRepaint: false,
+      },
       loading: false,
       filter: {
         page: 1,
@@ -161,32 +164,38 @@ export default {
   methods: {
     async initMasonryGrid() {
       if (process.server) return false
-      const Masonry = require('masonry-layout')
       await this.$nextTick()
-      this.masonryGrid = new Masonry('.ideas', { gutter: 16, stagger: 20 })
-      window.msnry = this.masonryGrid
+
+      const MasonryLayout = require('masonry-layout')
+      const Masonry = new MasonryLayout('.ideas', { gutter: 16, stagger: 20 })
+      Masonry.on('layoutComplete', () => (this.grid.isRepaint = false))
+      this.grid.masonryGrid = Masonry
     },
     async reloadMasonryGrid() {
+      this.grid.isRepaint = true
       await this.$nextTick()
 
-      this.masonryGrid.reloadItems()
+      this.grid.masonryGrid.reloadItems()
+      this.gridHide()
+      await this.$nextTick()
+      this.grid.masonryGrid.layout()
+      setTimeout(this.gridShow, 200)
+    },
+    gridHide() {
       const ideasGrid = this.$refs.ideas
       ideasGrid.style.transition = 'none'
-      ideasGrid.style.transform = 'scale(0.95)'
+      ideasGrid.style.transform = 'scale(0.97)'
       ideasGrid.style.opacity = 0
-
-      await this.$nextTick()
-
-      this.masonryGrid.layout()
-      setTimeout(() => {
-        ideasGrid.style.transition = 'all 300ms ease'
-        ideasGrid.style.transform = 'scale(1)'
-        ideasGrid.style.opacity = 1
-      }, 200)
+    },
+    gridShow() {
+      const ideasGrid = this.$refs.ideas
+      ideasGrid.style.transition = 'all 150ms ease'
+      ideasGrid.style.transform = 'scale(1)'
+      ideasGrid.style.opacity = 1
     },
     async toggleInlineView() {
-      this.inlineView = !this.inlineView
-      await this.$nextTick()
+      if (this.grid.isRepaint) return
+      this.grid.inlineView = !this.grid.inlineView
       await this.reloadMasonryGrid()
     },
     async applyFilter() {

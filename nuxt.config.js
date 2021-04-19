@@ -67,6 +67,10 @@ module.exports = {
       ignore: ['~/components/dialogs'],
       prefix: 'v',
     },
+    {
+      path: '~/app/dialogs/components',
+      prefix: 'v',
+    },
   ],
   plugins: [
     { src: '~/plugins/api.js' },
@@ -91,6 +95,7 @@ module.exports = {
     'cookie-universal-nuxt',
     // https://github.com/nuxt-community/proxy-module
     '@nuxtjs/proxy',
+    '~/modules/overlay-router',
   ],
   buildModules: [
     // https://github.com/nuxt-community/stylelint-module
@@ -126,9 +131,6 @@ module.exports = {
     VK_API_VERSION,
   },
   modern: !IS_DEV,
-  router: {
-    middleware: ['restore-profile'],
-  },
   build: {
     transpile: ['vee-validate/dist/rules'],
     extend(config, { isDev, isClient }) {
@@ -143,6 +145,23 @@ module.exports = {
     },
   },
 
+  router: {
+    middleware: ['overlay-routing'],
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'custom',
+        path: '/d',
+        components: {
+          default: resolve(__dirname, 'pages/ideas/index.vue'),
+          dialog: resolve(__dirname, 'pages/s/profile/settings.vue'),
+        },
+        chunkNames: {
+          dialog: 'pages/s/profile/settings',
+        },
+      })
+    },
+  },
+
   /* Modules configs */
   proxy: proxyConfig,
   buildOptimisations: {
@@ -150,6 +169,7 @@ module.exports = {
   },
   svgSprite: {
     input: '~/assets/svg',
+    svgo: null,
     elementClass: 'dbff-svg-sprite',
   },
   colorMode: {

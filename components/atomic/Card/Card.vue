@@ -24,11 +24,14 @@
       <div v-if="$slots.header">
         <slot name="header" />
       </div>
-      <div><slot /></div>
+      <div>
+        <slot />
+      </div>
       <div
         v-if="$slots.footer || $slots.controls"
-        class="border-t border-gray-200 self-end mt-4 -mb-4 py-2.5"
+        class="self-end -mb-4 py-2.5"
       >
+        <v-delimiter class="mb-2.5" />
         <div v-if="$slots.footer">
           <slot name="footer" />
         </div>

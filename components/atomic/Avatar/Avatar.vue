@@ -1,6 +1,7 @@
 <template>
   <div class="relative rounded-full overflow-hidden" style="padding: 1px">
     <div
+      :key="random"
       :class="[
         'bg-cover flex items-center justify-center rounded-full',
         'bg-white dark:bg-blueGray-900',
@@ -8,7 +9,7 @@
         'h-full w-full, relative z-10',
       ]"
       :style="{
-        backgroundImage: `url(${url})`,
+        backgroundImage: `url(${avatar}?${random})`,
         minWidth: size,
         minHeight: size,
       }"
@@ -38,8 +39,8 @@ export default {
     },
   },
   computed: {
-    url() {
-      return `${this.$config.API_BASE_URL}/photo/profile/${this.avatar}`
+    random() {
+      return Math.ceil(Math.random() * 1000)
     },
   },
 }

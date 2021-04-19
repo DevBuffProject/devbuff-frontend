@@ -2,7 +2,7 @@
   <div class="flex items-center">
     <v-avatar
       :gradient-border="avatarGradientBorder"
-      :avatar="userId"
+      :avatar="avatar"
       class="mr-2"
     />
     <div>
@@ -22,7 +22,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    userId: {
+    avatar: {
       type: String,
       default: null,
     },

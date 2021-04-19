@@ -13,6 +13,15 @@
     --tw-gradient-to: #00DFD8;
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
   }
+  .text-gradient-laguna {
+    --tw-gradient-from: #007CF0;
+    --tw-gradient-to: #00DFD8;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    background: linear-gradient(var(--tw-gradient-stops));
+    color: var(--tw-gradient-from);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
   .gradientLuna {
     --tw-gradient-from: #C781FF;
@@ -20,10 +29,31 @@
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
   }
 
+  .text-gradient-luna {
+    --tw-gradient-from: #C781FF;
+    --tw-gradient-to: #3C72FF;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    background: linear-gradient(var(--tw-gradient-stops));
+    color: var(--tw-gradient-from);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+
   .gradientAutumn {
     --tw-gradient-from: #FF4D4D;
     --tw-gradient-to: #F9CB28;
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  }
+
+  .text-gradient-autumn {
+    --tw-gradient-from: #FF4D4D;
+    --tw-gradient-to: #F9CB28;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    background: linear-gradient(var(--tw-gradient-stops));
+    color: var(--tw-gradient-from);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }
 

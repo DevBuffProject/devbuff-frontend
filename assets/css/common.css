@@ -29,7 +29,9 @@ body {
 }
 
 svg.dbff-svg-sprite {
-  @apply w-5 h-5 inline-flex items-center justify-center;
+  width: 1.25em;
+  height: 1.25em;
+  @apply inline-flex items-center justify-center;
 }
 
 [contenteditable] {

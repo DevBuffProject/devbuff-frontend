@@ -2,82 +2,94 @@
   <div>
     <v-breadcrumbs :items="breadcrumbs" />
     <h1>Твои проекты ({{ ideas.length }})</h1>
-    <div class="grid grid-cols-6 gap-6">
-      <div class="col-span-3">
-        <v-card v-for="idea in ideas" :key="idea.id" class="mb-6 group">
-          <template #controls>
-            <div class="text-xs text-gray-500 flex items-center">
-              <div class="flex items-center mr-4 transition-opacity">
-                <v-material-icon
-                  name="delete_forever"
-                  class="text-lg text-danger"
-                />
-                <span class="ml-1 capitalize"> удалить </span>
-              </div>
-              <span class="mr-4 mr-4 transition-opacity"> редактировать </span>
-            </div>
-          </template>
-          <template #bottom>
-            <div
-              class="text-xs text-gray-500 dark:text-blueGray-400 flex items-center"
-            >
-              <v-material-icon
-                :name="!idea.waitingValidation ? 'done' : 'hourglass_empty'"
-                :class="[
-                  idea.waitingValidation ? 'text-warning' : 'text-success',
-                  'text-xs',
-                ]"
-              />
-              <em class="opacity-50">
-                {{
-                  idea.waitingValidation
-                    ? $t('page.ideas.view.statusModeration.waitingValidation')
-                    : $t('page.ideas.view.statusModeration.alreadyApproved')
-                }}
-              </em>
-            </div>
-          </template>
+    <v-split-view>
+      <template #list="{ showView }">
+        <div class="-mx-4">
+          <div
+            v-for="(idea, index) in ideas"
+            :key="idea.id"
+            :class="[
+              'px-4 cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-blueGray-900',
+              {
+                'bg-gray-100 dark:bg-blueGray-900': inspectedIdeaId === idea.id,
+              },
+            ]"
+            @click="showView() || inspectIdea(idea)"
+          >
+            <div class="py-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-xs text-gray-400 dark:text-blueGray-400">
+                    {{ idea.datePublished | toLocaleDateTime($i18n.locale) }}
+                  </div>
+                  <div class="flex items-center">
+                    <div class="text-primary">{{ idea.name }}</div>
 
-          <div class="transition-all cursor-pointer" @click="inspectIdea(idea)">
-            <div class="flex items-start justify-between">
-              <div>
-                <div class="text-xs text-gray-400 dark:text-blueGray-400">
-                  {{ idea.datePublished | toLocaleDateTime($i18n.locale) }}
+                    <div
+                      class="text-xs text-gray-500 dark:text-blueGray-400 flex items-center"
+                    >
+                      <v-material-icon
+                        :name="
+                          !idea.waitingValidation ? 'done' : 'hourglass_empty'
+                        "
+                        :class="[
+                          idea.waitingValidation
+                            ? 'text-warning'
+                            : 'text-success',
+                          'text-xs',
+                        ]"
+                      />
+                      <em class="opacity-50">
+                        {{
+                          idea.waitingValidation
+                            ? $t(
+                                'page.ideas.view.statusModeration.waitingValidation'
+                              )
+                            : $t(
+                                'page.ideas.view.statusModeration.alreadyApproved'
+                              )
+                        }}
+                      </em>
+                    </div>
+                  </div>
                 </div>
-                <nuxt-link
-                  :to="localePath({ name: 'ideas-id', params: idea })"
-                  class="text-primary hover:underline text-xl"
-                >
-                  {{ idea.name }}
-                </nuxt-link>
+                <div class="flex items-center">
+                  <div class="opacity-50 hover:opacity-100 cursor-pointer p-3">
+                    <svg-icon name="edit/trash" class="text-sm text-danger" />
+                  </div>
+
+                  <div class="opacity-50 hover:opacity-100 cursor-pointer p-3">
+                    <svg-icon name="edit/edit" class="text-sm text-primary" />
+                  </div>
+                </div>
               </div>
+              <div class="mt-2">{{ idea.description }}</div>
             </div>
-            <div class="mt-2 text-sm text-gray-500 leading-5">
-              {{ idea.description }}
-            </div>
+            <v-delimiter v-if="index < ideas.length - 1" />
           </div>
-        </v-card>
-      </div>
-      <div class="col-span-3">
-        <h3 class="mt-0">Отклики</h3>
-        <v-card
-          v-for="user in pendingUsers"
-          :key="user.userEntity.id"
-          class="mb-6"
-        >
-          <v-user
-            :user-id="user.userEntity.id"
-            :firstname="user.userEntity.firstName"
-            :lastname="user.userEntity.lastName"
-            :username="user.userEntity.userName"
+        </div>
+      </template>
+
+      <template #viewport>
+        <div v-if="inspectedIdeaId" class="col-span-3">
+          <h3 class="mt-0">Отклики</h3>
+          <v-dashboard-user-card
+            v-for="{ userEntity: user, specialisationId } in pendingUsers"
+            :key="user.id"
+            :lastname="user.lastName"
+            :firstname="user.firstName"
+            :username="user.userName"
+            :user-id="user.id"
+            :vk-contact="user.vk"
+            :telegram-contact="user.telegram"
+            :skype-contact="user.skype"
+            :discord-contact="user.discord"
+            :specialization="getPositionName(specialisationId)"
+            class="mb-6"
           />
-          <v-delimiter class="my-4" />
-          <v-label name="Специальность">
-            {{ getPositionName(user.specialisationId) }}
-          </v-label>
-        </v-card>
-      </div>
-    </div>
+        </div>
+      </template>
+    </v-split-view>
   </div>
 </template>
 
@@ -109,10 +121,11 @@ export default {
     ...mapActions('dashboard', ['getPendingUsers']),
     ...mapActions('ideas', ['getIdea']),
     async inspectIdea({ id }) {
-      this.inspectedIdeaId = id
+      this.inspectedIdeaId = null
       try {
         await this.getIdea(id)
         await this.getPendingUsers(id)
+        this.inspectedIdeaId = id
       } catch (e) {
         console.error(e)
       }

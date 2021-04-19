@@ -1,43 +1,44 @@
 export const state = () => ({
-  profile: null,
-  user: null,
+  profile: {
+    data: {},
+    avatar: '',
+  },
+  user: {
+    data: {},
+    avatar: {},
+  },
 })
 
 export const mutations = {
-  setProfile: (state, profile) => (state.profile = profile),
+  setProfile: (state, profile) => (state.profile.data = profile),
   setUser: (state, user) => (state.user = user),
+  setAvatar: (state, avatar) => {
+    const random = Math.ceil(Math.random() * 1000)
+    state.profile.avatar = `${avatar}?${random}`
+  },
 }
 
 export const actions = {
-  async updateAvatar(_, image) {
-    const formData = new FormData()
-    formData.append('image', image)
-    return await this.$api.latest.put('photo/profile', formData)
-  },
-  async resendVerifyMail() {
-    return await this.$api.latest.post('profile/resendEmail')
-  },
-  async getProfile({ commit }, uuid) {
-    const profile = await this.$api.latest.get(
-      uuid ? `profile/${uuid}` : 'profile'
+  async getProfile({ commit }) {
+    const profile = await this.$api.latest.get('profile')
+    commit(
+      'setAvatar',
+      `${this.$config.API_BASE_URL}/photo/profile/${profile.id}`
     )
-    commit(uuid ? 'setUser' : 'setProfile', profile)
+    commit('setProfile', profile)
     return profile
   },
-  async updateProfile({ dispatch, state }, data) {
-    const profile = { ...state.profile }
-    Object.keys(data).forEach((key) => {
-      // patch state
-      profile[key] = data[key]
-    })
-    await this.$api.latest.post('profile', profile)
-    await dispatch('getProfile')
+  async getUser({ commit }, uuid) {
+    const user = await this.$api.latest.get(`profile/${uuid}`)
+    commit('setAvatar', `${this.$config.API_BASE_URL}/photo/profile/${uuid}`)
+    commit('setUser', user)
+    return user
   },
 }
 
 export const getters = {
-  profile: (state) => state.profile,
+  profile: (state) => state.profile.data,
+  avatar: (state) => state.profile.avatar,
   fullName: (_, getters) => `${getters.lastName} ${getters.firstName}`.trim(),
-  user: (state) => state.user,
   isAuthorized: (state) => !!state.profile,
 }

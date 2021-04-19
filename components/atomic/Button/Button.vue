@@ -1,8 +1,9 @@
 <template>
   <button
     :class="[
-      'py-1 px-5 overflow-hidden rounded-full outline-none relative',
+      'px-5 overflow-hidden rounded-full outline-none relative',
       'transform transition-all active:scale-95 border-2',
+      isSmall ? 'py-0.5 text-sm' : 'py-1',
       isMuted
         ? [
             'bg-gray-200 dark:bg-blueGray-600 border-gray-200 dark:border-blueGray-600',
@@ -18,7 +19,7 @@
   >
     <div
       v-if="$slots.default"
-      :class="['font-semibold', loading && 'invisible relative']"
+      :class="['font-medium', loading && 'invisible relative']"
     >
       <slot />
       <v-icon
@@ -52,6 +53,11 @@ export default {
     },
     isOutline: {
       type: Boolean,
+      default: false,
+    },
+    isSmall: {
+      type: Boolean,
+      default: false,
     },
     icon: {
       type: [Array, String],

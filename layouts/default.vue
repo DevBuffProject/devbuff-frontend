@@ -1,7 +1,7 @@
 <template>
   <div :class="[$style.Grid, 'bg-gray-50 dark:bg-blueGray-900 bg-opacity-90']">
     <div>
-      <v-dialog-container :preloaded-dialog="queryActionDialog" />
+      <v-dialog-view v-bind="overlayRouting" />
       <v-header :progress="progress" />
     </div>
     <main class="mt-10 grid gap-6 grid-cols-10 container mx-auto">
@@ -19,62 +19,19 @@
 <script>
 import { mapGetters } from 'vuex'
 import bus from '~/app/event-bus'
-// import qs from '~/app/utils/url'
+import overlayRoutes from '~/app/overlay-routes'
 
 export default {
   data: () => ({
     progress: false,
-    dialogs: {
-      settings: () => import('~/components/dialogs/User/Settings.vue'),
+    overlayRouting: {
+      routerConfig: { queryParam: 'act' },
+      routes: overlayRoutes,
     },
   }),
   computed: {
     ...mapGetters('auth', ['isAdmin']),
     ...mapGetters('user', ['isAuthorized', 'profile', 'fullName']),
-    queryActionDialog() {
-      const { act } = this.$route.query
-      return this.dialogs[act]
-    },
-    nav() {
-      const nav = [
-        {
-          title: this.$t('components.header.overview'),
-          icon: 'menu_book',
-          to: this.localePath({ name: 'ideas' }),
-          exact: true,
-        },
-      ]
-
-      if (this.isAuthorized)
-        nav.push({
-          title: this.$t('components.header.dashboard'),
-          to: this.localePath({ name: 's-dashboard' }),
-          exact: true,
-        })
-
-      if (this.isAdmin)
-        nav.push({
-          title: 'admin',
-          to: this.localePath({ name: 'a' }),
-        })
-
-      return nav
-    },
-  },
-  watch: {
-    async '$route.query'() {
-      const { queryActionDialog } = this
-      if (!queryActionDialog) return false
-
-      await this.$dialog.push(queryActionDialog)
-
-      console.log(window.history)
-      if (window.history.length > 2) {
-        this.$router.back()
-      } else {
-        console.log('LOOOG')
-      }
-    },
   },
   created() {
     bus.on('progress:start', () => (this.progress = true))
