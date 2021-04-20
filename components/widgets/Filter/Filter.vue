@@ -31,11 +31,18 @@
                     state[field.value] && state[field.value].includes(param),
                 },
               ]"
-              :value="param"
+              :value="
+                typeof param === 'object' && param !== null
+                  ? param.value
+                  : param
+              "
             >
               <v-icon :icon="['fas', 'plus']" class="mr-2 opacity-30" />
               <div class="ml-1 group-active:text-white">
-                {{ param }}
+                <div v-if="typeof param === 'object' && param !== null">
+                  {{ param.name }}
+                </div>
+                <div v-else>{{ param }}</div>
               </div>
             </v-checkbox>
           </li>

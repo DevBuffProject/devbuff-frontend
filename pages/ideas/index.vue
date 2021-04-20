@@ -140,12 +140,25 @@ export default {
         {
           name: this.t('common.specializations'),
           value: 'specialists',
-          params: this.specs,
+          params: this.specs.map((currentValue) => {
+            return {
+              value: currentValue,
+              name: this.t(
+                'specializations.' + currentValue + '.title',
+                currentValue
+              ),
+            }
+          }),
         },
         {
           name: this.t('components.ideaCard.languages'),
           value: 'languages',
-          params: this.langs,
+          params: this.langs.map((currentValue) => {
+            return {
+              value: currentValue,
+              name: this.t('languages.' + currentValue, currentValue),
+            }
+          }),
         },
       ]
     },
