@@ -9,7 +9,7 @@
       ]"
       @click="state = {}"
     >
-      сбросить
+      {{ $t('components.filter.clear') }}
     </a>
     <ul class="rounded-lg -m-2">
       <li v-for="field in fields" :key="field.name" class="mb-2">

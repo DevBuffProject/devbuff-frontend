@@ -294,6 +294,14 @@ export default {
       languages: 'Языки программирования',
       technologies: 'Технологии',
     },
+    filter: {
+      clear: 'сбросить',
+    },
+    breadcrumb: {
+      main: 'Главная',
+      idea: 'Идеи',
+      editor: 'Новая идея',
+    },
   },
   page: {
     index: {
@@ -355,6 +363,7 @@ export default {
     },
     ideas: {
       explore: {
+        header: 'Обзор проектов',
         ideas: 'Идеи',
         new: 'Создать',
         filter: {
@@ -425,6 +434,13 @@ export default {
       action: {
         index: 'На главную',
       },
+    },
+    sidebar: {
+      signInButton: 'Войти',
+      notAuthorized:
+        'Чтобы публиковать проекты, собирать команду и откликаться на идеи пользователей',
+      settings: 'Настройки',
+      logOut: 'Выйти',
     },
   },
 }

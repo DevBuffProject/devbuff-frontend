@@ -172,11 +172,11 @@ export default {
     breadcrumbs() {
       return [
         {
-          title: 'Главная',
+          title: this.$t('components.breadcrumb.main'),
           to: this.localePath({ name: 'index' }),
         },
         {
-          title: 'Идеи',
+          title: this.$t('components.breadcrumb.idea'),
           to: this.localePath({ name: 'ideas' }),
         },
         {

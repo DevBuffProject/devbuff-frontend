@@ -295,6 +295,14 @@ export default {
       languages: 'Languages',
       technologies: 'Technologies',
     },
+    filter: {
+      clear: 'reset',
+    },
+    breadcrumb: {
+      main: 'Main page',
+      idea: 'Idea',
+      editor: 'New idea',
+    },
   },
   page: {
     index: {
@@ -356,6 +364,7 @@ export default {
     },
     ideas: {
       explore: {
+        header: 'Project overview',
         ideas: 'Idea',
         new: 'Create',
         filter: {
@@ -426,6 +435,13 @@ export default {
       action: {
         index: 'Return',
       },
+    },
+    sidebar: {
+      signInButton: 'Sign In',
+      notAuthorized:
+        'To publish projects, build a team, and respond to user ideas',
+      settings: 'Settings',
+      logOut: 'Log Out',
     },
   },
 }

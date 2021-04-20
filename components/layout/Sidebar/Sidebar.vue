@@ -15,10 +15,11 @@
         />
       </nuxt-link>
       <div v-else class="p-5 mb-5 bg-primary bg-opacity-10 rounded-xl">
-        <v-button class="w-full" @click="authorize">Войти</v-button>
+        <v-button class="w-full" @click="authorize">
+          {{ $t('layouts.sidebar.signInButton') }}
+        </v-button>
         <div class="mt-2 text-xs font-medium">
-          Чтобы публиковать проекты, собирать команду и откликаться на идеи
-          пользователей
+          {{ $t('layouts.sidebar.notAuthorized') }}
         </div>
       </div>
 
@@ -65,7 +66,9 @@
         <div>
           <svg-icon name="account/log-out" class="mr-4" />
         </div>
-        <span class="text-md font-medium"> Выйти </span>
+        <span class="text-md font-medium">
+          {{ $t('layouts.sidebar.logOut') }}
+        </span>
       </div>
     </nav>
   </aside>
@@ -103,7 +106,7 @@ export default {
             exact: true,
           },
           {
-            title: 'Настройки',
+            title: this.$t('layouts.sidebar.settings'),
             icon: 'menu/settings',
             to: this.localePath({
               ...this.$route,
