@@ -83,6 +83,8 @@ module.exports = {
     { src: '~/plugins/vuex-persistedstate.js' },
     // https://vuescrolljs.yvescoding.org/
     { src: '~/plugins/vue-scroll.js' },
+    // https://portal-vue.linusb.org
+    { src: '~/plugins/vue-portal.client.js', mode: 'client' },
   ],
   modules: [
     // https://pwa.nuxtjs.org
@@ -95,7 +97,6 @@ module.exports = {
     'cookie-universal-nuxt',
     // https://github.com/nuxt-community/proxy-module
     '@nuxtjs/proxy',
-    '~/modules/overlay-router',
   ],
   buildModules: [
     // https://github.com/nuxt-community/stylelint-module

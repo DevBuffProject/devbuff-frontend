@@ -54,7 +54,10 @@
                   </div>
                 </div>
                 <div class="flex items-center">
-                  <div class="opacity-50 hover:opacity-100 cursor-pointer p-3">
+                  <div
+                    class="opacity-50 hover:opacity-100 cursor-pointer p-3"
+                    @click="removeIdea(idea)"
+                  >
                     <svg-icon name="edit/trash" class="text-sm text-danger" />
                   </div>
 
@@ -73,20 +76,29 @@
       <template #viewport>
         <div v-if="inspectedIdeaId" class="col-span-3">
           <h3 class="mt-0">Отклики</h3>
-          <v-dashboard-user-card
+          <div
             v-for="{ userEntity: user, specialisationId } in pendingUsers"
-            :key="user.id"
-            :lastname="user.lastName"
-            :firstname="user.firstName"
-            :username="user.userName"
-            :user-id="user.id"
-            :vk-contact="user.vk"
-            :telegram-contact="user.telegram"
-            :skype-contact="user.skype"
-            :discord-contact="user.discord"
-            :specialization="getPositionName(specialisationId)"
-            class="mb-6"
-          />
+            :key="user.id + specialisationId"
+          >
+            <portal :to="`userCard-${specialisationId}`">
+              <v-dashboard-user-card
+                slot-scope="{ isDialog }"
+                :readonly="isDialog"
+                :lastname="user.lastName"
+                :firstname="user.firstName"
+                :username="user.userName"
+                :user-id="user.id"
+                :vk-contact="user.vk"
+                :telegram-contact="user.telegram"
+                :skype-contact="user.skype"
+                :discord-contact="user.discord"
+                :specialisation="getPositionName(specialisationId)"
+                class="mb-6"
+                @onApprove="approveUser({ idea, user, specialisationId })"
+              />
+            </portal>
+            <portal-target :name="`userCard-${specialisationId}`" />
+          </div>
         </div>
       </template>
     </v-split-view>
@@ -120,6 +132,55 @@ export default {
   methods: {
     ...mapActions('dashboard', ['getPendingUsers']),
     ...mapActions('ideas', ['getIdea']),
+    async approveUser({
+      idea: { id: ideaId },
+      user: { id: userId },
+      specialisationId,
+    }) {
+      const approve = async () => {
+        await this.$store.dispatch('dashboard/approveUser', {
+          ideaId,
+          specialisationId,
+          userId,
+        })
+        await this.getPendingUsers(ideaId)
+      }
+
+      await this.$dialog.confirm({
+        portal: `userCard-${specialisationId}`,
+        title: 'Одобрить кандидатуру?',
+        actions: [
+          {
+            text: 'Одобрить',
+            type: 'success',
+            action: async () => {
+              await approve()
+              this.$dialog.close()
+            },
+          },
+        ],
+      })
+    },
+    async removeIdea({ id, name }) {
+      const remove = async () => {
+        await this.$store.dispatch('ideas/deleteIdea', id)
+        await this.$store.dispatch('dashboard/getIdeas')
+      }
+
+      await this.$dialog.confirm({
+        title: 'Удалить проект?',
+        actions: [
+          {
+            text: 'Удалить',
+            type: 'danger',
+            action: async () => {
+              await remove()
+              this.$dialog.close()
+            },
+          },
+        ],
+      })
+    },
     async inspectIdea({ id }) {
       this.inspectedIdeaId = null
       try {

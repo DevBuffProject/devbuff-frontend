@@ -2,6 +2,12 @@
   <div :class="$style.DialogWindow">
     <div v-if="title" class="mt-2 mb-6 text-xl font-semibold" v-text="title" />
     <slot />
+    <portal-target
+      v-if="portal.length"
+      slim
+      :name="portal"
+      :slot-props="{ isDialog: true }"
+    />
     <div v-if="$slots.controls" class="flex justify-end mt-5 pt-5">
       <slot name="controls" />
     </div>
@@ -12,7 +18,11 @@
 export default {
   name: 'VDialog',
   props: {
-    title: {
+    portal: {
+      type: String,
+      default: '',
+    },
+    heading: {
       type: String,
       default: '',
     },

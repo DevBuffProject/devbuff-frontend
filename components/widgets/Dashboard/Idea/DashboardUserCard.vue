@@ -7,11 +7,16 @@
         :lastname="lastname"
         :username="username"
       />
-      <div class="text-sm flex flex-col">
-        <v-button type="danger" is-small is-outline class="mb-2">
+      <div v-if="!readonly" class="text-sm flex flex-col">
+        <v-button
+          type="success"
+          is-small
+          is-outline
+          class="mb-2"
+          @click="$emit('onApprove')"
+        >
           отклонить
         </v-button>
-        <v-button is-small>одобрить</v-button>
       </div>
     </div>
     <v-delimiter class="my-4" />
@@ -45,6 +50,10 @@
 export default {
   name: 'VDashboardUserCard',
   props: {
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
     firstname: {
       type: String,
       default: '',
