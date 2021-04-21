@@ -302,6 +302,7 @@ export default {
       main: 'Main page',
       idea: 'Idea',
       editor: 'New idea',
+      dashboard: 'Your projects',
     },
   },
   page: {

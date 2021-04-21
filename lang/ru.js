@@ -301,6 +301,7 @@ export default {
       main: 'Главная',
       idea: 'Идеи',
       editor: 'Новая идея',
+      dashboard: 'Твои проекты',
     },
   },
   page: {

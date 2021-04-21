@@ -125,7 +125,7 @@ export default {
           title: this.$t('components.breadcrumb.main'),
           to: this.localePath({ name: 'index' }),
         },
-        { title: 'Твои идеи' },
+        { title: this.$t('components.breadcrumb.dashboard') },
       ]
     },
   },
