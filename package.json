@@ -62,7 +62,7 @@
     "vue-quill-editor": "3.0.6"
   },
   "devDependencies": {
-    "@babel/runtime-corejs3": "7.13.10",
+    "@babel/runtime-corejs3": "7.13.17",
     "@nuxtjs/storybook": "4.0.2",
     "@storybook/addon-knobs": "6.2.8",
     "babel-eslint": "10.1.0",
