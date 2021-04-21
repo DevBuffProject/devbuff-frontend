@@ -4,15 +4,17 @@
     <div v-if="text">{{ text }}</div>
     <template #controls>
       <div class="flex justify-center w-full">
-        <v-button
-          v-for="({ text, action, ...bindings }, index) in actionButtons"
+        <atomic-button
+          v-for="(
+            { title: buttonTitle, action, ...bindings }, index
+          ) in actionButtons"
           :key="index"
           v-bind="bindings"
           :class="index < actionButtons.length - 1 && 'mr-2'"
           @click="action ? action() : () => false"
         >
-          {{ text }}
-        </v-button>
+          {{ buttonTitle }}
+        </atomic-button>
       </div>
     </template>
   </v-dialog>
@@ -21,6 +23,9 @@
 <script>
 export default {
   name: 'VDialogConfirm',
+  components: {
+    VDialog: () => import('./Dialog'),
+  },
   props: {
     componentPortalName: {
       type: String,
@@ -44,7 +49,7 @@ export default {
       return [
         ...this.actions,
         {
-          text: 'cancel',
+          title: 'cancel',
           type: 'muted',
           isOutline: true,
           action: this.$dialog.close,

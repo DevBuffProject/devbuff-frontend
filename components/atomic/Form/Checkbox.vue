@@ -7,7 +7,7 @@
   >
     <div v-if="!$slots.default">
       <div class="text-2xl">
-        <v-material-icon
+        <atomic-material-icon
           :name="icon"
           type="round"
           :class="[

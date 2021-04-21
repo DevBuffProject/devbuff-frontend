@@ -16,7 +16,7 @@
         <div
           class="profile__sidebar-content flex flex-column align-content-center"
         >
-          <v-avatar
+          <atomic-avatar
             class="profile__avatar mb-3"
             :avatar="profile.id"
             size="6rem"
@@ -26,25 +26,28 @@
             rounded
             type="contrast"
             :icon="['fas', 'edit']"
-            @click="edit"
           />
         </div>
       </div>
       <div class="container mx-auto pt-3 pl-4">
         <div class="profile__container">
           <div class="flex mb-3">
-            <v-label v-if="profile.birthday" name="дата рождения" class="mr-5">
+            <atomic-label
+              v-if="profile.birthday"
+              name="дата рождения"
+              class="mr-5"
+            >
               {{ profile.birthday | toLocaleDateTime($i18n.locale) }}
-            </v-label>
+            </atomic-label>
 
-            <v-label v-if="profile.city" name="город" class="mr-5">
+            <atomic-label v-if="profile.city" name="город" class="mr-5">
               {{ profile.city }}
-            </v-label>
+            </atomic-label>
           </div>
 
-          <v-label v-if="profile.bio" name="о себе" class="mr-5 mb-4">
+          <atomic-label v-if="profile.bio" name="о себе" class="mr-5 mb-4">
             {{ profile.bio }}
-          </v-label>
+          </atomic-label>
 
           <div v-if="profile.socialNetworks" class="profile__socials">
             <div
@@ -135,7 +138,7 @@
             />
             <div v-else class="flex justify-center items-center">
               <span class="mr-3">{{ $t('page.profile.skillsLoading') }}</span>
-              <v-loading />
+              <atomic-loading />
             </div>
           </div>
 
@@ -162,7 +165,7 @@
                 class="profile__skill-spec"
               >
                 <span>
-                  <v-chip
+                  <atomic-chip
                     v-for="framework in spec.frameworks"
                     :key="framework.name"
                     :text="framework.name"
@@ -182,18 +185,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
-const ProfileEdit = () => import('~/components/widgets/Profile/ProfileEdit.vue')
-
 export default {
-  mounted() {
-    const { act } = this.$route.query
-
-    // show settings dialog
-    if (act === 'edit') {
-      this.edit()
-    }
-  },
-
   computed: {
     ...mapGetters({
       systemSkills: 'skills/skills',
@@ -228,16 +220,6 @@ export default {
   },
 
   methods: {
-    edit() {
-      this.$dialog
-        .push(ProfileEdit, {
-          dataProfile: JSON.parse(JSON.stringify(this.profile)),
-        })
-        .then(() => {
-          this.$router.replace({ ...this.$route, query: {} })
-        })
-    },
-
     changeSkills(skills) {
       this.$store.dispatch('user/update', { skills })
     },

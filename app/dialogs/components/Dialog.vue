@@ -1,5 +1,10 @@
 <template>
-  <div :class="$style.DialogWindow">
+  <div
+    :class="[
+      $style.DialogWindow,
+      'bg-white dark:bg-blueGray-800 rounded my-10 py-6 px-12',
+    ]"
+  >
     <div v-if="title" class="mt-2 mb-6 text-xl font-semibold" v-text="title" />
     <slot />
     <portal-target

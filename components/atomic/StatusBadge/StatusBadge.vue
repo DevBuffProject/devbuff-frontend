@@ -10,9 +10,7 @@
       ]"
     />
     <span class="mr-4"> {{ description }}. </span>
-    <!--    <v-link v-if="href" :href="href" :icon="['fas', 'external-link-alt']">-->
-    <!--      statuspage-->
-    <!--    </v-link>-->
+    <a v-if="href" :href="href">DevBuff health</a>
   </span>
 </template>
 
@@ -22,7 +20,6 @@ export default {
   props: {
     indicator: {
       type: String,
-      reduired: true,
       default: 'none',
       validate: (v) => ['none', 'minor', 'major'].includes(v),
     },

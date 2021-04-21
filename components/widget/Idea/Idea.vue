@@ -1,10 +1,10 @@
 <template>
-  <v-card class="relative">
+  <atomic-card class="relative">
     <template v-if="$slots.user" #bottom>
       <slot name="user" />
     </template>
     <div>
-      <!--      <v-image-->
+      <!--      <atomic-image-->
       <!--        size="4rem"-->
       <!--        class="mb-2 inline-block"-->
       <!--        :src="'//source.unsplash.com/random?logo&key' + id"-->
@@ -26,43 +26,43 @@
       {{ description }}
     </div>
 
-    <v-label
+    <atomic-label
       v-if="specialists.length"
       :name="$t('components.ideaCard.specialists')"
       class="mt-4"
     >
       <div :class="$style.Labels_list">
-        <v-chip
+        <atomic-chip
           v-for="(spec, index) in specialists"
           :key="'spec' + spec.name + index"
           :text="t(`specializations.${spec.name}.title`, spec.name)"
           :class="$style.Label"
         />
       </div>
-    </v-label>
+    </atomic-label>
 
-    <v-label
+    <atomic-label
       v-if="technologies.length"
       :name="$t('components.ideaCard.technologies')"
       class="mt-2"
     >
       <div :class="$style.Labels_list">
-        <v-chip
+        <atomic-chip
           v-for="(tech, index) in new Set(technologies)"
           :key="'tech' + tech + index"
           :text="tech"
           :class="$style.Label"
         />
       </div>
-    </v-label>
+    </atomic-label>
 
-    <v-label
+    <atomic-label
       v-if="languages.length"
       :name="$t('components.ideaCard.languages')"
       class="mt-2"
     >
       <div :class="$style.Labels_list">
-        <v-chip
+        <atomic-chip
           v-for="{ name } in languages"
           :key="name"
           :text="t(`languages.${name}`, name)"
@@ -70,8 +70,8 @@
           :class="$style.Label"
         />
       </div>
-    </v-label>
-  </v-card>
+    </atomic-label>
+  </atomic-card>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <input type="hidden" :value="selectedValue" />
-    <v-input
+    <atomic-form-input
       v-model="searchValue"
       :placeholder="selectedValue || placeholder"
       v-bind="$attrs"
@@ -20,7 +20,7 @@
               ]"
               @mousedown="$emit('change', '')"
             >
-              <v-material-icon name="backspace" />
+              <atomic-material-icon name="backspace" />
               <span class="ml-2">Очистить</span>
             </div>
             <div
@@ -37,7 +37,7 @@
           </div>
         </v-scroll>
       </template>
-    </v-input>
+    </atomic-form-input>
   </div>
 </template>
 

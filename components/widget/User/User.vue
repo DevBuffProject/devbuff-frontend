@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center">
-    <v-avatar
+    <atomic-avatar
       :gradient-border="avatarGradientBorder"
       :avatar="avatar"
       class="mr-2"

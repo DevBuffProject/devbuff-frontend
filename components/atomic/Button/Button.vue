@@ -33,7 +33,7 @@
       v-if="loading"
       class="absolute w-full h-full top-0 left-0 flex items-center justify-center"
     >
-      <v-loading
+      <atomic-loading
         :class="[isMuted ? 'text-black dark:text-white' : 'text-white']"
       />
     </div>

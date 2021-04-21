@@ -10,12 +10,12 @@
       >
         {{ $t('page.index.oAuth.gitHub') }}
       </v-button>
-      <v-delimiter text="или" />
+      <atomic-delimiter />
     </div>
     <nuxt-link :to="localePath({ name: 'ideas' })">
-      <v-button type="muted" rounded :icon="['fas', 'long-arrow-alt-right']">
+      <atomic-button type="muted">
         {{ $t('page.index.action.projects') }}
-      </v-button>
+      </atomic-button>
     </nuxt-link>
   </section>
 </template>
