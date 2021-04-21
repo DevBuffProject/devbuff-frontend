@@ -18,7 +18,7 @@
         </div>
         <ul class="px-4 font-normal text-xs">
           <li v-for="param in field.params" :key="param">
-            <v-checkbox
+            <atomic-form-checkbox
               v-model="state[field.value]"
               :class="[
                 'flex items-center cursor-pointer rounded p-1 px-2 mb-1 transition-all transform active:scale-95',
@@ -49,7 +49,7 @@
                 </div>
                 <div v-else>{{ param }}</div>
               </div>
-            </v-checkbox>
+            </atomic-form-checkbox>
           </li>
         </ul>
       </li>

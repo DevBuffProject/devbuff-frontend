@@ -9,7 +9,7 @@
       >
         {{ item.title }}
       </component>
-      <v-material-icon
+      <atomic-material-icon
         v-if="index < items.length - 1"
         :key="`chevron-${index}`"
         name="chevron_right"

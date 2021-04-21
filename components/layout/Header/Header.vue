@@ -6,10 +6,13 @@
     <div class="container mx-auto flex items-center py-4">
       <div class="flex items-center w-full">
         <nuxt-link :to="localePath({ name: 'ideas' })">
-          <v-logo src="/logos/logo-dark.svg" class="h-10 dark:hidden" />
-          <v-logo src="/logos/logo-white.svg" class="h-10 hidden dark:block" />
+          <atomic-logo src="/logos/logo-dark.svg" class="h-10 dark:hidden" />
+          <atomic-logo
+            src="/logos/logo-white.svg"
+            class="h-10 hidden dark:block"
+          />
         </nuxt-link>
-        <v-switcher
+        <atomic-switcher
           :value="locale"
           :values="availableLocales"
           class="transform scale-90 ml-5"
@@ -23,7 +26,7 @@
           <div
             class="cursor-pointer text-lg w-12 h-8 flex items-center justify-center rounded ml-6"
           >
-            <v-color-mode-switcher />
+            <widget-color-switcher />
           </div>
         </div>
         <nav v-if="isAuthorized" class="flex items-center">
@@ -46,7 +49,7 @@
       </div>
     </div>
     <i class="w-full h-px">
-      <v-progress v-show="progress" />
+      <atomic-loading-progress v-show="progress" />
     </i>
   </header>
 </template>

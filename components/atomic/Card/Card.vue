@@ -11,7 +11,7 @@
     >
       <template v-if="$slots.bottom">
         <em
-          v-if="this.$colorMode.preference === 'dark'"
+          v-if="$colorMode.preference === 'dark'"
           :class="[
             $style.Triangle_border,
             'border-gray-300 dark:border-blueGray-700 dark:bg-blueGray-900',
@@ -31,7 +31,7 @@
         v-if="$slots.footer || $slots.controls"
         class="self-end -mb-4 py-2.5"
       >
-        <v-delimiter class="mb-2.5" />
+        <atomic-delimiter class="mb-2.5" />
         <div v-if="$slots.footer">
           <slot name="footer" />
         </div>

@@ -13,31 +13,35 @@
 
     <div class="flex items-center">
       <div class="mr-4 flex flex-col items-center justify-center">
-        <v-avatar :avatar="avatar" class="w-36 h-36" />
+        <atomic-avatar :avatar="avatar" class="w-36 h-36" />
         <div
           class="mt-1 text-primary cursor-pointer flex items-center"
           @click="updateAvatar"
         >
-          <v-material-icon name="file_upload" class="text-base" />
+          <atomic-material-icon name="file_upload" class="text-base" />
           <span class="text-xs">Изменить</span>
         </div>
       </div>
       <div class="w-full">
-        <v-input v-model="userData.userName" label="@username" class="mb-2" />
-        <v-input v-model="userData.firstName" class="mb-2" />
-        <v-input v-model="userData.lastName" />
+        <atomic-form-input
+          v-model="userData.userName"
+          label="@username"
+          class="mb-2"
+        />
+        <atomic-form-input v-model="userData.firstName" class="mb-2" />
+        <atomic-form-input v-model="userData.lastName" />
       </div>
     </div>
     <h4>Немного о себе</h4>
-    <v-input v-model="userData.bio" textarea />
-    <v-input
+    <atomic-form-input v-model="userData.bio" textarea />
+    <atomic-form-input
       v-model="userData.birthday"
       type="date"
       label="Дата рождения"
       class="mt-4"
     />
     <div class="flex mt-2">
-      <v-select
+      <atomic-form-select
         v-model="userData.countryId"
         :options="countriesOptions"
         label="Страна"
@@ -45,7 +49,7 @@
         class="mr-4 w-full"
         @change="getCities({ country: userData.countryId })"
       />
-      <v-select
+      <atomic-form-select
         v-model="userData.cityId"
         :disabled="!userData.countryId"
         :options="citiesOptions"
@@ -58,7 +62,7 @@
     </div>
     <h4 class="mt-6">Контакты</h4>
     <div class="mb-8">
-      <v-input
+      <atomic-form-input
         v-model="userData.email"
         type="email"
         placeholder="mail@example.com"
@@ -73,7 +77,7 @@
         {{ statusEmailConfirm ? 'подтвержден' : 'не подтвержден!' }}
       </div>
     </div>
-    <v-input
+    <atomic-form-input
       v-model="userData.socialNetworks.vk"
       type="text"
       inline-label
@@ -81,7 +85,7 @@
       class="mt-4"
       placeholder="https://vk.com/"
     />
-    <v-input
+    <atomic-form-input
       v-model="userData.socialNetworks.telegram"
       type="text"
       inline-label
@@ -89,7 +93,7 @@
       class="mt-4"
       placeholder="@telegram"
     />
-    <v-input
+    <atomic-form-input
       v-model="userData.socialNetworks.discord"
       type="text"
       inline-label
@@ -97,7 +101,7 @@
       class="mt-4"
       placeholder="discord#999"
     />
-    <v-input
+    <atomic-form-input
       v-model="userData.socialNetworks.skype"
       type="text"
       inline-label

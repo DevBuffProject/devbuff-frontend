@@ -15,7 +15,7 @@
         isLightMode ? '-right-1/3' : '-left-1/3',
       ]"
     >
-      <v-material-icon
+      <atomic-material-icon
         type="round"
         :name="isLightMode ? 'mode_night' : 'light_mode'"
       />

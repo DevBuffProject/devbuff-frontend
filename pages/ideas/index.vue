@@ -1,11 +1,11 @@
 <template>
   <div>
-    <v-breadcrumbs :items="breadcrumbs" />
+    <atomic-breadcrumbs :items="breadcrumbs" />
     <div class="grid grid-cols-4 gap-6">
       <div class="col-span-3">
         <h1>{{ $t('page.ideas.explore.header') }}</h1>
         <div class="mb-4 flex items-center justify-between">
-          <v-switcher
+          <atomic-switcher
             v-model="filter.sort"
             :values="[
               {
@@ -32,7 +32,7 @@
           </div>
         </div>
         <div v-if="ideas.length" ref="ideas" class="ideas">
-          <v-idea
+          <widget-idea
             v-for="idea in ideas"
             :id="idea.id"
             :key="idea.id"
@@ -45,7 +45,7 @@
           >
             <template #user>
               <div class="flex items-center mt-3">
-                <v-avatar
+                <atomic-avatar
                   :avatar="$store.getters['user/profile'].id"
                   class="mr-3"
                   size="24px"
@@ -53,7 +53,7 @@
                 <div class="mt-px">User Name</div>
               </div>
             </template>
-          </v-idea>
+          </widget-idea>
         </div>
         <div v-else class="p-5">
           🤷
@@ -63,7 +63,7 @@
         </div>
       </div>
       <div class="col-span-1">
-        <v-filter
+        <widget-filter
           v-model="filter.params"
           :fields="filterOptions"
           class="sticky top-4"
@@ -171,7 +171,7 @@ export default {
       },
     },
   },
-  async mounted() {
+  async created() {
     await this.initMasonryGrid()
   },
   methods: {

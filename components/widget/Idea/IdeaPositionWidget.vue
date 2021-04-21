@@ -4,35 +4,35 @@
       <h2 class="text-primary">
         {{ name }}
       </h2>
-      <v-chip type="muted" :text="positionsCount" />
+      <atomic-chip type="muted" :text="positionsCount" />
     </div>
 
-    <v-label
+    <atomic-label
       v-if="languages.length"
       :name="$t('page.ideas.view.team.languages')"
       class="mb-3 mt-4"
     >
-      <v-chip
+      <atomic-chip
         v-for="language in languages"
         :key="language.name"
         :text="language.name"
         type="auto"
         class="mr-2"
       />
-    </v-label>
+    </atomic-label>
 
-    <v-label
+    <atomic-label
       v-if="technologies.length"
       :name="$t('page.ideas.view.team.technologies')"
     >
-      <v-chip
+      <atomic-chip
         v-for="framework in technologies"
         :key="framework"
         :text="framework"
         type="auto"
         class="mr-2"
       />
-    </v-label>
+    </atomic-label>
 
     <slot name="footer" />
   </div>

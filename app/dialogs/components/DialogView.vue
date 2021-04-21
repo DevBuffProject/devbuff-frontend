@@ -21,11 +21,9 @@
         style="overflow-y: overlay"
       >
         <div class="w-full m-auto" style="min-width: 320px; max-width: 600px">
-          <div
-            class="bg-white dark:bg-blueGray-800 rounded my-10 py-6 px-12 relative"
-          >
+          <div class="relative">
             <component :is="dialog.component" v-bind="dialog.props" />
-            <v-material-icon
+            <atomic-material-icon
               name="close"
               type="round"
               :class="[

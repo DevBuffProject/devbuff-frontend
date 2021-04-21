@@ -11,6 +11,9 @@ const {
   VK_PROXY_PATH,
   VK_BASE_URL,
   VK_API_VERSION,
+  VK_CLIENT_ID,
+  VK_SERVICE_TOKEN,
+  VK_TOKEN,
 } = process.env
 
 // https://github.com/nuxt-community/proxy-module
@@ -53,7 +56,7 @@ module.exports = {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
       {
-        src: 'https://ssmr5v2lldg4.statuspage.io/embed/script.js',
+        src: 'https://6yzwffsm5625.statuspage.io/embed/script.js',
         body: true,
         defer: true,
       },
@@ -64,12 +67,12 @@ module.exports = {
   components: [
     {
       path: '~/components/',
-      ignore: ['~/components/dialogs'],
-      prefix: 'v',
+      extensions: ['vue'],
     },
     {
       path: '~/app/dialogs/components',
-      prefix: 'v',
+      extensions: ['vue'],
+      prefix: 'app',
     },
   ],
   plugins: [
@@ -109,14 +112,15 @@ module.exports = {
     '@nuxtjs/color-mode',
     // https://github.com/nuxt-community/svg-sprite-module
     '@nuxtjs/svg-sprite',
+    // https://html-validator.nuxtjs.org
+    // '@nuxtjs/html-validator',
     // https://github.com/harlan-zw/nuxt-build-optimisations
     // 'nuxt-build-optimisations',
   ],
   privateRuntimeConfig: {
-    VK_CLIENT_ID: '7820928',
-    VK_TOKEN: '6j8Yj9ymxXhMRJsWwid9',
-    VK_SERVICE_TOKEN:
-      '4a7af3284a7af3284a7af328cf4a0da5a844a7a4a7af3282a09fa8d57bf84db3e5379d2',
+    VK_CLIENT_ID,
+    VK_SERVICE_TOKEN,
+    VK_TOKEN,
   },
   publicRuntimeConfig: {
     // Proxy env to runtime
@@ -164,6 +168,11 @@ module.exports = {
   },
 
   /* Modules configs */
+  tailwindcss: {
+    jit: true,
+    cssPath: '~/assets/css/tailwind.css',
+    configPath: './tailwind.config.js',
+  },
   proxy: proxyConfig,
   buildOptimisations: {
     profile: 'safe',

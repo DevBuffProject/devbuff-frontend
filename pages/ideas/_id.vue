@@ -1,11 +1,12 @@
 <template>
+  <!-- eslint-disable -->
   <div>
-    <v-breadcrumbs :items="breadcrumbs" />
+    <atomic-breadcrumbs :items="breadcrumbs" />
     <h1>{{ idea.name }}</h1>
     <div class="mt-3">
       <div class="flex flex-wrap items-center justify-between mb-3">
         <div class="flex flex-wrap items-center my-5">
-          <v-user
+          <widget-user
             :user-id="idea.ownerIdea.id"
             :firstname="idea.ownerIdea.firstName"
             :lastname="idea.ownerIdea.lastName"
@@ -13,15 +14,21 @@
             class="mr-10"
           />
 
-          <v-label :name="$t('page.ideas.view.dateCreation')" class="mt-0 mr-8">
+          <atomic-label
+            :name="$t('page.ideas.view.dateCreation')"
+            class="mt-0 mr-8"
+          >
             {{ idea.lastUpdateDate | toLocaleDateTime($i18n.locale) }}
-          </v-label>
+          </atomic-label>
 
-          <v-label :name="$t('page.ideas.view.status.title')" class="mt-0 mr-8">
+          <atomic-label
+            :name="$t('page.ideas.view.status.title')"
+            class="mt-0 mr-8"
+          >
             {{ $t(`page.ideas.view.status.${idea.status}`) }}
-          </v-label>
+          </atomic-label>
 
-          <v-label
+          <atomic-label
             v-if="isOwner"
             :name="$t('page.ideas.view.statusModeration.title')"
           >
@@ -30,14 +37,16 @@
                 ? $t('page.ideas.view.statusModeration.waitingValidation')
                 : $t('page.ideas.view.statusModeration.alreadyApproved')
             }}
-          </v-label>
+          </atomic-label>
         </div>
       </div>
 
       <div class="grid grid-cols-7 gap-5">
-        <v-card class="p-8 col-span-5" v-html="idea.text" />
+        <!-- eslint-disable -->
+        <atomic-card class="p-8 col-span-5" v-html="idea.text" />
+        <!-- eslint-enable -->
         <div class="self-start col-span-2">
-          <v-card class="overflow-hidden">
+          <atomic-card class="overflow-hidden">
             <div class="flex justify-center items-center text-sm">
               <div
                 v-if="isOwner"
@@ -70,8 +79,8 @@
                 <span>{{ $t('page.ideas.view.action.delete') }}</span>
               </div>
             </div>
-          </v-card>
-          <v-card class="mt-4">
+          </atomic-card>
+          <atomic-card class="mt-4">
             <h3 class="text-gray-400 dark:text-blueGray-500 text-thin mb-4">
               {{
                 `${$t('page.ideas.view.team.countSpecialists')} — ${
@@ -114,14 +123,14 @@
                       {{ $t('page.ideas.view.team.statusPending.pending') }}
                     </div>
                   </div>
-                  <v-delimiter
+                  <atomic-delimiter
                     v-if="index + 1 < idea.specialist.length"
                     class="my-6"
                   />
                 </template>
               </v-idea-position-widget>
             </div>
-          </v-card>
+          </atomic-card>
         </div>
       </div>
     </div>

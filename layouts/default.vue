@@ -1,18 +1,18 @@
 <template>
   <div :class="[$style.Grid, 'bg-gray-50 dark:bg-blueGray-900 bg-opacity-90']">
     <div>
-      <v-dialog-view v-bind="overlayRouting" />
-      <v-header :progress="progress" />
+      <app-dialog-view v-bind="overlayRouting" />
+      <layout-header :progress="progress" />
     </div>
     <main class="mt-10 grid gap-6 grid-cols-10 container mx-auto">
       <div class="col-span-2">
-        <v-sidebar class="sticky top-8" />
+        <layout-sidebar class="sticky top-8" />
       </div>
       <div class="col-span-8">
         <nuxt />
       </div>
     </main>
-    <v-footer class="mt-3" />
+    <layout-footer class="mt-3" />
   </div>
 </template>
 

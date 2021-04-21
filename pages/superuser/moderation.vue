@@ -1,10 +1,10 @@
 <template>
   <div>
-    <v-breadcrumbs :items="breadcrumbs" />
+    <atomic-breadcrumbs :items="breadcrumbs" />
     <h1>Модерация</h1>
     <div v-if="pendingIdeas.length" style="width: 700px">
       <div class="flex items-center mb-6">
-        <v-checkbox
+        <atomic-form-checkbox
           :checked="checked.length === pendingIdeas.length"
           :is-intermedia="
             checked.length > 0 && checked.length !== pendingIdeas.length
@@ -23,7 +23,10 @@
             class="mr-2 inline-flex items-center"
             @click="applyActionDialog('accept')"
           >
-            <v-material-icon name="done_all" class="text-xl text-success" />
+            <atomic-material-icon
+              name="done_all"
+              class="text-xl text-success"
+            />
             <span class="ml-2 font-semibold">Одобрить все</span>
           </button>
           <em class="mx-2 w-px h-6 bg-gray-300 dark:bg-blueGray-700 block" />
@@ -31,7 +34,7 @@
             class="mr-2 inline-flex items-center"
             @click="applyActionDialog('delete')"
           >
-            <v-material-icon
+            <atomic-material-icon
               name="delete_forever"
               class="text-xl text-danger"
             />
@@ -40,7 +43,7 @@
         </div>
       </div>
 
-      <v-card class="overflow-hidden">
+      <atomic-card class="overflow-hidden">
         <div
           v-for="(idea, index) in pendingIdeas"
           :key="idea.id"
@@ -51,7 +54,11 @@
           ]"
         >
           <div class="group flex" @click="toggleCheck(idea)">
-            <v-checkbox :checked="checked" :value="idea.id" class="mr-4" />
+            <atomic-form-checkbox
+              :checked="checked"
+              :value="idea.id"
+              class="mr-4"
+            />
             <div class="flex flex-col w-full">
               <nuxt-link
                 :to="localePath({ name: 'ideas-id', params: { id: idea.id } })"
@@ -65,9 +72,12 @@
               </div>
             </div>
           </div>
-          <v-delimiter v-if="index < pendingIdeas.length - 1" class="mt-4" />
+          <atomic-delimiter
+            v-if="index < pendingIdeas.length - 1"
+            class="mt-4"
+          />
         </div>
-      </v-card>
+      </atomic-card>
     </div>
     <div v-else class="flex flex-column items-center" style="width: 500px">
       <span class="text-muted"> 🤷 {{ $t('page.dashboard.noIdeas') }} </span>
@@ -114,7 +124,7 @@ export default {
         `${act === 'accept' ? 'Одобрить' : 'Удалить'} выделенные?`
       )
       if (accept)
-        this.$dialog.push(() => import('@/components/widgets/Admin/Progress'), {
+        this.$dialog.push(() => import('@/components/widget/Admin/Progress'), {
           act,
           ids: this.checked,
         })

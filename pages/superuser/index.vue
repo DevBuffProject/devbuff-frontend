@@ -1,10 +1,10 @@
 <template>
   <div>
-    <v-breadcrumbs :items="breadcrumbs" />
+    <atomic-breadcrumbs :items="breadcrumbs" />
     <h1>Superuser</h1>
     <div class="flex">
       <nuxt-link :to="localePath({ name: 'superuser-moderation' })">
-        <v-card>
+        <atomic-card>
           <div class="flex items-center">
             <svg-icon
               class="text-gradient-laguna text-2xl"
@@ -12,7 +12,7 @@
             />
             <span class="ml-4 text-2xl">Модерация</span>
           </div>
-        </v-card>
+        </atomic-card>
       </nuxt-link>
     </div>
   </div>

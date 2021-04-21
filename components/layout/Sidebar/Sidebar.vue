@@ -6,7 +6,7 @@
         :to="localePath({ name: 's-profile' })"
         class="mb-8 ml-4 block"
       >
-        <v-user
+        <widget-user
           avatar-gradient-border
           :avatar="$store.getters['user/avatar']"
           :firstname="profile.firstName"
@@ -43,18 +43,18 @@
             @click="goNavigate($event, link.to, navigate)"
           >
             <div class="mr-4 w-6 h-6 flex items-center justify-center">
-              <v-loading v-if="link.to === loadingRoute" />
+              <atomic-loading v-if="link.to === loadingRoute" />
               <svg-icon v-else :name="link.icon" />
             </div>
             <span class="text-md font-medium"> {{ link.title }} </span>
           </a>
         </nuxt-link>
         <div v-if="index < nav.length - 1" :key="index" class="mx-10 my-4">
-          <v-delimiter />
+          <atomic-delimiter />
         </div>
       </template>
       <div class="mx-10 my-4">
-        <v-delimiter />
+        <atomic-delimiter />
       </div>
       <div
         v-if="isAuth"

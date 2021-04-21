@@ -1,9 +1,9 @@
 <template>
   <div class="w-full">
     <div class="grid grid-cols-6 gap-6">
-      <v-card v-if="$scopedSlots.list" class="col-span-3">
+      <atomic-card v-if="$scopedSlots.list" class="col-span-3">
         <slot name="list" v-bind="{ showView, hideView, isViewShown }" />
-      </v-card>
+      </atomic-card>
       <div v-if="isViewShown" :class="['col-span-3 h-full']">
         <slot name="viewport" />
       </div>
