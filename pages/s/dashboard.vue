@@ -1,7 +1,7 @@
 <template>
   <div>
     <atomic-breadcrumbs :items="breadcrumbs" />
-    <h1>Твои проекты ({{ ideas.length }})</h1>
+    <h1>{{ $t('page.dashboard.title') }} ({{ ideas.length }})</h1>
     <widget-split-view>
       <template #list="{ showView }">
         <div class="-mx-4">
@@ -24,7 +24,7 @@
 
       <template #viewport>
         <div v-if="inspectedIdeaId" class="col-span-3">
-          <h3 class="mt-0">Отклики</h3>
+          <h3 class="mt-0">{{ $t('page.dashboard.respond.title') }}</h3>
           <div
             v-for="{
               userEntity: user,
@@ -77,10 +77,10 @@ export default {
     breadcrumbs() {
       return [
         {
-          title: 'Главная',
+          title: this.$t('components.breadcrumb.main'),
           to: this.localePath({ name: 'index' }),
         },
-        { title: 'Твои идеи' },
+        { title: this.$t('components.breadcrumb.dashboard') },
       ]
     },
   },

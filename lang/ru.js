@@ -294,6 +294,15 @@ export default {
       languages: 'Языки программирования',
       technologies: 'Технологии',
     },
+    filter: {
+      clear: 'сбросить',
+    },
+    breadcrumb: {
+      main: 'Главная',
+      idea: 'Идеи',
+      editor: 'Новая идея',
+      dashboard: 'Твои проекты',
+    },
   },
   page: {
     index: {
@@ -340,7 +349,7 @@ export default {
     },
     dashboard: {
       search: 'Поиск',
-      title: 'Персональная страница',
+      title: 'Твои проекты',
       noIdeas: 'Идей не найдено',
       respond: {
         title: 'Отклики',
@@ -355,6 +364,7 @@ export default {
     },
     ideas: {
       explore: {
+        header: 'Обзор проектов',
         ideas: 'Идеи',
         new: 'Создать',
         filter: {
@@ -424,6 +434,21 @@ export default {
       },
       action: {
         index: 'На главную',
+      },
+    },
+    sidebar: {
+      signInButton: 'Войти',
+      notAuthorized:
+        'Чтобы публиковать проекты, собирать команду и откликаться на идеи пользователей',
+      settings: 'Настройки',
+      logOut: 'Выйти',
+    },
+  },
+  widget: {
+    dashboard: {
+      userCard: {
+        approve: 'Одобрить',
+        specialization: 'Специальность',
       },
     },
   },

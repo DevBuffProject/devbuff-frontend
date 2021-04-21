@@ -3,7 +3,7 @@
     <atomic-breadcrumbs :items="breadcrumbs" />
     <div class="grid grid-cols-4 gap-6">
       <div class="col-span-3">
-        <h1>Обзор проектов</h1>
+        <h1>{{ $t('page.ideas.explore.header') }}</h1>
         <div class="mb-4 flex items-center justify-between">
           <atomic-switcher
             v-model="filter.sort"
@@ -126,11 +126,11 @@ export default {
     breadcrumbs() {
       return [
         {
-          title: 'Главная',
+          title: this.$t('components.breadcrumb.main'),
           to: this.localePath({ name: 'index' }),
         },
         {
-          title: 'Идеи',
+          title: this.$t('components.breadcrumb.idea'),
           to: this.localePath({ name: 'ideas' }),
         },
       ]
@@ -140,12 +140,25 @@ export default {
         {
           name: this.t('common.specializations'),
           value: 'specialists',
-          params: this.specs,
+          params: this.specs.map((currentValue) => {
+            return {
+              value: currentValue,
+              name: this.t(
+                'specializations.' + currentValue + '.title',
+                currentValue
+              ),
+            }
+          }),
         },
         {
           name: this.t('components.ideaCard.languages'),
           value: 'languages',
-          params: this.langs,
+          params: this.langs.map((currentValue) => {
+            return {
+              value: currentValue,
+              name: this.t('languages.' + currentValue, currentValue),
+            }
+          }),
         },
       ]
     },

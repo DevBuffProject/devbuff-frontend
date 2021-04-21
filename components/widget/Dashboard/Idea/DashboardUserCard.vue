@@ -15,13 +15,15 @@
           class="mb-2"
           @click="$emit('onApprove')"
         >
-          отклонить
+          {{ $t('widget.dashboard.userCard.approve') }}
         </atomic-button>
       </div>
     </div>
     <atomic-delimiter class="my-4" />
     <div class="flex">
-      <atomic-label name="Специальность">{{ specialization }}</atomic-label>
+      <atomic-label :name="$t('widget.dashboard.userCard.specialization')">
+        {{ t('specializations.' + specialization + '.title', specialization) }}
+      </atomic-label>
       <div class="ml-10">
         <widget-user-contacts
           :vk="vkContact"
@@ -82,6 +84,15 @@ export default {
   computed: {
     avatar() {
       return `${this.$config.API_BASE_URL}/photo/profile/${this.userId}`
+    },
+  },
+  methods: {
+    t(str, fallbackStr) {
+      return this.$t && this.$te
+        ? this.$te(str)
+          ? this.$t(str)
+          : fallbackStr
+        : fallbackStr || str
     },
   },
 }
