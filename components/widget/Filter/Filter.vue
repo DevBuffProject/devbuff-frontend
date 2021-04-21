@@ -9,7 +9,7 @@
       ]"
       @click="state = {}"
     >
-      сбросить
+      {{ $t('components.filter.clear') }}
     </a>
     <ul class="rounded-lg -m-2">
       <li v-for="field in fields" :key="field.name" class="mb-2">
@@ -24,18 +24,30 @@
                 'flex items-center cursor-pointer rounded p-1 px-2 mb-1 transition-all transform active:scale-95',
                 {
                   'text-gray-500 hover:bg-gray-100 dark:text-blueGray-300':
-                    !state[field.value] || !state[field.value].includes(param),
+                    !state[field.value] ||
+                    !state[field.value].includes(
+                      isObject(param) ? param.value : param
+                    ),
                   'dark:text-blueGray-300 dark:hover:bg-blueGray-800':
-                    !state[field.value] || !state[field.value].includes(param),
+                    !state[field.value] ||
+                    !state[field.value].includes(
+                      isObject(param) ? param.value : param
+                    ),
                   'bg-primary text-white':
-                    state[field.value] && state[field.value].includes(param),
+                    state[field.value] &&
+                    state[field.value].includes(
+                      isObject(param) ? param.value : param
+                    ),
                 },
               ]"
-              :value="param"
+              :value="isObject(param) ? param.value : param"
             >
               <v-icon :icon="['fas', 'plus']" class="mr-2 opacity-30" />
               <div class="ml-1 group-active:text-white">
-                {{ param }}
+                <div v-if="isObject(param)">
+                  {{ param.name }}
+                </div>
+                <div v-else>{{ param }}</div>
               </div>
             </atomic-form-checkbox>
           </li>
@@ -77,6 +89,11 @@ export default {
       handler(newValue) {
         this.state = newValue
       },
+    },
+  },
+  methods: {
+    isObject(data) {
+      return typeof data === 'object' && data !== null
     },
   },
 }
