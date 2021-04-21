@@ -350,7 +350,7 @@ export default {
     },
     dashboard: {
       search: 'Search',
-      title: 'Dashboard',
+      title: 'Your projects',
       noIdeas: 'No ideas',
       respond: {
         title: 'Responses',
@@ -443,6 +443,14 @@ export default {
         'To publish projects, build a team, and respond to user ideas',
       settings: 'Settings',
       logOut: 'Log Out',
+    },
+  },
+  widget: {
+    dashboard: {
+      userCard: {
+        approve: 'Approve',
+        specialization: 'Specialisation',
+      },
     },
   },
 }

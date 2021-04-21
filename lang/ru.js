@@ -349,7 +349,7 @@ export default {
     },
     dashboard: {
       search: 'Поиск',
-      title: 'Персональная страница',
+      title: 'Твои проекты',
       noIdeas: 'Идей не найдено',
       respond: {
         title: 'Отклики',
@@ -442,6 +442,14 @@ export default {
         'Чтобы публиковать проекты, собирать команду и откликаться на идеи пользователей',
       settings: 'Настройки',
       logOut: 'Выйти',
+    },
+  },
+  widget: {
+    dashboard: {
+      userCard: {
+        approve: 'Одобрить',
+        specialization: 'Специальность',
+      },
     },
   },
 }
