@@ -1,22 +1,28 @@
 export default {
   specializations: {
     'back-end': {
-      title: 'Backend developer',
+      title: 'Backend Developer',
     },
     'front-end': {
-      title: 'Frontend developer',
+      title: 'Frontend Developer',
     },
     desktop: {
-      title: 'Desktop developer',
+      title: 'Desktop Developer',
     },
     game: {
-      title: 'Game developer',
+      title: 'Game Developer',
     },
     android: {
       title: 'Android Developer',
     },
     apple: {
       title: 'Apple Developer',
+    },
+    ML: {
+      title: 'ML Developer',
+    },
+    microcontrollers: {
+      title: 'Microcontroller Developer',
     },
   },
 }
