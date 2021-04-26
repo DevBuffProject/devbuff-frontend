@@ -135,31 +135,52 @@ export default {
       ]
     },
     filterOptions() {
-      return [
-        {
-          name: this.t('common.specializations'),
-          value: 'specialists',
-          params: this.specs.map((currentValue) => {
-            return {
-              value: currentValue,
-              name: this.t(
-                'specializations.' + currentValue + '.title',
-                currentValue
-              ),
-            }
-          }),
-        },
-        {
-          name: this.t('components.ideaCard.languages'),
-          value: 'languages',
-          params: this.langs.map((currentValue) => {
-            return {
-              value: currentValue,
-              name: this.t('languages.' + currentValue, currentValue),
-            }
-          }),
-        },
-      ]
+      const result = []
+
+      result.push({
+        name: this.t('common.specializations'),
+        value: 'specialists',
+        params: this.specs.map((currentValue) => {
+          return {
+            value: currentValue,
+            name: this.t(
+              'specializations.' + currentValue + '.title',
+              currentValue
+            ),
+          }
+        }),
+      })
+
+      const currentSpecialists = this.filter.params.specialists
+      if (
+        !Array.isArray(currentSpecialists) ||
+        currentSpecialists.length === 0
+      ) {
+        return result
+      }
+
+      const languages = new Set()
+
+      for (const language of this.skills) {
+        for (const specialization of language.specializations) {
+          if (currentSpecialists.includes(specialization.name)) {
+            languages.add(language.name)
+          }
+        }
+      }
+
+      result.push({
+        name: this.t('components.ideaCard.languages'),
+        value: 'languages',
+        params: Array.from(languages).map((currentValue) => {
+          return {
+            value: currentValue,
+            name: this.t('languages.' + currentValue, currentValue),
+          }
+        }),
+      })
+
+      return result
     },
   },
   watch: {
