@@ -1,25 +1,22 @@
 <template>
   <button
     :class="[
-      'px-5 overflow-hidden rounded-full outline-none relative',
+      'px-6 overflow-hidden rounded outline-none relative',
       'transform transition-all active:scale-95 border-2',
       isSmall ? 'py-0.5 text-sm' : 'py-1',
-      isMuted
-        ? [
-            'bg-gray-200 dark:bg-blueGray-600 border-gray-200 dark:border-blueGray-600',
-            'bg-opacity-50 dark:bg-opacity-100 border-opacity-10',
-          ]
-        : [
-            `bg-${type} border-${type} text-white`,
-            isOutline ? `bg-opacity-0 hover:bg-opacity-10 text-${type}` : '',
-          ],
+      {
+        'bg-primary border-primary text-white': type === 'primary',
+        'bg-success border-success text-white': type === 'success',
+        'bg-warning border-warning text-white': type === 'warning',
+        'bg-danger border-danger text-white': type === 'danger',
+      },
     ]"
     v-bind="$attrs"
     v-on="$listeners"
   >
     <div
       v-if="$slots.default"
-      :class="['font-medium', loading && 'invisible relative']"
+      :class="['font-normal', loading && 'invisible relative']"
     >
       <slot />
       <v-icon
@@ -41,7 +38,7 @@
 </template>
 
 <script>
-const TYPES = ['muted', 'contrast', 'primary', 'success', 'warning', 'danger']
+const TYPES = ['muted', 'primary', 'success', 'warning', 'danger']
 
 export default {
   name: 'VButton',
@@ -68,9 +65,9 @@ export default {
       default: false,
     },
   },
-  data() {
-    return { TYPES }
-  },
+  data: () => ({
+    TYPES,
+  }),
   computed: {
     isMuted() {
       return this.type === 'muted'

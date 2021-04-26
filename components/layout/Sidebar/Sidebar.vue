@@ -2,22 +2,22 @@
   <aside>
     <nav>
       <nuxt-link
-        v-if="isAuth"
+        v-if="$auth.loggedIn"
         :to="localePath({ name: 's-profile' })"
         class="mb-8 ml-4 block"
       >
         <widget-user
           avatar-gradient-border
-          :avatar="$store.getters['user/avatar']"
+          :avatar="profile.avatar"
           :firstname="profile.firstName"
           :lastname="profile.lastName"
           :username="profile.userName"
         />
       </nuxt-link>
       <div v-else class="p-5 mb-5 bg-primary bg-opacity-10 rounded-xl">
-        <v-button class="w-full" @click="authorize">
+        <atomic-button class="w-full" @click="authorize">
           {{ $t('layouts.sidebar.signInButton') }}
-        </v-button>
+        </atomic-button>
         <div class="mt-2 text-xs font-medium">
           {{ $t('layouts.sidebar.notAuthorized') }}
         </div>
@@ -57,7 +57,7 @@
         <atomic-delimiter />
       </div>
       <div
-        v-if="isAuth"
+        v-if="$auth.loggedIn"
         :class="[
           'flex items-center rounded-full px-4 py-1.5 mb-2 cursor-pointer',
           'transition-colors hover:bg-danger text-danger hover:bg-opacity-10',
@@ -75,15 +75,16 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   data: () => ({
     loadingRoute: {},
   }),
   computed: {
-    ...mapGetters('session', ['isAdmin', 'isAuth']),
-    ...mapGetters('user', ['profile', 'fullName']),
+    profile() {
+      return this.$auth.user
+    },
     nav() {
       const main = [
         {
@@ -97,7 +98,7 @@ export default {
       const adminNav = []
       const userNav = []
 
-      if (this.isAuth) {
+      if (this.$auth.loggedIn) {
         main.push(
           {
             title: this.$t('components.header.dashboard'),
@@ -117,7 +118,7 @@ export default {
         )
       }
 
-      if (this.isAdmin)
+      if (this.$auth.hasScope('ROLE_ADMIN'))
         adminNav.push({
           title: 'Super user',
           icon: 'security/shield',

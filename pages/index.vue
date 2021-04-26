@@ -1,15 +1,9 @@
 <template>
   <section>
-    <div v-if="!isAuthorized" class="w-full">
-      <v-button
-        class="w-full"
-        type="contrast"
-        :icon="['fab', 'github']"
-        rounded
-        @click="authorize"
-      >
+    <div v-if="!$auth.user" class="w-full">
+      <atomic-button class="w-full" @click="authorize">
         {{ $t('page.index.oAuth.gitHub') }}
-      </v-button>
+      </atomic-button>
       <atomic-delimiter />
     </div>
     <nuxt-link :to="localePath({ name: 'ideas' })">
@@ -21,17 +15,17 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   layout: 'white-screen',
-  async middleware({ store, redirect, app }) {
-    if (store.getters['user/isAuthorized'])
-      await redirect(app.localePath({ name: 'ideas' }))
-  },
-  computed: {
-    ...mapGetters('user', ['isAuthorized']),
-  },
+  // async middleware({ store, redirect, app }) {
+  // if (store.getters['user/isAuthorized'])
+  //   await redirect(app.localePath({ name: 'ideas' }))
+  // },
+  // computed: {
+  //   ...mapGetters('user', ['isAuthorized']),
+  // },
   methods: {
     ...mapActions('auth', ['authorize']),
   },

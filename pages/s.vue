@@ -6,6 +6,6 @@
 
 <script>
 export default {
-  middleware: ['auth-guard'],
+  middleware: ['auth'],
 }
 </script>

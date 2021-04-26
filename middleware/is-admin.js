@@ -1,10 +1,10 @@
-export default ({ store, error }) => {
-  const isAdmin = store.getters['session/isAdmin']
+import { defineNuxtMiddleware } from '@nuxtjs/composition-api'
 
-  if (!isAdmin) {
+export default defineNuxtMiddleware(({ error, $auth }) => {
+  if (!$auth.hasScope('ROLE_ADMIN')) {
     return error({
       statusCode: 403,
       message: 'Forbidden',
     })
   }
-}
+})

@@ -11,21 +11,18 @@
         </span>
       </div>
 
-      <v-button
+      <atomic-button
         v-if="error.statusCode === 401"
-        :icon="['fab', 'github']"
-        type="dark"
-        rounded
-        class="error-page__button"
+        type="muted"
         @click="$store.dispatch('auth/authorize')"
       >
         {{ $t('layouts.error.oAuth.gitHub') }}
-      </v-button>
+      </atomic-button>
 
       <nuxt-link v-else to="/">
-        <v-button class="error-page__button" type="muted">
+        <atomic-button type="muted">
           {{ $t('layouts.error.action.index') }}
-        </v-button>
+        </atomic-button>
       </nuxt-link>
     </div>
 
@@ -71,6 +68,10 @@ export default {
     isDev() {
       return this.$config.IS_DEV
     },
+  },
+  created() {
+    // this.$nuxt.context.redirect('/ideas', 404)
+    this.$store.commit('setError', 404, { root: true })
   },
 }
 </script>

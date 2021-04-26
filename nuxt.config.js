@@ -16,8 +16,12 @@ const {
   VK_TOKEN,
 } = process.env
 
+const API_URL = process.env.API_PROXY_ENABLED
+  ? process.env.API_PROXY_PATH
+  : process.env.API_BASE_URL
+
 // https://github.com/nuxt-community/proxy-module
-if (process.env.VK_PROXY_ENABLED) {
+if (process.env.API_PROXY_ENABLED) {
   proxyConfig[process.env.API_PROXY_PATH] = {
     logLevel,
     target: process.env.API_BASE_URL,
@@ -76,7 +80,6 @@ module.exports = {
     },
   ],
   plugins: [
-    { src: '~/plugins/api.js' },
     { src: '~/plugins/setup.js' },
     // Deprecated
     { src: '~/plugins/fontawesome.js' },
@@ -100,6 +103,8 @@ module.exports = {
     'cookie-universal-nuxt',
     // https://github.com/nuxt-community/proxy-module
     '@nuxtjs/proxy',
+    // https://auth.nuxtjs.org
+    '@nuxtjs/auth-next',
   ],
   buildModules: [
     // https://github.com/nuxt-community/stylelint-module
@@ -112,6 +117,8 @@ module.exports = {
     '@nuxtjs/color-mode',
     // https://github.com/nuxt-community/svg-sprite-module
     '@nuxtjs/svg-sprite',
+    // https://composition-api.nuxtjs.org/
+    '@nuxtjs/composition-api/module',
     // https://html-validator.nuxtjs.org
     // '@nuxtjs/html-validator',
     // https://github.com/harlan-zw/nuxt-build-optimisations
@@ -150,24 +157,34 @@ module.exports = {
     },
   },
 
-  router: {
-    middleware: ['overlay-routing'],
-    extendRoutes(routes, resolve) {
-      routes.push({
-        name: 'custom',
-        path: '/d',
-        components: {
-          default: resolve(__dirname, 'pages/ideas/index.vue'),
-          dialog: resolve(__dirname, 'pages/s/profile/settings.vue'),
+  /* Modules configs */
+  auth: {
+    plugins: [
+      // https://auth.nuxtjs.org/recipes/extend
+      { src: '~/plugins/api.js', ssr: true },
+      { src: '~/plugins/auth.js', ssr: true },
+    ],
+    strategies: {
+      local: {
+        scheme: 'cookie',
+        grantType: 'github_oauth',
+        scope: 'ui',
+        scopeKey: 'authorities',
+        token: {
+          property: 'access_token',
+          required: true,
+          type: 'Bearer',
         },
-        chunkNames: {
-          dialog: 'pages/s/profile/settings',
+        endpoints: {
+          login: {
+            url: `${API_URL}/oAuth/GitHub`,
+            method: 'post',
+          },
+          user: false,
         },
-      })
+      },
     },
   },
-
-  /* Modules configs */
   tailwindcss: {
     jit: true,
     cssPath: '~/assets/css/tailwind.css',

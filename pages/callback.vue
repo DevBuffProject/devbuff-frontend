@@ -3,6 +3,16 @@
     class="h-screen w-full mx-auto my-0 flex items-center justify-center font-thin"
     style="max-width: 450px"
   >
+    <atomic-button
+      @click="
+        $auth.loginWith('local', {
+          params: { code: $route.query.code, grant_type: 'github_oauth' },
+          data: {},
+        })
+      "
+    >
+      log in
+    </atomic-button>
     <div v-if="status === false">
       <span>
         {{ $t('page.callback.status.error.text') }}
@@ -32,34 +42,32 @@ export default {
     this.getToken()
   },
   methods: {
+    login() {
+      const r = this.$auth.loginWith('local', {
+        data: { code: this.$route.query.code, grant_type: 'github_oauth' },
+      })
+
+      console.log(r)
+    },
     retryAuth() {
       this.$store.dispatch('session/authorize')
     },
 
-    async getToken() {
-      const { $store, $route, $router } = this
-      const grant = $route.query.code
-      const visited = localStorage.getItem('visited')
-
-      try {
-        await $store.dispatch('session/getToken', { grant })
-        this.status = true
-      } catch (e) {
-        this.status = false
-      }
-
-      let redirectPath = this.localePath({ name: 's-dashboard' })
-
-      if (!visited) {
-        redirectPath = this.localePath({
-          name: 's-profile',
-          query: { act: 'edit' },
-        })
-
-        localStorage.setItem('visited', true)
-      }
-
-      setTimeout(() => $router.push(redirectPath), 1000)
+    getToken() {
+      // const { $store, $route, $router } = this
+      //
+      // try {
+      //   const response = await $store.dispatch(
+      //     'session/getToken',
+      //     $route.query.code
+      //   )
+      //   await $store.dispatch('session/checkToken', response.access_token)
+      //   this.status = true
+      // } catch (e) {
+      //   this.status = false
+      // }
+      //
+      // setTimeout(() => $router.push(this.localePath({ name: 'ideas' })), 1000)
     },
   },
 }

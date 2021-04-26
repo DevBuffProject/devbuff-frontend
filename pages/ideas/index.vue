@@ -31,35 +31,35 @@
             </div>
           </div>
         </div>
-        <div v-if="ideas.length" ref="ideas" class="ideas">
-          <widget-idea
+        <div
+          ref="ideas"
+          v-masonry="{ gutter: 16, stagger: 20, transitionDuration: '0s' }"
+        >
+          <div
             v-for="idea in ideas"
-            :id="idea.id"
             :key="idea.id"
-            :title="idea.name"
-            :publish-date="idea.publishDate || idea.datePublished"
-            :description="idea.description"
-            :specialists="idea.specialists"
-            class="idea mb-6"
             :style="{ width: grid.inlineView ? '100%' : 'calc(50% - 8px)' }"
           >
-            <template #user>
-              <div class="flex items-center mt-3">
-                <atomic-avatar
-                  :avatar="$store.getters['user/profile'].id"
-                  class="mr-3"
-                  size="24px"
-                />
-                <div class="mt-px">User Name</div>
-              </div>
-            </template>
-          </widget-idea>
-        </div>
-        <div v-else class="p-5">
-          🤷
-          <span class="text-muted">
-            {{ $t('page.ideas.explore.notFound') }}
-          </span>
+            <widget-idea
+              :id="idea.id"
+              :title="idea.name"
+              :date="idea.publishDate || idea.datePublished"
+              :description="idea.description"
+              :specialists="idea.specialists"
+              class="mb-6"
+            >
+              <template #user>
+                <div class="flex items-center mt-3">
+                  <atomic-avatar
+                    :avatar="$auth.user.avatar"
+                    class="mr-3"
+                    size="24px"
+                  />
+                  <div class="mt-px">User Name</div>
+                </div>
+              </template>
+            </widget-idea>
+          </div>
         </div>
       </div>
       <div class="col-span-1">
@@ -75,6 +75,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { throttle } from 'lodash'
 import qs from '~/app/utils/url'
 
 export default {
@@ -93,8 +94,6 @@ export default {
     return {
       grid: {
         inlineView: false,
-        masonryGrid: null,
-        isRepaint: false,
       },
       loading: false,
       filter: {
@@ -171,46 +170,10 @@ export default {
       },
     },
   },
-  async created() {
-    await this.initMasonryGrid()
-  },
   methods: {
-    async initMasonryGrid() {
-      if (process.server) return false
-      await this.$nextTick()
-
-      const MasonryLayout = require('masonry-layout')
-      const Masonry = new MasonryLayout('.ideas', { gutter: 16, stagger: 20 })
-      Masonry.on('layoutComplete', () => (this.grid.isRepaint = false))
-      this.grid.masonryGrid = Masonry
-    },
-    async reloadMasonryGrid() {
-      this.grid.isRepaint = true
-      await this.$nextTick()
-
-      this.grid.masonryGrid.reloadItems()
-      this.gridHide()
-      await this.$nextTick()
-      this.grid.masonryGrid.layout()
-      setTimeout(this.gridShow, 200)
-    },
-    gridHide() {
-      const ideasGrid = this.$refs.ideas
-      ideasGrid.style.transition = 'none'
-      ideasGrid.style.transform = 'scale(0.97)'
-      ideasGrid.style.opacity = 0
-    },
-    gridShow() {
-      const ideasGrid = this.$refs.ideas
-      ideasGrid.style.transition = 'all 150ms ease'
-      ideasGrid.style.transform = 'scale(1)'
-      ideasGrid.style.opacity = 1
-    },
-    async toggleInlineView() {
-      if (this.grid.isRepaint) return
+    toggleInlineView: throttle(function () {
       this.grid.inlineView = !this.grid.inlineView
-      await this.reloadMasonryGrid()
-    },
+    }, 1000),
     async applyFilter() {
       const filter = {
         sortBy: this.filter.sort,
@@ -224,7 +187,6 @@ export default {
         `${window.location.origin + window.location.pathname}?${query}`
       )
       await this.$store.dispatch('ideas/getIdeas', filter)
-      await this.reloadMasonryGrid()
     },
     t(str, fallbackStr) {
       return this.$t && this.$te
