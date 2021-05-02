@@ -8,7 +8,7 @@
           <div class="flex items-center">
             <svg-icon
               class="text-gradient-laguna text-2xl"
-              name="security/shield"
+              name="outline/shield-check"
             />
             <span class="ml-4 text-2xl">Модерация</span>
           </div>

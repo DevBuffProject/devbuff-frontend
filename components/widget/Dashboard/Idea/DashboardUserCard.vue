@@ -9,7 +9,7 @@
       />
       <div v-if="!readonly" class="text-sm flex flex-col">
         <atomic-button
-          type="success"
+          type="muted"
           is-small
           is-outline
           class="mb-2"

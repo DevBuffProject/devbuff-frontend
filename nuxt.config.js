@@ -78,17 +78,21 @@ module.exports = {
       extensions: ['vue'],
       prefix: 'app',
     },
+    {
+      path: '~/app/notifications/components',
+      extensions: ['vue'],
+      prefix: 'app',
+    },
   ],
   plugins: [
     { src: '~/plugins/setup.js' },
-    // Deprecated
-    { src: '~/plugins/fontawesome.js' },
+    { src: '~/plugins/api.js' },
     // https://vee-validate.logaretm.com/v2/guide/rules.html
     { src: '~/plugins/vee-validate.js' },
-    // https://github.com/robinvdvleuten/vuex-persistedstate
-    { src: '~/plugins/vuex-persistedstate.js' },
     // https://vuescrolljs.yvescoding.org/
     { src: '~/plugins/vue-scroll.js' },
+
+    { src: '~/plugins/setup.client.js', mode: 'client' },
     // https://portal-vue.linusb.org
     { src: '~/plugins/vue-portal.client.js', mode: 'client' },
   ],
@@ -103,8 +107,6 @@ module.exports = {
     'cookie-universal-nuxt',
     // https://github.com/nuxt-community/proxy-module
     '@nuxtjs/proxy',
-    // https://auth.nuxtjs.org
-    '@nuxtjs/auth-next',
   ],
   buildModules: [
     // https://github.com/nuxt-community/stylelint-module
@@ -123,6 +125,8 @@ module.exports = {
     // '@nuxtjs/html-validator',
     // https://github.com/harlan-zw/nuxt-build-optimisations
     // 'nuxt-build-optimisations',
+    // https://motion.vueuse.org
+    // 'nuxt-use-motion',
   ],
   privateRuntimeConfig: {
     VK_CLIENT_ID,
@@ -158,32 +162,8 @@ module.exports = {
   },
 
   /* Modules configs */
-  auth: {
-    plugins: [
-      // https://auth.nuxtjs.org/recipes/extend
-      { src: '~/plugins/api.js', ssr: true },
-      { src: '~/plugins/auth.js', ssr: true },
-    ],
-    strategies: {
-      local: {
-        scheme: 'cookie',
-        grantType: 'github_oauth',
-        scope: 'ui',
-        scopeKey: 'authorities',
-        token: {
-          property: 'access_token',
-          required: true,
-          type: 'Bearer',
-        },
-        endpoints: {
-          login: {
-            url: `${API_URL}/oAuth/GitHub`,
-            method: 'post',
-          },
-          user: false,
-        },
-      },
-    },
+  axios: {
+    debug: true,
   },
   tailwindcss: {
     jit: true,

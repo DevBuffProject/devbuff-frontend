@@ -1,33 +1,34 @@
 <template>
-  <div
-    class="h-screen w-full mx-auto my-0 flex items-center justify-center font-thin"
-    style="max-width: 450px"
-  >
-    <atomic-button
-      @click="
-        $auth.loginWith('local', {
-          params: { code: $route.query.code, grant_type: 'github_oauth' },
-          data: {},
-        })
-      "
-    >
-      log in
+  <div class="h-screen w-full mx-auto my-0 mt-10 font-thin w-[1200px]">
+    <atomic-button class="mr-4" @click="$store.dispatch('auth/authorize')">
+      init auth
     </atomic-button>
-    <div v-if="status === false">
-      <span>
-        {{ $t('page.callback.status.error.text') }}
-      </span>
-      <v-button type="muted" @click="retryAuth">
-        {{ $t('page.callback.status.error.retryButton') }}
-      </v-button>
-    </div>
+    <atomic-button type="success" @click="login"> login </atomic-button>
+    <atomic-button type="warning" @click="refresh"> refresh </atomic-button>
+    <atomic-button type="muted" @click="refresh"> refresh </atomic-button>
+    <atomic-button type="danger" @click="refresh"> logout </atomic-button>
+    <div class="grid grid-cols-2 gap-8">
+      <div>
+        <h4>tokens</h4>
+        <pre
+          >{{ $store.getters['auth/tokens'] }}
+        </pre>
+      </div>
 
-    <div v-else-if="status === true">
-      {{ $t('page.callback.success.text') }}
+      <div>
+        <h4>refresh token:response</h4>
+        <pre
+          >{{ $store.getters['auth/status'] }}
+        </pre>
+      </div>
     </div>
-
-    <div v-else>
-      {{ $t('page.callback.processing.text') }}
+    <div class="grid grid-cols-2 gap-8">
+      <div>
+        <h4>user</h4>
+        <pre
+          >{{ $store.getters['auth/user'] }}
+        </pre>
+      </div>
     </div>
   </div>
 </template>
@@ -36,38 +37,21 @@
 export default {
   layout: 'white-screen',
   data: () => ({
-    status: null,
+    tokR: null,
+    tokRR: null,
   }),
-  created() {
-    this.getToken()
-  },
   methods: {
-    login() {
-      const r = this.$auth.loginWith('local', {
-        data: { code: this.$route.query.code, grant_type: 'github_oauth' },
-      })
-
-      console.log(r)
+    async login() {
+      this.tokR = await this.$store.dispatch(
+        'auth/login',
+        this.$route.query?.code
+      )
     },
-    retryAuth() {
-      this.$store.dispatch('session/authorize')
-    },
-
-    getToken() {
-      // const { $store, $route, $router } = this
-      //
-      // try {
-      //   const response = await $store.dispatch(
-      //     'session/getToken',
-      //     $route.query.code
-      //   )
-      //   await $store.dispatch('session/checkToken', response.access_token)
-      //   this.status = true
-      // } catch (e) {
-      //   this.status = false
-      // }
-      //
-      // setTimeout(() => $router.push(this.localePath({ name: 'ideas' })), 1000)
+    async refresh() {
+      this.tokRR = await this.$store.dispatch(
+        'auth/refresh',
+        this.$store.getters['auth/tokens'].refreshToken
+      )
     },
   },
 }

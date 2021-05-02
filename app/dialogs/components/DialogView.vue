@@ -7,36 +7,43 @@
           'fixed top-0 left-0 h-screen w-screen bg-black bg-opacity-75 z-40',
           'flex items-center justify-center',
         ]"
-      />
-    </transition>
-    <transition name="scale">
-      <div
-        v-if="dialogs.length && dialog.component"
-        ref="container"
-        data-target-container
-        :class="[
-          'fixed top-0 left-0 overflow-y-auto overflow-x-hidden h-screen w-screen z-50',
-          'flex items-center justify-center overflow-x-hidden',
-        ]"
-        style="overflow-y: overlay"
       >
-        <div class="w-full m-auto" style="min-width: 320px; max-width: 600px">
-          <div class="relative">
-            <component :is="dialog.component" v-bind="dialog.props" />
-            <atomic-material-icon
-              name="close"
-              type="round"
-              :class="[
-                'absolute right-0 top-0 cursor-pointer mt-6 mr-6 p-4 text-lg rounded-full',
-                'bg-gray-200 dark:bg-blueGray-900 cursor-pointer opacity-50',
-                'transition-opacity hover:opacity-100',
-              ]"
-              @click="close"
-            />
-          </div>
-        </div>
+        <!--        <div class="fixed h-full top-0 left-0 w-1/2"></div>-->
       </div>
     </transition>
+    <!--    <transition :css="false" @leave="(el, done) => motions.cube.leave(done)">-->
+    <div
+      v-if="dialogs.length && dialog.component"
+      ref="container"
+      data-target-container
+      :class="[
+        'fixed top-0 left-0 overflow-y-auto overflow-x-hidden h-screen w-screen z-40',
+        'flex items-center justify-center overflow-x-hidden',
+      ]"
+      style="overflow-y: overlay"
+    >
+      <div
+        class="absolute h-full top-0 right-0 w-1/2 flex justify-end group cursor-pointer"
+        @click="close"
+      >
+        <svg-icon
+          name="outline/x"
+          :class="[
+            'fixed top-0 right-0',
+            'm-10 cursor-pointer text-3xl rounded-full inline-block',
+            'text-white cursor-pointer opacity-50 relative z-50',
+            'transition-opacity group-hover:opacity-100',
+          ]"
+        />
+      </div>
+
+      <div class="w-full m-auto" style="min-width: 320px; max-width: 600px">
+        <div v-motion-slide-top class="relative z-50">
+          <component :is="dialog.component" v-bind="dialog.props" />
+        </div>
+      </div>
+    </div>
+    <!--    </transition>-->
   </div>
 </template>
 
@@ -110,11 +117,11 @@ export default {
       const { routerConfig } = this
 
       if (prevRoute) {
-        this.$router.push(prevRoute)
+        this.$router.replace(prevRoute)
         this.prevRoute = null
       } else if (query.act) {
         const { query } = $route
-        this.$router.push({
+        this.$router.replace({
           ...$route,
           query: { ...query, [routerConfig.queryParam]: undefined },
         })

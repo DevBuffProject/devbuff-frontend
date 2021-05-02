@@ -1,15 +1,15 @@
 <template>
-  <v-dialog title="Редактирование профиля" width-max>
+  <app-dialog title="Редактирование профиля" width-max>
     <template #controls>
       <div class="flex items-center">
-        <v-button type="muted" class="mr-4" @click="$dialog.close">
+        <atomic-button type="muted" class="mr-4" @click="$dialog.close">
           cancel
-        </v-button>
-        <v-button @click="updateProfile"> save </v-button>
+        </atomic-button>
+        <atomic-button @click="updateProfile"> save </atomic-button>
       </div>
     </template>
 
-    <v-notification :loading="loading" type="success" text="saved" />
+    <atomic-notification :loading="loading" type="success" text="saved" />
 
     <div class="flex items-center">
       <div class="mr-4 flex flex-col items-center justify-center">
@@ -109,7 +109,7 @@
       class="mt-4"
       placeholder="skype"
     />
-  </v-dialog>
+  </app-dialog>
 </template>
 
 <script>
@@ -145,7 +145,7 @@ export default {
     },
   }),
   computed: {
-    ...mapGetters('user', ['avatar', 'profile']),
+    ...mapGetters('auth', ['user']),
     countriesOptions() {
       return this.dict.countries.map((city) => ({
         value: city.id,
@@ -190,11 +190,10 @@ export default {
       picker.click()
     },
     async getProfile() {
-      const { id, status, statusEmailConfirm, ...profile } = this.profile
-      if (profile.countryId)
-        await this.getCities({ country: profile.countryId })
+      const { id, status, statusEmailConfirm, ...user } = this.user
+      if (user.countryId) await this.getCities({ country: user.countryId })
 
-      this.userData = JSON.parse(JSON.stringify(profile))
+      this.userData = JSON.parse(JSON.stringify(user))
       this.statusEmailConfirm = statusEmailConfirm
       this.userId = id
     },

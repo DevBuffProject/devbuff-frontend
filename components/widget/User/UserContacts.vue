@@ -6,7 +6,7 @@
       class="mb-2"
     >
       <div class="mb-2 flex items-center">
-        <svg-icon :name="`social/brand-${contactName}`" />
+        <!--        <svg-icon :name="`social/brand-${contactName}`" />-->
         <span class="ml-2">
           <a
             v-if="hrefs[contactName]"

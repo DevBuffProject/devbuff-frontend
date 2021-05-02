@@ -14,10 +14,11 @@ export default {
             : {}
         const Masonry = require('masonry-layout')
         const masonry = new Masonry(el, options)
-        const repaint = () => {
-          masonry.reloadItems()
-          masonry.layout()
-        }
+        const repaint = () =>
+          Vue.nextTick(() => {
+            masonry.reloadItems()
+            masonry.layout()
+          })
 
         Vue.nextTick(repaint)
         bus.on('update', () => {

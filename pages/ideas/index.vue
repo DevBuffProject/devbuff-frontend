@@ -19,48 +19,31 @@
             ]"
           />
           <div>
-            <div
-              :class="[
-                'text-3xl cursor-pointer h-10 w-10 p-2 rounded-full flex items-center justify-center',
-                'transition-all hover:bg-primary hover:text-primary hover:bg-opacity-10',
-                'transform active:scale-90',
-              ]"
-              @click="toggleInlineView"
-            >
-              <svg-icon :name="grid.inlineView ? 'edit/layout' : 'menu/menu'" />
+            <atomic-loading-spinner v-show="loading" />
+          </div>
+        </div>
+
+        <masonry :cols="2" :gutter="30">
+          <div v-for="idea in ideas" :key="idea.id">
+            <div>
+              <widget-idea
+                :id="idea.id"
+                :title="idea.name"
+                :date="idea.publishDate || idea.datePublished"
+                :description="idea.description"
+                :specialists="idea.specialists"
+                class="mb-6"
+              >
+                <template #user>
+                  <div class="flex items-center mt-3">
+                    <atomic-avatar class="mr-3" size="24px" />
+                    <div class="mt-px">User Name</div>
+                  </div>
+                </template>
+              </widget-idea>
             </div>
           </div>
-        </div>
-        <div
-          ref="ideas"
-          v-masonry="{ gutter: 16, stagger: 20, transitionDuration: '0s' }"
-        >
-          <div
-            v-for="idea in ideas"
-            :key="idea.id"
-            :style="{ width: grid.inlineView ? '100%' : 'calc(50% - 8px)' }"
-          >
-            <widget-idea
-              :id="idea.id"
-              :title="idea.name"
-              :date="idea.publishDate || idea.datePublished"
-              :description="idea.description"
-              :specialists="idea.specialists"
-              class="mb-6"
-            >
-              <template #user>
-                <div class="flex items-center mt-3">
-                  <atomic-avatar
-                    :avatar="$auth.user.avatar"
-                    class="mr-3"
-                    size="24px"
-                  />
-                  <div class="mt-px">User Name</div>
-                </div>
-              </template>
-            </widget-idea>
-          </div>
-        </div>
+        </masonry>
       </div>
       <div class="col-span-1">
         <widget-filter
@@ -75,7 +58,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { throttle } from 'lodash'
 import qs from '~/app/utils/url'
 
 export default {
@@ -92,9 +74,10 @@ export default {
     }, {})
 
     return {
-      grid: {
-        inlineView: false,
-      },
+      // grid: {
+      //   inlineView: true,
+      //   key: 0,
+      // },
       loading: false,
       filter: {
         page: 1,
@@ -140,18 +123,17 @@ export default {
       result.push({
         name: this.t('common.specializations'),
         value: 'specialists',
-        params: this.specs.map((currentValue) => {
-          return {
-            value: currentValue,
-            name: this.t(
-              'specializations.' + currentValue + '.title',
-              currentValue
-            ),
-          }
-        }),
+        params: this.specs.map((currentValue) => ({
+          value: currentValue,
+          name: this.t(
+            'specializations.' + currentValue + '.title',
+            currentValue
+          ),
+        })),
       })
 
       const currentSpecialists = this.filter.params.specialists
+
       if (
         !Array.isArray(currentSpecialists) ||
         currentSpecialists.length === 0
@@ -172,12 +154,10 @@ export default {
       result.push({
         name: this.t('components.ideaCard.languages'),
         value: 'languages',
-        params: Array.from(languages).map((currentValue) => {
-          return {
-            value: currentValue,
-            name: this.t('languages.' + currentValue, currentValue),
-          }
-        }),
+        params: Array.from(languages).map((currentValue) => ({
+          value: currentValue,
+          name: this.t('languages.' + currentValue, currentValue),
+        })),
       })
 
       return result
@@ -192,9 +172,10 @@ export default {
     },
   },
   methods: {
-    toggleInlineView: throttle(function () {
-      this.grid.inlineView = !this.grid.inlineView
-    }, 1000),
+    // toggleInlineView: throttle(function () {
+    //   this.grid.inlineView = !this.grid.inlineView
+    //   setTimeout(() => this.grid.key++, 1000)
+    // }, 1000),
     async applyFilter() {
       const filter = {
         sortBy: this.filter.sort,

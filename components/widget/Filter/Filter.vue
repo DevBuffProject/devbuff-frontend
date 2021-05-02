@@ -17,7 +17,7 @@
           {{ field.name }}
         </div>
         <ul class="px-4 font-normal text-xs">
-          <li v-for="param in field.params" :key="param">
+          <li v-for="param in field.params" :key="param.value">
             <atomic-form-checkbox
               v-model="state[field.value]"
               :class="[
@@ -43,7 +43,7 @@
               :value="isObject(param) ? param.value : param"
             >
               <v-icon :icon="['fas', 'plus']" class="mr-2 opacity-30" />
-              <div class="ml-1 group-active:text-white">
+              <div class="ml-1">
                 <div v-if="isObject(param)">
                   {{ param.name }}
                 </div>

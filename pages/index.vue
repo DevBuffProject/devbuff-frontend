@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div v-if="!$auth.user" class="w-full">
+    <div v-if="$store.getters['auth/user']" class="w-full">
       <atomic-button class="w-full" @click="authorize">
         {{ $t('page.index.oAuth.gitHub') }}
       </atomic-button>

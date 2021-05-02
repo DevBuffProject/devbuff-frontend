@@ -2,16 +2,17 @@
   <aside>
     <nav>
       <nuxt-link
-        v-if="$auth.loggedIn"
+        v-if="$store.getters['auth/isAuth']"
         :to="localePath({ name: 's-profile' })"
         class="mb-8 ml-4 block"
       >
         <widget-user
+          v-motion-fade
           avatar-gradient-border
-          :avatar="profile.avatar"
-          :firstname="profile.firstName"
-          :lastname="profile.lastName"
-          :username="profile.userName"
+          :avatar="user.avatar"
+          :firstname="user.firstName"
+          :lastname="user.lastName"
+          :username="user.userName"
         />
       </nuxt-link>
       <div v-else class="p-5 mb-5 bg-primary bg-opacity-10 rounded-xl">
@@ -34,7 +35,7 @@
             :href="href"
             :class="[
               'flex items-center rounded-full px-4 py-2 mb-2 cursor-pointer',
-              'transition-all hover:bg-gray-200 dark:hover:bg-blueGray-800 bg-opacity-50',
+              'transition-all hover:bg-gray-100 dark:hover:bg-blueGray-800',
               'transform active:scale-95',
               link.activeState !== false && isActive
                 ? 'text-primary'
@@ -57,14 +58,15 @@
         <atomic-delimiter />
       </div>
       <div
-        v-if="$auth.loggedIn"
+        v-if="user"
         :class="[
-          'flex items-center rounded-full px-4 py-1.5 mb-2 cursor-pointer',
-          'transition-colors hover:bg-danger text-danger hover:bg-opacity-10',
+          'flex items-center rounded-full px-4 py-2 mb-2 cursor-pointer',
+          'transition-all hover:bg-danger text-danger hover:bg-opacity-10',
+          'transform active:scale-95',
         ]"
       >
         <div>
-          <svg-icon name="account/log-out" class="mr-4" />
+          <svg-icon name="outline/logout" class="mr-4" />
         </div>
         <span class="text-md font-medium">
           {{ $t('layouts.sidebar.logOut') }}
@@ -82,14 +84,14 @@ export default {
     loadingRoute: {},
   }),
   computed: {
-    profile() {
-      return this.$auth.user
+    user() {
+      return this.$store.getters['auth/user']
     },
     nav() {
       const main = [
         {
           title: this.$t('components.header.overview'),
-          icon: 'net/search',
+          icon: 'outline/search',
           to: this.localePath({ name: 'ideas' }),
           exact: true,
         },
@@ -98,17 +100,17 @@ export default {
       const adminNav = []
       const userNav = []
 
-      if (this.$auth.loggedIn) {
+      if (this.user) {
         main.push(
           {
             title: this.$t('components.header.dashboard'),
-            icon: 'edit/layout',
+            icon: 'outline/collection',
             to: this.localePath({ name: 's-dashboard' }),
             exact: true,
           },
           {
             title: this.$t('layouts.sidebar.settings'),
-            icon: 'menu/settings',
+            icon: 'outline/cog',
             to: this.localePath({
               ...this.$route,
               query: { ...this.$route.query, act: 'settings' },
@@ -118,10 +120,10 @@ export default {
         )
       }
 
-      if (this.$auth.hasScope('ROLE_ADMIN'))
+      if (this.user)
         adminNav.push({
           title: 'Super user',
-          icon: 'security/shield',
+          icon: 'outline/shield-check',
           to: this.localePath({ name: 'superuser' }),
         })
 
@@ -132,7 +134,7 @@ export default {
   },
   created() {
     this.$router.afterEach(() => {
-      this.loadingRoute = {}
+      this.loadingRoute = ''
     })
   },
   methods: {

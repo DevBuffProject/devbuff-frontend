@@ -15,7 +15,7 @@
               'border-gray-200 dark:border-blueGray-700':
                 errors.length === 0 && !isFocused,
               'border-danger': errors.length,
-              'border-black': isFocused,
+              '!ring !ring-primary-200 outline-none border-primary': isFocused,
             },
             'relative w-full inline-flex border-2 rounded-md overflow-hidden rounded box-border',
             'items-baseline cursor-pointer bg-white dark:bg-blueGray-700',
@@ -64,7 +64,7 @@
       @mousedown.stop
     >
       <div
-        class="mt-2 flex rounded border-2 border-black dark:border-blueGray-700 bg-white shadow-xl"
+        class="mt-2 flex rounded border-2 border-primary dark:border-blueGray-700 bg-white shadow-xl"
       >
         <slot name="dropdown" v-bind="{ setFocus, hideDropdown }" />
       </div>

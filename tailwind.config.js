@@ -40,8 +40,8 @@ module.exports = {
       },
       muted: colors.gray[500],
       primary: {
-        DEFAULT: colors.blue['500'],
-        ...colors.blue,
+        DEFAULT: colors.lightBlue['500'],
+        ...colors.lightBlue,
       },
       secondary: {
         DEFAULT: colors.yellow['500'],
@@ -52,12 +52,12 @@ module.exports = {
         ...colors.green,
       },
       danger: {
-        DEFAULT: colors.rose['500'],
-        ...colors.rose,
+        DEFAULT: colors.red['500'],
+        ...colors.red,
       },
       warning: {
-        DEFAULT: colors.orange['500'],
-        ...colors.orange,
+        DEFAULT: colors.yellow['500'],
+        ...colors.yellow,
       },
     },
     screens: {

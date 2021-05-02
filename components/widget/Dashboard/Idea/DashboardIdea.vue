@@ -35,11 +35,11 @@
         </div>
         <div class="flex items-center">
           <div class="opacity-50 hover:opacity-100 cursor-pointer p-3">
-            <svg-icon name="edit/trash" class="text-sm text-danger" />
+            <svg-icon name="outline/trash" class="text-sm text-danger" />
           </div>
 
           <div class="opacity-50 hover:opacity-100 cursor-pointer p-3">
-            <svg-icon name="edit/edit" class="text-sm text-primary" />
+            <svg-icon name="outline/pencil-alt" class="text-sm text-primary" />
           </div>
         </div>
       </div>

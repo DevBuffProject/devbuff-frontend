@@ -3,11 +3,11 @@
     v-show="loading > 0"
     ref="info"
     :class="[
-      'flex items-start px-5 py-4 rounded-md border-2 border-opacity-50 mb-5',
+      'flex items-start px-5 py-4 rounded-md mb-5',
       `border-${type} text-${type} bg-${type} bg-opacity-10`,
     ]"
   >
-    <svg-icon name="notifications/alert-circle" class="mr-4 text-3xl" />
+    <svg-icon name="outline/exclamation-circle" class="mr-4 text-xl" />
     <span class="font-medium">{{ text }}</span>
   </div>
 </template>

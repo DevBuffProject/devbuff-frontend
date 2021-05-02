@@ -6,11 +6,12 @@
     <div class="container mx-auto flex items-center py-4">
       <div class="flex items-center w-full">
         <nuxt-link :to="localePath({ name: 'ideas' })">
-          <atomic-logo src="/logos/logo-dark.svg" class="h-10 dark:hidden" />
           <atomic-logo
-            src="/logos/logo-white.svg"
-            class="h-10 hidden dark:block"
+            v-if="$colorMode.preference === 'light'"
+            src="/logos/logo-dark.svg"
+            class="h-10"
           />
+          <atomic-logo v-else src="/logos/logo-white.svg" class="h-10" />
         </nuxt-link>
         <atomic-switcher
           :value="locale"
@@ -21,7 +22,7 @@
       </div>
       <div class="flex items-center">
         <div
-          class="flex items-center border-r border-gray-200 dark:border-blueGray-600 mr-2 pr-6"
+          class="flex items-center border-r border-gray-200 dark:border-blueGray-600 mr-4 pr-6"
         >
           <div
             class="cursor-pointer text-lg w-12 h-8 flex items-center justify-center rounded ml-6"
@@ -29,21 +30,14 @@
             <widget-color-switcher />
           </div>
         </div>
-        <nav v-if="isAuthorized" class="flex items-center">
+        <nav v-if="isAuth" class="flex items-center">
           <nuxt-link
-            :class="[
-              'mr-4 ml-4 transition-all text-gray-500 dark:text-blueGray-50 hover:text-primary rounded',
-              'border-2 border-gray-200 hover:border-primary dark:border-blueGray-600 dark:hover:border-primary',
-              'transform active:scale-95',
-            ]"
+            v-slot="{ isActive, navigate }"
             :to="localePath({ name: 's-editor' })"
           >
-            <div class="py-1 px-4 flex items-center">
-              <v-icon :icon="['fas', 'plus']" class="mr-4" />
-              <span class="font-semibold">
-                {{ $t('components.header.create') }}
-              </span>
-            </div>
+            <atomic-button :disabled="isActive" @click="navigate">
+              create
+            </atomic-button>
           </nuxt-link>
         </nav>
       </div>
@@ -55,6 +49,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'VHeader',
   props: {
@@ -71,18 +67,7 @@ export default {
     }
   },
   computed: {
-    isAuthorized() {
-      return this.$store.getters['user/isAuthorized']
-    },
-    isAdmin() {
-      return this.$store.getters['auth/isAdmin']
-    },
-    pendingIdeas() {
-      return this.$store.getters['admin/pendingIdeas']
-    },
-    avatar() {
-      return this.$store.getters['user/profile'].avatar
-    },
+    ...mapGetters('auth', ['isAuth', 'isAdmin']),
     availableLocales() {
       return this.$i18n.locales.map((locale) => ({
         title: locale.name,
@@ -91,9 +76,6 @@ export default {
     },
   },
   methods: {
-    authorize() {
-      this.$store.dispatch('auth/authorize')
-    },
     async setLocale(locale) {
       await this.$i18n.setLocale(locale)
       this.locale = locale
@@ -103,10 +85,6 @@ export default {
 </script>
 
 <style module>
-.link_active {
-  @apply bg-primary bg-opacity-10 text-primary !important;
-}
-
 .section {
   @apply flex items-center justify-end w-full;
 }

@@ -9,10 +9,10 @@
       >
         {{ item.title }}
       </component>
-      <atomic-material-icon
+      <svg-icon
         v-if="index < items.length - 1"
         :key="`chevron-${index}`"
-        name="chevron_right"
+        name="outline/cheveron-right"
         class="mx-0.5 text-gray-300 dark:text-blueGray-500"
       />
     </template>
