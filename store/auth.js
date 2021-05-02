@@ -15,9 +15,9 @@ export const mutations = {
 }
 
 export const actions = {
-  authorize() {
+  authorize({ commit }, typeOAuthProvider) {
     const { API_BASE_URL } = this.$config
-    window.location.href = `${API_BASE_URL}/oAuth/GitHub`
+    window.location.href = `${API_BASE_URL}/oAuth/` + typeOAuthProvider
   },
   async getUser({ commit }) {
     const user = await this.$api.latest.get('profile')
@@ -90,12 +90,12 @@ export const actions = {
 
     return tokens
   },
-  async login({ commit, dispatch }, code) {
+  async login({ commit, dispatch }, { code, typeOAuthProvider }) {
     const credentails = new URLSearchParams()
     credentails.set('code', code)
-    credentails.set('grant_type', 'github_oauth')
+    credentails.set('grant_type', typeOAuthProvider.toLowerCase() + '_oauth')
 
-    const tokens = await this.$api.latest.post('oAuth/GitHub', credentails)
+    const tokens = await this.$api.latest.post('oAuth', credentails)
 
     dispatch('installTokens', {
       accessToken: tokens.access_token,
