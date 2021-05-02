@@ -1,8 +1,12 @@
 <template>
   <section>
     <div v-if="$store.getters['auth/user']" class="w-full">
+      Sign in with
+      <atomic-button class="w-full" @click="authorize('GitHub')">
+        <svg-icon name="outline/logout" class="mr-4" /> GitHub
+      </atomic-button>
       <atomic-button class="w-full" @click="authorize('GitLab')">
-        {{ $t('page.index.oAuth.gitHub') }}
+        <svg-icon name="outline/logout" class="mr-4" /> GitLab
       </atomic-button>
       <atomic-delimiter />
     </div>
