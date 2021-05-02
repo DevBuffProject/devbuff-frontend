@@ -3,10 +3,10 @@
     <atomic-button class="mr-4" @click="$store.dispatch('auth/authorize')">
       init auth
     </atomic-button>
-    <atomic-button type="success" @click="login"> login </atomic-button>
-    <atomic-button type="warning" @click="refresh"> refresh </atomic-button>
-    <atomic-button type="muted" @click="refresh"> refresh </atomic-button>
-    <atomic-button type="danger" @click="refresh"> logout </atomic-button>
+    <atomic-button type="success" @click="login"> login</atomic-button>
+    <atomic-button type="warning" @click="refresh"> refresh</atomic-button>
+    <atomic-button type="muted" @click="refresh"> refresh</atomic-button>
+    <atomic-button type="danger" @click="refresh"> logout</atomic-button>
     <div class="grid grid-cols-2 gap-8">
       <div>
         <h4>tokens</h4>
@@ -42,10 +42,10 @@ export default {
   }),
   methods: {
     async login() {
-      this.tokR = await this.$store.dispatch(
-        'auth/login',
-        this.$route.query?.code
-      )
+      this.tokR = await this.$store.dispatch('auth/login', {
+        code: this.$route.query?.code,
+        typeOAuthProvider: this.$route.params?.typeOAuthProvider,
+      })
     },
     async refresh() {
       this.tokRR = await this.$store.dispatch(

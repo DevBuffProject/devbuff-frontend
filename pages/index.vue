@@ -1,7 +1,7 @@
 <template>
   <section>
     <div v-if="$store.getters['auth/user']" class="w-full">
-      <atomic-button class="w-full" @click="authorize">
+      <atomic-button class="w-full" @click="authorize('GitLab')">
         {{ $t('page.index.oAuth.gitHub') }}
       </atomic-button>
       <atomic-delimiter />
