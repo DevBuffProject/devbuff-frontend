@@ -8,7 +8,11 @@
 export default {
   async middleware({ store, route, error }) {
     try {
-      await store.dispatch('user/getProfile', route.params.id)
+      let uuid = route.params.id
+      if (uuid === undefined) {
+        uuid = store.getters['auth/user'].id
+      }
+      await store.dispatch('user/getProfile', uuid)
       await store.dispatch('skills/getSkills')
     } catch (e) {
       return error({ statusCode: 400 })
