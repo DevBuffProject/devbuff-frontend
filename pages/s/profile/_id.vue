@@ -60,8 +60,17 @@
                 >
                   {{ profile.bio }}
                 </atomic-label>
-
-                <div v-if="self" class="profile__skills">
+                <div v-for="(idea, index) in profile.ideas" :key="idea.id">
+                  <widget-dashboard-idea
+                    :date="idea.datePublished | toLocaleDateTime($i18n.locale)"
+                    :title="idea.name"
+                    :description="idea.description"
+                    :waiting-validation="idea.waitingValidation"
+                    @click="showView() || inspectIdea(idea)"
+                  />
+                  <atomic-delimiter v-if="index < profile.ideas.length - 1" />
+                </div>
+                <!--                <div v-if="self" class="profile__skills">
                   <v-skills-editor
                     v-if="systemSkills"
                     :user-skills="profile.skills"
@@ -109,7 +118,7 @@
                       </span>
                     </div>
                   </div>
-                </div>
+                </div>-->
               </div>
             </div>
           </div>
@@ -130,22 +139,7 @@ export default {
     }),
 
     self() {
-      return true // TODO
-    },
-
-    urls() {
-      if (!this.profile.socialNetworks) {
-        return false
-      }
-
-      return {
-        vk:
-          this.profile.socialNetworks.vk &&
-          `https://vk.com/${this.profile.socialNetworks.vk}`,
-        telegram:
-          this.profile.socialNetworks.telegram &&
-          `https://t.me/${this.profile.socialNetworks.telegram}`,
-      }
+      return this.profile.id === this.$store.getters['auth/user'].id
     },
   },
 

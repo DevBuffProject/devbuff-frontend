@@ -25,7 +25,8 @@ export const actions = {
   async getProfile({ commit, dispatch }, uuid) {
     const profile = await this.$api.latest.get(`profile/${uuid}`)
     profile.avatar = `${this.$config.API_BASE_URL}/photo/profile/${uuid}`
-    console.log(profile.cityId)
+
+    profile.ideas = await this.$api.latest.get(`idea/user/${uuid}`)
 
     if (profile.countryId) {
       profile.country = await dispatch(
