@@ -1,178 +1,115 @@
 <template>
   <div class="profile">
-    <v-toolbar hide-backlink class="profile__toolbar">
-      <div class="flex align-end pt-4 pl-4">
-        <div class="profile__name">
-          {{ profile.firstName }} {{ profile.lastName }}
-        </div>
-        <div class="ml-3 text-muted profile__username">
-          @{{ profile.userName }}
-        </div>
-      </div>
-      <div />
-    </v-toolbar>
-    <div class="container mx-auto flex">
-      <div class="profile__sidebar">
-        <div
-          class="profile__sidebar-content flex flex-column align-content-center"
-        >
-          <atomic-avatar
-            class="profile__avatar mb-3"
-            :avatar="profile.id"
-            size="6rem"
-          />
-          <v-button
-            v-if="self"
-            rounded
-            type="contrast"
-            :icon="['fas', 'edit']"
-          />
-        </div>
-      </div>
-      <div class="container mx-auto pt-3 pl-4">
-        <div class="profile__container">
-          <div class="flex mb-3">
-            <atomic-label
-              v-if="profile.birthday"
-              name="дата рождения"
-              class="mr-5"
-            >
-              {{ profile.birthday | toLocaleDateTime($i18n.locale) }}
-            </atomic-label>
-
-            <atomic-label v-if="profile.city" name="город" class="mr-5">
-              {{ profile.city }}
-            </atomic-label>
-          </div>
-
-          <atomic-label v-if="profile.bio" name="о себе" class="mr-5 mb-4">
-            {{ profile.bio }}
-          </atomic-label>
-
-          <div v-if="profile.socialNetworks" class="profile__socials">
-            <div
-              v-if="profile.socialNetworks.vk"
-              class="profile__social-contact mb-2"
-            >
-              <div class="mb-2 flex items-center profile__social-contact">
-                <v-icon
-                  class="mr-2 profile__social-icon"
-                  :icon="['fab', 'vk']"
-                />
-                <span class="text-muted mr-1">{{
-                  profile.socialNetworks.vk
-                }}</span>
-                <span class="mx-1">—</span>
-                {{ $t('page.profile.vk') }}
-              </div>
-              <v-og-preview
-                v-if="profile.socialNetworks.vk"
-                class="mb-4"
-                :url="urls.vk"
-              />
-            </div>
-
-            <div
-              v-if="profile.socialNetworks.telegram"
-              class="profile__social-contact mb-2"
-            >
-              <div class="mb-2 flex items-center profile__social-contact">
-                <v-icon
-                  class="mr-2 profile__social-icon"
-                  :icon="['fab', 'telegram']"
-                />
-                <span class="text-muted">{{
-                  profile.socialNetworks.telegram
-                }}</span>
-                <span class="mx-1">—</span>
-                tetegram
-              </div>
-              <v-og-preview
-                v-if="profile.socialNetworks.telegram"
-                class="mb-4"
-                :url="urls.telegram"
-              />
-            </div>
-
-            <div
-              v-if="profile.socialNetworks.skype"
-              class="profile__social-contact mb-2"
-            >
-              <div class="flex items-center profile__social-contact">
-                <v-icon
-                  class="mr-2 profile__social-icon"
-                  :icon="['fab', 'skype']"
-                />
-                <span class="text-muted">{{
-                  profile.socialNetworks.skype
-                }}</span>
-                <span class="mx-1">—</span>
-                skype
-              </div>
-            </div>
-
-            <div
-              v-if="profile.socialNetworks.discord"
-              class="profile__social-contact mb-4"
-            >
-              <div class="flex items-center profile__social-contact">
-                <v-icon
-                  class="mr-2 profile__social-icon"
-                  :icon="['fab', 'discord']"
-                />
-                <span class="text-muted">{{
-                  profile.socialNetworks.discord
-                }}</span>
-                <span class="mx-1">—</span>
-                discord
-              </div>
-            </div>
-          </div>
-
-          <div v-if="self" class="profile__skills">
-            <v-skills-editor
-              v-if="systemSkills"
-              :user-skills="profile.skills"
-              :skills="systemSkills"
-              @change="changeSkills"
+    <div v-if="profile !== undefined">
+      <div class="mt-3">
+        <div class="flex flex-wrap items-center justify-between mb-3">
+          <div class="flex flex-wrap items-center my-5">
+            <atomic-avatar
+              class="profile__avatar mb-3"
+              :avatar="profile.avatar"
+              size="6rem"
             />
-            <div v-else class="flex justify-center items-center">
-              <span class="mr-3">{{ $t('page.profile.skillsLoading') }}</span>
-              <atomic-loading />
-            </div>
+            <widget-user
+              :firstname="profile.firstName"
+              :lastname="profile.lastName"
+              :username="profile.userName"
+              class="ml-10"
+            />
           </div>
-
-          <div v-if="false" class="profile__skills">
-            <v-button
-              type="flat"
-              :icon="['fas', 'edit']"
-              class="profile__skills-edit"
-            >
-              изменить
-            </v-button>
-
-            <div
-              v-for="skill in profile.skills"
-              :key="skill.name"
-              class="profile__skill"
-            >
-              <div class="profile__skill-name">
-                {{ $t('languages.' + skill.name) }}
-              </div>
+          <div class="container mx-auto flex">
+            <div class="profile__sidebar">
               <div
-                v-for="spec in skill.specializations"
-                :key="spec.name"
-                class="profile__skill-spec"
+                class="profile__sidebar-content flex flex-column align-content-center"
               >
-                <span>
-                  <atomic-chip
-                    v-for="framework in spec.frameworks"
-                    :key="framework.name"
-                    :text="framework.name"
-                    type="auto"
-                    mix-class=" profile__skill-technology"
+                <v-button
+                  v-if="self"
+                  rounded
+                  type="contrast"
+                  :icon="['fas', 'edit']"
+                />
+              </div>
+            </div>
+            <div class="container mx-auto pt-3 pl-4">
+              <div class="profile__container">
+                <div class="flex mb-3">
+                  <atomic-label
+                    v-if="profile.birthday"
+                    name="дата рождения"
+                    class="mr-5"
+                  >
+                    {{ profile.birthday | toLocaleDateTime($i18n.locale) }}
+                  </atomic-label>
+
+                  <atomic-label
+                    v-if="profile.country"
+                    name="страна"
+                    class="mr-5"
+                  >
+                    {{ profile.country }}
+                  </atomic-label>
+
+                  <atomic-label v-if="profile.city" name="город" class="mr-5">
+                    {{ profile.city }}
+                  </atomic-label>
+                </div>
+
+                <atomic-label
+                  v-if="profile.bio"
+                  name="о себе"
+                  class="mr-5 mb-4"
+                >
+                  {{ profile.bio }}
+                </atomic-label>
+
+                <div v-if="self" class="profile__skills">
+                  <v-skills-editor
+                    v-if="systemSkills"
+                    :user-skills="profile.skills"
+                    :skills="systemSkills"
+                    @change="changeSkills"
                   />
-                </span>
+                  <div v-else class="flex justify-center items-center">
+                    <span class="mr-3">{{
+                      $t('page.profile.skillsLoading')
+                    }}</span>
+                    <atomic-loading />
+                  </div>
+                </div>
+
+                <div v-if="false" class="profile__skills">
+                  <v-button
+                    type="flat"
+                    :icon="['fas', 'edit']"
+                    class="profile__skills-edit"
+                  >
+                    изменить
+                  </v-button>
+
+                  <div
+                    v-for="skill in profile.skills"
+                    :key="skill.name"
+                    class="profile__skill"
+                  >
+                    <div class="profile__skill-name">
+                      {{ $t('languages.' + skill.name) }}
+                    </div>
+                    <div
+                      v-for="spec in skill.specializations"
+                      :key="spec.name"
+                      class="profile__skill-spec"
+                    >
+                      <span>
+                        <atomic-chip
+                          v-for="framework in spec.frameworks"
+                          :key="framework.name"
+                          :text="framework.name"
+                          type="auto"
+                          mix-class=" profile__skill-technology"
+                        />
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -189,18 +126,11 @@ export default {
   computed: {
     ...mapGetters({
       systemSkills: 'skills/skills',
+      profile: 'user/profile',
     }),
 
-    profile() {
-      const { id } = this.$route.params
-
-      return id
-        ? this.$store.getters['user/user']
-        : this.$store.getters['user/profile']
-    },
-
     self() {
-      return this.profile.id === this.$store.getters['user/profile'].id
+      return true // TODO
     },
 
     urls() {

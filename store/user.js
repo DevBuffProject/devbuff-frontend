@@ -3,6 +3,7 @@ export const state = () => ({
     data: {},
     avatar: {},
   },
+  profile: {},
 })
 
 export const mutations = {
@@ -11,6 +12,7 @@ export const mutations = {
     const random = Math.ceil(Math.random() * 1000)
     state.profile.avatar = `${avatar}?${random}`
   },
+  setProfile: (state, profile) => (state.profile = profile),
 }
 
 export const actions = {
@@ -20,9 +22,33 @@ export const actions = {
     commit('setUser', user)
     return user
   },
+  async getProfile({ commit, dispatch }, uuid) {
+    const profile = await this.$api.latest.get(`profile/${uuid}`)
+    profile.avatar = `${this.$config.API_BASE_URL}/photo/profile/${uuid}`
+    console.log(profile.cityId)
+
+    if (profile.countryId) {
+      profile.country = await dispatch(
+        'hints/getCountryById',
+        profile.countryId,
+        {
+          root: true,
+        }
+      )
+    }
+    if (profile.cityId) {
+      profile.city = await dispatch('hints/getCityById', profile.cityId, {
+        root: true,
+      })
+    }
+
+    commit('setProfile', profile)
+    return profile
+  },
 }
 
 export const getters = {
   avatar: (state) => state.profile.avatar,
+  profile: (state) => state.profile,
   fullName: (_, getters) => `${getters.lastName} ${getters.firstName}`.trim(),
 }
