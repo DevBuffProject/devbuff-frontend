@@ -13,7 +13,7 @@
 
     <div class="flex items-center">
       <div class="mr-4 flex flex-col items-center justify-center">
-        <atomic-avatar :avatar="avatar" class="w-36 h-36" />
+        <atomic-avatar :avatar="userData.avatar" class="w-36 h-36" />
         <div
           class="mt-1 text-primary cursor-pointer flex items-center"
           @click="updateAvatar"
