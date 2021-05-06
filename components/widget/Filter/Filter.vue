@@ -42,7 +42,7 @@
               ]"
               :value="isObject(param) ? param.value : param"
             >
-              <v-icon :icon="['fas', 'plus']" class="mr-2 opacity-30" />
+              <svg-icon name="outline/plus" class="mr-2 opacity-30" />
               <div class="ml-1">
                 <div v-if="isObject(param)">
                   {{ param.name }}

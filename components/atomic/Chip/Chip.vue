@@ -13,13 +13,15 @@
 </template>
 
 <script>
-import Color from 'assets/js/colors.js'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { useColors } from '../../../composes'
 
+const { stringColor } = useColors()
 const cachedColors = {}
 const getTextBasedColors = (text) => {
   if (cachedColors[text]) return cachedColors[text]
 
-  const colorInstance = Color(Color.generateFromString(text))
+  const colorInstance = stringColor(text)
   const colors = {
     text: colorInstance.luminate(0.1),
     bg: colorInstance.luminate(0.9),
@@ -28,8 +30,8 @@ const getTextBasedColors = (text) => {
   return (cachedColors[text] = colors)
 }
 
-export default {
-  name: 'VChip',
+export default defineComponent({
+  name: 'AtomicChip',
   props: {
     text: {
       type: String,
@@ -40,10 +42,12 @@ export default {
       default: '',
     },
   },
-  computed: {
-    colors() {
-      return getTextBasedColors(this.text)
-    },
+  setup({ text }) {
+    const colors = computed(() => getTextBasedColors(text))
+
+    return {
+      colors,
+    }
   },
-}
+})
 </script>

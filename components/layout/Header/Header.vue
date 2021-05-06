@@ -33,7 +33,12 @@
         <nav v-if="isAuth" class="flex items-center">
           <nuxt-link
             v-slot="{ isActive, navigate }"
-            :to="localePath({ name: 's-editor' })"
+            :to="
+              localePath({
+                name: 's-editor',
+                query: { id: '7537557e-f2fc-406e-bce6-d1e6ee22f01f' },
+              })
+            "
           >
             <atomic-button :disabled="isActive" @click="navigate">
               create
@@ -49,39 +54,32 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { defineComponent } from '@nuxtjs/composition-api'
+import { useUser, useLocale } from '../../../composes'
 
-export default {
-  name: 'VHeader',
+export default defineComponent({
+  name: 'LayoutHeader',
   props: {
     progress: {
       type: Boolean,
       default: false,
     },
-    // TODO: props, links, avatar, button slot and avatar
   },
-  data() {
+  setup() {
+    const auth = useUser()
+    const locale = useLocale()
+    const availableLocales = locale.locales.value.map((locale) => ({
+      title: locale.name,
+      value: locale.code,
+    }))
+
     return {
-      localeLoading: false,
-      locale: this.$i18n.locale,
+      availableLocales,
+      ...locale,
+      ...auth,
     }
   },
-  computed: {
-    ...mapGetters('auth', ['isAuth', 'isAdmin']),
-    availableLocales() {
-      return this.$i18n.locales.map((locale) => ({
-        title: locale.name,
-        value: locale.code,
-      }))
-    },
-  },
-  methods: {
-    async setLocale(locale) {
-      await this.$i18n.setLocale(locale)
-      this.locale = locale
-    },
-  },
-}
+})
 </script>
 
 <style module>

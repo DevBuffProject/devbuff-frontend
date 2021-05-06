@@ -11,25 +11,26 @@
         </div>
         <div
           :class="[
-            {
-              'border-gray-200 dark:border-blueGray-700':
-                errors.length === 0 && !isFocused,
-              'border-danger': errors.length,
-              '!ring !ring-primary-200 outline-none border-primary': isFocused,
-            },
-            'relative w-full inline-flex border-2 rounded-md overflow-hidden rounded box-border',
-            'items-baseline cursor-pointer bg-white dark:bg-blueGray-700',
+            'relative w-full inline-flex rounded-md overflow-hidden rounded box-border',
+            'items-baseline cursor-pointer transition-all outline-none',
+            'border-2 bg-white dark:bg-blueGray-700',
+            errors.length &&
+              '!border-danger !ring-danger-200 dark:!ring-danger-900',
+            isFocused
+              ? 'ring ring-primary-200 dark:ring-primary-900 border-primary'
+              : 'border-gray-300 dark:border-blueGray-700',
           ]"
           @mousedown="setFocus"
         >
           <textarea
-            v-if="textarea"
+            v-if="type === 'textarea'"
             ref="field"
-            class="w-full py-2 px-4 bg-transparent outline-none w-full resize-none"
-            :value="value"
+            :class="[
+              'w-full py-2 px-4 bg-transparent outline-none w-full',
+              'resize-none min-h-[100px]',
+            ]"
+            :value="modelValue"
             v-bind="$attrs"
-            autocomplete="off"
-            style="min-height: 100px"
             @input="onInput"
             @focus="onFocus"
             @blur="onBlur"
@@ -37,8 +38,11 @@
           <input
             v-else
             ref="field"
-            class="w-full py-2 px-4 bg-transparent outline-none w-full resize-none"
-            :value="value"
+            :class="[
+              'w-full py-2 px-4 bg-transparent outline-none w-full resize-none',
+              type === 'textarea' && 'resize-none min-h-[100px]',
+            ]"
+            :value="modelValue"
             v-bind="$attrs"
             autocomplete="off"
             @input="onInput"
@@ -47,15 +51,16 @@
           />
         </div>
       </label>
-      <transition name="fade">
-        <div
-          v-if="errors.length"
-          class="flex items-baseline mt-3 text-sm text-danger"
-        >
-          <v-icon :icon="['fas', 'exclamation']" class="mr-2" />
-          <span class="mt-px">{{ errors[0] }}</span>
-        </div>
-      </transition>
+      <div
+        v-if="errors.length"
+        v-motion="'errorMessage'"
+        :initial="{ marginTop: -10, opacity: 0 }"
+        :enter="{ marginTop: 0, opacity: 1 }"
+        class="flex items-center pt-1 text-xs text-danger"
+      >
+        <svg-icon name="outline/exclamation-circle" class="mr-2" />
+        <span class="mt-px">{{ errors[0] }}</span>
+      </div>
     </ValidationProvider>
     <div
       v-if="$scopedSlots.dropdown"
@@ -73,22 +78,26 @@
 </template>
 
 <script>
+import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import { localize } from 'vee-validate'
 
-export default {
+const types = ['date', 'number', 'text', 'textarea']
+
+export default defineComponent({
   name: 'VInput',
   model: {
-    prop: 'value',
-    event: 'input',
+    prop: 'modelValue',
+    event: 'update:modelValue',
   },
   props: {
-    value: {
+    modelValue: {
       type: [String, Number],
       default: '',
     },
     type: {
       type: String,
       default: 'text',
+      validate: (v) => types.includes(v),
     },
     label: {
       type: String,
@@ -98,45 +107,44 @@ export default {
       type: Boolean,
       default: false,
     },
-    textarea: {
-      type: Boolean,
-      default: false,
-    },
     rules: {
       type: [String, Array, Function],
       default: null,
     },
   },
 
-  data: () => ({
-    isFocused: false,
-    isDropdownOpen: false,
-  }),
+  setup(props, { emit }) {
+    const { i18n } = useContext()
+    const isFocused = ref(false)
+    const isDropdownOpen = ref(false)
 
-  created() {
-    localize(this.$i18n.locale)
-  },
+    const hideDropdown = () => (isDropdownOpen.value = false)
+    const setFocus = () => {
+      // this.$refs.field.focus()
+    }
+    const onInput = (e) => emit('update:modelValue', e.target.value)
+    const onFocus = (e) => {
+      isFocused.value = true
+      isDropdownOpen.value = true
+      emit('focus')
+    }
+    const onBlur = () => {
+      isFocused.value = false
+      isDropdownOpen.value = false
+      emit('blur')
+    }
 
-  methods: {
-    hideDropdown() {
-      this.isDropdownOpen = false
-    },
-    setFocus() {
-      this.$refs.field.focus()
-    },
-    onInput(event) {
-      this.$emit('input', event.target.value)
-    },
-    onFocus(e) {
-      this.isFocused = true
-      this.isDropdownOpen = true
-      this.$emit('focus')
-    },
-    onBlur() {
-      this.isFocused = false
-      this.isDropdownOpen = false
-      this.$emit('blur')
-    },
+    localize(i18n.locale)
+
+    return {
+      isFocused,
+      isDropdownOpen,
+      hideDropdown,
+      setFocus,
+      onInput,
+      onFocus,
+      onBlur,
+    }
   },
-}
+})
 </script>

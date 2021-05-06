@@ -20,8 +20,10 @@
 </template>
 
 <script>
-export default {
-  name: 'VBreadcrumbs',
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  name: 'AtomicBreadcrumbs',
   props: {
     items: {
       type: Array,
@@ -29,5 +31,5 @@ export default {
       validate: (v) => !!v[0]?.title,
     },
   },
-}
+})
 </script>

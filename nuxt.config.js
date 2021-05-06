@@ -127,6 +127,9 @@ module.exports = {
     // 'nuxt-build-optimisations',
     // https://motion.vueuse.org
     // 'nuxt-use-motion',
+    // https://vite.nuxtjs.org/
+    // wait for pr https://github.com/nuxt/vite/pull/127
+    // 'nuxt-vite',
   ],
   privateRuntimeConfig: {
     VK_CLIENT_ID,

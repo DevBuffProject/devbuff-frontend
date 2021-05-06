@@ -46,17 +46,15 @@ export default {
 }
 </script>
 
-<style lang="scss" module>
-.Indicator {
-  &::after {
-    position: absolute;
-    content: '';
-    width: inherit;
-    height: inherit;
-    background: inherit;
-    border-radius: inherit;
-    animation: ping 3s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
+<style module>
+.Indicator::after {
+  position: absolute;
+  content: '';
+  width: inherit;
+  height: inherit;
+  background: inherit;
+  border-radius: inherit;
+  animation: ping 3s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
 @keyframes ping {

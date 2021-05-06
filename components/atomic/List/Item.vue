@@ -1,13 +1,13 @@
 <template>
-$END$
+  <li class="px-4 py-2" v-bind="$attrs" v-on="$listeners">
+    <slot />
+  </li>
 </template>
 
 <script>
-export default {
-name: "Item"
-}
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  name: 'AtomicListItem',
+})
 </script>
-
-<style scoped>
-
-</style>

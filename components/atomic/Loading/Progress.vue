@@ -1,7 +1,7 @@
 <template>
-  <div class="progress h-px relative overflow-hidden bg-purple-500">
-    <div class="progress__bar progress__bar1" />
-    <div class="progress__bar progress__bar2" />
+  <div :class="[$style.Progress, 'h-px relative overflow-hidden']">
+    <div :class="[$style.Bar, $style.Bar1]" />
+    <div :class="[$style.Bar, $style.Bar2]" />
   </div>
 </template>
 
@@ -11,35 +11,34 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.progress {
+<style module>
+.Progress {
   --progress-time: 3s;
 
   height: 1px;
   position: relative;
   overflow: hidden;
   animation: start 0.3s ease-in;
+}
+.Bar {
+  @apply bg-primary;
 
-  &__bar {
-    @apply bg-primary;
+  position: absolute;
+  transition: transform 0.2s linear;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
 
-    position: absolute;
-    transition: transform 0.2s linear;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 100%;
-  }
+.Bar1 {
+  animation: growBar1 var(--progress-time) infinite,
+    moveBar1 var(--progress-time) infinite;
+}
 
-  &__bar1 {
-    animation: growBar1 var(--progress-time) infinite,
-      moveBar1 var(--progress-time) infinite;
-  }
-
-  &__bar2 {
-    animation: growBar2 var(--progress-time) infinite,
-      moveBar2 var(--progress-time) infinite;
-  }
+.Bar2 {
+  animation: growBar2 var(--progress-time) infinite,
+    moveBar2 var(--progress-time) infinite;
 }
 @keyframes growBar1 {
   0% {

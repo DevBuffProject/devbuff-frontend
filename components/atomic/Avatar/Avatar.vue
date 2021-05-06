@@ -10,8 +10,9 @@
       ]"
       :style="{
         backgroundImage: `url(${avatar}?${random})`,
-        minWidth: size,
-        minHeight: size,
+        width: size,
+        height: size,
+        flex: `0 0 ${size}`,
       }"
     />
     <em
@@ -22,8 +23,10 @@
 </template>
 
 <script>
-export default {
-  name: 'VAvatar',
+import { defineComponent, computed } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  name: 'AtomicAvatar',
   props: {
     avatar: {
       type: String,
@@ -38,10 +41,10 @@ export default {
       default: '40px',
     },
   },
-  computed: {
-    random() {
-      return Math.ceil(Math.random() * 1000)
-    },
+  setup() {
+    const random = computed(() => Math.ceil(Math.random() * 1000))
+
+    return { random }
   },
-}
+})
 </script>

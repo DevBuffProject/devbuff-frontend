@@ -5,7 +5,7 @@
       'border-gray-300 dark:border-blueGray-600 dark:bg-blueGray-700',
     ]"
     style="border-width: 3px"
-    @click="toggleDarkMode"
+    @click="toggleColorScheme"
   >
     <div
       :class="[
@@ -24,18 +24,18 @@
 </template>
 
 <script>
-export default {
-  name: 'VColorModeSwitcher',
-  computed: {
-    isLightMode() {
-      return this.$colorMode.preference === 'light'
-    },
+import { defineComponent } from '@nuxtjs/composition-api'
+import { useAppearance } from '~/composes'
+
+export default defineComponent({
+  name: 'WidgetColorModeSwitcher',
+  setup() {
+    const { toggleColorScheme, isLightMode } = useAppearance()
+
+    return {
+      toggleColorScheme,
+      isLightMode,
+    }
   },
-  methods: {
-    toggleDarkMode() {
-      this.$colorMode.preference =
-        this.$colorMode.preference === 'dark' ? 'light' : 'dark'
-    },
-  },
-}
+})
 </script>

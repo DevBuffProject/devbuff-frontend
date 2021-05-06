@@ -35,8 +35,9 @@
           </div>
           <span
             class="text-xs font-medium uppercase text-gray-500 dark:text-blueGray-500"
-            >ctrl + (shift) + z</span
           >
+            ctrl + (shift) + z
+          </span>
         </div>
 
         <div
@@ -51,8 +52,6 @@
           ]"
         >
           <div class="v-editor__toolbar-tools">
-            <div ref="highlight" class="v-editor__toolbar-hightlight" />
-
             <div
               v-for="(section, index) in state.tools.list.inline"
               :key="index"
@@ -61,14 +60,9 @@
               <div
                 v-for="tool in section"
                 :key="tool.format"
-                ref="tools"
-                v-ripple
                 class="v-editor__tool"
                 :class="state.formats[tool.format] && 'v-editor__tool--active'"
-                :data-tool-name="tool.format"
                 @click.stop.prevent="toggleInlineFormat(tool.format)"
-                @mouseover="onToolMouseover"
-                @mouseout="onToolMouseout"
               >
                 <v-icon :icon="tool.icon" class="v-editor__tool-icon" />
               </div>
@@ -93,8 +87,6 @@
                 "
                 :data-tool-name="`${tool.format}-${tool.value}`"
                 @click="lineFormat(tool.format, tool.value)"
-                @mouseover.self="onToolMouseover"
-                @mouseout.self="onToolMouseout"
               >
                 <v-icon :icon="tool.icon" class="v-editor__tool-icon" />
               </div>
@@ -106,14 +98,9 @@
               <div
                 v-for="tool in state.tools.list.media"
                 :key="tool.format"
-                ref="tools"
-                v-ripple
                 class="v-editor__tool"
                 :class="state.formats[tool.type] && 'v-editor__tool--active'"
-                :data-tool-name="tool.type"
                 @click="insertMedia(tool.type)"
-                @mouseover="onToolMouseover"
-                @mouseout.self="onToolMouseout"
               >
                 <v-icon :icon="tool.icon" class="v-editor__tool-icon" />
               </div>
@@ -123,14 +110,9 @@
               <v-tooltip
                 v-for="tool in state.tools.list.embed"
                 :key="tool.format"
-                ref="tools"
-                v-ripple
-                :data-tool-name="tool.type"
                 class="v-editor__tool"
                 :class="state.formats[tool.type] && 'v-editor__tool--active'"
                 activate-by-click
-                @mouseover.self="onToolMouseover"
-                @mouseout.self="onToolMouseout"
               >
                 <v-icon :icon="tool.icon" class="v-editor__tool-icon" />
 
@@ -179,8 +161,6 @@ import { required as veeRuleRequired } from 'vee-validate/dist/rules'
 import { extend as veeExtend, localize as veeLocalize } from 'vee-validate'
 import 'highlight.js/styles/atom-one-dark.css'
 
-let highlightTimeout = 0
-
 veeExtend('quillRequired', { ...veeRuleRequired })
 veeLocalize({
   en: { messages: { quillRequired: "Text can't be empty" } },
@@ -215,11 +195,9 @@ export default {
     quill: null,
     state: {
       historyMove: false,
-      toolHover: false,
       text: '',
       formats: {},
       tools: {
-        positions: {},
         list: {
           inline: [
             [
@@ -257,10 +235,8 @@ export default {
     },
   }),
   watch: {
-    'state.text': {
-      handler(t) {
-        this.validate()
-      },
+    'state.text'() {
+      this.validate()
     },
   },
 
@@ -293,7 +269,6 @@ export default {
       }
 
       this.quill.blur()
-      this.computeToolsPositions()
     },
     undo() {
       this.quill.history.undo()
@@ -301,21 +276,7 @@ export default {
     redo() {
       this.quill.history.redo()
     },
-    computeToolsPositions() {
-      const tools = this.$refs.tools
-
-      tools.forEach((t) => {
-        const tool = t.$el || t
-        const toolName = tool.getAttribute('data-tool-name')
-        const width = tool.offsetWidth
-        const height = tool.offsetHeight
-        const left = tool.offsetLeft > 0 ? tool.offsetLeft - 1 : tool.offsetLeft
-
-        this.state.tools.positions[toolName] = { width, height, left }
-      })
-    },
     validate() {
-      console.log('VALIDATE', this.state.text)
       setTimeout(this.$refs.validator.validate)
     },
     updateState() {
@@ -383,34 +344,6 @@ export default {
     },
     onTextChange() {
       this.state.text = this.quill.getText().trim()
-    },
-    onToolMouseover(e) {
-      this.state.toolHover = true
-      const highlight = this.$refs.highlight
-      const toolName = e.target.getAttribute('data-tool-name')
-
-      if (!toolName) {
-        return
-      }
-
-      const { width, height, left } = this.state.tools.positions[toolName]
-
-      highlight.style.width = `${width}px`
-      highlight.style.height = `${height}px`
-      highlight.style.transform = `translate(${left}px)`
-      this.$refs.toolbar.classList.add('v-editor__toolbar--hover')
-      setTimeout(
-        () => this.$refs.toolbar.classList.add('v-editor__toolbar--anim'),
-        30
-      )
-      clearTimeout(highlightTimeout)
-    },
-    onToolMouseout(e) {
-      this.$refs.toolbar.classList.remove('v-editor__toolbar--hover')
-      highlightTimeout = setTimeout(
-        () => this.$refs.toolbar.classList.remove('v-editor__toolbar--anim'),
-        70
-      )
     },
   },
 }

@@ -9,16 +9,27 @@
       v-bind="$attrs"
       v-on="$listeners"
     >
-      <template v-if="$slots.bottom">
+      <template v-if="$slots.bottom || triangle">
         <em
           v-if="$colorMode.preference === 'dark'"
           :class="[
             $style.Triangle_border,
             'border-gray-300 dark:border-blueGray-700 dark:bg-blueGray-900',
+            {
+              'top-[100%]': triangle === 'bottom' || $slots.bottom,
+              'top-[-16px] transform rotate-[180deg]': triangle === 'top',
+            },
           ]"
         />
         <em
-          :class="[$style.Triangle, 'border-white dark:border-blueGray-900']"
+          :class="[
+            $style.Triangle,
+            'border-white dark:border-blueGray-900',
+            {
+              'top-[100%]': triangle === 'bottom' || $slots.bottom,
+              'top-[-14px] transform rotate-[180deg]': triangle === 'top',
+            },
+          ]"
         />
       </template>
       <div v-if="$slots.header">
@@ -47,9 +58,17 @@
 </template>
 
 <script>
-export default {
-  name: 'VCard',
-}
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  name: 'AtomicCard',
+  props: {
+    triangle: {
+      type: String,
+      default: '',
+    },
+  },
+})
 </script>
 
 <style module>
@@ -59,9 +78,8 @@ export default {
 /* this CS forms the triangles */
 .Triangle,
 .Triangle_border {
-  display: block;
   position: absolute;
-  top: 100%;
+  display: block;
   width: 0;
   height: 0;
   border-style: solid;

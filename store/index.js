@@ -24,13 +24,14 @@ export const actions = {
     if (accessToken && refreshToken) {
       try {
         await dispatch('auth/checkToken', accessToken)
+        await dispatch('auth/getUser')
       } catch (e) {
-        await dispatch('auth/refresh', refreshToken)
-      } finally {
         try {
-          await dispatch('auth/checkToken', accessToken)
+          await dispatch('auth/refresh', refreshToken)
           await dispatch('auth/getUser')
-        } catch (e) {}
+        } catch (e) {
+          dispatch('auth/reset')
+        }
       }
     } else {
       dispatch('auth/reset')

@@ -14,24 +14,3 @@
     />
   </div>
 </template>
-
-<script>
-export default {
-  name: 'VSkeletonParagraph',
-
-  props: {
-    rows: {
-      type: Number,
-      default: 3,
-    },
-  },
-}
-</script>
-
-<style lang="scss" scoped>
-.skeleton-paragraph {
-  &__line:not(:last-of-type) {
-    margin-bottom: 0.5rem;
-  }
-}
-</style>

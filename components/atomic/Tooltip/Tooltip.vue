@@ -60,37 +60,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.v-tooltip {
-  --tooltip-color: rgba(0, 0, 0, 0.9);
-
-  position: relative;
-
-  &__tip-triangle {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 5px 5px 5px;
-    border-color: transparent transparent var(--tooltip-color) transparent;
-    transform: translateX(-50%);
-  }
-
-  &__tip {
-    background-color: var(--tooltip-color);
-    display: flex;
-    align-items: center;
-    color: #fff;
-    position: absolute;
-    top: calc(100% + 10px);
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 0.5rem 1.5rem;
-    border-radius: 8px;
-    z-index: 99999999;
-  }
-}
-</style>

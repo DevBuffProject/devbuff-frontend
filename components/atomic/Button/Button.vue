@@ -3,11 +3,16 @@
     style="box-shadow: 0 2px 0 rgb(0 0 0 / 2%)"
     :class="[
       'px-6 overflow-hidden rounded relative',
-      'transform transition-all active:scale-95 border border-opacity-100',
+      'transform transition-all border border-opacity-100',
       isSmall ? 'py-0.5 text-sm' : 'py-1.5',
+      disabled && [
+        '!bg-gray-100 !border-opacity-0 !text-gray-400 focus:!ring-0 !transform-none !transition-none',
+        'dark:!bg-blueGray-700 dark:!text-blueGray-900',
+      ],
       (!type || type === 'muted') && [
-        'border-gray-300 hover:border-primary',
+        'border-gray-300 dark:border-blueGray-600 hover:border-primary',
         'focus:!ring !ring-primary-300 focus:outline-none focus:border-primary',
+        'active:bg-gray-200 dark:active:bg-blueGray-700',
       ],
       type === 'primary' && [
         'focus:!ring !ring-primary-300 focus:outline-none focus:border-primary-600',
@@ -55,15 +60,16 @@
 </template>
 
 <script>
-const TYPES = ['muted', 'primary', 'success', 'warning', 'danger']
+import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { types } from './enums'
 
-export default {
-  name: 'VButton',
+export default defineComponent({
+  name: 'AtomicButton',
   props: {
     type: {
       type: String,
       default: 'primary',
-      validate: (v) => TYPES.includes(v),
+      validate: (v) => types.includes(v),
     },
     isOutline: {
       type: Boolean,
@@ -81,14 +87,15 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  data: () => ({
-    TYPES,
-  }),
-  computed: {
-    isMuted() {
-      return this.type === 'muted'
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
-}
+  setup({ type }) {
+    const isMuted = computed(() => type === 'muted')
+
+    return { isMuted }
+  },
+})
 </script>

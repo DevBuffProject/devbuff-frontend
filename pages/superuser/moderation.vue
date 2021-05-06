@@ -124,10 +124,13 @@ export default {
         `${act === 'accept' ? 'Одобрить' : 'Удалить'} выделенные?`
       )
       if (accept)
-        this.$dialog.push(() => import('@/components/widget/Admin/Progress'), {
-          act,
-          ids: this.checked,
-        })
+        this.$dialog.push(
+          () => import('@/components/widget/Admin/Progress.vue'),
+          {
+            act,
+            ids: this.checked,
+          }
+        )
     },
     toggleCheckAll() {
       this.checked =

@@ -1,4 +1,4 @@
 export * from './useColors'
-export * from './useAuth'
+export * from './useUser'
 export * from './useLocale'
 export * from './useAppearance'

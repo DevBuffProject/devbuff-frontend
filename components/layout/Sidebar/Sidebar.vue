@@ -34,20 +34,29 @@
           <a
             :href="href"
             :class="[
-              'flex items-center rounded-full px-4 py-2 mb-2 cursor-pointer',
-              'transition-all hover:bg-gray-100 dark:hover:bg-blueGray-800',
-              'transform active:scale-95',
-              link.activeState !== false && isActive
-                ? 'text-primary'
-                : 'text-gray-900 dark:text-blueGray-300',
+              'flex items-center mb-2 cursor-pointer',
+              'transition-all transform active:scale-95 group',
             ]"
             @click="goNavigate($event, link.to, navigate)"
           >
-            <div class="mr-4 w-6 h-6 flex items-center justify-center">
-              <atomic-loading v-if="link.to === loadingRoute" />
-              <svg-icon v-else :name="link.icon" />
+            <div
+              :class="[
+                'flex items-center pr-4 pl-3 py-2 rounded-full group-hover:text-primary',
+                'transition-all group-hover:bg-primary group-hover:bg-opacity-10',
+                link.activeState !== false && isActive
+                  ? 'text-primary'
+                  : 'text-gray-900 dark:text-blueGray-300',
+              ]"
+            >
+              <div class="mr-4 w-6 h-6 flex items-center justify-center">
+                <atomic-loading-spinner
+                  v-if="link.to === loadingRoute"
+                  class="text-primary"
+                />
+                <svg-icon v-else :name="link.icon" />
+              </div>
+              <span class="text-md font-medium"> {{ link.title }} </span>
             </div>
-            <span class="text-md font-medium"> {{ link.title }} </span>
           </a>
         </nuxt-link>
         <div v-if="index < nav.length - 1" :key="index" class="mx-10 my-4">
@@ -65,9 +74,7 @@
           'transform active:scale-95',
         ]"
       >
-        <div>
-          <svg-icon name="outline/logout" class="mr-4" />
-        </div>
+        <svg-icon name="outline/logout" class="mr-4" />
         <span class="text-md font-medium">
           {{ $t('layouts.sidebar.logOut') }}
         </span>
@@ -77,73 +84,82 @@
 </template>
 
 <script>
+import {
+  defineComponent,
+  ref,
+  computed,
+  useRoute,
+  useRouter,
+} from '@nuxtjs/composition-api'
 import { mapActions } from 'vuex'
+import { useUser, useLocale } from '~/composes'
 
-export default {
-  data: () => ({
-    loadingRoute: {},
-  }),
-  computed: {
-    user() {
-      return this.$store.getters['auth/user']
-    },
-    nav() {
+export default defineComponent({
+  setup() {
+    const loadingRoute = ref({})
+    const router = useRouter()
+    const { query, ...route } = computed(useRoute)
+    const { user } = useUser()
+    const { t, localePath } = useLocale()
+    const nav = computed(() => {
       const main = [
         {
-          title: this.$t('components.header.overview'),
+          title: t`components.header.overview`,
           icon: 'outline/search',
-          to: this.localePath({ name: 'ideas' }),
+          to: localePath({ name: 'ideas' }),
           exact: true,
         },
       ]
-
       const adminNav = []
       const userNav = []
 
-      if (this.user) {
+      if (user) {
         main.push(
           {
-            title: this.$t('components.header.dashboard'),
+            title: t`components.header.dashboard`,
             icon: 'outline/collection',
-            to: this.localePath({ name: 's-dashboard' }),
+            to: localePath({ name: 's-dashboard' }),
             exact: true,
           },
           {
-            title: this.$t('layouts.sidebar.settings'),
+            title: t`layouts.sidebar.settings`,
             icon: 'outline/cog',
-            to: this.localePath({
-              ...this.$route,
-              query: { ...this.$route.query, act: 'settings' },
+            to: localePath({
+              ...route.value,
+              query: { ...query, act: 'settings' },
             }),
             activeState: false,
           }
         )
       }
-
-      if (this.user)
+      if (user)
         adminNav.push({
           title: 'Super user',
           icon: 'outline/shield-check',
-          to: this.localePath({ name: 'superuser' }),
+          to: localePath({ name: 'superuser' }),
         })
 
       return Object.values({ main, userNav, adminNav }).filter(
         (nav) => nav.length > 0
       )
-    },
-  },
-  created() {
-    this.$router.afterEach(() => {
-      this.loadingRoute = ''
     })
+    const goNavigate = async (event, route, next) => {
+      if (route.path === route) return event.preventDefault()
+      loadingRoute.value = route
+      await next(event)
+    }
+
+    router.afterEach(() => (loadingRoute.value = ''))
+
+    return {
+      nav,
+      user,
+      loadingRoute,
+      goNavigate,
+    }
   },
   methods: {
     ...mapActions('session', ['authorize']),
-    async goNavigate(event, route, next) {
-      if (this.$route.path === route) return event.preventDefault()
-      this.loadingRoute = route
-      await next(event)
-    },
   },
-}
+})
 </script>
