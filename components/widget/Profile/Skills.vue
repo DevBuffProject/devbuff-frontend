@@ -82,9 +82,7 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
 import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
-// eslint-disable-next-line no-unused-vars
 import { useUser } from '@/composes'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 
