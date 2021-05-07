@@ -28,6 +28,7 @@
                   v-model="skill.checked"
                   type="checkbox"
                   class="mr-2"
+                  @change="onChangeSkill(skill, null)"
                 />
                 <div>{{ skill.name }}</div>
               </label>
@@ -37,7 +38,7 @@
                   'px-4 py-1 transition-colors rounded',
                   'group-hover:bg-primary group-hover:bg-opacity-10 active:text-primary',
                 ]"
-                @click="nextSlide(null, skill.specializations)"
+                @click="nextSlide(skill, skill.specializations)"
               >
                 <svg-icon name="outline/cheveron-right" />
               </div>
@@ -69,6 +70,7 @@
                   v-model="specialist.checked"
                   type="checkbox"
                   class="mr-2"
+                  @change="onChangeSkill(specialist, skills)"
                 />
                 <div>{{ specialist.name }}</div>
               </label>
@@ -105,7 +107,7 @@
             >
               <label class="flex items-center w-full" @click.stop>
                 <input
-                  :id="'specialist' + framework.name"
+                  :id="'framework' + framework.name"
                   v-model="framework.checked"
                   type="checkbox"
                   class="mr-2"
@@ -128,6 +130,7 @@ import {
   defineComponent,
   ref,
   reactive,
+  watch,
 } from '@nuxtjs/composition-api'
 import { useUser } from '@/composes'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
@@ -145,7 +148,6 @@ export default defineComponent({
     const { user } = useUser()
     const swiperComponent = ref(null)
     const swiper = computed(() => swiperComponent.value?.$swiper)
-    const toSlide = (index) => swiper.value.slideTo(index)
     const allSkills = store.getters['skills/skills']
 
     const userSkill = user.value.skills
@@ -193,11 +195,12 @@ export default defineComponent({
     }
 
     const specialists = ref([])
-    const frameworks = ref([])
 
-    let context
+    const frameworks = ref([])
+    const context = []
+
     function nextSlide(rootData, currentData) {
-      context = rootData
+      context.push(rootData)
       if (specialists.value.length === 0) {
         // Current language slide
         specialists.value = currentData
@@ -206,7 +209,10 @@ export default defineComponent({
         // Current specialist slide
         frameworks.value = currentData
         swiper.value.slideNext()
+        console.log(currentData)
       }
+
+      console.log(context)
     }
 
     function prevSlide() {
@@ -217,23 +223,41 @@ export default defineComponent({
         specialists.value = []
         swiper.value.slidePrev()
       }
+      context.pop()
+    }
+
+    function onChangeSkill(target) {
+      if (target.checked) {
+        for (const contextItem of context) {
+          contextItem.checked = true
+        }
+      } else if (!target.checked) {
+        unCheckTargets(target)
+      }
+    }
+
+    function unCheckTargets(target) {
+      if (Array.isArray(target)) {
+        target.forEach((el) => unCheckTargets(el))
+      } else {
+        target.checked = false
+        for (const index in target) {
+          if (Array.isArray(target[index])) {
+            unCheckTargets(target[index])
+          }
+        }
+      }
     }
 
     const skills = reactive(JSON.parse(JSON.stringify(allSkills)))
 
-    function onChangeSkill(target, prevTarget) {
-      console.log('Data: ')
-      console.log(target.checked)
-      console.log(prevTarget)
-      console.log(context.checked)
-      console.log('----')
-
-      if (target.checked && !context.checked) {
-        console.log('Chage')
-        context.checked = true
-        // onChangeSkill(prevTarget, undefined)
-      }
-    }
+    watch(
+      () => skills,
+      (newSkills, prevSkills) => {
+        console.log('Changed')
+      },
+      { deep: true }
+    )
 
     return {
       swiperComponent,
@@ -244,7 +268,6 @@ export default defineComponent({
       frameworks,
       nextSlide,
       prevSlide,
-      toSlide,
     }
   },
 })
