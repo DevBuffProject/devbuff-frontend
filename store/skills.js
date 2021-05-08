@@ -12,6 +12,11 @@ export const actions = {
     commit('setSkills', skills)
     return skills
   },
+  async saveUserSkills({ commit }, skills) {
+    await this.$api.latest.patch('profile', {
+      skills,
+    })
+  },
 }
 
 export const getters = {
