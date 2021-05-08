@@ -28,9 +28,9 @@
                   v-model="skill.checked"
                   type="checkbox"
                   class="mr-2"
-                  @change="onChangeSkill(skill, null)"
+                  @change="onChangeSkill(skill)"
                 />
-                <div>{{ skill.name }}</div>
+                <div>{{ t(`languages.${skill.name}`, skill.name) }}</div>
               </label>
               <div
                 v-if="skill.specializations.length"
@@ -66,13 +66,20 @@
             >
               <label class="flex items-center w-full" @click.stop>
                 <input
-                  :id="'specialist' + specialist.name"
+                  :id="'specialist' + specialist.name + Math.random() * 1000"
                   v-model="specialist.checked"
                   type="checkbox"
                   class="mr-2"
-                  @change="onChangeSkill(specialist, skills)"
+                  @change="onChangeSkill(specialist)"
                 />
-                <div>{{ specialist.name }}</div>
+                <div>
+                  {{
+                    t(
+                      `specializations.${specialist.name}.title`,
+                      specialist.name
+                    )
+                  }}
+                </div>
               </label>
               <div
                 v-if="specialist.frameworks.length"
@@ -111,7 +118,7 @@
                   v-model="framework.checked"
                   type="checkbox"
                   class="mr-2"
-                  @change="onChangeSkill(framework, specialists)"
+                  @change="onChangeSkill(framework)"
                 />
                 <div>{{ framework.name }}</div>
               </label>
@@ -119,6 +126,7 @@
           </atomic-list>
         </swiper-slide>
       </swiper>
+      <atomic-button @click="save"> Save </atomic-button>
     </div>
   </div>
 </template>
@@ -130,7 +138,6 @@ import {
   defineComponent,
   ref,
   reactive,
-  watch,
 } from '@nuxtjs/composition-api'
 import { useUser } from '@/composes'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
@@ -209,10 +216,7 @@ export default defineComponent({
         // Current specialist slide
         frameworks.value = currentData
         swiper.value.slideNext()
-        console.log(currentData)
       }
-
-      console.log(context)
     }
 
     function prevSlide() {
@@ -232,32 +236,72 @@ export default defineComponent({
           contextItem.checked = true
         }
       } else if (!target.checked) {
-        unCheckTargets(target)
+        if (target.specializations !== undefined) {
+          unCheckTargets(target.specializations)
+        } else if (target.frameworks !== undefined) {
+          unCheckTargets(target.frameworks)
+        }
       }
     }
 
     function unCheckTargets(target) {
       if (Array.isArray(target)) {
-        target.forEach((el) => unCheckTargets(el))
+        for (const value of target) {
+          unCheckTargets(value)
+        }
       } else {
         target.checked = false
-        for (const index in target) {
-          if (Array.isArray(target[index])) {
-            unCheckTargets(target[index])
-          }
-        }
       }
     }
 
     const skills = reactive(JSON.parse(JSON.stringify(allSkills)))
 
-    watch(
-      () => skills,
-      (newSkills, prevSkills) => {
-        console.log('Changed')
-      },
-      { deep: true }
-    )
+    function save() {
+      prevSlide()
+      prevSlide()
+      const skillsData = []
+
+      for (const language of skills) {
+        if (!language.checked) {
+          continue
+        }
+        const languageObj = {
+          name: language.name,
+          levelKnowledge: 'newbie',
+          specializations: [],
+        }
+        skillsData.push(languageObj)
+        for (const specialization of language.specializations) {
+          if (!specialization.checked) {
+            continue
+          }
+          const specializationObj = {
+            name: specialization.name,
+            frameworks: [],
+          }
+
+          languageObj.specializations.push(specializationObj)
+          for (const technology of specialization.frameworks) {
+            if (!technology.checked) {
+              continue
+            }
+            specializationObj.frameworks.push({
+              name: technology.name,
+              levelKnowledge: 'newbie',
+            })
+          }
+        }
+      }
+      store.dispatch('skills/saveUserSkills', skillsData)
+    }
+
+    function t(str, fallbackStr) {
+      return this.$t && this.$te
+        ? this.$te(str)
+          ? this.$t(str)
+          : fallbackStr
+        : fallbackStr || str
+    }
 
     return {
       swiperComponent,
@@ -268,6 +312,8 @@ export default defineComponent({
       frameworks,
       nextSlide,
       prevSlide,
+      save,
+      t,
     }
   },
 })
