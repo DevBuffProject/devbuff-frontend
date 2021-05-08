@@ -1,7 +1,6 @@
 <template>
   <div class="">
     <div class="">
-      {{ skills }}
       <swiper
         ref="swiperComponent"
         :options="{
@@ -236,11 +235,7 @@ export default defineComponent({
           contextItem.checked = true
         }
       } else if (!target.checked) {
-        if (target.specializations !== undefined) {
-          unCheckTargets(target.specializations)
-        } else if (target.frameworks !== undefined) {
-          unCheckTargets(target.frameworks)
-        }
+        unCheckTargets(target)
       }
     }
 
@@ -251,6 +246,11 @@ export default defineComponent({
         }
       } else {
         target.checked = false
+        if (target.specializations !== undefined) {
+          unCheckTargets(target.specializations)
+        } else if (target.frameworks !== undefined) {
+          unCheckTargets(target.frameworks)
+        }
       }
     }
 
