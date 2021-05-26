@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/**
+ * This injects Tailwind's base styles, which is a combination of
+ * Normalize.css and some additional base styles.
+ */
+@import '../node_modules/tailwindcss/base.css';
+@import '../node_modules/tailwindcss/components.css';
+@import '../node_modules/tailwindcss/utilities.css';
+@import '../node_modules/tailwindcss/screens.css';
+
+:root {
+  --font-family: 'Rubik';
+  --base-transition: cubic-bezier(.28, .98, .44, 1);
+}
+
+* {
+  outline: none !important;
+}
+
+body {
+  @apply text-gray-900 dark:text-blueGray-100 bg-gray-50 dark:bg-blueGray-900 bg-opacity-90;
+  margin: 0;
+  user-select: none;
+  font-family: var(--font-family);
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 400;
+  font-variant: no-common-ligatures slashed-zero;
+  -webkit-font-smoothing: antialiased;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+
+@supports (overflow: overlay) {
+  html {
+    overflow: overlay;
+  }
+}
+
+@layer utilities {
+  .gradientLaguna {
+    --tw-gradient-from: #007CF0;
+    --tw-gradient-to: #00DFD8;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  }
+  .text-gradient-laguna {
+    --tw-gradient-from: #007CF0;
+    --tw-gradient-to: #00DFD8;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    background: linear-gradient(var(--tw-gradient-stops));
+    color: var(--tw-gradient-from);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gradientLuna {
+    --tw-gradient-from: #C781FF;
+    --tw-gradient-to: #3C72FF;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  }
+
+  .text-gradient-luna {
+    --tw-gradient-from: #C781FF;
+    --tw-gradient-to: #3C72FF;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    background: linear-gradient(var(--tw-gradient-stops));
+    color: var(--tw-gradient-from);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+
+  .gradientAutumn {
+    --tw-gradient-from: #FF4D4D;
+    --tw-gradient-to: #F9CB28;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  }
+
+  .text-gradient-autumn {
+    --tw-gradient-from: #FF4D4D;
+    --tw-gradient-to: #F9CB28;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    background: linear-gradient(var(--tw-gradient-stops));
+    color: var(--tw-gradient-from);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+@layer components {
+  h1 {
+    @apply text-4xl font-semibold mb-8 mt-4;
+  }
+  h2 {
+    @apply text-3xl font-semibold mb-6 mt-4;
+  }
+  h3 {
+    @apply text-2xl font-semibold mb-4 mt-4;
+  }
+  h4 {
+    @apply text-xl font-semibold mb-4 mt-4;
+  }
+}
