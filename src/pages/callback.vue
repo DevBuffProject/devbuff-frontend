@@ -13,17 +13,19 @@
 import { defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuth } from '../composes/core'
+import { getUser } from '../middlewares'
 
 export default defineComponent({
   name: 'Callback',
   setup() {
     const route = useRoute()
-    const { getTokens, tokens } = useAuth()
+    const { auth, tokens } = useAuth()
     const continueAuth = async () => {
-      await getTokens({
+      await auth({
         code: route.query?.code,
         provider: route.params.provider,
       })
+      await getUser()
     }
 
     return {

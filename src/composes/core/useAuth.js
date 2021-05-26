@@ -1,7 +1,6 @@
 import { useCookies } from '@vueuse/integrations'
 import { useApi } from './useApi'
 import { computed } from 'vue'
-import { not } from '@vueuse/core'
 
 const PROVIDERS = {
   GitHub: 'GitHub',
@@ -9,7 +8,7 @@ const PROVIDERS = {
 }
 
 const { request } = useApi()
-const cookies = useCookies([])
+const cookies = useCookies()
 
 const tokens = computed(() => ({
   accessToken: cookies.get('access_token'),
@@ -25,7 +24,7 @@ const initAuth = (provider) => {
     import.meta.env.VITE_API_BASE_URL
   }/oAuth/${provider}`
 }
-const getTokens = async ({ code, provider }) => {
+const auth = async ({ code, provider }) => {
   if (!PROVIDERS[provider]) throw Error(`Unknown auth provider "${provider}"`)
   const credentials = new URLSearchParams()
   credentials.set('code', code)
@@ -38,8 +37,8 @@ const getTokens = async ({ code, provider }) => {
   saveTokens(response.data)
   return response
 }
-const refreshTokens = async () => {
-  if (not(isLoggedIn) || not(isLoggedIn)) return false
+const refresh = async () => {
+  if (!isLoggedIn.value) return false
 
   const credentials = new URLSearchParams()
   credentials.set('refresh_token', tokens.value.refreshToken)
@@ -55,10 +54,8 @@ const saveTokens = ({ expires_in, access_token, refresh_token }) => {
     new Date().setSeconds(now.getSeconds() + expires_in),
   )
   const refreshExpires = new Date(new Date().setMonth(now.getMonth() + 1))
-  const cookieBaseOptions = {
-    SameSite: 'Lax',
-    path: '/',
-  }
+  const cookieBaseOptions = { SameSite: 'Lax', path: '/' }
+
   cookies.set('access_token', access_token, {
     ...cookieBaseOptions,
     expires: tokenExpires,
@@ -68,7 +65,7 @@ const saveTokens = ({ expires_in, access_token, refresh_token }) => {
     expires: refreshExpires,
   })
 }
-const checkAuth = async () => {
+const check = async () => {
   const credentials = new URLSearchParams()
   credentials.set('token', tokens.value.accessToken)
   const response = await request({
@@ -79,13 +76,18 @@ const checkAuth = async () => {
 
   return response.data
 }
+const logout = () => {
+  cookies.remove('access_token')
+  cookies.remove('refresh_token')
+}
 
 export const useAuth = () => ({
   PROVIDERS,
   tokens,
   isLoggedIn,
   initAuth,
-  getTokens,
-  refreshTokens,
-  checkAuth,
+  auth,
+  refresh,
+  check,
+  logout,
 })

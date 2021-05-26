@@ -71,7 +71,7 @@
           </a>
         </router-link>
       </template>
-      <template v-if="isAuth">
+      <template v-if="isLoggedIn">
         <AtomicDelimiter class="mx-10 my-4" />
         <div
           :class="[
@@ -79,6 +79,7 @@
             'hover:bg-danger text-danger hover:bg-opacity-10 focus:bg-danger focus:bg-opacity-10',
           ]"
           v-focusable.indexOnly
+          @click="logout"
         >
           <LogOutIcon class="mr-4" />
           <span class="text-md font-medium"> log out </span>
@@ -107,7 +108,7 @@ import {
 
 export default defineComponent({
   setup() {
-    const { initAuth, PROVIDERS: AuthProviders, isLoggedIn } = useAuth()
+    const { initAuth, logout, PROVIDERS: AuthProviders, isLoggedIn } = useAuth()
     const { user } = useUser()
     const loadingRoute = ref({})
     const router = useRouter()
@@ -154,6 +155,7 @@ export default defineComponent({
       nav,
       loadingRoute,
       initAuth,
+      logout,
       goNavigate,
     }
   },

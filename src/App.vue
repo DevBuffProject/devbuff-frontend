@@ -8,7 +8,7 @@
           <template v-if="Component">
             <transition name="fade" mode="out-in">
               <suspense>
-                <div :key="route">
+                <div>
                   <div>
                     <AtomicBreadcrumbs :key="route.name" :items="breadcrumbs" />
                     <h1

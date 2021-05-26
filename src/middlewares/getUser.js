@@ -4,14 +4,21 @@ import { useGlobalState } from '../store'
 
 const state = useGlobalState()
 const { getUser } = useUser()
-const { isLoggedIn, checkAuth, refreshTokens } = useAuth()
+const { isLoggedIn, check, refresh, logout } = useAuth()
 
-export default useThrottleFn(async (to, from, next) => {
-  if (!isLoggedIn.value) return next()
-  const check = await checkAuth()
-  if (!check.active) await refreshTokens()
-  const { data: user } = await getUser()
-  state.value.user = user
+export default useThrottleFn(async () => {
+  if (!isLoggedIn.value) return false
 
-  next()
+  try {
+    const status = await check()
+
+    if (!status.active) await refresh()
+
+    const { data: user } = await getUser()
+    state.value.user = user
+  } catch (e) {
+    console.log('remove', e)
+    state.value.user = {}
+    logout()
+  }
 }, 1000 * 5)
