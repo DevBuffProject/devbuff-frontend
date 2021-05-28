@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { useUser } from '../../../../composes/core'
+
 export default {
   name: 'WidgetDashboardUserCard',
   props: {
@@ -75,7 +77,8 @@ export default {
   },
   computed: {
     avatar() {
-      return `${import.meta.VITE_API_BASE_URL}/photo/profile/${this.userId}`
+      const { getUserProfileUrl } = useUser()
+      return getUserProfileUrl(this.userId)
     },
   },
 }
