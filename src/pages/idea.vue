@@ -6,7 +6,7 @@
         <div class="mr-6 mb-4">
           <WidgetUser
             avatar-gradient-border
-            avatar="//source.unsplash.com/random"
+            :avatar="getUserProfileUrl(idea.ownerIdea.id)"
             :firstname="idea.ownerIdea.firstName"
             :lastname="idea.ownerIdea.lastName"
             :username="idea.ownerIdea.userName"
@@ -42,7 +42,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useIdea } from '../composes/core'
+import { useIdea, useUser } from '../composes/core'
 import { useTimeAgo, useTitle } from '@vueuse/core'
 
 export default defineComponent({
@@ -55,6 +55,7 @@ export default defineComponent({
   },
   async setup(props) {
     const { idea, getIdea } = useIdea(props.id)
+    const { getUserProfileUrl } = useUser()
     await getIdea()
 
     useTitle(`${idea.value.name} - Devbuff`)
@@ -63,6 +64,7 @@ export default defineComponent({
     return {
       idea,
       publishedAgo,
+      getUserProfileUrl,
     }
   },
 })

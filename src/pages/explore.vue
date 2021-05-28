@@ -15,8 +15,14 @@
         >
           <template #user>
             <div class="flex items-center mt-3">
-              <AtomicAvatar class="mr-3" size="24px" />
-              <div class="mt-px">User Name</div>
+              <AtomicAvatar
+                class="mr-3"
+                size="24px"
+                :avatar="getUserProfileUrl(idea.ownerIdea.id)"
+              />
+              <div class="mt-px">
+                {{ idea.ownerIdea.firstName }} {{ idea.ownerIdea.lastName }}
+              </div>
             </div>
           </template>
         </WidgetIdeasCard>
@@ -50,7 +56,7 @@ import {
   useThrottleFn,
   useTitle,
 } from '@vueuse/core'
-import { useIdeas } from '../composes/core'
+import { useIdeas, useUser } from '../composes/core'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
@@ -68,7 +74,6 @@ export default defineComponent({
         },
       })
     }
-
     const router = useRouter()
     const route = inject('backgroundRoute')
     const { ideas, isLoading, getIdeas } = useIdeas()
@@ -79,10 +84,12 @@ export default defineComponent({
       async () => await getIdeas(filter),
       500,
     )
+
+    const { getUserProfileUrl } = useUser()
     throttledGetIdeas()
     watch(filter, throttledGetIdeas)
 
-    return { ideas, filter, isLoading, route }
+    return { ideas, filter, isLoading, route, getUserProfileUrl }
   },
 })
 </script>
