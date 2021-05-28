@@ -97,7 +97,6 @@ export default defineComponent({
     },
   },
   setup(props, context) {
-    const styles = useCssModule()
     const { slots } = context
     const languages = computed(() =>
       props.specialists
@@ -118,7 +117,6 @@ export default defineComponent({
 
     return {
       slots,
-      styles,
       languages,
       technologies,
     }

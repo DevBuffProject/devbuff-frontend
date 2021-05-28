@@ -64,7 +64,6 @@
 <script>
 import {
   defineComponent,
-  watch,
   ref,
   onErrorCaptured,
   onMounted,
@@ -89,24 +88,18 @@ export default defineComponent({
       emit('onClose') || window.removeEventListener('keyup', onEscapeClose)
 
     onErrorCaptured(() => {
-      console.log('ERROR')
       set(isError, true)
     })
 
     onMounted(() => {
+      document.body.style.overflow = 'hidden'
       window.addEventListener('keyup', onEscapeClose)
     })
 
     onUnmounted(() => {
       window.removeEventListener('keyup', onEscapeClose)
+      document.body.style.overflow = overflow
     })
-
-    watch(
-      () => props.visible,
-      () => {
-        document.body.style.overflow = props.visible ? 'hidden' : overflow
-      },
-    )
 
     return {
       slots,

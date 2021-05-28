@@ -31,15 +31,39 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 1s ease;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s var(--base-transition);
 }
-
-.fade-enter-from,
-.fade-leave-to {
+.fade-enter-from, .fade-leave-to {
   opacity: 0;
 }
+
+.slide-enter-active, .slide-leave-active {
+  transition: all .3s var(--base-transition);
+}
+.slide-enter-from {
+  opacity: 0;
+  transform: translateY(-10%);
+}
+.slide-leave-to {
+  opacity: 0;
+  transform: translateY(10%);
+}
+
+/*.slide-enter-active, .slide-leave-active {*/
+/*  transition: transform 6000ms, opacity 100ms;*/
+/*}*/
+/*.slide-enter-from {*/
+/*  transform: translateY(-5%);*/
+/*  opacity: 0;*/
+/*}*/
+/*.slide-enter-to {*/
+/*  transform: translateY(0);*/
+/*}*/
+/*.slide-leave-to {*/
+/*  transform: translateY(5%);*/
+/*  opacity: 0;*/
+/*}*/
 
 
 @supports (overflow: overlay) {

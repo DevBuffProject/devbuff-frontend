@@ -9,15 +9,13 @@
             <transition name="fade" mode="out-in">
               <suspense>
                 <div>
-                  <div>
-                    <AtomicBreadcrumbs :key="route.name" :items="breadcrumbs" />
-                    <h1
-                      v-motion="'title'"
-                      :initial="{ opacity: 0, y: -10 }"
-                      :enter="{ opacity: 1, y: 0 }"
-                    >
-                      {{ route.meta.name }}
-                    </h1>
+                  <div class="relative h-[100px]">
+                    <AtomicBreadcrumbs :items="breadcrumbs" />
+                    <transition name="slide">
+                      <div :key="route.name" class="absolute">
+                        <h1>{{ route.meta.name }}</h1>
+                      </div>
+                    </transition>
                   </div>
                   <component :is="Component" />
                 </div>
@@ -62,11 +60,10 @@ import {
   computed,
   shallowRef,
   onErrorCaptured,
-  inject,
 } from 'vue'
-import { get, set, useDebounceFn, useThrottleFn, useTitle } from '@vueuse/core'
-import { useRoute, useRouter } from 'vue-router'
-import { useAuth, useUser } from './composes/core'
+import { set, useTitle } from '@vueuse/core'
+import { useRouter } from 'vue-router'
+import { useCookies } from '@vueuse/integrations'
 
 export default defineComponent({
   setup() {
@@ -74,7 +71,7 @@ export default defineComponent({
 
     const router = useRouter()
     const renderRoute = shallowRef({
-      matched: [],
+      matched: [], // fix vue-router:
     }) // TODO: rename
     const dialogRoute = shallowRef(null)
     const isDialog = ref(false)
@@ -112,7 +109,6 @@ export default defineComponent({
       dialogRoute,
       breadcrumbs,
       isError,
-      // appRoute,
       back,
     }
   },

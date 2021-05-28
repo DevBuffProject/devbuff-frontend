@@ -8,12 +8,17 @@ const PROVIDERS = {
 }
 
 const { request } = useApi()
-const cookies = useCookies()
+const cookies = useCookies(['access_token', 'refresh_token'], {
+  autoUpdateDependencies: true,
+})
+const cookieBaseOptions = { SameSite: 'Lax', path: '/' }
 
-const tokens = computed(() => ({
-  accessToken: cookies.get('access_token'),
-  refreshToken: cookies.get('refresh_token'),
-}))
+const tokens = computed(() => {
+  return {
+    accessToken: cookies.get('access_token'),
+    refreshToken: cookies.get('refresh_token'),
+  }
+})
 const isLoggedIn = computed(
   () => !!(tokens.value.accessToken || tokens.value.refreshToken),
 )
@@ -28,7 +33,7 @@ const auth = async ({ code, provider }) => {
   if (!PROVIDERS[provider]) throw Error(`Unknown auth provider "${provider}"`)
   const credentials = new URLSearchParams()
   credentials.set('code', code)
-  credentials.set('grant_type', provider.toLowerCase() + '_oauth')
+  credentials.set('grant_type', `${provider.toLowerCase()}_oauth`)
   const response = await request({
     url: '/oAuth',
     method: 'post',
@@ -54,8 +59,6 @@ const saveTokens = ({ expires_in, access_token, refresh_token }) => {
     new Date().setSeconds(now.getSeconds() + expires_in),
   )
   const refreshExpires = new Date(new Date().setMonth(now.getMonth() + 1))
-  const cookieBaseOptions = { SameSite: 'Lax', path: '/' }
-
   cookies.set('access_token', access_token, {
     ...cookieBaseOptions,
     expires: tokenExpires,
@@ -77,8 +80,8 @@ const check = async () => {
   return response.data
 }
 const logout = () => {
-  cookies.remove('access_token')
-  cookies.remove('refresh_token')
+  cookies.remove('access_token', cookieBaseOptions)
+  cookies.remove('refresh_token', cookieBaseOptions)
 }
 
 export const useAuth = () => ({

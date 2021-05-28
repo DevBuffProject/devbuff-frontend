@@ -31,6 +31,15 @@ export default [
     component: () => import('./pages/idea.vue'),
     props: true,
   },
+  {
+    name: 'superuser',
+    path: '/su',
+    component: () => import('./pages/superuser.vue'),
+    meta: {
+      name: 'Superuser',
+      breadcrumbs: ['home'],
+    },
+  },
 
   /* Emergency service routes */
   {

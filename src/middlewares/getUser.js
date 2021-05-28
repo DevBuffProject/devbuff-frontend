@@ -1,4 +1,3 @@
-import { useThrottleFn } from '@vueuse/core'
 import { useAuth, useUser } from '../composes/core'
 import { useGlobalState } from '../store'
 
@@ -6,7 +5,7 @@ const state = useGlobalState()
 const { getUser } = useUser()
 const { isLoggedIn, check, refresh, logout } = useAuth()
 
-export default useThrottleFn(async () => {
+export default async () => {
   if (!isLoggedIn.value) return false
 
   try {
@@ -15,10 +14,12 @@ export default useThrottleFn(async () => {
     if (!status.active) await refresh()
 
     const { data: user } = await getUser()
-    state.value.user = user
+    state.value.user = {
+      ...user,
+      avatar: `${import.meta.env.VITE_API_BASE_URL}/photo/profile/${user.id}`,
+    }
   } catch (e) {
-    console.log('remove', e)
     state.value.user = {}
     logout()
   }
-}, 1000 * 5)
+}

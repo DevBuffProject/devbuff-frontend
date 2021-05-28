@@ -28,8 +28,8 @@ export default defineComponent({
 
 <style module>
 .Loading {
-  width: 1em;
-  height: 1em;
+  width: 20px;
+  height: 20px;
   animation: spin 1s linear infinite;
   min-width: 20px;
   min-height: 20px;

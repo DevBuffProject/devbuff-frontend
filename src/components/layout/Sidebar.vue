@@ -105,11 +105,13 @@ import {
   SettingsIcon,
   ShieldIcon,
 } from '@iconicicons/vue3'
+import { useGlobalState } from '../../store'
 
 export default defineComponent({
   setup() {
     const { initAuth, logout, PROVIDERS: AuthProviders, isLoggedIn } = useAuth()
-    const { user } = useUser()
+    const state = useGlobalState()
+    const user = state.value.user
     const loadingRoute = ref({})
     const router = useRouter()
     const nav = computed(() =>

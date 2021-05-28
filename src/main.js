@@ -1,18 +1,17 @@
-import { computed, createApp, provide, ref, shallowRef } from 'vue'
-import { createRouter, createWebHistory, useRoute } from 'vue-router'
+import { createApp, defineAsyncComponent } from 'vue'
+import { createRouter, createWebHistory } from 'vue-router'
 import { MotionPlugin } from '@vueuse/motion'
 import { useQueryString } from './composes/utils'
-import { getUser } from './middlewares'
+import { createMiddleware, getUser } from './middlewares'
+import loadingComponent from './components/LoadingScreen.vue'
 import focusable from './app/directives/focusable'
 import mitt from 'mitt'
 import App from './App.vue'
 import routes from './routes'
 import './styles.css'
-import { set } from '@vueuse/core'
 
 const qs = useQueryString()
 const emitter = mitt()
-const app = createApp(App)
 const router = createRouter({
   routes,
   history: createWebHistory(),
@@ -20,35 +19,18 @@ const router = createRouter({
   stringifyQuery: qs.stringify,
 })
 
-router.beforeResolve(getUser)
-// const renderRoute = shallowRef({}) // TODO: rename
-// const dialogRoute = shallowRef(null)
-// const isDialog = ref(false)
+const loader = async () => {
+  await getUser()
 
-// router.beforeResolve((to, from, next) => {
-// set(isDialog, Boolean(to.params._isDialog))
-// set(dialogRoute, isDialog.value ? to : null)
-// Prevent reactive triggers if background route isn't changed
-// const bgRoute = isDialog.value ? from : to
-// if (renderRoute.value.fullPath !== bgRoute.fullPath) set(renderRoute, bgRoute)
-// next()
-// })
+  router.beforeResolve(createMiddleware(getUser, { throttle: 1000 * 5 }))
+  app.config.globalProperties.emitter = emitter
+  app.directive(focusable.name, focusable)
+  app.use(router)
+  app.use(MotionPlugin)
 
-app.config.globalProperties.emitter = emitter
+  return App
+}
 
-// const provideRoute = computed(() => ({
-//   main: renderRoute,
-//   dialog: dialogRoute,
-//   isDialog,
-// }))
-// provide('backgroundRoute', renderRoute)
-// provide('dialogRoute', dialogRoute)
-// provide('route', provideRoute)
+const app = createApp(defineAsyncComponent({ loader, loadingComponent }))
 
-app.directive(focusable.name, focusable)
-
-app.use(router)
-app.use(MotionPlugin)
 app.mount('#app')
-
-// console.log(useRoute())
