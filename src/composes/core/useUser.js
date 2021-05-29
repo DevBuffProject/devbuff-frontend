@@ -8,14 +8,19 @@ export const useUser = () => {
   const getUser = async (uuid = '') => {
     const response = await request(uuid ? `/profile/${uuid}` : '/profile')
     user.value = {
-      avatar: `${BASE_URL}/photo/profile/${response.data.id}`,
+      avatar: getUserProfileUrl(response.data.id),
       ...response.data,
     }
     return response
   }
 
+  const getUserProfileUrl = (uuid) => {
+    return `${BASE_URL}/photo/profile/${uuid}`
+  }
+
   return {
     user,
     getUser,
+    getUserProfileUrl,
   }
 }
