@@ -20,7 +20,7 @@
         class="p-5 mb-5 bg-primary bg-opacity-10 rounded-xl"
       >
         <AtomicButton
-          class="w-full"
+          class="w-full mb-4"
           v-focusable.indexOnly
           @click="initAuth(AuthProviders.GitHub)"
         >

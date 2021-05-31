@@ -4,7 +4,7 @@ const colors = require('tailwindcss/colors')
 // eslint-disable-next-line no-undef
 module.exports = {
   mode: 'jit',
-  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}', './index.html'],
   darkMode: 'class',
   theme: {
     colors: {

@@ -10,7 +10,6 @@ export default async () => {
 
   try {
     const status = await check()
-
     if (!status.active) await refresh()
 
     const { data: user } = await getUser()
@@ -18,6 +17,7 @@ export default async () => {
       ...user,
       avatar: `${import.meta.env.VITE_API_BASE_URL}/photo/profile/${user.id}`,
     }
+    console.log(state.value)
   } catch (e) {
     state.value.user = {}
     logout()

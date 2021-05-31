@@ -26,6 +26,7 @@ specifiers:
   tailwindcss: ^2.1.2
   vite: ^2.3.3
   vite-plugin-components: ^0.9.1
+  vite-plugin-fonts: ^0.2.2
   vue: ^3.0.5
   vue-router: ^4.0.8
 
@@ -59,6 +60,7 @@ devDependencies:
   prettier: 2.3.0
   tailwindcss: 2.1.2_797cfc3ceddb49f111b184f6879a433f
   vite: 2.3.3
+  vite-plugin-fonts: 0.2.2_vite@2.3.3
 
 packages:
 
@@ -2142,6 +2144,14 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: false
+
+  /vite-plugin-fonts/0.2.2_vite@2.3.3:
+    resolution: {integrity: sha512-fhzhsrTiuzlDjSO6g5sV5EVIIvbb8lmsaIY6eUTBM4lcF55x40UBpHrcyvNwIhQG211g0lu83XC7oZlkmvdkMA==}
+    peerDependencies:
+      vite: ^2.0.0
+    dependencies:
+      vite: 2.3.3
+    dev: true
 
   /vite/2.3.3:
     resolution: {integrity: sha512-eO1iwRbn3/BfkNVMNJDeANAFCZ5NobYOFPu7IqfY7DcI7I9nFGjJIZid0EViTmLDGwwSUPmRAq3cRBbO3+DsMA==}

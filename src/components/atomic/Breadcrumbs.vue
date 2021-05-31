@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center">
-    <template v-for="(item, index) in items" :key="index">
+    <template v-for="(item, index) in items" :key="item.title">
       <component
         :is="item.to && index < items.length - 1 ? 'router-link' : 'span'"
         :class="[index < items.length - 1 && 'text-primary', 'focusable']"
@@ -11,7 +11,7 @@
       </component>
       <ChevronRightIcon
         v-if="index < items.length - 1"
-        class="mx-0.5 text-gray-300 dark:text-blueGray-500"
+        class="mx-0.5 -my-2 text-gray-300 dark:text-blueGray-500"
       />
     </template>
   </div>

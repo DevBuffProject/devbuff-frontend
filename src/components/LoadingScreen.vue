@@ -1,9 +1,12 @@
 <template>
-  <div class="h-screen w-screen flex flex-col justify-center items-center">
-    <div class="w-[80px] h-[80px] p-4 rounded-full">
-      <img src="/icon.png" alt="logo" class="w-full" />
-    </div>
-  </div>
+  <AtomicOverlay
+    visible
+    hide-controls
+    transparent
+    class="backdrop-filter backdrop-blur-[10px]"
+  >
+    <img src="/images/icon.png" alt="logo" class="w-[60px]" />
+  </AtomicOverlay>
 </template>
 
 <script>

@@ -2,10 +2,8 @@ export default [
   {
     name: 'home',
     path: '/',
-    component: () => import('./pages/index.vue'),
-    meta: {
-      name: 'Main',
-    },
+    redirect: '/explore',
+    meta: { name: 'Main' },
   },
   {
     name: 'explore',
@@ -22,7 +20,7 @@ export default [
     component: () => import('./pages/dashboard.vue'),
     meta: {
       name: 'Dashboard',
-      breadcrumbs: ['home'],
+      breadcrumbs: ['home', 'explore'],
     },
   },
   {

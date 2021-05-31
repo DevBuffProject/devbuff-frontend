@@ -8,7 +8,6 @@ import focusable from './app/directives/focusable'
 import mitt from 'mitt'
 import App from './App.vue'
 import routes from './routes'
-import './styles.css'
 
 const qs = useQueryString()
 const emitter = mitt()
@@ -17,12 +16,17 @@ const router = createRouter({
   history: createWebHistory(),
   parseQuery: qs.parse,
   stringifyQuery: qs.stringify,
+  scrollBehavior(to, from, savedPosition) {
+    console.log(savedPosition, from)
+    return savedPosition
+  },
 })
 
 const loader = async () => {
   await getUser()
 
   router.beforeResolve(createMiddleware(getUser, { throttle: 1000 * 5 }))
+
   app.config.globalProperties.emitter = emitter
   app.directive(focusable.name, focusable)
   app.use(router)
@@ -31,6 +35,5 @@ const loader = async () => {
   return App
 }
 
-const app = createApp(defineAsyncComponent({ loader, loadingComponent }))
-
+const app = createApp(defineAsyncComponent({ loader }))
 app.mount('#app')

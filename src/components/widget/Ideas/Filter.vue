@@ -12,22 +12,30 @@
       clear
     </a>
     <ul v-if="options.length" class="rounded-lg">
-      <li v-for="option in options" :key="option.name" class="mb-8">
+      <li
+        v-for="(option, index) in options"
+        :key="option.name"
+        class="mb-8"
+        v-motion
+        :initial="{ opacity: 0 }"
+        :enter="{ opacity: 1 }"
+        :delay="50 * index * 2"
+      >
         <div class="text-black dark:text-blueGray-50 flex items-center mb-4">
           <component :is="option.icon" class="w-[20px] h-[20px]" />
           <span class="ml-2">{{ option.name }}</span>
         </div>
         <ul v-if="option.params" class="font-normal text-xs">
           <li
-            v-for="(param, index) in option.params"
+            v-for="(param, paramIndex) in option.params"
             :key="param.value"
             v-motion
             :initial="{ opacity: 0 }"
             :enter="{ opacity: 1 }"
-            :delay="20 * index"
+            :delay="10 * paramIndex"
             class="mb-2"
           >
-            <AtomicFormCheckbox
+            <AtomicCheckbox
               v-model="state[option.value]"
               :value="param.value"
               v-slot="{ isChecked }"
@@ -44,7 +52,7 @@
                   <div>{{ param.name }}</div>
                 </div>
               </div>
-            </AtomicFormCheckbox>
+            </AtomicCheckbox>
           </li>
         </ul>
       </li>

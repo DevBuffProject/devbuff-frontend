@@ -1,5 +1,5 @@
 <template>
-  <AtomicDialog :visible="true">
+  <AtomicDialog>
     <AtomicLoadingSpinner />
   </AtomicDialog>
 </template>

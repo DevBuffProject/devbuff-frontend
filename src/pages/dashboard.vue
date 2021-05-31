@@ -54,18 +54,14 @@ export default defineComponent({
   async setup() {
     useTitle(`DevBuff Dashboard`)
     const { userIdeas, getUserIdeas } = useIdeas()
-    const {
-      pendingUsers,
-      getPendingUsers,
-      isLoading: isPendingLoading,
-    } = useIdeas()
+    const { pendingUsers, getPendingUsers, isLoading } = useIdeas()
 
     await getUserIdeas()
 
     return {
       userIdeas,
       pendingUsers,
-      isPendingLoading,
+      isPendingLoading: true,
       getPendingUsers,
     }
   },

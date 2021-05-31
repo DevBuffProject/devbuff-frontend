@@ -11,7 +11,6 @@ export default defineComponent({
   name: 'AtomicLoadingBar',
   setup() {
     const styles = useCssModule()
-
     return { styles }
   },
 })

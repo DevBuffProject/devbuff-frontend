@@ -52,8 +52,7 @@
               'bg-black bg-opacity-80 dark:bg-blueGray-700 dark:bg-opacity-50',
             ]"
           >
-            <div v-if="isError">error</div>
-            <atomic-loading-bar v-else />
+            <AtomicLoadingBar />
           </div>
         </template>
       </suspense>
@@ -62,17 +61,10 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-  onErrorCaptured,
-  onMounted,
-  onUnmounted,
-} from 'vue'
-import { set } from '@vueuse/core'
+import { defineComponent, onMounted, onUnmounted } from 'vue'
 
-const { body } = document
-const { overflow } = window.getComputedStyle(body)
+const rooElement = window.document.documentElement
+const { overflow } = window.getComputedStyle(rooElement)
 
 export default defineComponent({
   emits: ['onClose'],
@@ -82,28 +74,22 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const { slots, emit } = ctx
-    const isError = ref(false)
     const onEscapeClose = (e) => e.key === 'Escape' && onClose()
     const onClose = () =>
       emit('onClose') || window.removeEventListener('keyup', onEscapeClose)
 
-    onErrorCaptured(() => {
-      set(isError, true)
-    })
-
     onMounted(() => {
-      document.body.style.overflow = 'hidden'
+      rooElement.style.overflow = 'hidden'
       window.addEventListener('keyup', onEscapeClose)
     })
 
     onUnmounted(() => {
+      rooElement.style.overflow = overflow
       window.removeEventListener('keyup', onEscapeClose)
-      document.body.style.overflow = overflow
     })
 
     return {
       slots,
-      isError,
       onClose,
     }
   },
