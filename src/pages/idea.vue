@@ -37,16 +37,24 @@
 
       <!--    <div class=""></div>-->
     </div>
+    <fast-comments-vue-next
+      v-if="dataFastComment.sso"
+      :config="dataFastComment"
+    />
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-import { useIdea, useUser } from '../composes/core'
+import { defineComponent, reactive } from 'vue'
+import { useIdea, useUser, useSso } from '../composes/core'
 import { useTimeAgo, useTitle } from '@vueuse/core'
+import FastCommentsVueNext from 'fastcomments-vue-next'
 
 export default defineComponent({
   name: 'IdeaDetail',
+  components: {
+    FastCommentsVueNext,
+  },
   props: {
     id: {
       type: String,
@@ -56,15 +64,31 @@ export default defineComponent({
   async setup(props) {
     const { idea, getIdea } = useIdea(props.id)
     const { getUserProfileUrl } = useUser()
-    await getIdea()
+    const { getSsoData } = useSso()
+
+    const dataFastComment = reactive({
+      tenantId: 'lprwn3v7q',
+      urlId: 'idea-' + props.id,
+      customCSS: '   .logged-in-info {\ndisplay: none;\n}',
+    })
 
     useTitle(`${idea.value.name} - Devbuff`)
     const publishedAgo = useTimeAgo(new Date(idea.value.lastUpdateDate))
 
+    getSsoData().then((result) => {
+      dataFastComment.sso = result
+    })
+
+    const isOwner = false // TODO process
+
+    await getIdea()
+
     return {
       idea,
+      isOwner,
       publishedAgo,
       getUserProfileUrl,
+      dataFastComment,
     }
   },
 })
