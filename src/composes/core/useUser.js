@@ -18,9 +18,22 @@ export const useUser = () => {
     return `${BASE_URL}/photo/profile/${uuid}`
   }
 
+  const joinToIdea = async (uuidIdea, uuidSpecialist) => {
+    await request('/idea/join/' + uuidIdea + '/' + uuidSpecialist, {
+      method: 'put',
+    })
+  }
+
+  const getStatusPositions = async (uuidIdea) => {
+    const { data } = await request('/idea/' + uuidIdea + '/statusPositions')
+    return data
+  }
+
   return {
     user,
     getUser,
     getUserProfileUrl,
+    joinToIdea,
+    getStatusPositions,
   }
 }
