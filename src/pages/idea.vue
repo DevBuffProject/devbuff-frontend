@@ -75,7 +75,8 @@
             v-focusable.indexOnly
             :is-small="true"
             @click="send(specialist.id)"
-            >Откликнуться
+          >
+            Откликнуться
           </AtomicButton>
 
           <AtomicButton
@@ -83,7 +84,8 @@
             v-focusable.indexOnly
             :is-small="true"
             :disabled="true"
-            >Заявка оправлена
+          >
+            Заявка оправлена
           </AtomicButton>
 
           <AtomicButton
@@ -91,7 +93,8 @@
             v-focusable.indexOnly
             :is-small="true"
             :disabled="true"
-            >Вы в команде
+          >
+            Вы в команде
           </AtomicButton>
         </div>
       </AtomicCard>
@@ -113,18 +116,19 @@ export default defineComponent({
     },
   },
   async setup(props) {
-    const { idea, getIdea } = useIdea(props.id)
-    const { joinToIdea, getUserProfileUrl, getStatusPositions, getUser, user } =
-      useUser()
-    await getIdea()
-    await getUser()
+    const {
+      idea,
+      publishedAgo,
+      getIdea,
+      statusPositions,
+      getStatusPositions,
+      joinToIdea,
+    } = useIdea(props.id)
+    const { getUserProfileUrl, getUser, user } = useUser()
 
-    useTitle(`${idea.value.name} - Devbuff`)
-    const publishedAgo = useTimeAgo(new Date(idea.value.lastUpdateDate))
+    useTitle(`${idea.value.name} - DevBuff`)
 
-    const statusPositions = ref(await getStatusPositions(idea.value.id))
-
-    function send(specialistId) {
+    const send = (specialistId) => {
       joinToIdea(idea.value.id, specialistId)
       let result = statusPositions.value.find((statusPosition) => {
         return statusPosition.specializationId === specialistId
@@ -133,25 +137,23 @@ export default defineComponent({
         result.positionStatus = 'PENDING'
       }
     }
-
-    function getStatusAtPosition(specialistId) {
-      let result = statusPositions.value.find((statusPosition) => {
-        return statusPosition.specializationId === specialistId
-      })
-
-      if (result !== undefined) {
-        return result.positionStatus
-      }
-      return undefined
+    const getStatusAtPosition = (specialistId) => {
+      let result = statusPositions.value.find(
+        (statusPosition) => statusPosition.specializationId === specialistId,
+      )
+      return result !== undefined ? result.positionStatus : undefined
     }
+    const isOwnerIdea = false
 
-    const isOwnerIdea = user.value.id === idea.value.ownerIdea.id
+    await getIdea()
+    await getUser()
+    await getStatusPositions(idea.value.id)
 
     return {
       idea,
       isOwnerIdea,
-      send,
       publishedAgo,
+      send,
       getUserProfileUrl,
       getStatusAtPosition,
     }
