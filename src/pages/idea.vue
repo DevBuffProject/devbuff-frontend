@@ -34,14 +34,76 @@
           class="p-4 border border-gray-200 dark:border-blueGray-600 rounded-xl"
         />
       </div>
+    </div>
+    <h1 class="grid grid-cols-12">Позиции:</h1>
 
-      <!--    <div class=""></div>-->
+    <div class="flex items-baseline mb-6">
+      <AtomicCard
+        class="space-x-2 mr-1"
+        v-for="specialist in idea.specialist"
+        :key="specialist.id"
+      >
+        <h4 class="mt-0">{{ specialist.name }} Developer</h4>
+
+        <AtomicLabel name="Необходимые ЯП" />
+        <div class="flex flex-wrap">
+          <div
+            v-for="language in specialist.languages"
+            :key="'language' + language.name + specialist.id"
+          >
+            <AtomicChip :text="language.name" class="ml-2 mb-2" type="auto" />
+
+            <AtomicLabel
+              v-if="language.frameworks && language.frameworks.length > 0"
+              name="Технологии"
+              class="ml-3"
+            />
+            <AtomicChip
+              v-for="framework in language.frameworks"
+              :key="
+                'framework' + framework.name + language.name + specialist.id
+              "
+              :text="framework.name"
+              type="auto"
+              class="ml-4"
+            />
+          </div>
+        </div>
+        <div class="flex items-baseline content-center mt-4">
+          <AtomicButton
+            v-if="!isOwnerIdea && getStatusAtPosition(specialist.id) === 'NONE'"
+            v-focusable.indexOnly
+            :is-small="true"
+            @click="send(specialist.id)"
+          >
+            Откликнуться
+          </AtomicButton>
+
+          <AtomicButton
+            v-if="getStatusAtPosition(specialist.id) === 'PENDING'"
+            v-focusable.indexOnly
+            :is-small="true"
+            :disabled="true"
+          >
+            Заявка оправлена
+          </AtomicButton>
+
+          <AtomicButton
+            v-if="getStatusAtPosition(specialist.id) === 'ACCEPTED'"
+            v-focusable.indexOnly
+            :is-small="true"
+            :disabled="true"
+          >
+            Вы в команде
+          </AtomicButton>
+        </div>
+      </AtomicCard>
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useIdea, useUser } from '../composes/core'
 import { useTimeAgo, useTitle } from '@vueuse/core'
 
@@ -54,17 +116,46 @@ export default defineComponent({
     },
   },
   async setup(props) {
-    const { idea, getIdea } = useIdea(props.id)
-    const { getUserProfileUrl } = useUser()
-    await getIdea()
+    const {
+      idea,
+      publishedAgo,
+      getIdea,
+      statusPositions,
+      getStatusPositions,
+      joinToIdea,
+    } = useIdea(props.id)
+    const { getUserProfileUrl, getUser, user } = useUser()
 
-    useTitle(`${idea.value.name} - Devbuff`)
-    const publishedAgo = useTimeAgo(new Date(idea.value.lastUpdateDate))
+    useTitle(`${idea.value.name} - DevBuff`)
+
+    const send = (specialistId) => {
+      joinToIdea(idea.value.id, specialistId)
+      let result = statusPositions.value.find((statusPosition) => {
+        return statusPosition.specializationId === specialistId
+      })
+      if (result !== undefined) {
+        result.positionStatus = 'PENDING'
+      }
+    }
+    const getStatusAtPosition = (specialistId) => {
+      let result = statusPositions.value.find(
+        (statusPosition) => statusPosition.specializationId === specialistId,
+      )
+      return result !== undefined ? result.positionStatus : undefined
+    }
+    const isOwnerIdea = false
+
+    await getIdea()
+    await getUser()
+    await getStatusPositions(idea.value.id)
 
     return {
       idea,
+      isOwnerIdea,
       publishedAgo,
+      send,
       getUserProfileUrl,
+      getStatusAtPosition,
     }
   },
 })
