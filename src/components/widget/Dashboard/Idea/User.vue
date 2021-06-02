@@ -8,7 +8,13 @@
         :username="username"
       />
       <div v-if="!readonly" class="text-sm flex flex-col">
-        <AtomicButton type="muted" is-small is-outline class="mb-2">
+        <AtomicButton
+          type="success"
+          is-small
+          is-outline
+          class="mb-2"
+          @click="approveUserToIdea(ideaId, specializationId, userId)"
+        >
           approve
         </AtomicButton>
       </div>
@@ -29,8 +35,10 @@
 </template>
 
 <script>
-import { useUser } from '../../../../composes/core'
+import { useUser, useIdea } from '../../../../composes/core'
 
+import { tryOnUnmounted } from '@vueuse/core'
+const rooElement = window.document.documentElement
 export default {
   name: 'WidgetDashboardUserCard',
   props: {
@@ -74,6 +82,26 @@ export default {
       type: String,
       default: '',
     },
+    specializationId: {
+      type: String,
+      default: '',
+    },
+    ideaId: {
+      type: String,
+      default: '',
+    },
+  },
+  setup() {
+    const { approveUser } = useIdea()
+
+    const approveUserToIdea = (uuidIdea, uuidSpecialisation, uuidUser) => {
+      approveUser(uuidIdea, uuidSpecialisation, uuidUser)
+      //TODO unmount component
+    }
+
+    return {
+      approveUserToIdea,
+    }
   },
   computed: {
     avatar() {
