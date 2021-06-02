@@ -26,6 +26,31 @@
       <AtomicLabel v-if="isOwnerIdea" name="moderation">
         {{ idea.waitingValidation ? 'waiting' : 'aproove' }}
       </AtomicLabel>
+      <AtomicLabel
+        v-if="isOwnerIdea"
+        name="Организация команды"
+        class="mt-0 mx-4 mb-4"
+      >
+        <AtomicButton
+          v-if="idea.status === 'WAITING_FULL_TEAM'"
+          v-focusable.indexOnly
+          :is-small="true"
+          :type="'danger'"
+          @click="changeIdeaStatus('DISABLE_SET_OF_CANDIDATES')"
+        >
+          Закрыть набор
+        </AtomicButton>
+
+        <AtomicButton
+          v-if="idea.status === 'WORKING'"
+          v-focusable.indexOnly
+          :is-small="true"
+          :type="'success'"
+          @click="changeIdeaStatus('ENABLE_SET_OF_CANDIDATES')"
+        >
+          Открыть набор
+        </AtomicButton>
+      </AtomicLabel>
     </div>
     <div class="grid grid-cols-5">
       <div class="mb-3 col-span-5">
@@ -103,7 +128,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import { useIdea, useUser } from '../composes/core'
 import { useTimeAgo, useTitle } from '@vueuse/core'
 
@@ -118,11 +143,11 @@ export default defineComponent({
   async setup(props) {
     const {
       idea,
-      publishedAgo,
       getIdea,
       statusPositions,
       getStatusPositions,
       joinToIdea,
+      changeStatusIdea,
     } = useIdea(props.id)
     const { getUserProfileUrl, getUser, user } = useUser()
 
@@ -144,17 +169,30 @@ export default defineComponent({
       return result !== undefined ? result.positionStatus : undefined
     }
 
+    const changeIdeaStatus = (status) => {
+      changeStatusIdea(status)
+
+      if (status === 'ENABLE_SET_OF_CANDIDATES') {
+        idea.value.status = 'WAITING_FULL_TEAM'
+      } else if (status === 'DISABLE_SET_OF_CANDIDATES') {
+        idea.value.status = 'WORKING'
+      }
+    }
+
     await getIdea()
     await getUser()
     await getStatusPositions(idea.value.id)
 
     const isOwnerIdea = user.value.id === idea.value.ownerIdea.id
 
+    const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
+
     return {
       idea,
       isOwnerIdea,
       publishedAgo,
       send,
+      changeIdeaStatus,
       getUserProfileUrl,
       getStatusAtPosition,
     }

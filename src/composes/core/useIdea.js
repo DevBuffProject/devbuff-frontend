@@ -13,7 +13,7 @@ export const useIdea = (uuid) => {
     return data
   }
 
-  const pendingUsers = ref([])
+  const pendingUsers = ref(undefined)
   const getPendingUsers = async (uuid) => {
     const response = await request(`/idea/pending/${uuid}`)
     pendingUsers.value = response.data
@@ -33,6 +33,24 @@ export const useIdea = (uuid) => {
     })
   }
 
+  const changeStatusIdea = async (status) => {
+    await request(`/idea/${uuid}/status`, {
+      method: 'PATCH',
+      data: {
+        status: status,
+      },
+    })
+  }
+
+  const approveUser = async (uuidIdea, uuidSpecialisation, uuidUser) => {
+    await request(
+      `/idea/approve/${uuidIdea}/${uuidSpecialisation}/${uuidUser}`,
+      {
+        method: 'PUT',
+      },
+    )
+  }
+
   return {
     idea,
     publishedAgo,
@@ -42,6 +60,8 @@ export const useIdea = (uuid) => {
     getPendingUsers,
     getStatusPositions,
     joinToIdea,
+    changeStatusIdea,
+    approveUser,
     ...rest,
   }
 }
