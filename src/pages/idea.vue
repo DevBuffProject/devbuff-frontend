@@ -124,16 +124,24 @@
         </div>
       </AtomicCard>
     </div>
+    <fast-comments-vue-next
+      v-if="dataFastComment.sso"
+      :config="dataFastComment"
+    />
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-import { useIdea, useUser } from '../composes/core'
+import { defineComponent, reactive } from 'vue'
+import { useIdea, useUser, useSso } from '../composes/core'
 import { useTimeAgo, useTitle } from '@vueuse/core'
+import FastCommentsVueNext from 'fastcomments-vue-next'
 
 export default defineComponent({
   name: 'IdeaDetail',
+  components: {
+    FastCommentsVueNext,
+  },
   props: {
     id: {
       type: String,
@@ -150,9 +158,15 @@ export default defineComponent({
       changeStatusIdea,
     } = useIdea(props.id)
     const { getUserProfileUrl, getUser, user } = useUser()
+    const { getSsoData } = useSso()
 
     useTitle(`${idea.value.name} - DevBuff`)
-
+    
+    const dataFastComment = reactive({
+      tenantId: 'lprwn3v7q',
+      urlId: 'idea-' + props.id,
+      customCSS: '   .logged-in-info {\ndisplay: none;\n}',
+    })
     const send = (specialistId) => {
       joinToIdea(idea.value.id, specialistId)
       let result = statusPositions.value.find((statusPosition) => {
@@ -174,14 +188,19 @@ export default defineComponent({
     await getStatusPositions(idea.value.id)
 
     const isOwnerIdea = user.value.id === idea.value.ownerIdea.id
-
     const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
+    getSsoData().then((result) => {
+      dataFastComment.sso = result
+    })
+    const isOwner = false // TODO process
 
     return {
       idea,
+      isOwner,
       isOwnerIdea,
       publishedAgo,
       send,
+      dataFastComment,
       changeStatusIdea,
       getUserProfileUrl,
       getStatusAtPosition,
