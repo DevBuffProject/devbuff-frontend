@@ -5,9 +5,10 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: Build
+  - name: Builds
     task:
       jobs:
-        - name: Build
+        - name: Builds
           commands:
-            - pnpm build
+            - npm run build
+            - yarn build
