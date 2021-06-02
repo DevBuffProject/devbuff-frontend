@@ -10,13 +10,20 @@
             :title="idea.name"
             :description="idea.description"
             :waiting-validation="idea.waitingValidation"
-            @click="getPendingUsers(idea.id)"
+            @click="
+              () => {
+                pendingUsers = undefined
+                getPendingUsers(idea.id)
+                currentIdeaId = idea.id
+              }
+            "
           />
         </div>
       </AtomicCard>
     </div>
     <aside class="col-span-1">
-      <AtomicLoadingSpinner v-if="isPendingLoading" />
+      <div v-if="currentIdeaId === undefined"></div>
+      <AtomicLoadingSpinner v-else-if="pendingUsers === undefined" />
       <div v-else-if="pendingUsers" class="col-span-3">
         <h3 class="mt-0">Responses</h3>
         <div
@@ -37,6 +44,8 @@
             :skype-contact="user.socialNetworks.skype"
             :discord-contact="user.socialNetworks.discord"
             :specialization="specialisationName"
+            :specialization-id="specialisationId"
+            :idea-id="currentIdeaId"
             class="mb-6"
           />
         </div>
@@ -46,16 +55,17 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-import { useIdeas } from '../composes/core'
+import { defineComponent, ref } from 'vue'
+import { useIdeas, useIdea } from '../composes/core'
 import { useTitle } from '@vueuse/core'
 
 export default defineComponent({
   async setup() {
     useTitle(`DevBuff Dashboard`)
     const { userIdeas, getUserIdeas } = useIdeas()
-    const { pendingUsers, getPendingUsers, isLoading } = useIdeas()
+    const { pendingUsers, getPendingUsers } = useIdea()
 
+    const currentIdeaId = ref(undefined)
     await getUserIdeas()
 
     return {
@@ -63,6 +73,7 @@ export default defineComponent({
       pendingUsers,
       isPendingLoading: true,
       getPendingUsers,
+      currentIdeaId,
     }
   },
 })
