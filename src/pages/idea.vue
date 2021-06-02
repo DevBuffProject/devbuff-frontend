@@ -23,7 +23,7 @@
         {{ idea.status }}
       </AtomicLabel>
 
-      <AtomicLabel v-if="isOwner" name="moderation">
+      <AtomicLabel v-if="isOwnerIdea" name="moderation">
         {{ idea.waitingValidation ? 'waiting' : 'aproove' }}
       </AtomicLabel>
     </div>
@@ -143,11 +143,12 @@ export default defineComponent({
       )
       return result !== undefined ? result.positionStatus : undefined
     }
-    const isOwnerIdea = false
 
     await getIdea()
     await getUser()
     await getStatusPositions(idea.value.id)
+
+    const isOwnerIdea = user.value.id === idea.value.ownerIdea.id
 
     return {
       idea,
