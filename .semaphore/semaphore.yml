@@ -1,0 +1,34 @@
+version: v1.0
+name: First pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Setup
+    task:
+      prologue:
+        commands:
+          - checkout
+      jobs:
+        - name: pnpm setup
+          commands:
+            - echo "Reserved setup step"
+  - name: Test
+    task:
+      jobs:
+        - name: Lint code
+          commands:
+            - echo "Lint temporary unused"
+        - name: Test
+          commands:
+            - 'echo "Tests temporary unused" '
+promotions:
+  - name: Build Linux
+    pipeline_file: pipeline_2.yml
+    auto_promote:
+      when: branch = 'vite' AND result = 'passed'
+  - name: Build macOS
+    pipeline_file: pipeline_3.yml
+    auto_promote:
+      when: branch = 'vite' AND result = 'passed'
