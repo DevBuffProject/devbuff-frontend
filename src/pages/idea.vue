@@ -36,7 +36,7 @@
           v-focusable.indexOnly
           :is-small="true"
           :type="'danger'"
-          @click="changeIdeaStatus('DISABLE_SET_OF_CANDIDATES')"
+          @click="changeStatusIdea('DISABLE_SET_OF_CANDIDATES')"
         >
           Закрыть набор
         </AtomicButton>
@@ -46,7 +46,7 @@
           v-focusable.indexOnly
           :is-small="true"
           :type="'success'"
-          @click="changeIdeaStatus('ENABLE_SET_OF_CANDIDATES')"
+          @click="changeStatusIdea('ENABLE_SET_OF_CANDIDATES')"
         >
           Открыть набор
         </AtomicButton>
@@ -169,16 +169,6 @@ export default defineComponent({
       return result !== undefined ? result.positionStatus : undefined
     }
 
-    const changeIdeaStatus = (status) => {
-      changeStatusIdea(status)
-
-      if (status === 'ENABLE_SET_OF_CANDIDATES') {
-        idea.value.status = 'WAITING_FULL_TEAM'
-      } else if (status === 'DISABLE_SET_OF_CANDIDATES') {
-        idea.value.status = 'WORKING'
-      }
-    }
-
     await getIdea()
     await getUser()
     await getStatusPositions(idea.value.id)
@@ -192,7 +182,7 @@ export default defineComponent({
       isOwnerIdea,
       publishedAgo,
       send,
-      changeIdeaStatus,
+      changeStatusIdea,
       getUserProfileUrl,
       getStatusAtPosition,
     }

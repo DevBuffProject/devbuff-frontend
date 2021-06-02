@@ -40,6 +40,12 @@ export const useIdea = (uuid) => {
         status: status,
       },
     })
+
+    if (status === 'ENABLE_SET_OF_CANDIDATES') {
+      idea.value.status = 'WAITING_FULL_TEAM'
+    } else if (status === 'DISABLE_SET_OF_CANDIDATES') {
+      idea.value.status = 'WORKING'
+    }
   }
 
   const approveUser = async (uuidIdea, uuidSpecialisation, uuidUser) => {
