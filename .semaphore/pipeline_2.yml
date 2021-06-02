@@ -10,5 +10,8 @@ blocks:
       jobs:
         - name: Builds
           commands:
-            - npm run build
+            - checkout
+            - sem-version node 14
+            - cache restore
+            - yarn
             - yarn build
