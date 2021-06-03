@@ -12,9 +12,6 @@
       clear
     </a>
     <ul v-if="options.length" class="rounded-lg">
-      {{
-        options
-      }}
       <li
         v-for="(option, index) in options"
         :key="option.name"
@@ -66,7 +63,7 @@
 <script>
 import { computed, defineComponent, watch } from 'vue'
 import { useSkills } from '../../../composes/core'
-import { useThrottleFn, useVModel } from '@vueuse/core'
+import { useVModel } from '@vueuse/core'
 import { CodeIcon, UserIcon } from '@iconicicons/vue3'
 
 const initialFilter = {
@@ -84,9 +81,8 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const { specializations, skills, languages, getSkills } = useSkills()
+    const { specializations, languages, getSkills } = useSkills()
     const state = useVModel(props, 'modelValue', emit)
-
     const specialistSelected = computed(
       () => state.value.specialists.length > 0,
     )
@@ -125,12 +121,6 @@ export default defineComponent({
     )
 
     getSkills()
-
-    watch(skills, () => {
-      skills.value.forEach((d) => {
-        console.log(d)
-      })
-    })
 
     return {
       state,
