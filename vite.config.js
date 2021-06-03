@@ -2,11 +2,17 @@ import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import ViteFonts from 'vite-plugin-fonts'
 import ViteComponents from 'vite-plugin-components'
+import viteSvgIcons from 'vite-plugin-svg-icons'
+import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     Vue(),
+    viteSvgIcons({
+      iconDirs: [path.resolve('src/assets/svg')],
+      symbolId: 'icon-[name]',
+    }),
     ViteComponents({
       directoryAsNamespace: true,
       customComponentResolvers: [

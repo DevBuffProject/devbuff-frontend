@@ -7,6 +7,7 @@
         'text-xs text-primary font-medium hover:underline',
         'border-l border-gray-200 dark:border-blueGray-600',
       ]"
+      style="z-index: 99"
       @click="reset"
     >
       clear
@@ -61,7 +62,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, watch } from 'vue'
+import { computed, defineComponent, watch, triggerRef } from 'vue'
 import { useSkills } from '../../../composes/core'
 import { useVModel } from '@vueuse/core'
 import { CodeIcon, UserIcon } from '@iconicicons/vue3'
@@ -81,8 +82,9 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const { specializations, languages, getSkills } = useSkills()
+    const { specializations, skills, languages, getSkills } = useSkills()
     const state = useVModel(props, 'modelValue', emit)
+
     const specialistSelected = computed(
       () => state.value.specialists.length > 0,
     )
@@ -96,19 +98,32 @@ export default defineComponent({
           name: 'specialists',
           value: 'specialists',
           icon: UserIcon,
-          params: specializations.value.map((lang) => ({
-            value: lang,
-            name: lang,
+          params: specializations.value.map((specialist) => ({
+            value: specialist,
+            name: specialist,
           })),
         },
         specialistSelected.value && {
           name: 'languages',
           value: 'languages',
           icon: CodeIcon,
-          params: languages.value.map((lang) => ({
-            value: lang,
-            name: lang,
-          })),
+          params: languages.value
+            .filter((languageSearched) => {
+              let data = skills.value.find((language) => {
+                return (
+                  language.name === languageSearched &&
+                  language.specializations.find((specialist) => {
+                    return state.value.specialists.includes(specialist.name)
+                  })
+                )
+              })
+
+              return data !== undefined
+            })
+            .map((language) => ({
+              value: language,
+              name: language,
+            })),
         },
       ].filter((s) => !!s),
     )
@@ -119,7 +134,6 @@ export default defineComponent({
       specialistSelected,
       () => !specialistSelected.value && (state.value.languages = []),
     )
-
     getSkills()
 
     return {

@@ -19,23 +19,28 @@
         v-if="!isLoggedIn"
         class="p-5 mb-5 bg-primary bg-opacity-10 rounded-xl"
       >
+        <h4 class="mt-0">Login via</h4>
+
         <AtomicButton
-          class="w-full mb-4"
           v-focusable.indexOnly
           @click="initAuth(AuthProviders.GitHub)"
         >
-          sign with GitHub
+          <div class="text-black dark:text-blueGray-50 flex items-center">
+            <Svg name="Github" />
+            <span class="ml-2">GitHub</span>
+          </div>
         </AtomicButton>
         <AtomicButton
-          class="w-full"
+          class="w-full mb-4 flex items-center justify-center"
           v-focusable.indexOnly
           @click="initAuth(AuthProviders.GitLab)"
         >
-          sign with GitLab
+          <div class="text-black dark:text-blueGray-50 flex items-center">
+            <Svg name="Gitlab" />
+            <span class="ml-2">GitLab</span>
+          </div>
         </AtomicButton>
-        <div class="mt-2 text-xs font-semibold">
-          login for publish idea and respond
-        </div>
+        <div class="mt-0">login for publish idea and respond</div>
       </div>
 
       <template v-for="link in nav" :key="link.title">
@@ -86,12 +91,6 @@
         </div>
       </template>
     </nav>
-
-    <!--    <AtomicDialog-->
-    <!--      :visible="isSettingsVisible"-->
-    <!--      @close="isSettingsVisible.value = false"-->
-    <!--    >-->
-    <!--    </AtomicDialog>-->
   </aside>
 </template>
 
@@ -128,7 +127,7 @@ export default defineComponent({
           to: '/dashboard',
           exact: true,
         },
-        {
+        isLoggedIn.value && {
           title: 'Settings',
           icon: SettingsIcon,
           to: '/',
