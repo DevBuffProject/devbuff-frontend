@@ -20,7 +20,7 @@ export default defineComponent({
     watch(
       () => route.query,
       async () => {
-        if (!route.query.code) return await redirect()
+        if (!route.query || !route.query.code) return await redirect()
         await auth({
           code: route.query.code,
           provider: route.params.provider,
