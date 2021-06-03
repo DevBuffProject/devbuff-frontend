@@ -17,23 +17,16 @@
       </router-link>
       <div
         v-if="!isLoggedIn"
-        class="p-5 mb-5 bg-primary bg-opacity-10 rounded-xl grid grid-cols-5"
+        class="p-5 mb-5 bg-primary bg-opacity-10 rounded-xl"
       >
-        <h4 class="mt-0 col-start-1 col-span-5">Login via</h4>
+        <h4 class="mt-0">Login via</h4>
 
         <AtomicButton
-          class="
-            w-auto
-            mb-4
-            col-start-1 col-span-5
-            flex
-            items-center
-            justify-center
-          "
+          class="w-full mb-4 flex items-center justify-center"
           v-focusable.indexOnly
           @click="initAuth(AuthProviders.GitHub)"
         >
-          <span>
+          <div class="text-black dark:text-blueGray-50 flex items-center">
             <svg
               aria-hidden="true"
               focusable="false"
@@ -50,22 +43,15 @@
                 d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
               />
             </svg>
-            GitHub
-          </span>
+            <span class="ml-2">GitHub</span>
+          </div>
         </AtomicButton>
         <AtomicButton
-          class="
-            w-auto
-            mb-4
-            col-start-1 col-span-5
-            flex
-            items-center
-            justify-center
-          "
+          class="w-full mb-4 flex items-center justify-center"
           v-focusable.indexOnly
           @click="initAuth(AuthProviders.GitLab)"
         >
-          <span>
+          <div class="text-black dark:text-blueGray-50 flex items-center">
             <svg
               aria-hidden="true"
               focusable="false"
@@ -130,12 +116,10 @@
                 </g>
               </g>
             </svg>
-            GitLab
-          </span>
+            <span class="ml-2">GitLab</span>
+          </div>
         </AtomicButton>
-        <div class="mt-0 col-start-1 col-span-5">
-          login for publish idea and respond
-        </div>
+        <div class="mt-0">login for publish idea and respond</div>
       </div>
 
       <template v-for="link in nav" :key="link.title">
