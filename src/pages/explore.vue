@@ -1,10 +1,11 @@
 <template>
   <div class="grid grid-cols-4 gap-6">
     <div class="col-span-3" id="ideas">
-      <template v-if="ideas && !isLoading">
+      <template v-if="!isLoading && ideas">
         <WidgetIdeasCard
           v-for="(idea, index) of ideas"
           :key="idea.id"
+          :linked="isLoggedIn"
           :id="idea.id"
           :title="idea.name"
           :date="idea.publishDate || idea.datePublished"
@@ -50,8 +51,7 @@ import {
   useThrottleFn,
   useTitle,
 } from '@vueuse/core'
-import { useIdeas } from '../composes/core'
-import { useUser } from '../composes/core'
+import { useIdeas, useUser, useAuth } from '../composes/core'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
@@ -69,6 +69,7 @@ export default defineComponent({
     const route = inject('backgroundRoute')
     const { isLoading, ideas, getIdeas } = useIdeas()
     const { getUserProfileUrl } = useUser()
+    const { isLoggedIn } = useAuth()
     const specialists = filterQueryReactive('specialists')
     const languages = filterQueryReactive('languages')
     const filter = reactive({ specialists, languages })
@@ -80,7 +81,7 @@ export default defineComponent({
 
     watch(filter, throttledGetIdeas)
 
-    return { ideas, filter, isLoading, getUserProfileUrl }
+    return { ideas, filter, isLoading, getUserProfileUrl, isLoggedIn }
   },
 })
 </script>
