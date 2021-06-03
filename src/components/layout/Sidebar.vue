@@ -75,10 +75,9 @@
                 stroke-width="1"
                 fill="none"
                 fill-rule="evenodd"
-                :type="MSPage"
               >
-                <g id="Fill-1-+-Group-24" :type="MSLayerGroup">
-                  <g id="Group-24" :type="MSShapeGroup">
+                <g id="Fill-1-+-Group-24">
+                  <g id="Group-24">
                     <g id="Group">
                       <path
                         d="M105.0614,193.655 L105.0614,193.655 L143.7014,74.734 L66.4214,74.734 L105.0614,193.655 L105.0614,193.655 Z"
