@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-4 gap-6">
     <div class="col-span-3" id="ideas">
-      <template v-if="ideas && !isLoading">
+      <template v-if="!isLoading && ideas">
         <WidgetIdeasCard
           v-for="(idea, index) of ideas"
           :key="idea.id"
