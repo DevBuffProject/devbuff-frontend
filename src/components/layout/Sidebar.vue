@@ -22,6 +22,7 @@
         <h4 class="mt-0">Login via</h4>
 
         <AtomicButton
+          class="w-full mb-2 flex items-center justify-center"
           v-focusable.indexOnly
           @click="initAuth(AuthProviders.GitHub)"
         >
@@ -30,6 +31,7 @@
             <span class="ml-2">GitHub</span>
           </div>
         </AtomicButton>
+
         <AtomicButton
           class="w-full mb-4 flex items-center justify-center"
           v-focusable.indexOnly
