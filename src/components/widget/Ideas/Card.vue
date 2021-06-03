@@ -10,7 +10,7 @@
       <!--        :src="'//source.unsplash.com/random?logo&key' + id"-->
       <!--      />-->
 
-      <div v-if="!linked" class="text-primary text-xl block font-light">
+      <div v-if="!linked" class="text-primary text-lg block font-medium">
         {{ title }}
       </div>
       <RouterLink
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { defineComponent, computed, useCssModule } from 'vue'
+import { defineComponent, computed } from 'vue'
 
 export default defineComponent({
   name: 'VIdea',
