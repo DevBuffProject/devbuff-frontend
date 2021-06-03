@@ -3,11 +3,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { MotionPlugin } from '@vueuse/motion'
 import { useQueryString } from './composes/utils'
 import { createMiddleware, getUser } from './middlewares'
-import loadingComponent from './components/LoadingScreen.vue'
 import focusable from './app/directives/focusable'
 import mitt from 'mitt'
 import App from './App.vue'
 import routes from './routes'
+
+import 'virtual:svg-icons-register'
 
 const qs = useQueryString()
 const emitter = mitt()

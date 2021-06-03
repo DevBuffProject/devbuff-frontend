@@ -52,12 +52,37 @@
         </AtomicButton>
       </AtomicLabel>
     </div>
-    <div class="grid grid-cols-5">
-      <div class="mb-3 col-span-5">
+    <div class="grid grid-cols-12">
+      <div class="mb-3 col-span-8">
         <div
           v-html="idea.text"
           class="p-4 border border-gray-200 dark:border-blueGray-600 rounded-xl"
         />
+      </div>
+      <div
+        class="col-start-10 col-end-13"
+        v-if="Object.keys(acceptedUsers).length > 0"
+      >
+        <AtomicCard>
+          <h3 class="mt-0">Команда:</h3>
+
+          <!--     TODO profile page @click  -->
+          <div
+            class="flex items-center"
+            v-for="(userDate, userId) in acceptedUsers"
+            :key="'accepted' + userId"
+          >
+            <atomic-avatar :avatar="getUserProfileUrl(userId)" class="mr-2" />
+            <div>
+              <div class="font-semibold">
+                {{ userDate.firstName }} {{ userDate.lastName }}
+              </div>
+              <div class="text-xs text-gray-500 dark:text-blueGray-400">
+                {{ userDate.positions.join(', ') }}
+              </div>
+            </div>
+          </div>
+        </AtomicCard>
       </div>
     </div>
     <h1 class="grid grid-cols-12">Позиции:</h1>
@@ -69,7 +94,6 @@
         :key="specialist.id"
       >
         <h4 class="mt-0">{{ specialist.name }} Developer</h4>
-
         <AtomicLabel name="Необходимые ЯП" />
         <div class="flex flex-wrap">
           <div
@@ -177,6 +201,20 @@ export default defineComponent({
 
     const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
 
+    const acceptedUsers = {}
+
+    for (let specialist of idea.value.specialist) {
+      for (let acceptedUser of specialist.acceptedUsers) {
+        if (acceptedUsers[acceptedUser.id] === undefined) {
+          acceptedUsers[acceptedUser.id] = {}
+          acceptedUsers[acceptedUser.id].firstName = acceptedUser.firstName
+          acceptedUsers[acceptedUser.id].lastName = acceptedUser.lastName
+          acceptedUsers[acceptedUser.id].positions = []
+        }
+
+        acceptedUsers[acceptedUser.id].positions.push(specialist.name)
+      }
+    }
     return {
       idea,
       isOwnerIdea,
@@ -184,6 +222,7 @@ export default defineComponent({
       send,
       changeStatusIdea,
       getUserProfileUrl,
+      acceptedUsers,
       getStatusAtPosition,
     }
   },

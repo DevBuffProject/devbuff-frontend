@@ -36,6 +36,7 @@
     "prettier": "^2.3.0",
     "tailwindcss": "^2.1.2",
     "vite": "^2.3.3",
-    "vite-plugin-fonts": "^0.2.2"
+    "vite-plugin-fonts": "^0.2.2",
+    "vite-plugin-svg-icons": "^0.7.0"
   }
 }
