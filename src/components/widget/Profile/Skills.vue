@@ -2,22 +2,20 @@
   <div class="">
     <div class="">
       <swiper
-        ref="swiperComponent"
-        :options="{
-          autoHeight: true,
-          calculateHeight: true,
-          lazy: true,
-          simulateTouch: false,
-        }"
+        :simulate-touch="false"
+        :lazy="true"
+        :auto-height="true"
         :auto-update="true"
-        style="height: auto; margin-left: 0"
+        @swiper="onSwiper"
       >
         <swiper-slide>
-          <atomic-list class="divide-y divide-gray-200">
-            <atomic-list-item
+          <AtomicList class="divide-y divide-gray-200">
+            <AtomicListItem
               v-for="skill of skills"
               :key="skill.name"
-              :class="['flex justify-between items-center group cursor-pointer']"
+              :class="[
+                'flex justify-between items-center group cursor-pointer',
+              ]"
             >
               <label class="flex items-center w-full" @click.stop>
                 <input
@@ -37,14 +35,14 @@
                 ]"
                 @click="nextSlide(skill, skill.specializations)"
               >
-                <svg-icon name="outline/cheveron-right" />
+                <component :is="ChevronRightIcon" />
               </div>
-            </atomic-list-item>
-          </atomic-list>
+            </AtomicListItem>
+          </AtomicList>
         </swiper-slide>
 
         <swiper-slide>
-          <atomic-list class="divide-y divide-gray-200">
+          <AtomicList class="divide-y divide-gray-200">
             <div
               :class="[
                 'px-4 py-1 transition-colors rounded',
@@ -52,12 +50,14 @@
               ]"
               @click="prevSlide()"
             >
-              <svg-icon name="outline/cheveron-left" />
+              <component :is="ChevronLeftIcon" />
             </div>
-            <atomic-list-item
+            <AtomicListItem
               v-for="specialist of specialists"
               :key="specialist.name"
-              :class="['flex justify-between items-center group cursor-pointer']"
+              :class="[
+                'flex justify-between items-center group cursor-pointer',
+              ]"
             >
               <label class="flex items-center w-full" @click.stop>
                 <input
@@ -68,7 +68,12 @@
                   @change="onChangeSkill(specialist)"
                 />
                 <div>
-                  {{ t(`specializations.${specialist.name}.title`, specialist.name) }}
+                  {{
+                    t(
+                      `specializations.${specialist.name}.title`,
+                      specialist.name,
+                    )
+                  }}
                 </div>
               </label>
               <div
@@ -79,13 +84,13 @@
                 ]"
                 @click="nextSlide(specialist, specialist.frameworks)"
               >
-                <svg-icon name="outline/cheveron-right" />
+                <component :is="ChevronRightIcon" />
               </div>
-            </atomic-list-item>
-          </atomic-list>
+            </AtomicListItem>
+          </AtomicList>
         </swiper-slide>
         <swiper-slide>
-          <atomic-list class="divide-y divide-gray-200">
+          <AtomicList class="divide-y divide-gray-200">
             <div
               :class="[
                 'px-4 py-1 transition-colors rounded',
@@ -93,12 +98,14 @@
               ]"
               @click="prevSlide()"
             >
-              <svg-icon name="outline/cheveron-left" />
+              <component :is="ChevronLeftIcon" />
             </div>
-            <atomic-list-item
+            <AtomicListItem
               v-for="framework of frameworks"
               :key="framework.name"
-              :class="['flex justify-between items-center group cursor-pointer']"
+              :class="[
+                'flex justify-between items-center group cursor-pointer',
+              ]"
             >
               <label class="flex items-center w-full" @click.stop>
                 <input
@@ -110,20 +117,20 @@
                 />
                 <div>{{ framework.name }}</div>
               </label>
-            </atomic-list-item>
-          </atomic-list>
+            </AtomicListItem>
+          </AtomicList>
         </swiper-slide>
       </swiper>
-      <atomic-button @click="save"> Save </atomic-button>
+      <AtomicButton @click="save"> Save </AtomicButton>
     </div>
   </div>
 </template>
 
 <script>
-import { useStore, computed, defineComponent, ref, reactive } from '@nuxtjs/composition-api'
-import { useUser } from '@/composes'
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-
+import { defineComponent, ref, reactive } from 'vue'
+import { useSkills, useUser } from '../../../composes/core'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { ChevronRightIcon, ChevronLeftIcon } from '@iconicicons/vue3'
 import 'swiper/swiper.scss'
 
 export default defineComponent({
@@ -132,12 +139,11 @@ export default defineComponent({
     Swiper,
     SwiperSlide,
   },
-  setup() {
-    const store = useStore()
+  async setup() {
     const { user } = useUser()
-    const swiperComponent = ref(null)
-    const swiper = computed(() => swiperComponent.value?.$swiper)
-    const allSkills = store.getters['skills/skills']
+    const { getSkills } = useSkills()
+    const swiper = ref()
+    const allSkills = await getSkills()
 
     const userSkill = user.value.skills
 
@@ -152,16 +158,23 @@ export default defineComponent({
       const userSpecialization = userSkill[indexUserLanguage].specializations
 
       for (const specialization of language.specializations) {
-        const indexUserSpecialization = findName(userSpecialization, specialization.name)
+        const indexUserSpecialization = findName(
+          userSpecialization,
+          specialization.name,
+        )
         if (indexUserSpecialization === -1) {
           continue
         }
         specialization.checked = true
 
-        const userTechnologies = userSpecialization[indexUserSpecialization].frameworks
+        const userTechnologies =
+          userSpecialization[indexUserSpecialization].frameworks
 
         for (const technology of specialization.frameworks) {
-          const indexUserTechnology = findName(userTechnologies, technology.name)
+          const indexUserTechnology = findName(
+            userTechnologies,
+            technology.name,
+          )
           if (indexUserTechnology === -1) {
             continue
           }
@@ -272,11 +285,14 @@ export default defineComponent({
     }
 
     function t(str, fallbackStr) {
-      return this.$t && this.$te ? (this.$te(str) ? this.$t(str) : fallbackStr) : fallbackStr || str
+      return fallbackStr
     }
 
+    const onSwiper = (swiperComponent) => (swiper.value = swiperComponent)
+
     return {
-      swiperComponent,
+      ChevronRightIcon,
+      ChevronLeftIcon,
       user,
       skills,
       onChangeSkill,
@@ -286,6 +302,7 @@ export default defineComponent({
       prevSlide,
       save,
       t,
+      onSwiper,
     }
   },
 })
