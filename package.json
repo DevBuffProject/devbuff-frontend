@@ -19,6 +19,7 @@
     "mitt": "^2.1.0",
     "query-string": "^7.0.0",
     "string-to-color": "^2.2.2",
+    "swiper": "^6.7.0",
     "vite-plugin-components": "^0.9.1",
     "vue": "^3.0.5",
     "vue-router": "^4.0.8"
@@ -34,6 +35,7 @@
     "eslint-plugin-vue": "^7.9.0",
     "postcss": "^8.2.15",
     "prettier": "^2.3.0",
+    "sass": "^1.34.1",
     "tailwindcss": "^2.1.2",
     "vite": "^2.3.3",
     "vite-plugin-fonts": "^0.2.2",

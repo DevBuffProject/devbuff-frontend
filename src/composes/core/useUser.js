@@ -18,9 +18,21 @@ export const useUser = () => {
     return `${BASE_URL}/photo/profile/${uuid}`
   }
 
+  const saveUserSkills = async (skills) => {
+    const response = await request('/profile', {
+      method: 'patch',
+      data: {
+        skills,
+      },
+    })
+
+    console.log(user.value)
+  }
+
   return {
     user,
     getUser,
     getUserProfileUrl,
+    saveUserSkills,
   }
 }
