@@ -19,14 +19,14 @@ export const useUser = () => {
   }
 
   const saveUserSkills = async (skills) => {
-    const response = await request('/profile', {
+    await request('/profile', {
       method: 'patch',
       data: {
         skills,
       },
     })
 
-    console.log(user.value)
+    user.value.skills = skills
   }
 
   return {
