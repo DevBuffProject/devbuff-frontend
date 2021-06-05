@@ -30,6 +30,15 @@ export default [
     props: true,
   },
   {
+    name: 'settings',
+    path: '/settings',
+    component: () => import('./pages/settings.vue'),
+    meta: {
+      name: 'Settings',
+      breadcrumbs: ['home'],
+    },
+  },
+  {
     name: 'superuser',
     path: '/su',
     component: () => import('./pages/superuser.vue'),
