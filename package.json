@@ -20,9 +20,11 @@
     "query-string": "^7.0.0",
     "string-to-color": "^2.2.2",
     "swiper": "^6.7.0",
+    "vee-validate": "^4.4.4",
     "vite-plugin-components": "^0.9.1",
     "vue": "^3.0.5",
-    "vue-router": "^4.0.8"
+    "vue-router": "^4.0.8",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.2",
