@@ -8,25 +8,12 @@
           <template v-if="Component">
             <suspense>
               <div class="h-full">
-                <div
-                  v-show="
-                    route.meta && route.meta.breadcrumbs && route.meta.name
-                  "
-                  class="relative h-[100px]"
-                >
-                  <AtomicBreadcrumbs
-                    v-if="route.meta.breadcrumbs"
-                    :items="breadcrumbs"
-                  />
-                  <transition v-if="route.meta.name" name="slide">
-                    <h1 class="absolute" :key="route.name">
-                      {{ route.meta.name }}
-                    </h1>
-                  </transition>
-                </div>
-                <keep-alive>
-                  <component :is="Component" />
-                </keep-alive>
+                <AtomicBreadcrumbs
+                  v-if="route.meta.breadcrumbs"
+                  :items="breadcrumbs"
+                />
+                <h1>{{ route.meta.name }}</h1>
+                <component :is="Component" />
               </div>
               <template #fallback>
                 <div>
@@ -49,21 +36,9 @@
           :route="dialogRoute"
           v-slot="{ Component: Dialog }"
         >
-          <template v-if="Dialog">
-            <suspense>
-              <keep-alive>
-                <AtomicDialog :visible="true" @onClose="back">
-                  <component :is="Dialog" />
-                </AtomicDialog>
-              </keep-alive>
-
-              <template #fallback>
-                <AtomicLoadingOverlay :visible="true">
-                  loading
-                </AtomicLoadingOverlay>
-              </template>
-            </suspense>
-          </template>
+          <AtomicOverlay v-if="Dialog" :visible="true" @onClose="back">
+            <component :is="Dialog" class="" />
+          </AtomicOverlay>
         </router-view>
       </div>
     </div>
@@ -78,14 +53,16 @@ import {
   provide,
   computed,
   shallowRef,
-  onErrorCaptured,
   defineAsyncComponent,
+  onErrorCaptured,
 } from 'vue'
 import { set, useTitle } from '@vueuse/core'
 import { useRouter } from 'vue-router'
+import AtomicOverlay from './components/atomic/Overlay.vue'
 
 export default defineComponent({
   components: {
+    AtomicOverlay,
     Header: defineAsyncComponent(() =>
       import('./components/layout/Header.vue'),
     ),

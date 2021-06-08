@@ -1,56 +1,58 @@
 <template>
   <div>
-    <h1>{{ idea.name }}</h1>
-    <div class="flex flex-wrap items-start my-5">
-      <RouterLink to="/" custom v-slot="{ navigate }">
-        <div class="mr-6 mb-4">
-          <WidgetUser
-            avatar-gradient-border
-            :avatar="getUserProfileUrl(idea.ownerIdea.id)"
-            :firstname="idea.ownerIdea.firstName"
-            :lastname="idea.ownerIdea.lastName"
-            :username="idea.ownerIdea.userName"
-            @click="navigate"
-            v-focusable
-          />
-        </div>
-      </RouterLink>
-      <AtomicLabel name="date" class="mt-0 mx-4 mb-4">
-        {{ publishedAgo }}
-      </AtomicLabel>
+    <div>
+      <h1>{{ idea.name }}</h1>
+      <div class="flex flex-wrap items-start my-5">
+        <RouterLink to="/" custom v-slot="{ navigate }">
+          <div class="mr-6 mb-4">
+            <WidgetUser
+              avatar-gradient-border
+              :avatar="getUserProfileUrl(idea.ownerIdea.id)"
+              :firstname="idea.ownerIdea.firstName"
+              :lastname="idea.ownerIdea.lastName"
+              :username="idea.ownerIdea.userName"
+              @click="navigate"
+              v-focusable
+            />
+          </div>
+        </RouterLink>
+        <AtomicLabel name="date" class="mt-0 mx-4 mb-4">
+          {{ publishedAgo }}
+        </AtomicLabel>
 
-      <AtomicLabel name="status" class="mt-0 mx-4 mb-4">
-        {{ idea.status }}
-      </AtomicLabel>
+        <AtomicLabel name="status" class="mt-0 mx-4 mb-4">
+          {{ idea.status }}
+        </AtomicLabel>
 
-      <AtomicLabel v-if="isOwnerIdea" name="moderation">
-        {{ idea.waitingValidation ? 'waiting' : 'aproove' }}
-      </AtomicLabel>
-      <AtomicLabel
-        v-if="isOwnerIdea"
-        name="Организация команды"
-        class="mt-0 mx-4 mb-4"
-      >
-        <AtomicButton
-          v-if="idea.status === 'WAITING_FULL_TEAM'"
-          v-focusable.indexOnly
-          :is-small="true"
-          :type="'danger'"
-          @click="changeStatusIdea('DISABLE_SET_OF_CANDIDATES')"
+        <AtomicLabel v-if="isOwnerIdea" name="moderation">
+          {{ idea.waitingValidation ? 'waiting' : 'aproove' }}
+        </AtomicLabel>
+        <AtomicLabel
+          v-if="isOwnerIdea"
+          name="Организация команды"
+          class="mt-0 mx-4 mb-4"
         >
-          Закрыть набор
-        </AtomicButton>
+          <AtomicButton
+            v-if="idea.status === 'WAITING_FULL_TEAM'"
+            v-focusable.indexOnly
+            :is-small="true"
+            :type="'danger'"
+            @click="changeStatusIdea('DISABLE_SET_OF_CANDIDATES')"
+          >
+            Закрыть набор
+          </AtomicButton>
 
-        <AtomicButton
-          v-if="idea.status === 'WORKING'"
-          v-focusable.indexOnly
-          :is-small="true"
-          :type="'success'"
-          @click="changeStatusIdea('ENABLE_SET_OF_CANDIDATES')"
-        >
-          Открыть набор
-        </AtomicButton>
-      </AtomicLabel>
+          <AtomicButton
+            v-if="idea.status === 'WORKING'"
+            v-focusable.indexOnly
+            :is-small="true"
+            :type="'success'"
+            @click="changeStatusIdea('ENABLE_SET_OF_CANDIDATES')"
+          >
+            Открыть набор
+          </AtomicButton>
+        </AtomicLabel>
+      </div>
     </div>
     <div class="grid grid-cols-12">
       <div class="mb-3 col-span-8">
