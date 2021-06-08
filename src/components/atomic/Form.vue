@@ -1,5 +1,19 @@
 <template>
-  <Form :validation-schema="schemas" class="grid grid-cols-2 gap-4">
+  <Form
+    :validation-schema="schemas"
+    class="
+      grid grid-cols-2
+      gap-4
+      bg-white
+      border border-gray-300 border-opacity-30
+      dark:border-blueGray-700
+      dark:bg-blueGray-900
+      grid
+      p-4
+      rounded-xl
+      relative
+    "
+  >
     <div v-for="(input, index) in data" :key="`key_form` + input.name + index">
       <AtomicInputNew
         :value="input.value"
@@ -9,7 +23,7 @@
       >
       </AtomicInputNew>
     </div>
-    <button type="submit" class="btn">Submit</button>
+    <AtomicButton> Submit </AtomicButton>
   </Form>
 </template>
 
