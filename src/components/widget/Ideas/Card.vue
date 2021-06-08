@@ -1,15 +1,6 @@
 <template>
-  <AtomicCard class="relative">
-    <template v-if="slots.user" #bottom>
-      <slot name="user" />
-    </template>
-    <div>
-      <!--      <atomic-image-->
-      <!--        size="4rem"-->
-      <!--        class="mb-2 inline-block"-->
-      <!--        :src="'//source.unsplash.com/random?logo&key' + id"-->
-      <!--      />-->
-
+  <div class="relative">
+    <AtomicCard class="relative">
       <div v-if="!linked" class="text-primary text-lg block font-medium">
         {{ title }}
       </div>
@@ -23,50 +14,103 @@
           {{ title }}
         </a>
       </RouterLink>
+
+      <div class="mt-2 text-sm text-gray-500 leading-5">
+        {{ description }}
+      </div>
+
+      <AtomicLabel v-if="specialists.length" name="Specialists" class="mt-4">
+        <div class="flex flex-wrap">
+          <AtomicChip
+            v-for="(spec, index) in specialists"
+            :key="'spec' + spec.name + index"
+            :text="spec.name"
+            class="mr-2 mb-2"
+          />
+        </div>
+      </AtomicLabel>
+
+      <AtomicLabel v-if="technologies.length" name="technologies" class="mt-2">
+        <div class="flex flex-wrap">
+          <AtomicChip
+            v-for="(tech, index) in technologies"
+            :key="'tech' + tech + index"
+            :text="tech"
+            class="mr-2 mb-2"
+          />
+        </div>
+      </AtomicLabel>
+
+      <AtomicLabel v-if="languages.length" name="languages" class="mt-2">
+        <div class="flex flex-wrap">
+          <AtomicChip
+            v-for="{ name } in languages"
+            :key="name"
+            :text="name"
+            type="auto"
+            class="mr-2 mb-2"
+          />
+        </div>
+      </AtomicLabel>
+    </AtomicCard>
+
+    <div class="relative -mt-px">
+      <em
+        :class="[
+          styles.Triangle_border,
+          'border-gray-200 dark:border-blueGray-700 dark:bg-blueGray-900 top-[100%]',
+        ]"
+      />
+      <em
+        :class="[
+          styles.Triangle,
+          'border-white dark:border-blueGray-900 top-[100%]',
+        ]"
+      />
     </div>
-
-    <div class="mt-2 text-sm text-gray-500 leading-5">
-      {{ description }}
+    <div class="ml-4 mt-4">
+      <slot name="user" />
     </div>
-
-    <AtomicLabel v-if="specialists.length" name="Specialists" class="mt-4">
-      <div class="flex flex-wrap">
-        <AtomicChip
-          v-for="(spec, index) in specialists"
-          :key="'spec' + spec.name + index"
-          :text="spec.name"
-          class="mr-2 mb-2"
-        />
-      </div>
-    </AtomicLabel>
-
-    <AtomicLabel v-if="technologies.length" name="technologies" class="mt-2">
-      <div class="flex flex-wrap">
-        <AtomicChip
-          v-for="(tech, index) in technologies"
-          :key="'tech' + tech + index"
-          :text="tech"
-          class="mr-2 mb-2"
-        />
-      </div>
-    </AtomicLabel>
-
-    <AtomicLabel v-if="languages.length" name="languages" class="mt-2">
-      <div class="flex flex-wrap">
-        <AtomicChip
-          v-for="{ name } in languages"
-          :key="name"
-          :text="name"
-          type="auto"
-          class="mr-2 mb-2"
-        />
-      </div>
-    </AtomicLabel>
-  </AtomicCard>
+  </div>
 </template>
 
+
+<style module>
+.CardShadow {
+  box-shadow: 0px 10px 25px -5px rgb(0 0 0 / 7%);
+}
+/* this CS forms the triangles */
+.Triangle,
+.Triangle_border {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+/* this border color controlls the color of the triangle (what looks like the fill of the triangle) */
+.Triangle {
+  border-right-color: transparent !important;
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-width: 11px;
+  left: 17px;
+}
+
+/* this border color controlls the outside, thin border */
+.Triangle_border {
+  display: block;
+  border-right-color: transparent !important;
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-width: 12px;
+  left: 16px;
+}
+</style>
+
 <script>
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, useCssModule } from 'vue'
 
 export default defineComponent({
   name: 'VIdea',
@@ -97,6 +141,7 @@ export default defineComponent({
     },
   },
   setup(props, context) {
+    const styles = useCssModule()
     const { slots } = context
     const languages = computed(() =>
       props.specialists
@@ -116,6 +161,7 @@ export default defineComponent({
     )
 
     return {
+      styles,
       slots,
       languages,
       technologies,

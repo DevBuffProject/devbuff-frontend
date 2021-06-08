@@ -5,10 +5,10 @@
         <div class="mb-8">
           <WidgetUser
             avatar-gradient-border
-            :avatar="state.user.avatar"
-            :firstname="state.user.firstName"
-            :lastname="state.user.lastName"
-            :username="state.user.userName"
+            :avatar="user.avatar"
+            :firstname="user.firstName"
+            :lastname="user.lastName"
+            :username="user.userName"
             @click="navigate"
             class="block"
             v-focusable
@@ -99,19 +99,18 @@
 <script>
 import { defineComponent, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuth } from '../../composes/core'
+import { useAuth, useUser } from '../../composes/core'
 import {
   SearchIcon,
   DashboardIcon,
   SettingsIcon,
   ShieldIcon,
 } from '@iconicicons/vue3'
-import { useGlobalState } from '../../store'
 
 export default defineComponent({
   setup() {
     const { initAuth, logout, PROVIDERS: AuthProviders, isLoggedIn } = useAuth()
-    const state = useGlobalState()
+    const { user } = useUser()
     const loadingRoute = ref({})
     const router = useRouter()
     const nav = computed(() =>
@@ -151,7 +150,7 @@ export default defineComponent({
     router.afterEach(() => (loadingRoute.value = ''))
 
     return {
-      state,
+      user,
       AuthProviders,
       isLoggedIn,
       nav,

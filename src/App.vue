@@ -8,25 +8,12 @@
           <template v-if="Component">
             <suspense>
               <div class="h-full">
-                <div
-                  v-show="
-                    route.meta && route.meta.breadcrumbs && route.meta.name
-                  "
-                  class="relative h-[100px]"
-                >
-                  <AtomicBreadcrumbs
-                    v-if="route.meta.breadcrumbs"
-                    :items="breadcrumbs"
-                  />
-                  <transition v-if="route.meta.name" name="slide">
-                    <h1 class="absolute" :key="route.name">
-                      {{ route.meta.name }}
-                    </h1>
-                  </transition>
-                </div>
-                <keep-alive>
-                  <component :is="Component" />
-                </keep-alive>
+                <AtomicBreadcrumbs
+                  v-if="route.meta.breadcrumbs"
+                  :items="breadcrumbs"
+                />
+                <h1>{{ route.meta.name }}</h1>
+                <component :is="Component" />
               </div>
               <template #fallback>
                 <div>
