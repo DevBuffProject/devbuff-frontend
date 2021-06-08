@@ -24,17 +24,21 @@
           Your email not confirmed
           <div class="text-sm font-base">
             Resend
-            <a href="/#">here</a>
+            <a href="/#">TODO</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="flex mb-12 w-full">
-    <AtomicForm :data="data" @submit="onSubmit"> </AtomicForm>
+  <div class="w-full grid grid-cols-12">
+    <h3 class="col-span-12">User data</h3>
+    <AtomicForm :data="data" @submit="onSubmit" class="col-span-12">
+    </AtomicForm>
   </div>
-  <div class="flex">
-    <WidgetProfileSkills class="w-full h-auto"> </WidgetProfileSkills>
+  <div class="grid grid-cols-12">
+    <h3 class="col-span-12">Skills settings</h3>
+    <WidgetProfileSkills class="col-span-12 w-full h-auto">
+    </WidgetProfileSkills>
   </div>
 </template>
 
