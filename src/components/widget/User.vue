@@ -8,7 +8,9 @@
     />
     <div>
       <div class="font-semibold">{{ firstname }} {{ lastname }}</div>
-      <div class="text-xs text-gray-500 dark:text-blueGray-400">@{{ username }}</div>
+      <div class="text-xs text-gray-500 dark:text-blueGray-400">
+        {{ `@${username}` }}
+      </div>
     </div>
   </div>
 </template>

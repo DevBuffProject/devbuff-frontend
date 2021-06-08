@@ -23,130 +23,146 @@
         {{ idea.status }}
       </AtomicLabel>
 
-      <AtomicLabel v-if="isOwnerIdea" name="moderation">
+      <AtomicLabel v-if="isOwnerIdea" name="moderation" class="mt-0 mx-4 mb-4">
         {{ idea.waitingValidation ? 'waiting' : 'aproove' }}
       </AtomicLabel>
-      <AtomicLabel
-        v-if="isOwnerIdea"
-        name="Организация команды"
-        class="mt-0 mx-4 mb-4"
-      >
-        <AtomicButton
-          v-if="idea.status === 'WAITING_FULL_TEAM'"
-          v-focusable.indexOnly
-          :is-small="true"
-          :type="'danger'"
-          @click="changeStatusIdea('DISABLE_SET_OF_CANDIDATES')"
-        >
-          Закрыть набор
-        </AtomicButton>
-
-        <AtomicButton
-          v-if="idea.status === 'WORKING'"
-          v-focusable.indexOnly
-          :is-small="true"
-          :type="'success'"
-          @click="changeStatusIdea('ENABLE_SET_OF_CANDIDATES')"
-        >
-          Открыть набор
-        </AtomicButton>
-      </AtomicLabel>
     </div>
-    <div class="grid grid-cols-12">
-      <div class="mb-3 col-span-8">
-        <div
-          v-html="idea.text"
-          class="p-4 border border-gray-200 dark:border-blueGray-600 rounded-xl"
-        />
-      </div>
-      <div
-        class="col-start-10 col-end-13"
-        v-if="Object.keys(acceptedUsers).length > 0"
-      >
+    <div class="grid gap-6 grid-cols-6">
+      <div class="mb-3 col-span-4">
         <AtomicCard>
-          <h3 class="mt-0">Команда:</h3>
+          <div v-html="idea.text" class="overflow-hidden" />
+        </AtomicCard>
+      </div>
 
-          <!--     TODO profile page @click  -->
-          <div
-            class="flex items-center"
-            v-for="(userDate, userId) in acceptedUsers"
-            :key="'accepted' + userId"
+      <div class="col-span-2">
+        <AtomicCard v-if="isOwnerIdea" class="mb-4">
+          <AtomicButton
+            v-focusable.indexOnly
+            is-depressed
+            :type="idea.status === 'WAITING_FULL_TEAM' ? 'danger' : 'success'"
+            @click="
+              changeStatusIdea(
+                idea.status === 'WAITING_FULL_TEAM'
+                  ? 'DISABLE_SET_OF_CANDIDATES'
+                  : 'ENABLE_SET_OF_CANDIDATES',
+              )
+            "
           >
-            <atomic-avatar :avatar="getUserProfileUrl(userId)" class="mr-2" />
-            <div>
-              <div class="font-semibold">
-                {{ userDate.firstName }} {{ userDate.lastName }}
+            <div class="flex flex-col items-center justify-center">
+              <StopIcon v-if="idea.status === 'WAITING_FULL_TEAM'" />
+              <PlayIcon v-else />
+              <span>{{
+                idea.status === 'WAITING_FULL_TEAM'
+                  ? 'Остановить набор'
+                  : 'Продолжить набор'
+              }}</span>
+            </div>
+          </AtomicButton>
+        </AtomicCard>
+
+        <AtomicCard v-if="isOwnerIdea" class="mb-6">
+          <div class="flex justify-center items-center text-sm">
+            <AtomicButton
+              v-if="isOwnerIdea"
+              type="primary"
+              is-depressed
+              is-wide
+            >
+              <div class="flex flex-col items-center justify-center">
+                <EditIcon />
+                <span>Edit</span>
               </div>
-              <div class="text-xs text-gray-500 dark:text-blueGray-400">
-                {{ userDate.positions.join(', ') }}
+            </AtomicButton>
+            <i
+              v-if="isOwnerIdea"
+              class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10"
+            />
+            <AtomicButton v-if="isOwnerIdea" type="danger" is-depressed is-wide>
+              <div class="flex flex-col items-center justify-center">
+                <TrashIcon />
+                <span>Delete</span>
+              </div>
+            </AtomicButton>
+          </div>
+        </AtomicCard>
+
+        <AtomicCard>
+          <h4 class="mt-0 mb-2 text-sm font-normal opacity-30">
+            Позиции - {{ idea.specialist.length + 1 }}
+          </h4>
+          <div class="divide-y divide-gray-200 dark:divide-blueGray-700">
+            <div
+              class="-mx-4 mb-3 px-4 py-3"
+              v-for="specialist in idea.specialist"
+              :key="specialist.id"
+            >
+              <h5 class="mb-4 m-0 font-normal">
+                {{ specialist.name }} Developer
+              </h5>
+              <AtomicLabel name="Необходимые ЯП">
+                <div class="flex flex-wrap">
+                  <div
+                    v-for="language in specialist.languages"
+                    :key="`language-${language.name}-${specialist.id}`"
+                  >
+                    <AtomicChip
+                      :text="language.name"
+                      class="mb-2"
+                      type="auto"
+                    />
+                  </div>
+                </div>
+              </AtomicLabel>
+              <!--TODO: Computed properties-->
+              <!--              <AtomicLabel name="Технологии">-->
+              <!--                <AtomicChip-->
+              <!--                  v-for="(framework, i) in specialist.languages.map(-->
+              <!--                    (lang) => lang.frameworks,-->
+              <!--                  )"-->
+              <!--                  :key="'framework' + i"-->
+              <!--                  :text="framework.name"-->
+              <!--                  type="auto"-->
+              <!--                  class="mr-2"-->
+              <!--                />-->
+              <!--              </AtomicLabel>-->
+
+              <div v-if="!isOwnerIdea" class="mt-6">
+                <div
+                  role="button"
+                  v-if="getStatusAtPosition(specialist.id) === 'NONE'"
+                  @click="send(specialist.id)"
+                  :class="[
+                    'p-2 text-center text-primary bg-primary bg-opacity-10',
+                    'transition-all hover:bg-opacity-[0.15] rounded',
+                  ]"
+                >
+                  Откликнуться
+                </div>
+                <div
+                  v-else-if="getStatusAtPosition(specialist.id) === 'PENDING'"
+                  :class="[
+                    'w-full py-2 rounded',
+                    'text-center text-gray-400',
+                    'bg-gray-100',
+                  ]"
+                >
+                  Заявка оправлена
+                </div>
+                <div
+                  v-else-if="getStatusAtPosition(specialist.id) === 'ACCEPTED'"
+                  :class="[
+                    'w-full py-2 rounded',
+                    'text-center text-gray-400',
+                    'bg-gray-100',
+                  ]"
+                >
+                  Вы в команде
+                </div>
               </div>
             </div>
           </div>
         </AtomicCard>
       </div>
-    </div>
-    <h1 class="grid grid-cols-12">Позиции:</h1>
-
-    <div class="flex items-baseline mb-6">
-      <AtomicCard
-        class="space-x-2 mr-1"
-        v-for="specialist in idea.specialist"
-        :key="specialist.id"
-      >
-        <h4 class="mt-0">{{ specialist.name }} Developer</h4>
-        <AtomicLabel name="Необходимые ЯП" />
-        <div class="flex flex-wrap">
-          <div
-            v-for="language in specialist.languages"
-            :key="'language' + language.name + specialist.id"
-          >
-            <AtomicChip :text="language.name" class="ml-2 mb-2" type="auto" />
-
-            <AtomicLabel
-              v-if="language.frameworks && language.frameworks.length > 0"
-              name="Технологии"
-              class="ml-3"
-            />
-            <AtomicChip
-              v-for="framework in language.frameworks"
-              :key="
-                'framework' + framework.name + language.name + specialist.id
-              "
-              :text="framework.name"
-              type="auto"
-              class="ml-4"
-            />
-          </div>
-        </div>
-        <div class="flex items-baseline content-center mt-4">
-          <AtomicButton
-            v-if="!isOwnerIdea && getStatusAtPosition(specialist.id) === 'NONE'"
-            v-focusable.indexOnly
-            :is-small="true"
-            @click="send(specialist.id)"
-          >
-            Откликнуться
-          </AtomicButton>
-
-          <AtomicButton
-            v-if="getStatusAtPosition(specialist.id) === 'PENDING'"
-            v-focusable.indexOnly
-            :is-small="true"
-            :disabled="true"
-          >
-            Заявка оправлена
-          </AtomicButton>
-
-          <AtomicButton
-            v-if="getStatusAtPosition(specialist.id) === 'ACCEPTED'"
-            v-focusable.indexOnly
-            :is-small="true"
-            :disabled="true"
-          >
-            Вы в команде
-          </AtomicButton>
-        </div>
-      </AtomicCard>
     </div>
   </div>
 </template>
@@ -201,20 +217,6 @@ export default defineComponent({
 
     const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
 
-    const acceptedUsers = {}
-
-    for (let specialist of idea.value.specialist) {
-      for (let acceptedUser of specialist.acceptedUsers) {
-        if (acceptedUsers[acceptedUser.id] === undefined) {
-          acceptedUsers[acceptedUser.id] = {}
-          acceptedUsers[acceptedUser.id].firstName = acceptedUser.firstName
-          acceptedUsers[acceptedUser.id].lastName = acceptedUser.lastName
-          acceptedUsers[acceptedUser.id].positions = []
-        }
-
-        acceptedUsers[acceptedUser.id].positions.push(specialist.name)
-      }
-    }
     return {
       idea,
       isOwnerIdea,
@@ -222,7 +224,6 @@ export default defineComponent({
       send,
       changeStatusIdea,
       getUserProfileUrl,
-      acceptedUsers,
       getStatusAtPosition,
     }
   },
