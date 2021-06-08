@@ -119,4 +119,7 @@ body {
   h4 {
     @apply text-xl font-semibold mb-4 mt-4;
   }
+  h5 {
+    @apply text-lg font-medium mb-4 mt-4;
+  }
 }

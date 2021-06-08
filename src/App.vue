@@ -36,9 +36,21 @@
           :route="dialogRoute"
           v-slot="{ Component: Dialog }"
         >
-          <AtomicOverlay v-if="Dialog" :visible="true" @onClose="back">
-            <component :is="Dialog" class="" />
-          </AtomicOverlay>
+          <template v-if="Dialog">
+            <suspense>
+              <keep-alive>
+                <AtomicDialog :visible="true" @onClose="back">
+                  <component :is="Dialog" />
+                </AtomicDialog>
+              </keep-alive>
+
+              <template #fallback>
+                <AtomicLoadingOverlay :visible="true">
+                  loading
+                </AtomicLoadingOverlay>
+              </template>
+            </suspense>
+          </template>
         </router-view>
       </div>
     </div>
@@ -53,16 +65,14 @@ import {
   provide,
   computed,
   shallowRef,
-  defineAsyncComponent,
   onErrorCaptured,
+  defineAsyncComponent,
 } from 'vue'
 import { set, useTitle } from '@vueuse/core'
 import { useRouter } from 'vue-router'
-import AtomicOverlay from './components/atomic/Overlay.vue'
 
 export default defineComponent({
   components: {
-    AtomicOverlay,
     Header: defineAsyncComponent(() =>
       import('./components/layout/Header.vue'),
     ),
