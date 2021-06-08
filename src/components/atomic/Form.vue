@@ -26,7 +26,7 @@
         :name="input.name"
         :type="input.type"
         :label="input.label"
-        :icon="input.icon"
+        :svg-icon-name="input.svgIconName"
       >
       </AtomicInputNew>
     </div>
@@ -37,8 +37,7 @@
 <script>
 import { Form } from 'vee-validate'
 import { defineComponent } from 'vue'
-import { NumberSchema, StringSchema } from 'yup'
-import { InformationIcon } from '@iconicicons/vue3'
+import { NumberSchema, StringSchema, DateSchema } from 'yup'
 import * as yup from 'yup'
 
 export default defineComponent({
@@ -77,6 +76,8 @@ export default defineComponent({
         }
       } else if (input.schema instanceof NumberSchema) {
         input.type = 'number'
+      } else if (input.schema instanceof DateSchema) {
+        input.type = 'date'
       }
       yupObject[input.name] = input.schema
     }
@@ -84,7 +85,6 @@ export default defineComponent({
     const schemas = yup.object(yupObject)
     return {
       schemas,
-      InformationIcon,
     }
   },
 })
