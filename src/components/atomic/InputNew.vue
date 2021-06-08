@@ -33,23 +33,57 @@
           :type="type"
           :value="inputValue"
           @input="handleChange"
-          @blur="handleBlur"
+          @blur="onBlur"
           @focus="onFocus"
         />
-        <input
-          v-else
-          :class="[
-            'w-full py-2 px-4 bg-transparent outline-none w-full resize-none',
-            type === 'textarea' && 'resize-none min-h-[100px]',
-          ]"
-          :name="name"
-          :id="name"
-          :type="type"
-          :value="inputValue"
-          @input="handleChange"
-          @blur="handleBlur"
-          @focus="onFocus"
-        />
+
+        <div v-else class="flex flex-wrap items-stretch relative">
+          <div class="flex" v-if="icon">
+            <component
+              class="
+                flex
+                items-center
+                leading-normal
+                border-1
+                rounded-r-none
+                px-3
+                whitespace-no-wrap
+                text-sm
+                w-12
+                h-10
+                justify-center
+                items-center
+                text-xl
+                rounded-lg
+                text-black
+                dark:text-white
+              "
+              :is="icon"
+            />
+          </div>
+          <input
+            class="
+              flex-shrink flex-grow flex-auto
+              leading-normal
+              flex-1
+              relative
+              w-full
+              py-2
+              px-4
+              bg-transparent
+              outline-none
+              w-full
+              resize-none
+            "
+            :name="name"
+            :id="name"
+            :type="type"
+            :value="inputValue"
+            @input="handleChange"
+            @blur="onBlur"
+            @focus="onFocus"
+          />
+        </div>
       </div>
     </label>
     <div
@@ -91,6 +125,10 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    icon: {
+      type: Function,
+      default: undefined,
+    },
   },
   setup(props, { emit }) {
     const {
@@ -106,6 +144,7 @@ export default defineComponent({
     const isFocused = ref(false)
     const onFocus = () => (isFocused.value = true)
 
+    const onBlur = () => (isFocused.value = false)
     return {
       inputValue,
       meta,
@@ -114,6 +153,7 @@ export default defineComponent({
       handleBlur,
       isFocused,
       onFocus,
+      onBlur,
     }
   },
 })

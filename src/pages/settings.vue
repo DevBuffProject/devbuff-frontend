@@ -1,6 +1,37 @@
 <template>
-  <div class="flex mb-12">
-    <AtomicForm :data="data" @submit="test"> </AtomicForm>
+  <div class="flex">
+    <div
+      class="
+        flex
+        justify-center
+        items-center
+        m-1
+        font-medium
+        py-1
+        px-2
+        bg-white
+        rounded-md
+        text-yellow-700
+        bg-yellow-100
+        border border-yellow-300
+      "
+    >
+      <div v-if="!user.statusEmailConfirm">
+        <component :is="InformationIcon" />
+      </div>
+      <div class="text-xl font-normal max-w-full flex-initial">
+        <div class="py-2">
+          Your email not confirmed
+          <div class="text-sm font-base">
+            Resend
+            <a href="/#">here</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex mb-12 w-full">
+    <AtomicForm :data="data" @submit="onSubmit"> </AtomicForm>
   </div>
   <div class="flex">
     <WidgetProfileSkills class="w-full h-auto"> </WidgetProfileSkills>
@@ -10,30 +41,113 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import * as yup from 'yup'
+import { useUser } from '../composes/core'
+
+import { InformationIcon, AirplayToTvIcon } from '@iconicicons/vue3'
+
 export default defineComponent({
-  setup() {
+  async setup() {
+    const { user, getUser, saveUserData } = useUser()
+
     const data = [
       {
-        schema: yup.number().min(1).max(10),
-        label: 'TestValue',
-        name: 'test_value',
-        value: 2,
+        schema: yup.string().min(4).max(10),
+        label: 'User name',
+        name: 'userName',
+        value: user.value.userName,
       },
       {
-        schema: yup.string().required().min(10).max(140),
-        label: 'Test string',
-        name: 'test_value_string',
-        value: '2',
+        schema: yup.string().email(),
+        label: 'Email',
+        name: 'email',
+        value: user.value.email,
+      },
+
+      {
+        schema: yup
+          .string()
+          .matches(/^[A-Za-zА-яа-я]*$/)
+          .min(3)
+          .max(30)
+          .required(),
+        label: 'First name',
+        name: 'firstName',
+        value: user.value.firstName,
+      },
+      {
+        schema: yup
+          .string()
+          .matches(/^[A-Za-zА-яа-я]*$/)
+          .min(3)
+          .max(30)
+          .required(),
+        label: 'Last name',
+        name: 'lastName',
+        value: user.value.lastName,
+      },
+      {
+        schema: yup.string().min(0).max(300),
+        label: 'Bio',
+        name: 'bio',
+        value: user.value.bio,
+      },
+      {
+        schema: yup
+          .string()
+          .min(3)
+          .max(15)
+          .matches(/^[A-z0-9]*$/),
+        label: 'Telegram',
+        name: 'socialNetworks:telegram',
+        value: user.value.socialNetworks.telegram,
+        icon: AirplayToTvIcon,
+      },
+      {
+        schema: yup.string().matches(/^([A-z0-9]{4,})(#)(\d{4})$/),
+        label: 'Discord',
+        name: 'socialNetworks:discord',
+        value: user.value.socialNetworks.discord,
+        icon: AirplayToTvIcon,
+      },
+      {
+        schema: yup.string().matches(/^([A-z0-9_:]{3,15})$/),
+        label: 'Skype',
+        name: 'socialNetworks:skype',
+        value: user.value.socialNetworks.skype,
+        icon: AirplayToTvIcon,
+      },
+      {
+        schema: yup.string().matches(/^([A-z0-9_]{3,15})$/),
+        label: 'Vk',
+        name: 'socialNetworks:vk',
+        value: user.value.socialNetworks.vk,
+        icon: AirplayToTvIcon,
       },
     ]
-    const test = (a) => {
-      console.log(a)
+
+    const onSubmit = (data) => {
+      for (const indexValue of Object.keys(data)) {
+        if (indexValue.indexOf(':') > -1) {
+          const split = indexValue.split(':')
+          if (data[split[0]] === undefined) {
+            data[split[0]] = {}
+          }
+          data[split[0]][split[1]] = data[indexValue]
+          delete data[indexValue]
+        }
+      }
+      console.log(data)
+      saveUserData(data)
     }
 
+    await getUser()
+    console.log(JSON.stringify(user.value))
     return {
       yup,
       data,
-      test,
+      onSubmit,
+      InformationIcon,
+      user,
     }
   },
 })

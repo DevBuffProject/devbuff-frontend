@@ -29,10 +29,22 @@ export const useUser = () => {
     user.value.skills = skills
   }
 
+  const saveUserData = async (data) => {
+    await request('/profile', {
+      method: 'patch',
+      data: data,
+    })
+
+    for (const indexValue of Object.keys(data)) {
+      user.value[indexValue] = data[indexValue]
+    }
+  }
+
   return {
     user,
     getUser,
     getUserProfileUrl,
     saveUserSkills,
+    saveUserData,
   }
 }
