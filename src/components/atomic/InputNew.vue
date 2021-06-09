@@ -38,8 +38,8 @@
         />
 
         <div v-else class="flex flex-wrap items-stretch relative">
-          <div class="flex" v-if="icon">
-            <component
+          <div class="flex" v-if="svgIconName">
+            <Svg
               class="
                 flex
                 items-center
@@ -58,7 +58,7 @@
                 text-black
                 dark:text-white
               "
-              :is="icon"
+              :name="svgIconName"
             />
           </div>
           <input
@@ -125,8 +125,8 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    icon: {
-      type: Function,
+    svgIconName: {
+      type: String,
       default: undefined,
     },
   },
