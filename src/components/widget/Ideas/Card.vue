@@ -59,8 +59,10 @@
       </AtomicLabel>
     </AtomicCard>
 
-    <AtomicTriangle class="-mt-px" />
-    <div class="ml-4 mt-4">
+    <div class="ml-4">
+      <div class="-mt-1">
+        <AtomicTriangle direction="bottom" />
+      </div>
       <slot name="user" />
     </div>
   </div>

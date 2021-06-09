@@ -20,7 +20,7 @@
       v-bind="attrs"
       :class="[
         styles.Triangle,
-        'block w-[0px] h-[0px] border-solid',
+        'block w-[0px] h-[0px] border-solid relative',
         'border border-[11px] !border-b-0 border-white dark:border-blueGray-900',
       ]"
     />
