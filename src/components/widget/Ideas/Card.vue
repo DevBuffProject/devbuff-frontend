@@ -10,7 +10,12 @@
         custom
         v-slot="{ href, navigate }"
       >
-        <a :href="href" @click="navigate" v-focusable class="font-semibold">
+        <a
+          :href="href"
+          @click="navigate"
+          v-focusable
+          class="font-semibold inline-block"
+        >
           {{ title }}
         </a>
       </RouterLink>
@@ -54,57 +59,12 @@
       </AtomicLabel>
     </AtomicCard>
 
-    <div class="relative -mt-px">
-      <em
-        :class="[
-          styles.Triangle_border,
-          'border-gray-200 dark:border-blueGray-700 dark:bg-blueGray-900 top-[100%]',
-        ]"
-      />
-      <em
-        :class="[
-          styles.Triangle,
-          'border-white dark:border-blueGray-900 top-[100%]',
-        ]"
-      />
-    </div>
+    <AtomicTriangle class="-mt-px" />
     <div class="ml-4 mt-4">
       <slot name="user" />
     </div>
   </div>
 </template>
-
-
-<style module>
-/* this CS forms the triangles */
-.Triangle,
-.Triangle_border {
-  position: absolute;
-  display: block;
-  width: 0;
-  height: 0;
-  border-style: solid;
-}
-
-/* this border color controlls the color of the triangle (what looks like the fill of the triangle) */
-.Triangle {
-  border-right-color: transparent !important;
-  border-bottom-color: transparent !important;
-  border-left-color: transparent !important;
-  border-width: 11px;
-  left: 17px;
-}
-
-/* this border color controlls the outside, thin border */
-.Triangle_border {
-  display: block;
-  border-right-color: transparent !important;
-  border-bottom-color: transparent !important;
-  border-left-color: transparent !important;
-  border-width: 12px;
-  left: 16px;
-}
-</style>
 
 <script>
 import { defineComponent, computed, useCssModule } from 'vue'

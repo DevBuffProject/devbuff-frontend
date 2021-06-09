@@ -28,63 +28,101 @@
       </AtomicLabel>
     </div>
     <div class="grid gap-6 grid-cols-6">
-      <div class="mb-3 col-span-4">
-        <AtomicCard>
-          <div v-html="idea.text" class="overflow-hidden" />
-        </AtomicCard>
-      </div>
+      <AtomicCard class="mb-3 col-span-4">
+        <div v-html="idea.text" class="overflow-hidden" />
+      </AtomicCard>
 
       <div class="col-span-2">
-        <AtomicCard v-if="isOwnerIdea" class="mb-4">
-          <AtomicButton
-            v-focusable.indexOnly
-            is-depressed
-            :type="idea.status === 'WAITING_FULL_TEAM' ? 'danger' : 'success'"
-            @click="
-              changeStatusIdea(
-                idea.status === 'WAITING_FULL_TEAM'
-                  ? 'DISABLE_SET_OF_CANDIDATES'
-                  : 'ENABLE_SET_OF_CANDIDATES',
-              )
-            "
-          >
-            <div class="flex flex-col items-center justify-center">
-              <StopIcon v-if="idea.status === 'WAITING_FULL_TEAM'" />
-              <PlayIcon v-else />
-              <span>{{
-                idea.status === 'WAITING_FULL_TEAM'
-                  ? 'Остановить набор'
-                  : 'Продолжить набор'
-              }}</span>
-            </div>
-          </AtomicButton>
-        </AtomicCard>
+        <div class="-mt-12 mb-6 flex items-center">
+          <span class="opacity-50">вы создатель</span>
+          <AtomicDropdown by-click>
+            <template #activator>
+              <div
+                role="button"
+                class="text-primary flex items-center ml-2"
+                v-focusable
+                @clock="toggleControls"
+              >
+                Управлять
+                <ChevronDownIcon />
+              </div>
+            </template>
 
-        <AtomicCard v-if="isOwnerIdea" class="mb-6">
-          <div class="flex justify-center items-center text-sm">
-            <AtomicButton
-              v-if="isOwnerIdea"
-              type="primary"
-              is-depressed
-              is-wide
-            >
-              <div class="flex flex-col items-center justify-center">
-                <EditIcon />
-                <span>Edit</span>
-              </div>
-            </AtomicButton>
-            <i
-              v-if="isOwnerIdea"
-              class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10"
-            />
-            <AtomicButton v-if="isOwnerIdea" type="danger" is-depressed is-wide>
-              <div class="flex flex-col items-center justify-center">
-                <TrashIcon />
-                <span>Delete</span>
-              </div>
-            </AtomicButton>
-          </div>
-        </AtomicCard>
+            <div class="flex justify-center items-center text-sm">
+              <AtomicButton
+                v-focusable.indexOnly
+                is-depressed
+                is-small
+                :type="
+                  idea.status === 'WAITING_FULL_TEAM' ? 'danger' : 'success'
+                "
+                @click="
+                  changeStatusIdea(
+                    idea.id,
+                    idea.status === 'WAITING_FULL_TEAM'
+                      ? 'DISABLE_SET_OF_CANDIDATES'
+                      : 'ENABLE_SET_OF_CANDIDATES',
+                  )
+                "
+              >
+                <div class="flex flex-col items-center justify-center">
+                  <StopIcon v-if="idea.status === 'WAITING_FULL_TEAM'" />
+                  <PlayIcon v-else />
+                  <span>{{
+                    idea.status === 'WAITING_FULL_TEAM'
+                      ? 'Остановить набор'
+                      : 'Продолжить набор'
+                  }}</span>
+                </div>
+              </AtomicButton>
+              <i
+                v-if="isOwnerIdea"
+                class="
+                  bg-gray-200
+                  dark:bg-blueGray-600
+                  mx-2
+                  w-px
+                  h-10
+                  opacity-20
+                "
+              />
+              <AtomicButton
+                v-if="isOwnerIdea"
+                type="primary"
+                is-depressed
+                is-small
+              >
+                <div class="flex flex-col items-center justify-center">
+                  <EditIcon />
+                  <span>Edit</span>
+                </div>
+              </AtomicButton>
+              <!-- TODO: use delimiter component or class -->
+              <i
+                v-if="isOwnerIdea"
+                class="
+                  bg-gray-200
+                  dark:bg-blueGray-600
+                  mx-2
+                  w-px
+                  h-10
+                  opacity-20
+                "
+              />
+              <AtomicButton
+                v-if="isOwnerIdea"
+                type="danger"
+                is-depressed
+                is-small
+              >
+                <div class="flex flex-col items-center justify-center">
+                  <TrashIcon />
+                  <span>Delete</span>
+                </div>
+              </AtomicButton>
+            </div>
+          </AtomicDropdown>
+        </div>
 
         <AtomicCard>
           <h4 class="mt-0 mb-0 text-sm font-normal opacity-30">
@@ -140,7 +178,7 @@
                     'bg-gray-100',
                   ]"
                 >
-                  Заявка оправлена
+                  Заявка отправлена
                 </div>
                 <div
                   v-else-if="getStatusAtPosition(specialist.id) === 'ACCEPTED'"

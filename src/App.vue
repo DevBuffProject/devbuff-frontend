@@ -38,11 +38,10 @@
         >
           <template v-if="Dialog">
             <suspense>
-              <keep-alive>
-                <AtomicDialog :visible="true" @onClose="back">
-                  <component :is="Dialog" />
-                </AtomicDialog>
-              </keep-alive>
+              <AtomicDialog :visible="true" @onClose="back">
+                <component :is="dialogRoute?.meta.preview || Dialog" />
+                {{ dialogRoute.meta.preview }}
+              </AtomicDialog>
 
               <template #fallback>
                 <AtomicLoadingOverlay :visible="true">
@@ -56,7 +55,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 import {
@@ -122,6 +120,7 @@ export default defineComponent({
       dialogRoute,
       breadcrumbs,
       error,
+      log: console.log,
       back,
       LayoutHeader,
     }
