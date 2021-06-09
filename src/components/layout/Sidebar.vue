@@ -128,15 +128,15 @@ export default defineComponent({
           exact: true,
         },
         isLoggedIn.value && {
-          title: 'Settings',
-          icon: SettingsIcon,
-          to: '/',
-          exact: true,
-        },
-        isLoggedIn.value && {
           title: 'Superuser',
           icon: ShieldIcon,
           to: '/su',
+          exact: true,
+        },
+        isLoggedIn.value && {
+          title: 'Settings',
+          icon: SettingsIcon,
+          to: '/settings',
           exact: true,
         },
       ].filter((i) => !!i),

@@ -29,6 +29,12 @@
   </div>
 </template>
 
+<style module>
+.CardShadow {
+  box-shadow: 0px 10px 25px -5px rgb(0 0 0 / 7%);
+}
+</style>
+
 <script>
 import { defineComponent, useCssModule, useContext } from 'vue'
 import { useAppearance } from '../../composes/utils'
