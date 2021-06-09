@@ -120,6 +120,7 @@ export default defineComponent({
         name: 'socialNetworks:vk',
         value: user.value.socialNetworks.vk,
         svgIconName: 'Vk',
+        placeholder: 'username',
       },
     ]
     const resendEmailNotificationIsVisible = ref(true)
