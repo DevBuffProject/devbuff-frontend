@@ -1,34 +1,13 @@
 <template>
   <div class="flex">
-    <div
-      class="
-        flex
-        justify-center
-        items-center
-        m-1
-        font-medium
-        py-1
-        px-2
-        bg-white
-        rounded-md
-        text-yellow-700
-        bg-yellow-100
-        border border-yellow-300
-      "
-    >
-      <div v-if="!user.statusEmailConfirm">
-        <component :is="InformationIcon" />
-      </div>
-      <div class="text-xl font-normal max-w-full flex-initial">
-        <div class="py-2">
-          Your email not confirmed
-          <div class="text-sm font-base">
-            Resend
-            <a href="/#">TODO</a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <AtomicNotification
+      v-if="!user.statusEmailConfirm && resendEmailNotificationIsVisible"
+      @click="onResendEmail"
+      style="cursor: pointer"
+      type="warning"
+      :message="`Your email not confirmed`"
+      :description="`Для того чтобы вы могли получать уведомления о ваших идеях, необходимо подтвердить Email. Переотправить письмо на адрес ${user.email}`"
+    ></AtomicNotification>
   </div>
   <div class="w-full grid grid-cols-12">
     <h3 class="col-span-12">User data</h3>
@@ -47,11 +26,9 @@ import { defineComponent, ref } from 'vue'
 import * as yup from 'yup'
 import { useUser } from '../composes/core'
 
-import { InformationIcon, AirplayToTvIcon } from '@iconicicons/vue3'
-
 export default defineComponent({
   async setup() {
-    const { user, getUser, saveUserData } = useUser()
+    const { user, getUser, saveUserData, resendEmail } = useUser()
 
     const data = [
       {
@@ -106,34 +83,47 @@ export default defineComponent({
           .string()
           .min(3)
           .max(15)
-          .matches(/^[A-z0-9]*$/),
+          .matches(/^[A-z0-9]*$/)
+          .nullable(),
         label: 'Telegram',
         name: 'socialNetworks:telegram',
         value: user.value.socialNetworks.telegram,
         svgIconName: 'Telegram',
       },
       {
-        schema: yup.string().matches(/^([A-z0-9]{4,})(#)(\d{4})$/),
+        schema: yup
+          .string()
+          .matches(/^([A-z0-9]{4,})(#)(\d{4})$/)
+          .nullable(),
         label: 'Discord',
         name: 'socialNetworks:discord',
         value: user.value.socialNetworks.discord,
+        placeholder: 'DevBuffUser#1234',
         svgIconName: 'Discord',
       },
       {
-        schema: yup.string().matches(/^([A-z0-9_:]{3,15})$/),
+        schema: yup
+          .string()
+          .matches(/^([A-z0-9_:]{3,15})$/)
+          .nullable(),
         label: 'Skype',
         name: 'socialNetworks:skype',
         value: user.value.socialNetworks.skype,
         svgIconName: 'Skype',
       },
       {
-        schema: yup.string().matches(/^([A-z0-9_]{3,15})$/),
+        schema: yup
+          .string()
+          .matches(/^([A-z0-9_]{3,15})$/)
+          .nullable(),
         label: 'Vk',
         name: 'socialNetworks:vk',
         value: user.value.socialNetworks.vk,
         svgIconName: 'Vk',
+        placeholder: 'username',
       },
     ]
+    const resendEmailNotificationIsVisible = ref(true)
 
     const onSubmit = (data) => {
       for (const indexValue of Object.keys(data)) {
@@ -146,7 +136,13 @@ export default defineComponent({
           delete data[indexValue]
         }
       }
+      resendEmailNotificationIsVisible.value = false
       saveUserData(data)
+    }
+
+    const onResendEmail = async () => {
+      await resendEmail()
+      resendEmailNotificationIsVisible.value = false
     }
 
     await getUser()
@@ -155,7 +151,8 @@ export default defineComponent({
       yup,
       data,
       onSubmit,
-      InformationIcon,
+      onResendEmail,
+      resendEmailNotificationIsVisible,
       user,
     }
   },

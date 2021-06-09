@@ -2,7 +2,10 @@
   <div class="grid gap-6 grid-cols-2">
     <div class="col-span-1">
       <AtomicCard class="px-0">
-        <div class="divide-y divide-gray-200 dark:divide-blueGray-700">
+        <div
+          class="divide-y divide-gray-200 dark:divide-blueGray-700"
+          v-if="userIdeas.length > 0"
+        >
           <WidgetDashboardIdeaCard
             v-for="idea of userIdeas"
             :key="idea.id"
@@ -19,6 +22,7 @@
             "
           />
         </div>
+        <div class="ml-4" v-else>У вас нет созданных идей.</div>
       </AtomicCard>
     </div>
     <aside class="col-span-1">

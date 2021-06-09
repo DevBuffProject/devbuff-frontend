@@ -88,7 +88,7 @@
 
         <AtomicCard>
           <h4 class="mt-0 mb-0 text-sm font-normal opacity-30">
-            Позиции - {{ idea.specialist.length + 1 }}
+            Позиции - {{ idea.specialist.length }}
           </h4>
           <div class="divide-y divide-gray-200 dark:divide-blueGray-700">
             <div
