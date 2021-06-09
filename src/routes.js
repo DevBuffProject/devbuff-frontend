@@ -58,4 +58,9 @@ export default [
     component: () => import('./pages/callback.vue'),
     props: true,
   },
+  {
+    name: 'email',
+    path: '/email/:confirm?',
+    component: () => import('./pages/email.vue'),
+  },
 ]

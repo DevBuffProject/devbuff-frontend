@@ -8,8 +8,8 @@ export const useUser = () => {
   const getUser = async (uuid = '') => {
     const response = await request(uuid ? `/profile/${uuid}` : '/profile')
     user.value = {
-      avatar: getUserProfileUrl(response?.data.id),
-      ...response?.data,
+      avatar: getUserProfileUrl(response.data.id),
+      ...response.data,
     }
     return response
   }
@@ -40,11 +40,21 @@ export const useUser = () => {
     }
   }
 
+  const confirmEmail = async (token) => {
+    try {
+      await request(`/email/confirm?token=${token}`)
+    } catch (error) {
+      if (error.value && error.value.response.status !== 200)
+        throw new Error("Can't confirm email")
+    }
+  }
+
   return {
     user,
     getUser,
     getUserProfileUrl,
     saveUserSkills,
     saveUserData,
+    confirmEmail,
   }
 }
