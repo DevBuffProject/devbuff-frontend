@@ -28,6 +28,9 @@ export default [
     path: '/view-:id',
     component: () => import('./pages/idea.vue'),
     props: true,
+    meta: {
+      breadcrumbs: ['home', 'explore'],
+    },
   },
   {
     name: 'settings',

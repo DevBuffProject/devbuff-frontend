@@ -8,35 +8,11 @@
       ]"
       v-bind="attrs"
     >
-      <template v-if="$slots.bottom || triangle">
-        <em
-          v-if="isDark"
-          :class="[
-            styles.Triangle_border,
-            'border-gray-300 dark:border-blueGray-700 dark:bg-blueGray-900',
-            {
-              'top-[100%]': triangle === 'bottom' || slots.bottom,
-              'top-[-16px] transform rotate-[180deg]': triangle === 'top',
-            },
-          ]"
-        />
-        <em
-          :class="[
-            styles.Triangle,
-            'border-white dark:border-blueGray-900',
-            {
-              'top-[100%]': triangle === 'bottom' || slots.bottom,
-              'top-[-14px] transform rotate-[180deg]': triangle === 'top',
-            },
-          ]"
-        />
-      </template>
+      <template v-if="$slots.bottom || triangle"> </template>
       <div v-if="slots.header">
         <slot name="header" />
       </div>
-      <div>
-        <slot />
-      </div>
+      <slot />
       <div v-if="slots.footer || slots.controls" class="self-end -mb-4 py-2.5">
         <atomic-delimiter class="mb-2.5" />
         <div v-if="slots.footer">
@@ -53,8 +29,14 @@
   </div>
 </template>
 
+<style module>
+.CardShadow {
+  box-shadow: 0px 10px 25px -5px rgb(0 0 0 / 7%);
+}
+</style>
+
 <script>
-import { defineComponent, useCssModule } from 'vue'
+import { defineComponent, useCssModule, useContext } from 'vue'
 import { useAppearance } from '../../composes/utils'
 
 export default defineComponent({
@@ -65,10 +47,10 @@ export default defineComponent({
       default: '',
     },
   },
-  setup(_, context) {
+  setup() {
     const styles = useCssModule()
+    const { attrs, slots } = useContext()
     const { isDark } = useAppearance()
-    const { attrs, slots } = context
 
     return {
       styles,
@@ -79,37 +61,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style module>
-.CardShadow {
-  box-shadow: 0px 10px 25px -5px rgb(0 0 0 / 7%);
-}
-/* this CS forms the triangles */
-.Triangle,
-.Triangle_border {
-  position: absolute;
-  display: block;
-  width: 0;
-  height: 0;
-  border-style: solid;
-}
-
-/* this border color controlls the color of the triangle (what looks like the fill of the triangle) */
-.Triangle {
-  border-right-color: transparent !important;
-  border-bottom-color: transparent !important;
-  border-left-color: transparent !important;
-  border-width: 7px;
-  left: 17px;
-}
-
-/* this border color controlls the outside, thin border */
-.Triangle_border {
-  display: block;
-  border-right-color: transparent !important;
-  border-bottom-color: transparent !important;
-  border-left-color: transparent !important;
-  border-width: 8px;
-  left: 16px;
-}
-</style>

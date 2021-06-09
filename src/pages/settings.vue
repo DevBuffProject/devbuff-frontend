@@ -136,12 +136,11 @@ export default defineComponent({
           delete data[indexValue]
         }
       }
-      console.log(data)
       saveUserData(data)
     }
 
     await getUser()
-    console.log(JSON.stringify(user.value))
+
     return {
       yup,
       data,
