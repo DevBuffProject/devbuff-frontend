@@ -32,6 +32,7 @@
           :id="name"
           :type="type"
           :value="inputValue"
+          :placeholder="placeholder"
           @input="handleChange"
           @blur="onBlur"
           @focus="onFocus"
@@ -78,6 +79,7 @@
             :id="name"
             :type="type"
             :value="inputValue"
+            :placeholder="placeholder"
             @input="handleChange"
             @blur="onBlur"
             @focus="onFocus"
@@ -115,6 +117,10 @@ export default defineComponent({
     label: {
       type: String,
       required: true,
+    },
+    placeholder: {
+      type: String,
+      default: undefined,
     },
     inlineLabel: {
       type: Boolean,

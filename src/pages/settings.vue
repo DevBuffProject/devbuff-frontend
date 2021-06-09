@@ -98,6 +98,7 @@ export default defineComponent({
         label: 'Discord',
         name: 'socialNetworks:discord',
         value: user.value.socialNetworks.discord,
+        placeholder: 'DevBuffUser#1234',
         svgIconName: 'Discord',
       },
       {
