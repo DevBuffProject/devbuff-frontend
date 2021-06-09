@@ -136,7 +136,7 @@ export default defineComponent({
         isLoggedIn.value && {
           title: 'Settings',
           icon: SettingsIcon,
-          to: '/settings',
+          to: { name: 'settings', params: { _isDialog: true } },
           exact: true,
         },
       ].filter((i) => !!i),
