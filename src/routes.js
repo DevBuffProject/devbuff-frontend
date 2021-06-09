@@ -33,6 +33,15 @@ export default [
     },
   },
   {
+    name: 'settings',
+    path: '/settings',
+    component: () => import('./pages/settings.vue'),
+    meta: {
+      name: 'Settings',
+      breadcrumbs: ['home'],
+    },
+  },
+  {
     name: 'superuser',
     path: '/su',
     component: () => import('./pages/superuser.vue'),
@@ -48,5 +57,10 @@ export default [
     path: '/callback/:provider?',
     component: () => import('./pages/callback.vue'),
     props: true,
+  },
+  {
+    name: 'email',
+    path: '/email/:confirm?',
+    component: () => import('./pages/email.vue'),
   },
 ]

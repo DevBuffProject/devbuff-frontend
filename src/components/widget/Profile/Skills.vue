@@ -1,129 +1,125 @@
 <template>
   <div class="">
-    <div class="">
-      <swiper
-        ref="swiperComponent"
-        :options="{
-          autoHeight: true,
-          calculateHeight: true,
-          lazy: true,
-          simulateTouch: false,
-        }"
-        :auto-update="true"
-        style="height: auto; margin-left: 0"
-      >
-        <swiper-slide>
-          <atomic-list class="divide-y divide-gray-200">
-            <atomic-list-item
-              v-for="skill of skills"
-              :key="skill.name"
-              :class="['flex justify-between items-center group cursor-pointer']"
+    <swiper
+      :simulate-touch="false"
+      :lazy="true"
+      :auto-height="true"
+      :auto-update="true"
+      @swiper="onSwiper"
+    >
+      <swiper-slide>
+        <AtomicList class="divide-y divide-gray-200">
+          <AtomicListItem
+            v-for="skill of skills"
+            :key="skill.name"
+            :class="['flex justify-between items-center group cursor-pointer']"
+          >
+            <label class="flex items-center w-full" @click.stop>
+              <input
+                :id="'language' + skill.name"
+                v-model="skill.checked"
+                type="checkbox"
+                class="mr-2"
+                @change="onChangeSkill(skill)"
+              />
+              <div>{{ t(`languages.${skill.name}`, skill.name) }}</div>
+            </label>
+            <div
+              v-if="skill.specializations.length"
+              :class="[
+                'px-4 py-1 transition-colors rounded',
+                'group-hover:bg-primary group-hover:bg-opacity-10 active:text-primary',
+              ]"
+              @click="nextSlide(skill, skill.specializations)"
             >
-              <label class="flex items-center w-full" @click.stop>
-                <input
-                  :id="'language' + skill.name"
-                  v-model="skill.checked"
-                  type="checkbox"
-                  class="mr-2"
-                  @change="onChangeSkill(skill)"
-                />
-                <div>{{ t(`languages.${skill.name}`, skill.name) }}</div>
-              </label>
-              <div
-                v-if="skill.specializations.length"
-                :class="[
-                  'px-4 py-1 transition-colors rounded',
-                  'group-hover:bg-primary group-hover:bg-opacity-10 active:text-primary',
-                ]"
-                @click="nextSlide(skill, skill.specializations)"
-              >
-                <svg-icon name="outline/cheveron-right" />
-              </div>
-            </atomic-list-item>
-          </atomic-list>
-        </swiper-slide>
+              <component :is="ChevronRightIcon" />
+            </div>
+          </AtomicListItem>
+        </AtomicList>
+      </swiper-slide>
 
-        <swiper-slide>
-          <atomic-list class="divide-y divide-gray-200">
-            <div
-              :class="[
-                'px-4 py-1 transition-colors rounded',
-                'group-hover:bg-primary group-hover:bg-opacity-10 active:text-primary',
-              ]"
-              @click="prevSlide()"
-            >
-              <svg-icon name="outline/cheveron-left" />
-            </div>
-            <atomic-list-item
-              v-for="specialist of specialists"
-              :key="specialist.name"
-              :class="['flex justify-between items-center group cursor-pointer']"
-            >
-              <label class="flex items-center w-full" @click.stop>
-                <input
-                  :id="'specialist' + specialist.name + Math.random() * 1000"
-                  v-model="specialist.checked"
-                  type="checkbox"
-                  class="mr-2"
-                  @change="onChangeSkill(specialist)"
-                />
-                <div>
-                  {{ t(`specializations.${specialist.name}.title`, specialist.name) }}
-                </div>
-              </label>
-              <div
-                v-if="specialist.frameworks.length"
-                :class="[
-                  'px-4 py-1 transition-colors rounded',
-                  'group-hover:bg-primary group-hover:bg-opacity-10 active:text-primary',
-                ]"
-                @click="nextSlide(specialist, specialist.frameworks)"
-              >
-                <svg-icon name="outline/cheveron-right" />
+      <swiper-slide>
+        <AtomicList class="divide-y divide-gray-200">
+          <div
+            :class="[
+              'px-4 py-1 transition-colors rounded',
+              'group-hover:bg-primary group-hover:bg-opacity-10 active:text-primary',
+            ]"
+            @click="prevSlide()"
+          >
+            <component :is="ChevronLeftIcon" />
+          </div>
+          <AtomicListItem
+            v-for="specialist of specialists"
+            :key="specialist.name"
+            :class="['flex justify-between items-center group cursor-pointer']"
+          >
+            <label class="flex items-center w-full" @click.stop>
+              <input
+                :id="'specialist' + specialist.name + Math.random() * 1000"
+                v-model="specialist.checked"
+                type="checkbox"
+                class="mr-2"
+                @change="onChangeSkill(specialist)"
+              />
+              <div>
+                {{
+                  t(`specializations.${specialist.name}.title`, specialist.name)
+                }}
               </div>
-            </atomic-list-item>
-          </atomic-list>
-        </swiper-slide>
-        <swiper-slide>
-          <atomic-list class="divide-y divide-gray-200">
+            </label>
             <div
+              v-if="specialist.frameworks.length"
               :class="[
                 'px-4 py-1 transition-colors rounded',
                 'group-hover:bg-primary group-hover:bg-opacity-10 active:text-primary',
               ]"
-              @click="prevSlide()"
+              @click="nextSlide(specialist, specialist.frameworks)"
             >
-              <svg-icon name="outline/cheveron-left" />
+              <component :is="ChevronRightIcon" />
             </div>
-            <atomic-list-item
-              v-for="framework of frameworks"
-              :key="framework.name"
-              :class="['flex justify-between items-center group cursor-pointer']"
-            >
-              <label class="flex items-center w-full" @click.stop>
-                <input
-                  :id="'framework' + framework.name"
-                  v-model="framework.checked"
-                  type="checkbox"
-                  class="mr-2"
-                  @change="onChangeSkill(framework)"
-                />
-                <div>{{ framework.name }}</div>
-              </label>
-            </atomic-list-item>
-          </atomic-list>
-        </swiper-slide>
-      </swiper>
-      <atomic-button @click="save"> Save </atomic-button>
-    </div>
+          </AtomicListItem>
+        </AtomicList>
+      </swiper-slide>
+      <swiper-slide>
+        <AtomicList class="divide-y divide-gray-200">
+          <div
+            :class="[
+              'px-4 py-1 transition-colors rounded',
+              'group-hover:bg-primary group-hover:bg-opacity-10 active:text-primary',
+            ]"
+            @click="prevSlide()"
+          >
+            <component :is="ChevronLeftIcon" />
+          </div>
+          <AtomicListItem
+            v-for="framework of frameworks"
+            :key="framework.name"
+            :class="['flex justify-between items-center group cursor-pointer']"
+          >
+            <label class="flex items-center w-full" @click.stop>
+              <input
+                :id="'framework' + framework.name"
+                v-model="framework.checked"
+                type="checkbox"
+                class="mr-2"
+                @change="onChangeSkill(framework)"
+              />
+              <div>{{ framework.name }}</div>
+            </label>
+          </AtomicListItem>
+        </AtomicList>
+      </swiper-slide>
+    </swiper>
+    <AtomicButton @click="save"> Save </AtomicButton>
   </div>
 </template>
 
 <script>
-import { useStore, computed, defineComponent, ref, reactive } from '@nuxtjs/composition-api'
-import { useUser } from '@/composes'
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-
+import { defineComponent, ref, reactive, nextTick } from 'vue'
+import { useSkills, useUser } from '../../../composes/core'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { ChevronRightIcon, ChevronLeftIcon } from '@iconicicons/vue3'
 import 'swiper/swiper.scss'
 
 export default defineComponent({
@@ -132,12 +128,11 @@ export default defineComponent({
     Swiper,
     SwiperSlide,
   },
-  setup() {
-    const store = useStore()
-    const { user } = useUser()
-    const swiperComponent = ref(null)
-    const swiper = computed(() => swiperComponent.value?.$swiper)
-    const allSkills = store.getters['skills/skills']
+  async setup() {
+    const { user, saveUserSkills } = useUser()
+    const { getSkills } = useSkills()
+    const swiper = ref()
+    const allSkills = await getSkills()
 
     const userSkill = user.value.skills
 
@@ -152,16 +147,23 @@ export default defineComponent({
       const userSpecialization = userSkill[indexUserLanguage].specializations
 
       for (const specialization of language.specializations) {
-        const indexUserSpecialization = findName(userSpecialization, specialization.name)
+        const indexUserSpecialization = findName(
+          userSpecialization,
+          specialization.name,
+        )
         if (indexUserSpecialization === -1) {
           continue
         }
         specialization.checked = true
 
-        const userTechnologies = userSpecialization[indexUserSpecialization].frameworks
+        const userTechnologies =
+          userSpecialization[indexUserSpecialization].frameworks
 
         for (const technology of specialization.frameworks) {
-          const indexUserTechnology = findName(userTechnologies, technology.name)
+          const indexUserTechnology = findName(
+            userTechnologies,
+            technology.name,
+          )
           if (indexUserTechnology === -1) {
             continue
           }
@@ -192,6 +194,7 @@ export default defineComponent({
         frameworks.value = currentData
         swiper.value.slideNext()
       }
+      updateSwiper()
     }
 
     function prevSlide() {
@@ -203,6 +206,15 @@ export default defineComponent({
         swiper.value.slidePrev()
       }
       context.pop()
+      updateSwiper()
+    }
+
+    const updateSwiper = () => {
+      nextTick(() => {
+        swiper.value.updateAutoHeight()
+        swiper.value.update()
+        swiper.value.updateSize()
+      })
     }
 
     function onChangeSkill(target) {
@@ -268,15 +280,19 @@ export default defineComponent({
           }
         }
       }
-      store.dispatch('skills/saveUserSkills', skillsData)
+
+      saveUserSkills(skillsData)
     }
 
     function t(str, fallbackStr) {
-      return this.$t && this.$te ? (this.$te(str) ? this.$t(str) : fallbackStr) : fallbackStr || str
+      return fallbackStr
     }
 
+    const onSwiper = (swiperComponent) => (swiper.value = swiperComponent)
+
     return {
-      swiperComponent,
+      ChevronRightIcon,
+      ChevronLeftIcon,
       user,
       skills,
       onChangeSkill,
@@ -286,6 +302,7 @@ export default defineComponent({
       prevSlide,
       save,
       t,
+      onSwiper,
     }
   },
 })

@@ -87,44 +87,38 @@
         </AtomicCard>
 
         <AtomicCard>
-          <h4 class="mt-0 mb-2 text-sm font-normal opacity-30">
+          <h4 class="mt-0 mb-0 text-sm font-normal opacity-30">
             Позиции - {{ idea.specialist.length + 1 }}
           </h4>
           <div class="divide-y divide-gray-200 dark:divide-blueGray-700">
             <div
-              class="-mx-4 mb-3 px-4 py-3"
+              class="-mx-4 mt-3 px-4 py-3"
               v-for="specialist in idea.specialist"
               :key="specialist.id"
             >
               <h5 class="mb-4 m-0 font-normal">
                 {{ specialist.name }} Developer
               </h5>
-              <AtomicLabel name="Необходимые ЯП">
+              <AtomicLabel name="Стек языков">
                 <div class="flex flex-wrap">
                   <div
-                    v-for="language in specialist.languages"
-                    :key="`language-${language.name}-${specialist.id}`"
+                    v-for="language in languages"
+                    :key="`language-${language}-${specialist.id}`"
                   >
-                    <AtomicChip
-                      :text="language.name"
-                      class="mb-2"
-                      type="auto"
-                    />
+                    <AtomicChip :text="language" class="mb-2" type="auto" />
                   </div>
                 </div>
               </AtomicLabel>
-              <!--TODO: Computed properties-->
-              <!--              <AtomicLabel name="Технологии">-->
-              <!--                <AtomicChip-->
-              <!--                  v-for="(framework, i) in specialist.languages.map(-->
-              <!--                    (lang) => lang.frameworks,-->
-              <!--                  )"-->
-              <!--                  :key="'framework' + i"-->
-              <!--                  :text="framework.name"-->
-              <!--                  type="auto"-->
-              <!--                  class="mr-2"-->
-              <!--                />-->
-              <!--              </AtomicLabel>-->
+              <AtomicLabel name="Стек фреймворков" class="mt-4">
+                <div class="flex flex-wrap">
+                  <div
+                    v-for="framework of frameworks"
+                    :key="`language-${framework}-${specialist.id}`"
+                  >
+                    <AtomicChip :text="framework" class="mb-2" type="auto" />
+                  </div>
+                </div>
+              </AtomicLabel>
 
               <div v-if="!isOwnerIdea" class="mt-6">
                 <div
@@ -175,38 +169,33 @@ import { useTimeAgo, useTitle } from '@vueuse/core'
 export default defineComponent({
   name: 'IdeaDetail',
   props: {
-    id: {
-      type: String,
-      required: true,
-    },
+    id: { type: String, required: true },
   },
   async setup(props) {
     const {
       idea,
-      getIdea,
       statusPositions,
+      languages,
+      frameworks,
+      getIdea,
       getStatusPositions,
       joinToIdea,
       changeStatusIdea,
     } = useIdea(props.id)
     const { getUserProfileUrl, getUser, user } = useUser()
 
-    useTitle(`${idea.value.name} - DevBuff`)
-
     const send = (specialistId) => {
       joinToIdea(idea.value.id, specialistId)
-      let result = statusPositions.value.find((statusPosition) => {
-        return statusPosition.specializationId === specialistId
-      })
-      if (result !== undefined) {
-        result.positionStatus = 'PENDING'
-      }
+      let result = statusPositions.value.find(
+        (statusPosition) => statusPosition.specializationId === specialistId,
+      )
+      if (result) result.positionStatus = 'PENDING'
     }
     const getStatusAtPosition = (specialistId) => {
       let result = statusPositions.value.find(
         (statusPosition) => statusPosition.specializationId === specialistId,
       )
-      return result !== undefined ? result.positionStatus : undefined
+      return result && result.positionStatus
     }
 
     await getIdea()
@@ -214,13 +203,16 @@ export default defineComponent({
     await getStatusPositions(idea.value.id)
 
     const isOwnerIdea = user.value.id === idea.value.ownerIdea.id
-
     const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
+
+    useTitle(`${idea.value.name} - DevBuff`)
 
     return {
       idea,
       isOwnerIdea,
       publishedAgo,
+      languages,
+      frameworks,
       send,
       changeStatusIdea,
       getUserProfileUrl,

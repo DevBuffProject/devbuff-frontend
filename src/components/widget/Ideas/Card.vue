@@ -76,9 +76,6 @@
 
 
 <style module>
-.CardShadow {
-  box-shadow: 0px 10px 25px -5px rgb(0 0 0 / 7%);
-}
 /* this CS forms the triangles */
 .Triangle,
 .Triangle_border {

@@ -17,10 +17,6 @@ const router = createRouter({
   history: createWebHistory(),
   parseQuery: qs.parse,
   stringifyQuery: qs.stringify,
-  scrollBehavior(to, from, savedPosition) {
-    console.log(savedPosition, from)
-    return savedPosition
-  },
 })
 
 const loader = async () => {
