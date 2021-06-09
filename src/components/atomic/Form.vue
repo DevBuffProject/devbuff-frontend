@@ -26,6 +26,7 @@
         :name="input.name"
         :type="input.type"
         :label="input.label"
+        :placeholder="input.placeholder"
         :svg-icon-name="input.svgIconName"
       >
       </AtomicInputNew>

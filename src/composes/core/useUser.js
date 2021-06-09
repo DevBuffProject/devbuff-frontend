@@ -1,7 +1,7 @@
 import { useApi } from './useApi'
 import { ref } from 'vue'
 
-const { request, BASE_URL } = useApi()
+const { request, BASE_URL, error } = useApi()
 const user = ref({})
 
 export const useUser = () => {
@@ -35,18 +35,26 @@ export const useUser = () => {
       data: data,
     })
 
+    if (data.email !== user.value.email) {
+      user.value.statusEmailConfirm = false
+    }
+
     for (const indexValue of Object.keys(data)) {
       user.value[indexValue] = data[indexValue]
     }
   }
 
   const confirmEmail = async (token) => {
-    try {
-      await request(`/email/confirm?token=${token}`)
-    } catch (error) {
-      if (error.value && error.value.response.status !== 200)
-        throw new Error("Can't confirm email")
-    }
+    await request(`/email/confirm?token=${token}`)
+
+    if (error.value?.response?.status !== undefined)
+      throw new Error("Can't confirm email")
+  }
+
+  const resendEmail = async () => {
+    await request('/profile/resendEmail', {
+      method: 'post',
+    })
   }
 
   return {
@@ -56,5 +64,6 @@ export const useUser = () => {
     saveUserSkills,
     saveUserData,
     confirmEmail,
+    resendEmail,
   }
 }
