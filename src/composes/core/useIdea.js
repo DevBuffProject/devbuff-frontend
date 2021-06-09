@@ -7,37 +7,37 @@ const mapValuesFromArrayObjects = (object, key) => {
   return [...new Set(values)]
 }
 
-export const useIdea = (uuid) => {
+export const useIdea = (id) => {
   const { request, ...rest } = useApi('ideas')
 
   const idea = ref({})
   const publishedAgo = useTimeAgo(new Date(idea.value.lastUpdateDate))
-  const getIdea = async () => {
+  const getIdea = async (uuid = id) => {
     const { data } = await request(`idea/${uuid}`)
     set(idea, data)
     return data
   }
 
-  const pendingUsers = ref(undefined)
-  const getPendingUsers = async (uuid) => {
+  const pendingUsers = ref()
+  const getPendingUsers = async (uuid = id) => {
     const response = await request(`/idea/pending/${uuid}`)
     pendingUsers.value = response.data
     return response
   }
 
   const statusPositions = ref([])
-  const getStatusPositions = async (uuid) => {
+  const getStatusPositions = async (uuid = id) => {
     const { data } = await request(`/idea/${uuid}/statusPositions`)
     statusPositions.value = data
     return data
   }
 
-  const joinToIdea = async (uuidIdea, uuidSpecialist) => {
+  const joinToIdea = async (uuidIdea = id, uuidSpecialist) => {
     await request('/idea/join/' + uuidIdea + '/' + uuidSpecialist, {
       method: 'put',
     })
   }
-  const changeStatusIdea = async (status) => {
+  const changeStatusIdea = async (uuid = id, status) => {
     await request(`/idea/${uuid}/status`, {
       method: 'PATCH',
       data: { status: status },
@@ -48,7 +48,7 @@ export const useIdea = (uuid) => {
     else if (status === 'DISABLE_SET_OF_CANDIDATES')
       idea.value.status = 'WORKING'
   }
-  const approveUser = async (uuidIdea, uuidSpecialisation, uuidUser) => {
+  const approveUser = async (uuidIdea = id, uuidSpecialisation, uuidUser) => {
     await request(
       `/idea/approve/${uuidIdea}/${uuidSpecialisation}/${uuidUser}`,
       {
