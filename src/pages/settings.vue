@@ -24,17 +24,21 @@
           Your email not confirmed
           <div class="text-sm font-base">
             Resend
-            <a href="/#">here</a>
+            <a href="/#">TODO</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="flex mb-12 w-full">
-    <AtomicForm :data="data" @submit="onSubmit"> </AtomicForm>
+  <div class="w-full grid grid-cols-12">
+    <h3 class="col-span-12">User data</h3>
+    <AtomicForm :data="data" @submit="onSubmit" class="col-span-12">
+    </AtomicForm>
   </div>
-  <div class="flex">
-    <WidgetProfileSkills class="w-full h-auto"> </WidgetProfileSkills>
+  <div class="grid grid-cols-12">
+    <h3 class="col-span-12">Skills settings</h3>
+    <WidgetProfileSkills class="col-span-12 w-full h-auto">
+    </WidgetProfileSkills>
   </div>
 </template>
 
@@ -86,6 +90,12 @@ export default defineComponent({
         value: user.value.lastName,
       },
       {
+        schema: yup.date().default(() => new Date()),
+        label: 'Birthday',
+        name: 'birthday',
+        value: user.value.birthday,
+      },
+      {
         schema: yup.string().min(0).max(300),
         label: 'Bio',
         name: 'bio',
@@ -100,28 +110,28 @@ export default defineComponent({
         label: 'Telegram',
         name: 'socialNetworks:telegram',
         value: user.value.socialNetworks.telegram,
-        icon: AirplayToTvIcon,
+        svgIconName: 'Telegram',
       },
       {
         schema: yup.string().matches(/^([A-z0-9]{4,})(#)(\d{4})$/),
         label: 'Discord',
         name: 'socialNetworks:discord',
         value: user.value.socialNetworks.discord,
-        icon: AirplayToTvIcon,
+        svgIconName: 'Discord',
       },
       {
         schema: yup.string().matches(/^([A-z0-9_:]{3,15})$/),
         label: 'Skype',
         name: 'socialNetworks:skype',
         value: user.value.socialNetworks.skype,
-        icon: AirplayToTvIcon,
+        svgIconName: 'Skype',
       },
       {
         schema: yup.string().matches(/^([A-z0-9_]{3,15})$/),
         label: 'Vk',
         name: 'socialNetworks:vk',
         value: user.value.socialNetworks.vk,
-        icon: AirplayToTvIcon,
+        svgIconName: 'Vk',
       },
     ]
 
