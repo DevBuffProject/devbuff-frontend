@@ -72,7 +72,6 @@
               px-4
               bg-transparent
               outline-none
-              w-full
               resize-none
             "
             :name="name"
