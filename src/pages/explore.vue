@@ -39,7 +39,24 @@
       </template>
     </div>
 
-    <WidgetIdeasFilter v-model="filter" class="col-span-1" />
+    <div class="col-span-1">
+      <AtomicSwitcher
+        class="mb-4"
+        v-model:value="filter.sort"
+        :values="[
+          {
+            title: 'Date',
+            value: 'date',
+          },
+          {
+            title: 'Last update',
+            value: 'lastUpdate',
+          },
+        ]"
+      >
+      </AtomicSwitcher>
+      <WidgetIdeasFilter v-model="filter" />
+    </div>
   </div>
 </template>
 
