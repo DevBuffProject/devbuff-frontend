@@ -1,5 +1,5 @@
 <template>
-  {{ t('home.test') }}
+  {{ t('as') }}
   <div class="grid gap-6 grid-cols-2">
     <div class="col-span-1">
       <AtomicCard class="px-0">

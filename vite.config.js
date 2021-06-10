@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import ViteFonts from 'vite-plugin-fonts'
 import ViteComponents from 'vite-plugin-components'
-import i18nResources from 'vite-plugin-i18n-resources'
 import viteSvgIcons from 'vite-plugin-svg-icons'
 import path from 'path'
 
@@ -35,9 +34,6 @@ export default defineConfig({
           },
         ],
       },
-    }),
-    i18nResources({
-      path: path.resolve(__dirname, 'src/locales'),
     }),
   ],
 })
