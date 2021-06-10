@@ -41,5 +41,4 @@ const loader = async () => {
 }
 
 const app = createApp(defineAsyncComponent({ loader }))
-app.use(i18n)
-app.mount('#app')
+app.use(i18n).mount('#app')
