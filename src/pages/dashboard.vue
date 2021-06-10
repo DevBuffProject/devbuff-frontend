@@ -1,4 +1,5 @@
 <template>
+  {{ t('home.test') }}
   <div class="grid gap-6 grid-cols-2">
     <div class="col-span-1">
       <AtomicCard class="px-0">
@@ -62,10 +63,11 @@
 import { defineComponent, ref } from 'vue'
 import { useIdeas, useIdea } from '../composes/core'
 import { useTitle } from '@vueuse/core'
-
+import { useI18n } from 'vue-i18n'
 export default defineComponent({
   async setup() {
     useTitle(`DevBuff Dashboard`)
+    const { t } = useI18n()
     const { userIdeas, getUserIdeas } = useIdeas()
     const { pendingUsers, getPendingUsers } = useIdea()
 
@@ -73,6 +75,7 @@ export default defineComponent({
     await getUserIdeas()
 
     return {
+      t,
       userIdeas,
       pendingUsers,
       isPendingLoading: true,
