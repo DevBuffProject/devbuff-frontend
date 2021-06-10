@@ -1,3 +1,5 @@
+import { defineAsyncComponent } from 'vue'
+
 export default [
   {
     name: 'home',
@@ -29,6 +31,9 @@ export default [
     component: () => import('./pages/idea.vue'),
     props: true,
     meta: {
+      // preview: defineAsyncComponent(() =>
+      //   import('./components/previews/idea.vue'),
+      // ),
       breadcrumbs: ['home', 'explore'],
     },
   },
