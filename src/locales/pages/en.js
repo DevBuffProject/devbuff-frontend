@@ -1,3 +1,3 @@
 export default {
-  as: 'Test22',
+  pages: {},
 }

@@ -1,6 +1,11 @@
+import pagesEn from './pages/en'
+import pagesRu from './pages/ru'
+
 export const messages = {
   ru: {
-    as: 'Test22',
+    ...pagesRu,
   },
-  as: 'asd',
+  en: {
+    ...pagesEn,
+  },
 }

@@ -1,5 +1,4 @@
 <template>
-  {{ t('as') }}
   <div class="grid gap-6 grid-cols-2">
     <div class="col-span-1">
       <AtomicCard class="px-0">
@@ -23,14 +22,14 @@
             "
           />
         </div>
-        <div class="ml-4" v-else>У вас нет созданных идей.</div>
+        <div class="ml-4" v-else>{{ t('notFound') }}</div>
       </AtomicCard>
     </div>
     <aside class="col-span-1">
       <div v-if="currentIdeaId === undefined"></div>
       <AtomicLoadingSpinner v-else-if="pendingUsers === undefined" />
       <div v-else-if="pendingUsers" class="col-span-3">
-        <h3 class="mt-0">Responses</h3>
+        <h3 class="mt-0">{{ t('responses') }}</h3>
         <div
           v-for="{
             userEntity: user,
@@ -61,19 +60,18 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import { useIdeas, useIdea } from '../composes/core'
 import { useTitle } from '@vueuse/core'
-import { useI18n } from 'vue-i18n'
+import { useIdeas, useIdea } from '../composes/core'
+import { useI18n } from '../composes/utils'
 export default defineComponent({
   async setup() {
     useTitle(`DevBuff Dashboard`)
-    const { t } = useI18n()
+    const { t } = useI18n('pages.dashboard')
     const { userIdeas, getUserIdeas } = useIdeas()
     const { pendingUsers, getPendingUsers } = useIdea()
 
     const currentIdeaId = ref(undefined)
     await getUserIdeas()
-
     return {
       t,
       userIdeas,
