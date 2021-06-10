@@ -2,11 +2,11 @@
   <div
     :class="[
       'relative inline-flex rounded-full text-black',
-      // 'border border-gray-200 dark:border-blueGray-700'
+      'border border-gray-200 dark:border-blueGray-700',
     ]"
   >
     <div
-      ref="highlight"
+      ref="elementRefHighlight"
       :class="[
         'absolute z-0 top-0 left-0 h-full rounded-full transition-all shadow',
         'bg-gray-50 dark:bg-blueGray-600 dark:text-white bg-opacity-50 text-black',
@@ -16,7 +16,7 @@
     <div
       v-for="(button, index) in values"
       :key="button.value"
-      ref="button"
+      :ref="setItemRef"
       class="py-2 px-5 cursor-pointer relative z-10 text-xs font-semibold"
       :class="{
         'text-gray-500 dark:text-blueGray-500': activeIndex !== index,
@@ -30,13 +30,18 @@
 </template>
 
 <script>
-export default {
-  name: 'VSwitcher',
+import {
+  defineComponent,
+  ref,
+  watch,
+  onBeforeUpdate,
+  onMounted,
+  useContext,
+} from 'vue'
 
-  model: {
-    event: 'change',
-    prop: 'value',
-  },
+export default defineComponent({
+  name: 'VSwitcher',
+  emits: ['update:value'],
 
   props: {
     values: {
@@ -49,50 +54,66 @@ export default {
     },
   },
 
-  data: () => ({
-    activeIndex: 0,
-  }),
+  setup(props) {
+    const { emit } = useContext()
+    const activeIndex = ref(0)
 
-  watch: {
-    value: {
-      handler() {
-        this.computeHighlightStyles()
-      },
-    },
-  },
+    const elementRefHighlight = ref()
+    let elementRefButton = []
 
-  mounted() {
-    this.computeHighlightStyles()
-    setTimeout(() => (this.$refs.highlight.style.opacity = 1), 300)
-  },
+    const setValue = (index) => {
+      const value = props.values[index] && props.values[index].value
 
-  methods: {
-    setValue(index) {
-      const value = this.values[index] && this.values[index].value
-
-      if (value === this.value) {
-        this.activeIndex = index
+      if (value === props.value) {
+        activeIndex.value = index
       }
-      this.computeHighlightStyles()
-      this.$emit('change', value)
-    },
-    computeHighlightStyles() {
-      const highlight = this.$refs.highlight
-      const activeIndex = this.value ? this.values.findIndex((v) => v.value === this.value) : 0
-      const button = this.$refs.button[activeIndex]
+      emit('update:value', value)
+    }
 
+    const computeHighlightStyles = () => {
+      const currentActiveIndex = props.value
+        ? props.values.findIndex((v) => v.value === props.value)
+        : 0
+
+      const button = elementRefButton[currentActiveIndex]
       if (!button) {
         return false
       }
 
-      this.activeIndex = activeIndex
+      activeIndex.value = currentActiveIndex
 
       const width = button.offsetWidth
-      const left = button.offsetLeft > 0 ? button.offsetLeft - 1 : button.offsetLeft
+      const left =
+        button.offsetLeft > 0 ? button.offsetLeft - 1 : button.offsetLeft
 
-      highlight.style.width = `${width + 1}px`
-      highlight.style.transform = `translateX(${left}px)`
-    },
+      elementRefHighlight.value.style.width = `${width + 1}px`
+      elementRefHighlight.value.style.transform = `translateX(${left}px)`
+    }
+
+    const setItemRef = (el) => {
+      if (el) {
+        elementRefButton.push(el)
+      }
+    }
+    onBeforeUpdate(() => {
+      elementRefButton = []
+    })
+
+    onMounted(() => {
+      computeHighlightStyles()
+      setTimeout(() => (elementRefHighlight.value.style.opacity = 1), 300)
+    })
+
+    watch(() => props.value, computeHighlightStyles)
+
+    return {
+      activeIndex,
+      elementRefHighlight,
+      elementRefButton,
+      setValue,
+      computeHighlightStyles,
+      setItemRef,
+    }
   },
-}
+})
 </script>
