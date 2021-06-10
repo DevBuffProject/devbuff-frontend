@@ -29,6 +29,7 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
+    "@intlify/vite-plugin-vue-i18n": "^2.2.1",
     "@vitejs/plugin-vue": "^1.2.2",
     "@vue/compiler-sfc": "^3.0.5",
     "@vue/eslint-config-prettier": "^6.0.0",
