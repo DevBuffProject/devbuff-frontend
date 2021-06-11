@@ -1,0 +1,42 @@
+{
+  "pages": {
+    /** */
+    "dashboard": {
+      "notFound": "У вас нет идей",
+      "responses": "Отклики"
+    },
+    "email": {
+      "onSuccess": "Your email successful confirmed",
+      "onError": "Something wrong, try again."
+    },
+    explore: {
+      "notFound": "С заданными параметрами идей не найдено"
+    },
+    idea: {
+      positions: {
+        label: "Позиции",
+        status: {
+          NONE: "Откликнуться",
+          PENDING: "Заявка отправлена",
+          ACCEPTED: "Вы в команде"
+        }
+      }
+    }
+  },
+  "components": {
+    "widget": {
+    }
+  },
+  commons: {
+    specialist: {
+      'back-end': 'Backend Developer',
+      'front-end': 'Frontend Developer',
+      desktop: 'Desktop Developer',
+      game: 'Game Developer',
+      android: 'Android Developer',
+      apple: 'Apple Developer',
+      ML: 'ML Developer',
+      microcontrollers: 'Microcontroller Developer',
+    }
+  }
+}

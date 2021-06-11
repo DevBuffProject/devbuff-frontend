@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-4 gap-6">
     <div class="col-span-3" id="ideas">
-      <template v-if="!isLoading && ideas">
+      <template v-if="!isLoading && ideas.length > 0">
         <WidgetIdeasCard
           v-for="(idea, index) of ideas"
           :key="idea.id"
@@ -34,8 +34,7 @@
         <AtomicLoadingLogo />
       </div>
       <template v-else>
-        <span class="text-4xl mb-4">🤷</span>
-        <span class="text-2xl opacity-30">no ideas</span>
+        <span class="text-2xl">{{ t('notFound') }}</span>
       </template>
     </div>
 
@@ -52,6 +51,7 @@ import {
   useTitle,
 } from '@vueuse/core'
 import { useIdeas, useUser, useAuth } from '../composes/core'
+import { useI18n } from '../composes/utils'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
@@ -69,6 +69,7 @@ export default defineComponent({
     const route = inject('backgroundRoute')
     const { isLoading, ideas, getIdeas } = useIdeas()
     const { getUserProfileUrl } = useUser()
+    const { t } = useI18n('pages.explore')
     const { isLoggedIn } = useAuth()
     const specialists = filterQueryReactive('specialists')
     const languages = filterQueryReactive('languages')
@@ -81,7 +82,7 @@ export default defineComponent({
 
     watch(filter, throttledGetIdeas)
 
-    return { ideas, filter, isLoading, getUserProfileUrl, isLoggedIn }
+    return { t, ideas, filter, isLoading, getUserProfileUrl, isLoggedIn }
   },
 })
 </script>
