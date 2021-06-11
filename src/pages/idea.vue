@@ -88,7 +88,7 @@
 
         <AtomicCard>
           <h4 class="mt-0 mb-0 text-sm font-normal opacity-30">
-            {{ t('positions.label') }} - {{ idea.specialist.length }}
+            Позиции - {{ idea.specialist.length }}
           </h4>
           <div class="divide-y divide-gray-200 dark:divide-blueGray-700">
             <div
@@ -97,7 +97,7 @@
               :key="specialist.id"
             >
               <h5 class="mb-4 m-0 font-normal">
-                {{ t('commons.specialist.' + specialist.name, true) }}
+                {{ specialist.name }} Developer
               </h5>
               <AtomicLabel name="Стек языков">
                 <div class="flex flex-wrap">
@@ -130,19 +130,27 @@
                     'transition-all hover:bg-opacity-[0.15] rounded',
                   ]"
                 >
-                  {{ t('positions.status.NONE') }}
+                  Откликнуться
                 </div>
                 <div
-                  v-else
+                  v-else-if="getStatusAtPosition(specialist.id) === 'PENDING'"
                   :class="[
                     'w-full py-2 rounded',
                     'text-center text-gray-400',
                     'bg-gray-100',
                   ]"
                 >
-                  {{
-                    t('positions.status.' + getStatusAtPosition(specialist.id))
-                  }}
+                  Заявка оправлена
+                </div>
+                <div
+                  v-else-if="getStatusAtPosition(specialist.id) === 'ACCEPTED'"
+                  :class="[
+                    'w-full py-2 rounded',
+                    'text-center text-gray-400',
+                    'bg-gray-100',
+                  ]"
+                >
+                  Вы в команде
                 </div>
               </div>
             </div>
@@ -156,7 +164,6 @@
 <script>
 import { defineComponent } from 'vue'
 import { useIdea, useUser } from '../composes/core'
-import { useI18n } from '../composes/utils'
 import { useTimeAgo, useTitle } from '@vueuse/core'
 
 export default defineComponent({
@@ -177,7 +184,6 @@ export default defineComponent({
     } = useIdea(props.id)
     const { getUserProfileUrl, getUser, user } = useUser()
 
-    const { t } = useI18n('pages.idea')
     const send = (specialistId) => {
       joinToIdea(idea.value.id, specialistId)
       let result = statusPositions.value.find(
@@ -202,7 +208,6 @@ export default defineComponent({
     useTitle(`${idea.value.name} - DevBuff`)
 
     return {
-      t,
       idea,
       isOwnerIdea,
       publishedAgo,
