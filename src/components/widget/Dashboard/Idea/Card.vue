@@ -12,13 +12,16 @@
           <div class="flex items-center">
             <div class="text-primary">{{ title }}</div>
 
-            <div class="flex items-center">
-              <!--              <atomic-material-icon-->
-              <!--                :name="!waitingValidation ? 'done' : 'hourglass_empty'"-->
-              <!--                :class="[waitingValidation ? 'text-warning' : 'text-success', 'text-xs']"-->
-              <!--              />-->
+            <div class="flex items-center ml-4">
+              <ClockIcon v-if="waitingValidation" class="text-warning w-5" />
+              <CheckIcon v-else class="text-success w-5" />
               <em
-                class="opacity-50 text-xs text-gray-500 dark:text-blueGray-400"
+                class="
+                  ml-1
+                  opacity-50
+                  text-xs text-gray-500
+                  dark:text-blueGray-400
+                "
               >
                 {{ waitingValidation ? 'wait' : 'approve' }}
               </em>
@@ -27,11 +30,11 @@
         </div>
         <div class="flex items-center">
           <div class="opacity-50 hover:opacity-100 cursor-pointer p-3">
-            <!--            <svg-icon name="outline/trash" class="text-sm text-danger" />-->
+            <TrashIcon class="text-sm text-danger" />
           </div>
 
           <div class="opacity-50 hover:opacity-100 cursor-pointer p-3">
-            <!--            <svg-icon name="outline/pencil-alt" class="text-sm text-primary" />-->
+            <EditIcon class="text-sm text-primary" />
           </div>
         </div>
       </div>
@@ -41,7 +44,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, useContext } from 'vue'
 
 export default defineComponent({
   name: 'WidgetDashboardIdeaCard',
@@ -63,7 +66,8 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props, { attrs }) {
+  setup() {
+    const { attrs } = useContext()
     return { attrs }
   },
 })

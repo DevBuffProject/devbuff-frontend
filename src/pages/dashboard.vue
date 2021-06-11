@@ -17,7 +17,7 @@
               () => {
                 pendingUsers = undefined
                 getPendingUsers(idea.id)
-                currentIdeaId = idea.id
+                getIdea(idea.id)
               }
             "
           />
@@ -26,10 +26,58 @@
       </AtomicCard>
     </div>
     <aside class="col-span-1">
-      <div v-if="currentIdeaId === undefined"></div>
-      <AtomicLoadingSpinner v-else-if="pendingUsers === undefined" />
-      <div v-else-if="pendingUsers" class="col-span-3">
-        <h3 class="mt-0">{{ t('responses') }}</h3>
+      <div v-if="!inspectedIdea" />
+      <AtomicLoadingSpinner v-if="pendingUsers === undefined" />
+      <div v-if="inspectedIdea" class="col-span-3">
+        <h1 class="mt-0 mb-3">{{ inspectedIdea.name }}</h1>
+        <p class="mt-0 mb-6 opacity-50">{{ inspectedIdea.description }}</p>
+        <AtomicCard class="mb-4">
+          <div class="flex">
+            <AtomicButton
+              v-focusable.indexOnly
+              is-depressed
+              is-wide
+              :type="
+                inspectedIdea.status === 'WAITING_FULL_TEAM'
+                  ? 'danger'
+                  : 'success'
+              "
+              @click="
+                changeStatusIdea(
+                  inspectedIdea.id,
+                  inspectedIdea.status === 'WAITING_FULL_TEAM'
+                    ? 'DISABLE_SET_OF_CANDIDATES'
+                    : 'ENABLE_SET_OF_CANDIDATES',
+                )
+              "
+            >
+              <div class="flex flex-col items-center justify-center">
+                <StopIcon v-if="inspectedIdea.status === 'WAITING_FULL_TEAM'" />
+                <PlayIcon v-else />
+                <span>{{
+                  inspectedIdea.status === 'WAITING_FULL_TEAM'
+                    ? 'Остановить набор'
+                    : 'Продолжить набор'
+                }}</span>
+              </div>
+            </AtomicButton>
+            <i class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10" />
+            <AtomicButton type="danger" is-depressed is-wide>
+              <div class="flex flex-col items-center justify-center">
+                <TrashIcon />
+                <span>Delete</span>
+              </div>
+            </AtomicButton>
+            <i class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10" />
+            <AtomicButton type="primary" is-depressed is-wide>
+              <div class="flex flex-col items-center justify-center">
+                <EditIcon />
+                <span>Edit</span>
+              </div>
+            </AtomicButton>
+          </div>
+        </AtomicCard>
+        <h3 class="mt-0">Responses</h3>
         <div
           v-for="{
             userEntity: user,
@@ -49,7 +97,7 @@
             :discord-contact="user.socialNetworks.discord"
             :specialization="specialisationName"
             :specialization-id="specialisationId"
-            :idea-id="currentIdeaId"
+            :idea-id="inspectedIdea.id"
             class="mb-6"
           />
         </div>
@@ -68,17 +116,24 @@ export default defineComponent({
     useTitle(`DevBuff Dashboard`)
     const { t } = useI18n('pages.dashboard')
     const { userIdeas, getUserIdeas } = useIdeas()
-    const { pendingUsers, getPendingUsers } = useIdea()
+    const {
+      idea: inspectedIdea,
+      pendingUsers,
+      getIdea,
+      getPendingUsers,
+      changeStatusIdea,
+    } = useIdea()
 
-    const currentIdeaId = ref(undefined)
     await getUserIdeas()
     return {
       t,
       userIdeas,
       pendingUsers,
+      inspectedIdea,
       isPendingLoading: true,
+      getIdea,
       getPendingUsers,
-      currentIdeaId,
+      changeStatusIdea,
     }
   },
 })

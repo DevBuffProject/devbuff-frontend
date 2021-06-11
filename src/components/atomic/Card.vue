@@ -2,7 +2,8 @@
   <div>
     <div
       :class="[
-        'bg-white border border-gray-300 border-opacity-30 dark:border-blueGray-700 dark:bg-blueGray-900',
+        'bg-white border border-gray-300 border-opacity-30',
+        'dark:border-blueGray-700 dark:bg-blueGray-800 dark:bg-opacity-50',
         'grid p-4 rounded-xl relative',
         styles.CardShadow,
       ]"
@@ -12,7 +13,11 @@
       <div v-if="slots.header">
         <slot name="header" />
       </div>
-      <slot />
+
+      <div>
+        <slot />
+      </div>
+
       <div v-if="slots.footer || slots.controls" class="self-end -mb-4 py-2.5">
         <atomic-delimiter class="mb-2.5" />
         <div v-if="slots.footer">
