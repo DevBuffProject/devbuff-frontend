@@ -62,5 +62,9 @@ export default [
     name: 'email',
     path: '/email/:confirm?',
     component: () => import('./pages/email.vue'),
+    meta: {
+      name: 'Confirmation email',
+      breadcrumbs: ['home'],
+    },
   },
 ]
