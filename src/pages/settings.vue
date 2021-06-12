@@ -96,6 +96,7 @@ export default defineComponent({
         label: 'Telegram',
         name: 'socialNetworks:telegram',
         value: user.value.socialNetworks.telegram,
+        placeholder: 'username',
         svgIconName: 'Telegram',
       },
       {
@@ -117,6 +118,7 @@ export default defineComponent({
         label: 'Skype',
         name: 'socialNetworks:skype',
         value: user.value.socialNetworks.skype,
+        placeholder: 'username',
         svgIconName: 'Skype',
       },
       {
