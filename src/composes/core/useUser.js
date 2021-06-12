@@ -35,6 +35,11 @@ export const useUser = () => {
       data: data,
     })
 
+    if (error.value?.response?.status === 409) {
+      //conflict data
+      throw new Error(error.value.response.data)
+    }
+
     if (data.email !== user.value.email) {
       user.value.statusEmailConfirm = false
     }
