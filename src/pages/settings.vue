@@ -9,6 +9,14 @@
       :description="`Для того чтобы вы могли получать уведомления о ваших идеях, необходимо подтвердить Email. Переотправить письмо на адрес ${user.email}`"
     ></AtomicNotification>
   </div>
+  <div class="flex">
+    <AtomicNotification
+      v-if="conflictMessage"
+      type="danger"
+      :message="`Conflict field's`"
+      :description="conflictMessage"
+    ></AtomicNotification>
+  </div>
   <div class="w-full grid grid-cols-12">
     <h3 class="col-span-12">User data</h3>
     <AtomicForm :data="data" @submit="onSubmit" class="col-span-12">
@@ -22,7 +30,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import * as yup from 'yup'
 import { useUser } from '../composes/core'
 
@@ -125,7 +133,9 @@ export default defineComponent({
     ]
     const resendEmailNotificationIsVisible = ref(true)
 
-    const onSubmit = (data) => {
+    const conflictFields = ref([])
+
+    const onSubmit = async (data) => {
       for (const indexValue of Object.keys(data)) {
         if (indexValue.indexOf(':') > -1) {
           const split = indexValue.split(':')
@@ -136,8 +146,13 @@ export default defineComponent({
           delete data[indexValue]
         }
       }
-      resendEmailNotificationIsVisible.value = false
-      saveUserData(data)
+      try {
+        conflictFields.value = []
+        await saveUserData(data)
+        resendEmailNotificationIsVisible.value = false
+      } catch (err) {
+        conflictFields.value = err.message.split(',')
+      }
     }
 
     const onResendEmail = async () => {
@@ -147,12 +162,21 @@ export default defineComponent({
 
     await getUser()
 
+    const conflictMessage = computed(() => {
+      if (conflictFields.value.length === 0) {
+        return undefined
+      }
+      //TODO i18n
+      return 'Conflicted: ' + conflictFields.value.join(', ')
+    })
+
     return {
       yup,
       data,
       onSubmit,
       onResendEmail,
       resendEmailNotificationIsVisible,
+      conflictMessage,
       user,
     }
   },
