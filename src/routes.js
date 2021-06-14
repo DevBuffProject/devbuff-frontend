@@ -49,10 +49,19 @@ export default [
   {
     name: 'superuser',
     path: '/su',
-    component: () => import('./pages/superuser.vue'),
+    component: () => import('./pages/superuser/superuser.vue'),
     meta: {
       name: 'Superuser',
       breadcrumbs: ['home'],
+    },
+  },
+  {
+    name: 'approve',
+    path: '/su/approve',
+    component: () => import('./pages/superuser/approve.vue'),
+    meta: {
+      name: 'Approve',
+      breadcrumbs: ['home', 'superuser'],
     },
   },
 
