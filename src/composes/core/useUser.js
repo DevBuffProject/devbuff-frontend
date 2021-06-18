@@ -13,49 +13,32 @@ export const useUser = () => {
     }
     return response
   }
+  const getUserProfileUrl = (uuid) => `${BASE_URL}/photo/profile/${uuid}`
 
-  const getUserProfileUrl = (uuid) => {
-    return `${BASE_URL}/photo/profile/${uuid}`
-  }
-
-  const saveUserSkills = async (skills) => {
-    await request('/profile', {
-      method: 'patch',
-      data: {
-        skills,
-      },
-    })
-
-    user.value.skills = skills
+  const saveUserSkills = async (data) => {
+    const response = await request('/profile', { method: 'patch', data })
+    user.value.skills = data
+    return response
   }
 
   const saveUserData = async (data) => {
-    await request('/profile', {
-      method: 'patch',
-      data: data,
-    })
-
-    if (data.email !== user.value.email) {
-      user.value.statusEmailConfirm = false
-    }
-
-    for (const indexValue of Object.keys(data)) {
-      user.value[indexValue] = data[indexValue]
-    }
+    const response = await request('/profile', { method: 'patch', data })
+    //conflict data
+    if (error.value?.response?.status === 409)
+      throw new Error(error.value.response.data)
+    return response
   }
 
   const confirmEmail = async (token) => {
-    await request(`/email/confirm?token=${token}`)
-
+    const response = await request(`/email/confirm?token=${token}`)
     if (error.value?.response?.status !== undefined)
       throw new Error("Can't confirm email")
+
+    return response
   }
 
-  const resendEmail = async () => {
-    await request('/profile/resendEmail', {
-      method: 'post',
-    })
-  }
+  const resendEmail = async () =>
+    await request('/profile/resendEmail', { method: 'post' })
 
   return {
     user,

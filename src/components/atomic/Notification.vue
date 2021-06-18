@@ -11,7 +11,7 @@
       <component :is="icon" />
     </div>
     <div class="text-xl font-normal max-w-full text-yellow-700 flex-initial">
-      <div class="py-2">
+      <div :class="['py-2', `text-${type}`]">
         {{ message }}
         <div class="text-sm font-base" v-if="description">
           {{ description }}
@@ -75,7 +75,6 @@ export default defineComponent({
     }
 
     const highlight = () => {
-      console.log('as')
       const classes = ['bg-opacity-50']
       info.value.style.transition = '50ms ease'
       info.value.classList.add(...classes)
