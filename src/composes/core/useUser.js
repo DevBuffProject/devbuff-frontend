@@ -30,7 +30,7 @@ export const useUser = () => {
   }
 
   const confirmEmail = async (token) => {
-    const response = await request(`/email/confirm?token=${token}`)
+    const response = await request(`/notification/email/confirm?token=${token}`)
     if (error.value?.response?.status !== undefined)
       throw new Error("Can't confirm email")
 
