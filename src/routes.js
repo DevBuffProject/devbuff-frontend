@@ -26,6 +26,18 @@ export default [
     },
   },
   {
+    name: 'idea-create',
+    path: '/create',
+    component: () => import('./pages/idea-creation.vue'),
+    props: true,
+    meta: {
+      // preview: defineAsyncComponent(() =>
+      //   import('./components/previews/idea.vue'),
+      // ),
+      breadcrumbs: ['home', 'explore'],
+    },
+  },
+  {
     name: 'idea-detail',
     path: '/view-:id',
     component: () => import('./pages/idea.vue'),

@@ -23,7 +23,7 @@
           <WidgetColorSwitcher v-focusable />
         </div>
         <nav class="flex items-center">
-          <RouterLink v-slot="{ isActive }" to="/">
+          <RouterLink v-slot="{ isActive }" to="/create">
             <AtomicButton
               :disabled="isActive"
               v-focusable.indexOnly="{ indexOnly: true }"

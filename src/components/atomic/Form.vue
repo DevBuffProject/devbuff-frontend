@@ -17,11 +17,21 @@
       v-for="(input, index) in data"
       :key="`key_form` + input.name + index"
       :class="[
-        input.type !== 'textarea' && 'col-span-6',
-        input.type === 'textarea' && 'col-span-12',
+        input.type === 'textarea' || input.type === 'editor'
+          ? 'col-span-12'
+          : 'col-span-6',
       ]"
     >
+      <div v-if="input.type === 'editor'">
+        <AtomicEditor
+          :value="input.value"
+          :label="input.label"
+          :name="input.name"
+          :placeholder="input.placeholder"
+        />
+      </div>
       <AtomicInputNew
+        v-else
         :value="input.value"
         :name="input.name"
         :type="input.type"
@@ -31,14 +41,14 @@
       >
       </AtomicInputNew>
     </div>
-    <AtomicButton class="flex items-center justify-center"> Save </AtomicButton>
+    <AtomicButton class="flex items-center justify-center"> Save</AtomicButton>
   </Form>
 </template>
 
 <script>
 import { Form } from 'vee-validate'
 import { defineComponent } from 'vue'
-import { NumberSchema, StringSchema, DateSchema } from 'yup'
+import { NumberSchema, StringSchema, DateSchema, MixedSchema } from 'yup'
 import * as yup from 'yup'
 
 export default defineComponent({
@@ -52,7 +62,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  setup: function (props) {
     let yupObject = {}
 
     const getMetaParam = (schema, nameOfParam) => {
@@ -70,7 +80,9 @@ export default defineComponent({
       input.type = 'text'
 
       if (input.schema instanceof StringSchema) {
-        if (getMetaParam(input.schema, 'max')?.max >= 150) {
+        if (getMetaParam(input.schema, 'max')?.max >= 5000) {
+          input.type = 'editor'
+        } else if (getMetaParam(input.schema, 'max')?.max >= 150) {
           input.type = 'textarea'
         } else if (getMetaParam(input.schema, 'email') !== undefined) {
           input.type = 'email'
