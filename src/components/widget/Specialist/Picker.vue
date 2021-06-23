@@ -53,18 +53,18 @@
 
   <hr class="mt-2 mb-2" />
 
-  <transition-group name="bounce" tag="div" class="flex flex-wrap">
-    <ul class="picker__list">
+  <transition-group name="bounce" tag="div" class="flex flex-wrap overflow-x-scroll">
+    <ul class="flex items-start">
       <li
         v-for="(specialist, index) in selectedSpecialist"
         :key="specialist + index + '_selected'"
-        class="picker__item"
+        class="pl-2 pr-2 flex flex-col flex-wrap bg-white rounded"
       >
         <div class="picker__spec">
           <p>Специалист: {{ specialist.name }}</p>
         </div>
         <div
-          class="picker__name"
+          class="mt-4"
           v-for="(language, indexLanguage) of specialist.languages"
           :key="specialist + index + '_selected' + indexLanguage + language"
         >
@@ -73,6 +73,7 @@
               class="
                 flex flex-wrap
                 items-center
+                transition duration-500 ease-in-out
                 hover:bg-primary-100
                 p-1
                 cursor-pointer
@@ -86,33 +87,40 @@
               <span>{{ language.name }}</span>
             </a>
           </div>
-          <ul class="ul__technology">
-            <li
-              v-for="(technology, indexTechnology) of language.frameworks"
-              :key="
-                specialist +
-                index +
-                '_selected' +
-                indexLanguage +
-                language +
-                technology +
-                indexTechnology
-              "
-              class="p-2 ml-10"
-            >
-              <div
-                @click="technology.selected = !technology.selected"
-                class="flex justify-around"
+          <transition name="tech_activate">
+            <ul v-if="language.selected" class="ul__technology">
+              <li
+                v-for="(technology, indexTechnology) of language.frameworks"
+                :key="
+                  specialist +
+                  index +
+                  '_selected' +
+                  indexLanguage +
+                  language +
+                  technology +
+                  indexTechnology
+                "
+                class="p-2 ml-10"
               >
-                <!--                <span v-if="!technology.selected">&times;</span>-->
-                <AtomicChip
-                  :text="technology.name"
-                  :type="technology.selected ? 'auto' : 'none'"
-                  class="mr-2 mb-2 transition"
-                />
-              </div>
-            </li>
-          </ul>
+                <div
+                  @click="technology.selected = !technology.selected"
+                  class="flex justify-around"
+                >
+                  <a class="p-1 bg-[rgb(192,192,192)] text-xs rounded cursor-pointer"
+                  @click=""
+
+                  >
+                    {{technology.name}}
+                  </a>
+  <!--                <AtomicChip-->
+  <!--                  :text="technology.name"-->
+  <!--                  :type="technology.selected ? 'auto' : 'none'"-->
+  <!--                  class="mr-2 mb-2 transition cursor-pointer"-->
+  <!--                />-->
+                </div>
+              </li>
+            </ul>
+          </transition>
         </div>
       </li>
     </ul>
@@ -197,32 +205,25 @@ ul {
   padding: 0;
   margin: 0;
 }
-
-.picker__list {
-  display: flex;
-  width: 400px;
-  flex-shrink: 0;
-  flex-grow: 0;
-  height: 100%;
+.tech_activate-enter-active {
+  animation: activation 0.5s;
+}
+.tech_activate-leave-active {
+  animation: activation 0.5s reverse;
 }
 
-.picker__item {
-  padding-left: 10px;
-  padding-right: 10px;
-  display: flex;
-  flex-direction: column;
+@keyframes activation {
+  0% {
+  opacity: 0;
+  visibility: hidden;
 
-  background-color: white;
-  border-radius: 12px;
+  }
+  100%{
+    opacity: 100%;
+    visibility: visible;
+  }
 }
 
-.picker__spec {
-  margin-top: 5px;
-}
-
-.picker__name {
-  margin-top: 15px;
-}
 
 .specialist-plus {
   transition: transform 0.2s ease-out;
