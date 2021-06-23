@@ -1,4 +1,25 @@
 <template>
+  <div
+    class="bg-gray-900 rounded h-6 mt-5"
+    role="progressbar"
+    :aria-valuenow="maxCountPercent"
+    aria-valuemin="0"
+    aria-valuemax="100"
+  >
+    <div
+      class="
+        bg-primary-800
+        rounded
+        h-6
+        text-center text-white text-sm
+        transition
+      "
+      :style="`width: ${maxCountPercent}%; transition: width 2s;`"
+    >
+      {{ maxCountPercent }} %
+    </div>
+  </div>
+
   <div class="grid grid-cols-12">
     <div
       class="
@@ -24,7 +45,7 @@
           class="col-span-1 specialist-plus"
         />
         <p class="flex items-center pt-1 text-xs text-gray-400 col-span-6">
-          Description about specialist
+          Description about specialist Lorem
         </p>
       </div>
     </div>
@@ -32,78 +53,69 @@
 
   <hr class="mt-2 mb-2" />
 
-  <transition-group
-    name="bounce"
-    tag="div"
-    class="grid grid-cols-12 gap-4 mt-2"
-  >
-    <div
-      v-for="(specialist, index) in selectedSpecialist"
-      :key="specialist + index + '_selected'"
-      class="
-        flex
-        col-span-3
-        bg-white
-        border border-gray-300 border-opacity-30
-        dark:border-blueGray-700
-        dark:bg-blueGray-900
-        p-4
-        rounded-xl
-        relative
-      "
-    >
-      <div class="grid grid-cols-6">
-        <div class="col-span-5">Специалист: {{ specialist.name }}</div>
-        <div class="col-span-1">
-          <component
-            :is="CloseIcon"
-            @click="selectedSpecialist.splice(index, 1)"
-          />
+  <transition-group name="bounce" tag="div" class="flex flex-wrap">
+    <ul class="picker__list">
+      <li
+        v-for="(specialist, index) in selectedSpecialist"
+        :key="specialist + index + '_selected'"
+        class="picker__item"
+      >
+        <div class="picker__spec">
+          <p>Специалист: {{ specialist.name }}</p>
         </div>
-
-        <div class="col-span-6 flex-grow">
-          <div
-            v-for="(language, indexLanguage) of specialist.languages"
-            :key="language + index + specialist.name + indexLanguage"
-            class="flex cursor-pointer hover:bg-primary-100 rounded w-full"
-            @click="language.selected = !language.selected"
-          >
-            <div>
-              <div class="w-8 h-10 text-center py-1">
-                <p class="text-3xl p-0 text-green-dark">&bull;</p>
-              </div>
-              <div class="w-4/5 h-10 py-3 px-1">
-                <p class="hover:text-blue-dark">{{ language.name }}</p>
-              </div>
-            </div>
-            <div
+        <div
+          class="picker__name"
+          v-for="(language, indexLanguage) of specialist.languages"
+          :key="specialist + index + '_selected' + indexLanguage + language"
+        >
+          <div class="ml-3">
+            <a
               class="
-                flex
-                cursor-pointer
-                ml-10
-                my-1
+                flex flex-wrap
+                items-center
                 hover:bg-primary-100
+                p-1
+                cursor-pointer
                 rounded
               "
-              v-if="language.selected"
+              @click="language.selected = !language.selected"
             >
-              <li
-                v-for="(technology, indexTechnology) of language.frameworks"
-                :key="
-                  language +
-                  index +
-                  specialist.name +
-                  indexLanguage +
-                  indexTechnology
-                "
-              >
-                {{ technology.name }}
-              </li>
-            </div>
+              <span>
+                <component :is="language.selected ? MinusIcon : PlusIcon" />
+              </span>
+              <span>{{ language.name }}</span>
+            </a>
           </div>
+          <ul class="ul__technology">
+            <li
+              v-for="(technology, indexTechnology) of language.frameworks"
+              :key="
+                specialist +
+                index +
+                '_selected' +
+                indexLanguage +
+                language +
+                technology +
+                indexTechnology
+              "
+              class="p-2 ml-10"
+            >
+              <div
+                @click="technology.selected = !technology.selected"
+                class="flex justify-around"
+              >
+                <!--                <span v-if="!technology.selected">&times;</span>-->
+                <AtomicChip
+                  :text="technology.name"
+                  :type="technology.selected ? 'auto' : 'none'"
+                  class="mr-2 mb-2 transition"
+                />
+              </div>
+            </li>
+          </ul>
         </div>
-      </div>
-    </div>
+      </li>
+    </ul>
   </transition-group>
 </template>
 
@@ -111,7 +123,7 @@
 import { defineComponent, ref } from 'vue'
 import { useSkills } from '../../../composes/core'
 
-import { PlusIcon, CloseIcon } from '@iconicicons/vue3'
+import { PlusIcon, CloseIcon, MinusIcon } from '@iconicicons/vue3'
 
 export default defineComponent({
   name: 'SpecialistPicker',
@@ -119,8 +131,13 @@ export default defineComponent({
   async setup() {
     const { skills, specializations, getSkills } = useSkills()
     getSkills()
+    const maxPerson = 10
+    const maxCountPercent = ref(0)
 
     const addSpecialist = (specialistName) => {
+      if (selectedSpecialist.value.length === maxPerson) {
+        return
+      }
       const specialistObject = {}
 
       specialistObject.name = specialistName
@@ -154,21 +171,59 @@ export default defineComponent({
       }
 
       selectedSpecialist.value.push(specialistObject)
+      maxCountPercent.value = selectedSpecialist.value.length * 10
     }
 
     const selectedSpecialist = ref([])
     return {
       specializations,
       PlusIcon,
+      MinusIcon,
       CloseIcon,
       addSpecialist,
       selectedSpecialist,
+      maxCountPercent,
     }
   },
 })
 </script>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+.picker__list {
+  display: flex;
+  width: 400px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  height: 100%;
+}
+
+.picker__item {
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+
+  background-color: white;
+  border-radius: 12px;
+}
+
+.picker__spec {
+  margin-top: 5px;
+}
+
+.picker__name {
+  margin-top: 15px;
+}
+
 .specialist-plus {
   transition: transform 0.2s ease-out;
 }
@@ -195,21 +250,5 @@ export default defineComponent({
 
 .specialist-plus:hover {
   transform: rotate(180deg);
-}
-
-.list-item {
-  display: inline-block;
-  margin-right: 10px;
-}
-
-.list-enter-active,
-.list-leave-active {
-  transition: all 1s ease;
-}
-
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateY(30px);
 }
 </style>
