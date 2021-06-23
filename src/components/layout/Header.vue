@@ -20,6 +20,14 @@
             'border-r border-gray-200 dark:border-blueGray-600',
           ]"
         >
+          <WidgetUserNotification v-focusable />
+        </div>
+        <div
+          :class="[
+            'flex items-center mr-4 pr-6',
+            'border-r border-gray-200 dark:border-blueGray-600',
+          ]"
+        >
           <WidgetColorSwitcher v-focusable />
         </div>
         <nav class="flex items-center">

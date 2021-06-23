@@ -4,6 +4,8 @@ import { ref } from 'vue'
 const { request, BASE_URL, error } = useApi()
 const user = ref({})
 
+const countUnreadNotifications = ref(0)
+
 export const useUser = () => {
   const getUser = async (uuid = '') => {
     const response = await request(uuid ? `/profile/${uuid}` : '/profile')
@@ -40,13 +42,26 @@ export const useUser = () => {
   const resendEmail = async () =>
     await request('/profile/resendEmail', { method: 'post' })
 
+  const getCountUnreadNotifications = async () => {
+    const response = await request(`/notification/unread`)
+    countUnreadNotifications.value = response.data.count
+    return countUnreadNotifications.value
+  }
+
+  const getNotifications = async (page) => {
+    const response = await request(`/notification?page=${page}`)
+    return response.data
+  }
   return {
     user,
+    countUnreadNotifications,
     getUser,
     getUserProfileUrl,
     saveUserSkills,
     saveUserData,
     confirmEmail,
     resendEmail,
+    getCountUnreadNotifications,
+    getNotifications,
   }
 }

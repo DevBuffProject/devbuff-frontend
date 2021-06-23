@@ -15,7 +15,7 @@
         <div
           :class="[
             'bg-opacity-80 dark:bg-opacity-50 backdrop-filter backdrop-blur-[5px]',
-            'rounded-xl p-4 z-50 bg-black',
+            'rounded-xl z-50 bg-black',
           ]"
         >
           <slot />
@@ -32,10 +32,11 @@ import { onClickOutside, useMagicKeys, whenever } from '@vueuse/core'
 
 export default defineComponent({
   name: 'AtomicDropdown',
+  emits: ['onOpen', 'onClose'],
   props: {
     byClick: { type: Boolean, default: false },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const container = ref()
     const dropdown = ref()
     const isVisible = ref(false)
@@ -46,11 +47,15 @@ export default defineComponent({
     })
 
     const show = async () => {
+      emit('onOpen')
       isVisible.value = true
       await motion.apply('show')
     }
     const hide = async () => {
       await motion.apply('initial')
+      if (isVisible.value) {
+        emit('onClose')
+      }
       isVisible.value = false
     }
 
