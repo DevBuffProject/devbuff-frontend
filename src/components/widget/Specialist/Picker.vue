@@ -1,25 +1,5 @@
 <template>
-  <div
-    class="bg-gray-900 rounded h-6 mt-5"
-    role="progressbar"
-    :aria-valuenow="maxCountPercent"
-    aria-valuemin="0"
-    aria-valuemax="100"
-  >
-    <div
-      class="
-        bg-primary-800
-        rounded
-        h-6
-        text-center text-white text-sm
-        transition
-      "
-      :style="`width: ${maxCountPercent}%; transition: width 2s;`"
-    >
-      {{ maxCountPercent }} %
-    </div>
-  </div>
-
+  <h3>Ваша команда</h3>
   <div class="grid grid-cols-12 gap-2">
     <div
       class="
@@ -40,6 +20,7 @@
           {{ specialist }}
         </div>
         <component
+          v-if="selectedSpecialist.length < maxPerson"
           :is="PlusIcon"
           @click="addSpecialist(specialist)"
           class="col-span-1 specialist-plus"
@@ -53,15 +34,73 @@
 
   <hr class="mt-2 mb-2" />
 
-  <transition-group name="bounce" tag="div" class="masonory">
+  <div
+    class="bg-gray-900 rounded h-6 mb-5"
+    role="progressbar"
+    :aria-valuenow="maxCountPercent"
+    aria-valuemin="0"
+    aria-valuemax="100"
+  >
+    <div
+      :class="[
+        `
+        rounded
+        h-6
+        text-center text-white text-sm
+        transition`,
+        (selectedSpecialist.length * 100) / maxPerson >= 0
+          ? 'bg-primary-400'
+          : '',
+        (selectedSpecialist.length * 100) / maxPerson >= 40
+          ? 'bg-warning-400'
+          : '',
+        (selectedSpecialist.length * 100) / maxPerson >= 71
+          ? 'bg-danger-400'
+          : '',
+        (selectedSpecialist.length * 100) / maxPerson === 100
+          ? 'bg-danger-700'
+          : '',
+      ]"
+      :style="`width: ${
+        (selectedSpecialist.length * 100) / maxPerson
+      }%; transition: width 2s;`"
+    >
+      {{ selectedSpecialist.length }} / {{ maxPerson }}
+    </div>
+  </div>
+
+  <transition-group name="zoom" tag="div" class="masonory">
     <ul
-      class="w-40% break-avoid bg-white rounded mt-3 ml-3 mb-3"
+      class="
+        w-40%
+        break-avoid
+        bg-white
+        border border-gray-300 border-opacity-30
+        dark:border-blueGray-700
+        dark:bg-blueGray-900
+        rounded-xl
+        relative
+        mt-2
+      "
       v-for="(specialist, index) in selectedSpecialist"
       :key="specialist + index + '_selected'"
     >
-      <li class="pl-2 pr-2 flex flex-col flex-wrap rounded">
-        <div class="p-3">
-          <p>Специалист: {{ specialist.name }}</p>
+      <li class="flex flex-col flex-wrap rounded">
+        <div
+          class="
+            p-2
+            border-b-2 border-gray-300 border-opacity-30
+            dark:border-blueGray-700
+            mb-2
+            flex
+            justify-between
+          "
+        >
+          <p>{{ specialist.name }}</p>
+          <component
+            @click="selectedSpecialist.splice(index, 1)"
+            :is="CloseIcon"
+          />
         </div>
         <div
           class=""
@@ -117,7 +156,7 @@
                       rounded
                       cursor-pointer
                     "
-                    @click=""
+                    @click="technology.selected = !technology.selected"
                   >
                     {{ technology.name }}
                   </a>
@@ -183,11 +222,11 @@ export default defineComponent({
       }
 
       selectedSpecialist.value.push(specialistObject)
-      maxCountPercent.value = selectedSpecialist.value.length * 10
     }
 
     const selectedSpecialist = ref([])
     return {
+      maxPerson,
       specializations,
       PlusIcon,
       MinusIcon,
@@ -204,38 +243,47 @@ export default defineComponent({
 ul {
   padding: 0;
 }
+
 .break-avoid {
   break-inside: avoid;
 }
 
 .masonory {
   column-count: 4;
-  column-gap: 10px;
-}
-.content-stretch {
-}
-
-@keyframes activation {
-  0% {
-    opacity: 0;
-    visibility: hidden;
-  }
-  100% {
-    opacity: 100%;
-    visibility: visible;
-  }
 }
 
 .specialist-plus {
   transition: transform 0.2s ease-out;
 }
 
-.bounce-enter-active {
-  animation: bounce-in 0.5s;
+.zoom-enter-active {
+  animation: zoomIn 0.5s;
 }
 
-.bounce-leave-active {
-  animation: bounce-in 0.5s reverse;
+.zoom-leave-active {
+  animation: zoomIn 0.5s reverse;
+}
+
+@-webkit-keyframes zoomIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 @keyframes bounce-in {
