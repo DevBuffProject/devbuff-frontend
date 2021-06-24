@@ -53,13 +53,9 @@
 
   <hr class="mt-2 mb-2" />
 
-  <transition-group
-    name="bounce"
-    tag="div"
-    class="masonory "
-  >
+  <transition-group name="bounce" tag="div" class="masonory">
     <ul
-      class="w-40% break-avoid   bg-white rounded mt-3 ml-3 mb-3 "
+      class="w-40% break-avoid bg-white rounded mt-3 ml-3 mb-3"
       v-for="(specialist, index) in selectedSpecialist"
       :key="specialist + index + '_selected'"
     >
@@ -207,9 +203,6 @@ export default defineComponent({
 <style scoped>
 ul {
   padding: 0;
-  /*margin-top:10px;*/
-  /*margin-left: 10px;*/
-
 }
 .break-avoid {
   break-inside: avoid;
@@ -220,7 +213,6 @@ ul {
   column-gap: 10px;
 }
 .content-stretch {
-
 }
 
 @keyframes activation {
