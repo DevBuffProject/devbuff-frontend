@@ -179,7 +179,7 @@ import { PlusIcon, CloseIcon, MinusIcon } from '@iconicicons/vue3'
 export default defineComponent({
   name: 'SpecialistPicker',
 
-  async setup() {
+  setup() {
     const { skills, specializations, getSkills } = useSkills()
     getSkills()
     const maxPerson = 10

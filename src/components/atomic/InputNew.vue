@@ -102,7 +102,7 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import { useForm, useField } from 'vee-validate'
+import { useField } from 'vee-validate'
 export default defineComponent({
   name: 'VInputNew',
   props: {

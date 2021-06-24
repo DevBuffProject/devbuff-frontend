@@ -4,7 +4,7 @@
     <AtomicForm :data="data" @submit="onSubmit" class="col-span-12">
       <template #externalForms>
         <div class="col-span-12">
-          <WidgetSpecialistPicker name="specialists" - v-model="inputValue" />
+          <WidgetSpecialistPicker />
         </div>
       </template>
     </AtomicForm>
@@ -12,9 +12,8 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import * as yup from 'yup'
-import { useField } from 'vee-validate'
 
 export default defineComponent({
   async setup() {
@@ -51,22 +50,16 @@ export default defineComponent({
         value: '',
       },
     ]
-
-    const {
-      value: inputValue,
-      errorMessage,
-      handleBlur,
-      handleChange,
-      meta,
-    } = useField('specialists', undefined)
+    const d = ref([])
 
     const onSubmit = async (data) => {
       console.log(data)
+      console.log(d.value)
     }
     return {
-      inputValue,
       data,
       onSubmit,
+      d,
     }
   },
 })
