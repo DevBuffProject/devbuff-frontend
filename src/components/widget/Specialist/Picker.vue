@@ -56,10 +56,10 @@
   <transition-group
     name="bounce"
     tag="div"
-    class="flex flex-row items-start  flex-wrap bg-[rgb(211,211,211)] rounded p-1 mb-3 "
+    class="masonory "
   >
     <ul
-      class="w-40%  bg-white rounded mt-3 ml-3 mb-3 "
+      class="w-40% break-avoid   bg-white rounded mt-3 ml-3 mb-3 "
       v-for="(specialist, index) in selectedSpecialist"
       :key="specialist + index + '_selected'"
     >
@@ -209,6 +209,18 @@ ul {
   padding: 0;
   /*margin-top:10px;*/
   /*margin-left: 10px;*/
+
+}
+.break-avoid {
+  break-inside: avoid;
+}
+
+.masonory {
+  column-count: 4;
+  column-gap: 10px;
+}
+.content-stretch {
+
 }
 
 @keyframes activation {
