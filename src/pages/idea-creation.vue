@@ -1,15 +1,20 @@
 <template>
   <div class="w-full grid grid-cols-12">
     <h3 class="col-span-12">Idea creation</h3>
-    <AtomicForm :data="data" @submit="onSubmit" class="col-span-12" />
+    <AtomicForm :data="data" @submit="onSubmit" class="col-span-12">
+      <template #externalForms>
+        <div class="col-span-12">
+          <WidgetSpecialistPicker name="specialists" - v-model="inputValue" />
+        </div>
+      </template>
+    </AtomicForm>
   </div>
-
-  <WidgetSpecialistPicker> </WidgetSpecialistPicker>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import * as yup from 'yup'
+import { useField } from 'vee-validate'
 
 export default defineComponent({
   async setup() {
@@ -47,10 +52,19 @@ export default defineComponent({
       },
     ]
 
+    const {
+      value: inputValue,
+      errorMessage,
+      handleBlur,
+      handleChange,
+      meta,
+    } = useField('specialists', undefined)
+
     const onSubmit = async (data) => {
       console.log(data)
     }
     return {
+      inputValue,
       data,
       onSubmit,
     }

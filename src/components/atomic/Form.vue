@@ -41,7 +41,8 @@
       >
       </AtomicInputNew>
     </div>
-    <AtomicButton class="flex items-center justify-center"> Save</AtomicButton>
+    <slot name="externalForms" />
+    <AtomicButton class="col-start-12">Save</AtomicButton>
   </Form>
 </template>
 

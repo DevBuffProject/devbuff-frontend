@@ -1,5 +1,5 @@
 <template>
-  <h3>Ваша команда</h3>
+  <h5>Ваша команда</h5>
   <div class="grid grid-cols-12 gap-2">
     <div
       class="
