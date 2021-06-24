@@ -56,19 +56,19 @@
   <transition-group
     name="bounce"
     tag="div"
-    class="flex flex-row items-end flex-wrap"
+    class="flex flex-row items-start  flex-wrap bg-[rgb(211,211,211)] rounded p-1 mb-3 "
   >
     <ul
-      class="w-1/2 bg-white"
+      class="w-40%  bg-white rounded mt-3 ml-3 mb-3 "
       v-for="(specialist, index) in selectedSpecialist"
       :key="specialist + index + '_selected'"
     >
       <li class="pl-2 pr-2 flex flex-col flex-wrap rounded">
-        <div>
+        <div class="p-3">
           <p>Специалист: {{ specialist.name }}</p>
         </div>
         <div
-          class="mt-4"
+          class=""
           v-for="(language, indexLanguage) of specialist.languages"
           :key="specialist + index + '_selected' + indexLanguage + language"
         >
@@ -77,6 +77,7 @@
               class="
                 flex flex-wrap
                 items-center
+                mb-3
                 transition
                 duration-500
                 ease-in-out
@@ -94,7 +95,7 @@
             </a>
           </div>
           <transition name="tech_activate">
-            <ul v-if="language.selected" class="ul__technology">
+            <ul v-if="language.selected" class="ul__technology mt-0 p-0">
               <li
                 v-for="(technology, indexTechnology) of language.frameworks"
                 :key="
@@ -206,7 +207,8 @@ export default defineComponent({
 <style scoped>
 ul {
   padding: 0;
-  margin: 0;
+  /*margin-top:10px;*/
+  /*margin-left: 10px;*/
 }
 
 @keyframes activation {
