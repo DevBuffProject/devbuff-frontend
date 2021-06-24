@@ -31,7 +31,7 @@
         />
       </div>
       <AtomicInputNew
-        v-else
+        v-else-if="input.type != 'mixed'"
         :value="input.value"
         :name="input.name"
         :type="input.type"
@@ -49,7 +49,7 @@
 <script>
 import { Form } from 'vee-validate'
 import { defineComponent } from 'vue'
-import { NumberSchema, StringSchema, DateSchema, MixedSchema } from 'yup'
+import { NumberSchema, StringSchema, DateSchema, ArraySchema } from 'yup'
 import * as yup from 'yup'
 
 export default defineComponent({
@@ -92,6 +92,8 @@ export default defineComponent({
         input.type = 'number'
       } else if (input.schema instanceof DateSchema) {
         input.type = 'date'
+      } else if (input.schema instanceof ArraySchema) {
+        input.type = 'mixed'
       }
       yupObject[input.name] = input.schema
     }

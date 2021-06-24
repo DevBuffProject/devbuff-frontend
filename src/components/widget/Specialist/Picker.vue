@@ -1,5 +1,9 @@
 <template>
   <h5>Ваша команда</h5>
+
+  <input type="hidden" :name="name" :id="name" :value="inputValue" />
+  {{ errorMessage }}
+  {{ inputValue }}
   <div class="grid grid-cols-12 gap-2">
     <div
       class="
@@ -156,7 +160,6 @@
                       rounded
                       cursor-pointer
                     "
-                    @click="technology.selected = !technology.selected"
                   >
                     {{ technology.name }}
                   </a>
@@ -171,15 +174,21 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { useSkills } from '../../../composes/core'
 
 import { PlusIcon, CloseIcon, MinusIcon } from '@iconicicons/vue3'
+import { useField } from 'vee-validate'
 
 export default defineComponent({
   name: 'SpecialistPicker',
-
-  setup() {
+  props: {
+    name: {
+      type: String,
+      default: 'specialists',
+    },
+  },
+  setup(props) {
     const { skills, specializations, getSkills } = useSkills()
     getSkills()
     const maxPerson = 10
@@ -225,7 +234,57 @@ export default defineComponent({
     }
 
     const selectedSpecialist = ref([])
+
+    const {
+      value: inputValue,
+      errorMessage,
+      handleBlur,
+      handleChange,
+      meta,
+    } = useField(props.name, undefined, {
+      initialValue: selectedSpecialist,
+    })
+
+    watch(
+      () => selectedSpecialist,
+      (state) => {
+        const result = []
+
+        for (const specialist of state.value) {
+          const specialistValue = {
+            name: specialist.name,
+            count: specialist.count,
+            languages: [],
+          }
+
+          for (const language of specialist.languages) {
+            if (!language.selected) {
+              continue
+            }
+
+            const languageValue = {
+              name: language.name,
+              frameworks: [],
+            }
+            for (const technology of language.frameworks) {
+              if (technology.selected) {
+                languageValue.frameworks.push({
+                  name: technology.name,
+                })
+              }
+            }
+            specialistValue.languages.push(languageValue)
+          }
+          result.push(specialistValue)
+        }
+
+        inputValue.value = result
+      },
+      { deep: true },
+    )
     return {
+      inputValue,
+      errorMessage,
       maxPerson,
       specializations,
       PlusIcon,

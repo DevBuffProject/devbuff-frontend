@@ -49,6 +49,10 @@ export default defineComponent({
         placeholder: 'Опишите кратко вашу идею',
         value: '',
       },
+      {
+        schema: yup.array().min(1).max(10).required(),
+        name: 'specialists',
+      },
     ]
     const d = ref([])
 
