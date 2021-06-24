@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-12">
+  <div class="grid grid-cols-12 gap-2">
     <div
       class="
         col-span-3
@@ -53,14 +53,18 @@
 
   <hr class="mt-2 mb-2" />
 
-  <transition-group name="bounce" tag="div" class="flex flex-wrap overflow-x-scroll">
-    <ul class="flex items-start">
-      <li
-        v-for="(specialist, index) in selectedSpecialist"
-        :key="specialist + index + '_selected'"
-        class="pl-2 pr-2 flex flex-col flex-wrap bg-white rounded"
-      >
-        <div class="picker__spec">
+  <transition-group
+    name="bounce"
+    tag="div"
+    class="flex flex-row items-end flex-wrap"
+  >
+    <ul
+      class="w-1/2 bg-white"
+      v-for="(specialist, index) in selectedSpecialist"
+      :key="specialist + index + '_selected'"
+    >
+      <li class="pl-2 pr-2 flex flex-col flex-wrap rounded">
+        <div>
           <p>Специалист: {{ specialist.name }}</p>
         </div>
         <div
@@ -73,7 +77,9 @@
               class="
                 flex flex-wrap
                 items-center
-                transition duration-500 ease-in-out
+                transition
+                duration-500
+                ease-in-out
                 hover:bg-primary-100
                 p-1
                 cursor-pointer
@@ -106,17 +112,18 @@
                   @click="technology.selected = !technology.selected"
                   class="flex justify-around"
                 >
-                  <a class="p-1 bg-[rgb(192,192,192)] text-xs rounded cursor-pointer"
-                  @click=""
-
+                  <a
+                    class="
+                      p-1
+                      bg-[rgb(192,192,192)]
+                      text-xs
+                      rounded
+                      cursor-pointer
+                    "
+                    @click=""
                   >
-                    {{technology.name}}
+                    {{ technology.name }}
                   </a>
-  <!--                <AtomicChip-->
-  <!--                  :text="technology.name"-->
-  <!--                  :type="technology.selected ? 'auto' : 'none'"-->
-  <!--                  class="mr-2 mb-2 transition cursor-pointer"-->
-  <!--                />-->
                 </div>
               </li>
             </ul>
@@ -197,33 +204,21 @@ export default defineComponent({
 </script>
 
 <style scoped>
-* {
-  box-sizing: border-box;
-}
-
 ul {
   padding: 0;
   margin: 0;
 }
-.tech_activate-enter-active {
-  animation: activation 0.5s;
-}
-.tech_activate-leave-active {
-  animation: activation 0.5s reverse;
-}
 
 @keyframes activation {
   0% {
-  opacity: 0;
-  visibility: hidden;
-
+    opacity: 0;
+    visibility: hidden;
   }
-  100%{
+  100% {
     opacity: 100%;
     visibility: visible;
   }
 }
-
 
 .specialist-plus {
   transition: transform 0.2s ease-out;
