@@ -16,7 +16,7 @@
       theme="snow"
       :placeholder="placeholder"
       :toolbar="toolbar"
-      :style="[errorMessage && 'border-color: red; z-index:99 ']"
+      :style="[errorMessage && 'border-color: red']"
     />
     <div
       v-if="errorMessage"

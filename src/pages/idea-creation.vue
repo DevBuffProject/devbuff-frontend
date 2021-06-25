@@ -12,11 +12,15 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import * as yup from 'yup'
+import { useIdea } from '../composes/core'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   async setup() {
+    const { publishIdea } = useIdea()
+    const router = useRouter()
     const data = [
       {
         schema: yup
@@ -54,16 +58,20 @@ export default defineComponent({
         name: 'specialists',
       },
     ]
-    const d = ref([])
 
     const onSubmit = async (data) => {
-      console.log(data)
-      console.log(d.value)
+      publishIdea(data).then((result) =>
+        router.replace({
+          name: `idea-detail`,
+          params: {
+            id: result.id,
+          },
+        }),
+      )
     }
     return {
       data,
       onSubmit,
-      d,
     }
   },
 })
