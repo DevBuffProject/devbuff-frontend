@@ -2,20 +2,15 @@
   <h5>Ваша команда</h5>
 
   <input type="hidden" :name="name" :id="name" :value="inputValue" />
-  {{ errorMessage }}
-  {{ inputValue }}
+  <div class="w-full flex justify-center pt-1 text-xs text-danger mb-2">
+    <span class="mt-px">{{ errorMessage }}</span>
+  </div>
   <div class="grid grid-cols-12 gap-2">
     <div
-      class="
-        col-span-3
-        bg-white
-        border border-gray-300 border-opacity-30
-        dark:border-blueGray-700
-        dark:bg-blueGray-900
-        p-4
-        rounded-xl
-        relative
-      "
+      :class="[
+        'col-span-3 bg-white border border-gray-300 border-opacity-30 dark:border-blueGray-700 dark:bg-blueGray-900 p-4 rounded-xl relative',
+        errorMessage && '!border-danger !ring-danger-200 dark:!ring-danger-900',
+      ]"
       v-for="(specialist, index) of specializations"
       :key="specialist + index"
     >
@@ -30,7 +25,8 @@
           class="col-span-1 specialist-plus"
         />
         <p class="flex items-center pt-1 text-xs text-gray-400 col-span-6">
-          Description about specialist Lorem
+          Description about specialist Lorem, Description about specialist
+          Lorem, Description about specialist Lorem
         </p>
       </div>
     </div>
@@ -69,7 +65,9 @@
         (selectedSpecialist.length * 100) / maxPerson
       }%; transition: width 2s;`"
     >
-      {{ selectedSpecialist.length }} / {{ maxPerson }}
+      <span v-if="selectedSpecialist.length > 0">
+        {{ selectedSpecialist.length }} / {{ maxPerson }}
+      </span>
     </div>
   </div>
 
@@ -84,7 +82,7 @@
         dark:bg-blueGray-900
         rounded-xl
         relative
-        mt-2
+        mb-4
       "
       v-for="(specialist, index) in selectedSpecialist"
       :key="specialist + index + '_selected'"
@@ -102,6 +100,7 @@
         >
           <p>{{ specialist.name }}</p>
           <component
+            class="specialist-plus"
             @click="selectedSpecialist.splice(index, 1)"
             :is="CloseIcon"
           />
@@ -116,11 +115,11 @@
               class="
                 flex flex-wrap
                 items-center
-                mb-3
                 transition
                 duration-500
                 ease-in-out
-                hover:bg-primary-100
+                dark:hover:bg-primary-800
+                hover:bg-primary-400
                 p-1
                 cursor-pointer
                 rounded
@@ -134,7 +133,10 @@
             </a>
           </div>
           <transition name="tech_activate">
-            <ul v-if="language.selected" class="ul__technology mt-0 p-0">
+            <ul
+              v-if="language.selected && language.frameworks.length > 0"
+              class="mt-0"
+            >
               <li
                 v-for="(technology, indexTechnology) of language.frameworks"
                 :key="
@@ -146,24 +148,13 @@
                   technology +
                   indexTechnology
                 "
-                class="p-2 ml-10"
+                class="mb-1 ml-10"
               >
-                <div
+                <AtomicChip
+                  :text="technology.name"
+                  :type="technology.selected ? 'auto' : ''"
                   @click="technology.selected = !technology.selected"
-                  class="flex justify-around"
-                >
-                  <a
-                    class="
-                      p-1
-                      bg-[rgb(192,192,192)]
-                      text-xs
-                      rounded
-                      cursor-pointer
-                    "
-                  >
-                    {{ technology.name }}
-                  </a>
-                </div>
+                ></AtomicChip>
               </li>
             </ul>
           </transition>
@@ -342,18 +333,6 @@ ul {
   }
   50% {
     opacity: 1;
-  }
-}
-
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(1);
   }
 }
 
