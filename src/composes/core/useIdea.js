@@ -57,6 +57,24 @@ export const useIdea = (id) => {
     )
   }
 
+  const publishIdea = async (data) => {
+    const formData = new FormData()
+
+    for (const key of Object.keys(data)) {
+      formData.append(
+        key,
+        typeof data[key] === 'object' ? JSON.stringify(data[key]) : data[key],
+      )
+    }
+
+    return (
+      await request(`/idea/`, {
+        method: 'POST',
+        data: formData,
+      })
+    ).data
+  }
+
   const mapLanguages = (customIdea) =>
     mapValuesFromArrayObjects(customIdea.specialist, 'languages')
   const languages = computed(() =>
@@ -84,6 +102,7 @@ export const useIdea = (id) => {
     joinToIdea,
     changeStatusIdea,
     approveUser,
+    publishIdea,
     ...rest,
   }
 }

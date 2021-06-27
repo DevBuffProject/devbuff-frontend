@@ -26,7 +26,7 @@
           v-focusable.indexOnly
           @click="initAuth(AuthProviders.GitHub)"
         >
-          <div class="text-black dark:text-blueGray-50 flex items-center">
+          <div class="text-white dark:text-blueGray-50 flex items-center">
             <Svg name="Github" />
             <span class="ml-2">GitHub</span>
           </div>
@@ -37,7 +37,7 @@
           v-focusable.indexOnly
           @click="initAuth(AuthProviders.GitLab)"
         >
-          <div class="text-black dark:text-blueGray-50 flex items-center">
+          <div class="text-white dark:text-blueGray-50 flex items-center">
             <Svg name="Gitlab" />
             <span class="ml-2">GitLab</span>
           </div>
