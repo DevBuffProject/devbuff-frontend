@@ -3,11 +3,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { MotionPlugin } from '@vueuse/motion'
 import { useQueryString } from './composes/utils'
 import { createMiddleware, getUser } from './middlewares'
+import { createI18n } from 'vue-i18n'
+import messages from '@intlify/vite-plugin-vue-i18n/messages'
 import focusable from './app/directives/focusable'
 import mitt from 'mitt'
 import App from './App.vue'
 import routes from './routes'
-
 import 'virtual:svg-icons-register'
 
 const qs = useQueryString()
@@ -17,6 +18,13 @@ const router = createRouter({
   history: createWebHistory(),
   parseQuery: qs.parse,
   stringifyQuery: qs.stringify,
+})
+
+console.log(messages)
+const i18n = createI18n({
+  legacy: false,
+  locale: 'ru',
+  messages,
 })
 
 const loader = async () => {
@@ -33,4 +41,4 @@ const loader = async () => {
 }
 
 const app = createApp(defineAsyncComponent({ loader }))
-app.mount('#app')
+app.use(i18n).mount('#app')
