@@ -26,6 +26,18 @@ export default [
     },
   },
   {
+    name: 'idea-create',
+    path: '/create',
+    component: () => import('./pages/idea-creation.vue'),
+    props: true,
+    meta: {
+      // preview: defineAsyncComponent(() =>
+      //   import('./components/previews/idea.vue'),
+      // ),
+      breadcrumbs: ['home', 'explore'],
+    },
+  },
+  {
     name: 'idea-detail',
     path: '/view-:id',
     component: () => import('./pages/idea.vue'),
@@ -49,10 +61,19 @@ export default [
   {
     name: 'superuser',
     path: '/su',
-    component: () => import('./pages/superuser.vue'),
+    component: () => import('./pages/superuser/superuser.vue'),
     meta: {
       name: 'Superuser',
       breadcrumbs: ['home'],
+    },
+  },
+  {
+    name: 'approve',
+    path: '/su/approve',
+    component: () => import('./pages/superuser/approve.vue'),
+    meta: {
+      name: 'Approve',
+      breadcrumbs: ['home', 'superuser'],
     },
   },
 

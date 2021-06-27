@@ -34,7 +34,7 @@ export const useUser = () => {
   const confirmEmail = async (token) => {
     const response = await request(`/notification/email/confirm?token=${token}`)
     if (error.value?.response?.status !== undefined)
-      throw new Error("Can't confirm email")
+      throw new Error('Can\'t confirm email')
 
     return response
   }
@@ -52,6 +52,14 @@ export const useUser = () => {
     const response = await request(`/notification?page=${page}`)
     return response.data
   }
+  const uploadUserImage = async (file) => {
+    const data = new FormData()
+    data.append('image', file, file.fileName)
+
+    const response = await request('image', { method: 'post', data })
+
+    return `${BASE_URL}/image/${response.data.imagePath}`
+  }
   return {
     user,
     countUnreadNotifications,
@@ -63,5 +71,6 @@ export const useUser = () => {
     resendEmail,
     getCountUnreadNotifications,
     getNotifications,
+    uploadUserImage,
   }
 }
