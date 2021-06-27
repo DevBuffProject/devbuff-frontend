@@ -40,6 +40,14 @@ export const useUser = () => {
   const resendEmail = async () =>
     await request('/profile/resendEmail', { method: 'post' })
 
+  const uploadUserImage = async (file) => {
+    const data = new FormData()
+    data.append('image', file, file.fileName)
+
+    const response = await request('image', { method: 'post', data })
+
+    return `${BASE_URL}/image/${response.data.imagePath}`
+  }
   return {
     user,
     getUser,
@@ -48,5 +56,6 @@ export const useUser = () => {
     saveUserData,
     confirmEmail,
     resendEmail,
+    uploadUserImage,
   }
 }
