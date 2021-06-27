@@ -75,27 +75,36 @@ export const useIdea = (id) => {
     ).data
   }
 
-  const mapLanguages = (customIdea) =>
-    mapValuesFromArrayObjects(customIdea.specialist, 'languages')
-  const languages = computed(() =>
-    mapLanguages(idea.value).map((lang) => lang.name),
-  )
+  const languagesForSpecialist = (specialistId) => {
+    return idea.value.specialist
+      .filter((specialist) => {
+        return specialist.id === specialistId
+      })
+      .flatMap((specialist) => {
+        return mapValuesFromArrayObjects(specialist.languages, 'name')
+      })
+  }
 
-  const mapFrameworks = (customIdea) =>
-    mapValuesFromArrayObjects(mapLanguages(customIdea), 'frameworks')
-  const frameworks = computed(() =>
-    mapFrameworks(idea.value).map((framework) => framework.name),
-  )
+  const frameworksForSpecialist = (specialistId) => {
+    return idea.value.specialist
+      .filter((specialist) => {
+        return specialist.id === specialistId
+      })
+      .flatMap((specialist) => {
+        return mapValuesFromArrayObjects(
+          mapValuesFromArrayObjects(specialist.languages, 'frameworks'),
+          'name',
+        )
+      })
+  }
 
   return {
     idea,
     publishedAgo,
     pendingUsers,
     statusPositions,
-    languages,
-    frameworks,
-    mapLanguages,
-    mapFrameworks,
+    languagesForSpecialist,
+    frameworksForSpecialist,
     getIdea,
     getPendingUsers,
     getStatusPositions,

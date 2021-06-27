@@ -137,23 +137,38 @@
               <h5 class="mb-4 m-0 font-normal">
                 {{ specialist.name }} Developer
               </h5>
-              <AtomicLabel name="Стек языков">
+              <AtomicLabel
+                name="Стек языков"
+                v-if="languagesForSpecialist(specialist.id).length > 0"
+              >
                 <div class="flex flex-wrap">
                   <div
-                    v-for="language in languages"
+                    v-for="language in languagesForSpecialist(specialist.id)"
                     :key="`language-${language}-${specialist.id}`"
                   >
-                    <AtomicChip :text="language" class="mb-2" type="auto" />
+                    <AtomicChip
+                      :text="language"
+                      class="mb-2 mr-1"
+                      type="auto"
+                    />
                   </div>
                 </div>
               </AtomicLabel>
-              <AtomicLabel name="Стек фреймворков" class="mt-4">
+              <AtomicLabel
+                name="Стек фреймворков"
+                class="mt-4"
+                v-if="frameworksForSpecialist(specialist.id).length > 0"
+              >
                 <div class="flex flex-wrap">
                   <div
-                    v-for="framework of frameworks"
+                    v-for="framework of frameworksForSpecialist(specialist.id)"
                     :key="`language-${framework}-${specialist.id}`"
                   >
-                    <AtomicChip :text="framework" class="mb-2" type="auto" />
+                    <AtomicChip
+                      :text="framework"
+                      class="mb-2 mr-1"
+                      type="auto"
+                    />
                   </div>
                 </div>
               </AtomicLabel>
@@ -213,8 +228,8 @@ export default defineComponent({
     const {
       idea,
       statusPositions,
-      languages,
-      frameworks,
+      languagesForSpecialist,
+      frameworksForSpecialist,
       getIdea,
       getStatusPositions,
       joinToIdea,
@@ -249,12 +264,12 @@ export default defineComponent({
       idea,
       isOwnerIdea,
       publishedAgo,
-      languages,
-      frameworks,
       send,
       changeStatusIdea,
       getUserProfileUrl,
       getStatusAtPosition,
+      languagesForSpecialist,
+      frameworksForSpecialist,
     }
   },
 })
