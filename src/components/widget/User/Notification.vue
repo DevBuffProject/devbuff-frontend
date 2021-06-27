@@ -34,7 +34,7 @@
         <AtomicLoadingBar v-if="isLoading" class="text-primary" />
       </div>
       <div
-        v-else
+        v-else-if="notifications.length > 0"
         class="
           col-span-5
           border-b
@@ -83,6 +83,19 @@
         <div class="col-span-11" v-if="notification.type === 'CONFIRM_EMAIL'">
           Мы отправили вам письмо для подтверждения
         </div>
+      </div>
+      <div
+        v-else
+        class="
+          col-start-2 col-span-3
+          flex
+          items-center
+          justify-center
+          w-full
+          p-4
+        "
+      >
+        У вас нет уведомлений
       </div>
     </div>
   </AtomicDropdown>
