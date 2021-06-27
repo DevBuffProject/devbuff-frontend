@@ -22,7 +22,7 @@
             "
           />
         </div>
-        <div class="ml-4" v-else>У вас нет созданных идей.</div>
+        <div class="ml-4" v-else>{{ t('notFound') }}</div>
       </AtomicCard>
     </div>
     <aside class="col-span-1">
@@ -108,12 +108,13 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import { useIdeas, useIdea } from '../composes/core'
 import { useTitle } from '@vueuse/core'
-
+import { useIdeas, useIdea } from '../composes/core'
+import { useI18n } from '../composes/utils'
 export default defineComponent({
   async setup() {
     useTitle(`DevBuff Dashboard`)
+    const { t } = useI18n('pages.dashboard')
     const { userIdeas, getUserIdeas } = useIdeas()
     const {
       idea: inspectedIdea,
@@ -124,8 +125,8 @@ export default defineComponent({
     } = useIdea()
 
     await getUserIdeas()
-
     return {
+      t,
       userIdeas,
       pendingUsers,
       inspectedIdea,

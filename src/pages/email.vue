@@ -1,20 +1,20 @@
 <template>
-  <h2>Confirmation email</h2>
   <AtomicLoadingSpinner v-if="statusConfirmation === 'PENDING'" />
-  <h3 v-if="statusConfirmation === 'SUCCESS'">Success!</h3>
-  <h3 v-if="statusConfirmation === 'ERROR'">Something wrong, try again.</h3>
+  <h3 v-if="statusConfirmation === 'SUCCESS'">{{ t('onSuccess') }}</h3>
+  <h3 v-if="statusConfirmation === 'ERROR'">{{ t('onError') }}</h3>
 </template>
 <script>
 import { defineComponent, watch, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUser } from '../composes/core'
-
+import { useI18n } from '../composes/utils'
 export default defineComponent({
   name: 'Email',
   setup() {
     const statusConfirmation = ref('PENDING')
     const route = useRoute()
     const router = useRouter()
+    const { t } = useI18n('pages.email')
     const { confirmEmail } = useUser()
     const redirect = () => router.replace({ name: 'explore' })
 
@@ -31,6 +31,7 @@ export default defineComponent({
       },
     )
     return {
+      t,
       statusConfirmation,
     }
   },
