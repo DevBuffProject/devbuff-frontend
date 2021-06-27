@@ -13,7 +13,7 @@
         borderClasses,
         'absolute top-0 -left-px block w-[0px] h-[0px] border-solid',
         'border border-[12px] !border-b-0',
-        'border-gray-200 dark:border-blueGray-700 dark:bg-blueGray-900',
+        'border-gray-200 dark:border-blueGray-700',
       ]"
     />
     <em
