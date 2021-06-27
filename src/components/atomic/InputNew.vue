@@ -38,7 +38,7 @@
           @focus="onFocus"
         />
 
-        <div v-else class="flex flex-wrap items-stretch relative">
+        <div v-else class="flex flex-wrap items-stretch relative w-full">
           <div class="flex" v-if="svgIconName">
             <Svg
               class="
@@ -102,7 +102,7 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import { useForm, useField } from 'vee-validate'
+import { useField } from 'vee-validate'
 export default defineComponent({
   name: 'VInputNew',
   props: {

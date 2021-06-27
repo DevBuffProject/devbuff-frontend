@@ -1,30 +1,36 @@
 <template>
   <div class="flex">
     <AtomicNotification
-      v-if="!user.statusEmailConfirm && resendEmailNotificationIsVisible"
+      v-if="!user.statusEmailConfirm && isVerifyEmailSent"
       @click="onResendEmail"
       style="cursor: pointer"
       type="warning"
       :message="`Your email not confirmed`"
       :description="`Для того чтобы вы могли получать уведомления о ваших идеях, необходимо подтвердить Email. Переотправить письмо на адрес ${user.email}`"
-    ></AtomicNotification>
+    />
+  </div>
+  <div class="flex">
+    <AtomicNotification
+      v-if="conflictMessage"
+      type="danger"
+      :message="`Conflict field's`"
+      :description="conflictMessage"
+    />
   </div>
   <div class="w-full grid grid-cols-12">
     <h3 class="col-span-12">User data</h3>
-    <AtomicForm :data="data" @submit="onSubmit" class="col-span-12">
-    </AtomicForm>
+    <AtomicForm :data="data" @submit="onSubmit" class="col-span-12" />
   </div>
   <div class="grid grid-cols-12">
     <h3 class="col-span-12">Skills settings</h3>
-    <WidgetProfileSkills class="col-span-12 w-full h-auto">
-    </WidgetProfileSkills>
+    <WidgetProfileSkills class="col-span-12 w-full h-auto" />
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import * as yup from 'yup'
+import { defineComponent, ref, computed } from 'vue'
 import { useUser } from '../composes/core'
+import * as yup from 'yup'
 
 export default defineComponent({
   async setup() {
@@ -88,6 +94,7 @@ export default defineComponent({
         label: 'Telegram',
         name: 'socialNetworks:telegram',
         value: user.value.socialNetworks.telegram,
+        placeholder: 'username',
         svgIconName: 'Telegram',
       },
       {
@@ -109,6 +116,7 @@ export default defineComponent({
         label: 'Skype',
         name: 'socialNetworks:skype',
         value: user.value.socialNetworks.skype,
+        placeholder: 'username',
         svgIconName: 'Skype',
       },
       {
@@ -123,9 +131,12 @@ export default defineComponent({
         placeholder: 'username',
       },
     ]
-    const resendEmailNotificationIsVisible = ref(true)
+    const isVerifyEmailSent = ref(true)
+    const conflictFields = ref([])
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
+      // TODO
+      // !reduce
       for (const indexValue of Object.keys(data)) {
         if (indexValue.indexOf(':') > -1) {
           const split = indexValue.split(':')
@@ -136,24 +147,36 @@ export default defineComponent({
           delete data[indexValue]
         }
       }
-      resendEmailNotificationIsVisible.value = false
-      saveUserData(data)
+      try {
+        conflictFields.value = []
+        await saveUserData(data)
+        isVerifyEmailSent.value = false
+      } catch (err) {
+        conflictFields.value = err.message.split(',')
+      }
     }
 
     const onResendEmail = async () => {
       await resendEmail()
-      resendEmailNotificationIsVisible.value = false
+      isVerifyEmailSent.value = false
     }
 
     await getUser()
 
+    const conflictMessage = computed(() => {
+      if (conflictFields.value.length === 0) return undefined
+      //TODO i18n
+      return `Conflicted: ${conflictFields.value.join(', ')}`
+    })
+
     return {
       yup,
       data,
+      isVerifyEmailSent,
+      conflictMessage,
+      user,
       onSubmit,
       onResendEmail,
-      resendEmailNotificationIsVisible,
-      user,
     }
   },
 })
