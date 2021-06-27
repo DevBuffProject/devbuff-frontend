@@ -1,5 +1,5 @@
 <template>
-  <teleport to="body" v-if="visible">
+  <div v-if="visible">
     <div
       :class="[
         'fixed z-50 top-0 left-0 w-screen h-screen',
@@ -49,7 +49,7 @@
         </template>
       </suspense>
     </div>
-  </teleport>
+  </div>
 </template>
 
 <script>

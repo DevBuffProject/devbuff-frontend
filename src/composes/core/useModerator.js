@@ -2,12 +2,12 @@ import { useApi } from './useApi'
 import { ref } from 'vue'
 
 const { request, BASE_URL, error } = useApi()
-const ideaForValidation = ref([])
+const pendingIdeas = ref([])
 
 export const useModeration = () => {
-  const loadForIdeasValidation = async () => {
+  const getPendingIdeas = async () => {
     const data = await request('idea/moderator/waiting')
-    ideaForValidation.value = data.data
+    pendingIdeas.value = data.data
   }
 
   const approveIdea = async (uuid) => {
@@ -21,20 +21,20 @@ export const useModeration = () => {
   }
 
   const deleteIdeaFromRef = (uuid) => {
-    const indexIdea = ideaForValidation.value.findIndex((idea) => {
+    const indexIdea = pendingIdeas.value.findIndex((idea) => {
       if (idea.id === uuid) {
         return true
       }
     })
 
     if (indexIdea !== -1) {
-      ideaForValidation.value.splice(indexIdea, 1)
+      pendingIdeas.value.splice(indexIdea, 1)
     }
   }
 
   return {
-    ideaForValidation,
-    loadForIdeasValidation,
+    pendingIdeas,
+    getPendingIdeas,
     approveIdea,
     deleteIdea,
   }
