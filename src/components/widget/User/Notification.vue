@@ -6,10 +6,8 @@
   >
     <template #activator>
       <div role="button" v-focusable>
-        <span>
-          <component :is="BellIcon"></component>
-        </span>
-        <div style="position: absolute; top: -10px; left: 25px">
+        <component :is="BellIcon" />
+        <div class="absolute top-[-10px] left-[25px]">
           {{ countUnreadNotifications }}
         </div>
       </div>
@@ -24,6 +22,8 @@
         scrollbar-thumb-rounded
         scrollbar-thumb-gray
         scrolling-touch
+        w-[400px]
+        max-w-[280px]
       "
       style="width: 400px; max-height: 280px"
     >
@@ -34,7 +34,7 @@
         <AtomicLoadingBar v-if="isLoading" class="text-primary" />
       </div>
       <div
-        v-else-if="notifications.length > 0"
+        v-else-if="notifications"
         class="
           col-span-5
           border-b
@@ -50,14 +50,12 @@
           <component
             v-if="notification.type === 'USER_PENDING'"
             :is="UserPlusIcon"
-          >
-          </component>
+          />
 
           <component
             v-if="notification.type === 'CONFIRM_EMAIL'"
             :is="SendIcon"
-          >
-          </component>
+          />
         </div>
 
         <div class="col-span-11" v-if="notification.type === 'USER_PENDING'">
@@ -102,7 +100,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, nextTick } from 'vue'
+import { defineComponent, ref, onBeforeUnmount } from 'vue'
 import { useUser } from '../../../composes/core'
 import { BellIcon, UserPlusIcon, SendIcon } from '@iconicicons/vue3'
 
@@ -110,39 +108,36 @@ export default defineComponent({
   name: 'WidgetUserNotification',
   setup() {
     const {
+      notifications,
       countUnreadNotifications,
       getCountUnreadNotifications,
       getNotifications,
     } = useUser()
-    getCountUnreadNotifications()
-
-    setInterval(getCountUnreadNotifications, 30000)
-
-    const notifications = ref([])
     const isLoading = ref(false)
     let currentPage = 1
 
     const onOpenNotificationDialog = async () => {
       isLoading.value = true
-      const result = await getNotifications(1)
-      notifications.value = notifications.value.concat(result.notifications)
-      countUnreadNotifications.value = result.countUnread
+      await getNotifications(1)
       currentPage++
       isLoading.value = false
     }
-    const onCloseNotificationDialog = () => {
-      notifications.value = []
-    }
+    const onCloseNotificationDialog = () => (notifications.value = [])
+
+    getCountUnreadNotifications()
+
+    const interval = setInterval(getCountUnreadNotifications, 30000)
+    onBeforeUnmount(() => clearInterval(interval))
 
     return {
       isLoading,
-      onOpenNotificationDialog,
-      onCloseNotificationDialog,
       BellIcon,
       UserPlusIcon,
       SendIcon,
       countUnreadNotifications,
       notifications,
+      onOpenNotificationDialog,
+      onCloseNotificationDialog,
     }
   },
 })
