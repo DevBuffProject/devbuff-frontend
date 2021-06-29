@@ -20,6 +20,14 @@
             'border-r border-gray-200 dark:border-blueGray-600',
           ]"
         >
+          <WidgetUserNotification v-if="isLoggedIn" v-focusable />
+        </div>
+        <div
+          :class="[
+            'flex items-center mr-4 pr-6',
+            'border-r border-gray-200 dark:border-blueGray-600',
+          ]"
+        >
           <WidgetColorSwitcher v-focusable />
         </div>
         <nav class="flex items-center">
@@ -41,12 +49,13 @@
 <script>
 import { defineComponent } from 'vue'
 import { useAppearance } from '../../composes/utils'
+import { useAuth } from '../../composes/core'
 
 export default defineComponent({
   setup() {
     const { isDark, isLight } = useAppearance()
-
-    return { isDark, isLight }
+    const { isLoggedIn } = useAuth()
+    return { isDark, isLight, isLoggedIn }
   },
 })
 </script>

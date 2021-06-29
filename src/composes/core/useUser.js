@@ -2,7 +2,10 @@ import { useApi } from './useApi'
 import { ref } from 'vue'
 
 const { request, BASE_URL, error } = useApi()
+
 const user = ref({})
+const countUnreadNotifications = ref(0)
+const notifications = ref([])
 
 export const useUser = () => {
   const getUser = async (uuid = '') => {
@@ -13,6 +16,7 @@ export const useUser = () => {
     }
     return response
   }
+
   const getUserProfileUrl = (uuid) => `${BASE_URL}/photo/profile/${uuid}`
 
   const saveUserSkills = async (data) => {
@@ -40,22 +44,39 @@ export const useUser = () => {
   const resendEmail = async () =>
     await request('/profile/resendEmail', { method: 'post' })
 
+  const getCountUnreadNotifications = async () => {
+    const response = await request(`/notification/unread`)
+    countUnreadNotifications.value = response.data.count
+    return countUnreadNotifications.value
+  }
+
+  const getNotifications = async (page) => {
+    const response = await request(`/notification?page=${page}`)
+    notifications.value = notifications.value.concat(
+      response.data.notifications,
+    )
+    countUnreadNotifications.value = response.data.countUnread
+    return response
+  }
   const uploadUserImage = async (file) => {
     const data = new FormData()
     data.append('image', file, file.fileName)
-
     const response = await request('image', { method: 'post', data })
 
     return `${BASE_URL}/image/${response.data.imagePath}`
   }
   return {
     user,
+    notifications,
+    countUnreadNotifications,
     getUser,
     getUserProfileUrl,
     saveUserSkills,
     saveUserData,
     confirmEmail,
     resendEmail,
+    getCountUnreadNotifications,
+    getNotifications,
     uploadUserImage,
   }
 }
