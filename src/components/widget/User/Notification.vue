@@ -56,6 +56,10 @@
             v-if="notification.type === 'CONFIRM_EMAIL'"
             :is="SendIcon"
           />
+          <component
+            v-if="notification.type === 'IDEA_APPROVED'"
+            :is="UserCheckIcon"
+          />
         </div>
 
         <div class="col-span-11" v-if="notification.type === 'USER_PENDING'">
@@ -81,6 +85,27 @@
         <div class="col-span-11" v-if="notification.type === 'CONFIRM_EMAIL'">
           Мы отправили вам письмо для подтверждения
         </div>
+        <div class="col-span-11" v-if="notification.type === 'IDEA_APPROVED'">
+          Ваша идея «
+          <RouterLink
+            :to="{
+              name: 'idea-detail',
+              params: { id: notification.data.ideaId, _isDialog: true },
+            }"
+            custom
+            v-slot="{ href, navigate }"
+          >
+            <a
+              :href="href"
+              @click="navigate"
+              v-focusable
+              class="font-semibold inline-block"
+            >
+              {{ notification.data.ideaName }}
+            </a>
+          </RouterLink>
+          », была одобрена
+        </div>
       </div>
       <div
         v-else
@@ -102,7 +127,12 @@
 <script>
 import { defineComponent, ref, onBeforeUnmount } from 'vue'
 import { useUser } from '../../../composes/core'
-import { BellIcon, UserPlusIcon, SendIcon } from '@iconicicons/vue3'
+import {
+  BellIcon,
+  UserPlusIcon,
+  SendIcon,
+  UserCheckIcon,
+} from '@iconicicons/vue3'
 
 export default defineComponent({
   name: 'WidgetUserNotification',
@@ -134,6 +164,7 @@ export default defineComponent({
       BellIcon,
       UserPlusIcon,
       SendIcon,
+      UserCheckIcon,
       countUnreadNotifications,
       notifications,
       onOpenNotificationDialog,
