@@ -209,13 +209,19 @@
           </div>
         </AtomicCard>
       </div>
+      <div class="col-span-4">
+        <WidgetCommentsFast
+          :id="`idea-${idea.id}`"
+          :sso="ssoData"
+        ></WidgetCommentsFast>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
-import { useIdea, useUser } from '../composes/core'
+import { useIdea, useUser, useSso } from '../composes/core'
 import { useTimeAgo, useTitle } from '@vueuse/core'
 import { useI18n } from '../composes/utils'
 
@@ -235,6 +241,8 @@ export default defineComponent({
       joinToIdea,
       changeStatusIdea,
     } = useIdea(props.id)
+
+    const { ssoData, getSsoData } = useSso()
 
     const { t } = useI18n('pages.idea')
 
@@ -257,6 +265,7 @@ export default defineComponent({
     await getIdea()
     await getUser()
     await getStatusPositions(idea.value.id)
+    await getSsoData()
 
     const isOwnerIdea = user.value.id === idea.value.ownerIdea.id
     const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
@@ -266,6 +275,7 @@ export default defineComponent({
     return {
       t,
       idea,
+      ssoData,
       isOwnerIdea,
       publishedAgo,
       send,
