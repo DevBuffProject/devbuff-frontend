@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import { defineComponent, computed, useCssModule } from 'vue'
+import { defineComponent } from 'vue'
 import { useI18n } from '../../../composes/utils'
 
 export default defineComponent({

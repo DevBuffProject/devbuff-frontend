@@ -1,6 +1,6 @@
 <template>
-  <div class="grid grid-cols-4 gap-6">
-    <div class="col-span-3" id="ideas">
+  <div class="grid grid-cols-6 gap-6">
+    <div class="col-span-4" id="ideas">
       <template v-if="!isLoading && ideas.length > 0">
         <WidgetIdeasCard
           v-for="(idea, index) of ideas"
@@ -38,17 +38,17 @@
       </template>
     </div>
 
-    <div class="col-span-1">
+    <div class="col-span-2">
       <AtomicSwitcher
         class="mb-4"
         v-model:value="filter.sort"
         :values="[
           {
-            title: 'Date',
+            title: t('filter.date'),
             value: 'date',
           },
           {
-            title: 'Last update',
+            title: t('filter.lastUpdate'),
             value: 'lastUpdate',
           },
         ]"

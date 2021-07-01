@@ -10,6 +10,10 @@
       "onError": "Something wrong, try again."
     },
     explore: {
+      filter: {
+        date: 'Дата создания',
+        lastUpdate: 'Дата обновления'
+      },
       "notFound": "С заданными параметрами идей не найдено"
     },
     idea: {
@@ -39,8 +43,8 @@
       }
     }
   },
-  "components": {
-    "widget": {
+  components: {
+    widget: {
       ideas: {
         card: {
           detail: {
@@ -48,6 +52,12 @@
             technologies: 'Технологии в проекте',
             languages: 'Языки программирования',
           },
+        },
+        filter: {
+          param: {
+            specialists: 'Специалисты',
+            languages: 'Языки программирования'
+          }
         }
       },
       specialist: {
