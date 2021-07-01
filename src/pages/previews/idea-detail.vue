@@ -45,7 +45,9 @@
           custom
           v-slot="{ href, navigate }"
         >
-          <AtomicButton :href="href" @click="navigate">Подробнее</AtomicButton>
+          <AtomicButton :href="href" @click="navigate">
+            {{ t(`more`) }}
+          </AtomicButton>
         </RouterLink>
       </div>
     </div>
