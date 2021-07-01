@@ -41,6 +41,15 @@
   },
   "components": {
     "widget": {
+      ideas: {
+        card: {
+          detail: {
+            specialist: 'Специалисты',
+            technologies: 'Технологии в проекте',
+            languages: 'Языки программирования',
+          },
+        }
+      },
       specialist: {
         picker: {
           title: 'Ваша команда'

@@ -20,7 +20,6 @@ const router = createRouter({
   stringifyQuery: qs.stringify,
 })
 
-console.log(messages)
 const i18n = createI18n({
   legacy: false,
   locale: 'ru',
