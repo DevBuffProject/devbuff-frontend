@@ -1,4 +1,4 @@
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, defineComponent } from 'vue'
 
 export default [
   {
@@ -43,9 +43,9 @@ export default [
     component: () => import('./pages/idea.vue'),
     props: true,
     meta: {
-      // preview: defineAsyncComponent(() =>
-      //   import('./components/previews/idea.vue'),
-      // ),
+      preview: defineAsyncComponent(() =>
+        import('./pages/previews/idea-detail.vue'),
+      ),
       breadcrumbs: ['home', 'explore'],
     },
   },

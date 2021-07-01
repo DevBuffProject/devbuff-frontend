@@ -40,7 +40,6 @@
             <suspense>
               <AtomicDialog :visible="true" @onClose="back">
                 <component :is="dialogRoute?.meta.preview || Dialog" />
-                {{ dialogRoute.meta.preview }}
               </AtomicDialog>
 
               <template #fallback>

@@ -1,5 +1,18 @@
 {
   "pages": {
+    preview: {
+      idea: {
+        info: {
+          date: "Последнее обновление",
+          status: {
+            title: 'Статус',
+            PUBLISH: 'Опубликована',
+            WAITING_FULL_TEAM: 'Идет набор в команду',
+            WORKING: 'Набор закрыт',
+          }
+        }
+      }
+    },
     /** */
     "dashboard": {
       "notFound": "У вас нет идей",
@@ -18,7 +31,7 @@
     },
     idea: {
       info: {
-        date: "Дата",
+        date: "Последнее обновление",
         status: {
           title: 'Статус',
           PUBLISH: 'Опубликована',
