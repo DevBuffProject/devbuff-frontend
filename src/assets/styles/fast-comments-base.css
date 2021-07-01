@@ -1,0 +1,11 @@
+.logged-in-info {
+  display: none !important;
+}
+
+.avatar-wrapper {
+  box-shadow: none !important;
+  border-radius: 100% !important;
+  margin: 5px 0 0 5px;
+  width: 40px !important;
+  height: 40px !important;
+}

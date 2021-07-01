@@ -12,9 +12,11 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch, nextTick, watchEffect } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import FastCommentsVueNext from 'fastcomments-vue-next'
 import { useAppearance } from '../../../composes/utils'
+import * as baseStyle from '../../../assets/styles/fast-comments-base.css'
+import * as darkStyle from '../../../assets/styles/fast-comments-dark-theme.css'
 
 export default defineComponent({
   name: 'FastComments',
@@ -31,7 +33,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  async setup(props) {
     const { isDark } = useAppearance()
     const isLoading = ref(true)
     const reRenderKey = ref(true)
@@ -44,17 +46,21 @@ export default defineComponent({
       { deep: true },
     )
 
+    const style = computed(() => {
+      return isDark.value ? darkStyle.default : baseStyle.default
+    })
+
     const dataFastComment = ref({
       tenantId: 'lprwn3v7q',
       urlId: props.id,
-      customCSS: '.logged-in-info {\ndisplay: none !important;\n}',
+      customCSS: style,
       sso: props.sso,
       hasDarkBackground: isDark,
+      showLiveRightAway: true,
       onRender: () => {
         isLoading.value = false
       },
     })
-
     return { isLoading, reRenderKey, dataFastComment }
   },
 })

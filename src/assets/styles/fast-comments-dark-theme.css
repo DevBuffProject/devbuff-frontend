@@ -1,0 +1,10 @@
+@import "fast-comments-base.css";
+
+
+.comment-text {
+  color: white !important;
+}
+
+.website-url {
+  color: white !important;
+}
