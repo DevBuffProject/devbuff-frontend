@@ -19,7 +19,7 @@
         v-if="!isLoggedIn"
         class="p-5 mb-5 bg-primary bg-opacity-10 rounded-xl"
       >
-        <h4 class="mt-0">Login via</h4>
+        <h4 class="mt-0">{{ t('loginVia') }}</h4>
 
         <AtomicButton
           class="w-full mb-2 flex items-center justify-center"
@@ -42,7 +42,7 @@
             <span class="ml-2">GitLab</span>
           </div>
         </AtomicButton>
-        <div class="mt-0">login for publish idea and respond</div>
+        <div class="mt-0">{{ t('loginReason') }}</div>
       </div>
 
       <template v-for="link in nav" :key="link.title">
@@ -89,7 +89,7 @@
           @click="logout"
         >
           <LogOutIcon class="mr-4" />
-          <span class="text-md font-medium"> log out </span>
+          <span class="text-md font-medium"> {{ t('links.logout') }} </span>
         </div>
       </template>
     </nav>
@@ -106,35 +106,43 @@ import {
   SettingsIcon,
   ShieldIcon,
 } from '@iconicicons/vue3'
+import { useI18n } from '../../composes/utils'
 
 export default defineComponent({
   setup() {
-    const { initAuth, logout, PROVIDERS: AuthProviders, isLoggedIn } = useAuth()
+    const { t } = useI18n('components.layout.sidebar')
+    const {
+      initAuth,
+      logout,
+      PROVIDERS: AuthProviders,
+      isLoggedIn,
+      isAdmin,
+    } = useAuth()
     const { user } = useUser()
     const loadingRoute = ref({})
     const router = useRouter()
     const nav = computed(() =>
       [
         {
-          title: 'Explore',
+          title: t('links.explore'),
           icon: SearchIcon,
           to: '/explore',
           exact: true,
         },
         isLoggedIn.value && {
-          title: 'Dashboard',
+          title: t('links.dashboard'),
           icon: DashboardIcon,
           to: '/dashboard',
           exact: true,
         },
-        isLoggedIn.value && {
-          title: 'Superuser',
+        isAdmin.value && {
+          title: t('links.superuser'),
           icon: ShieldIcon,
           to: '/su',
           exact: true,
         },
         isLoggedIn.value && {
-          title: 'Settings',
+          title: t('links.settings'),
           icon: SettingsIcon,
           to: { name: 'settings', params: { _isDialog: true } },
           exact: true,
@@ -150,6 +158,7 @@ export default defineComponent({
     router.afterEach(() => (loadingRoute.value = ''))
 
     return {
+      t,
       user,
       AuthProviders,
       isLoggedIn,

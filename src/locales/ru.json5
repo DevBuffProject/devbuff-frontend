@@ -58,6 +58,19 @@
     }
   },
   components: {
+    layout: {
+      sidebar: {
+        loginVia: "Войти с помощью",
+        loginReason: "Авторизуйтесь для возможности просмотра и создания идей",
+        links: {
+          explore: 'Обзор идей',
+          dashboard: 'Дашборд',
+          superuser: 'Админ панель',
+          settings: 'Настройки',
+          logout: 'Выйти'
+        }
+      }
+    },
     widget: {
       ideas: {
         card: {

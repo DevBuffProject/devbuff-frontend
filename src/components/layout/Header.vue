@@ -15,22 +15,24 @@
       </div>
       <div class="flex items-center">
         <div
+          v-if="isLoggedIn"
           :class="[
-            'flex items-center mr-4 pr-6',
+            'flex items-center mr-4 pr-6 pt-2 pb-2',
             'border-r border-gray-200 dark:border-blueGray-600',
           ]"
         >
-          <WidgetUserNotification v-if="isLoggedIn" v-focusable />
+          <WidgetUserNotification v-focusable />
         </div>
-        <div
-          :class="[
-            'flex items-center mr-4 pr-6',
-            'border-r border-gray-200 dark:border-blueGray-600',
-          ]"
-        >
+        <div class="flex items-center pr-6">
           <WidgetColorSwitcher v-focusable />
         </div>
-        <nav class="flex items-center">
+        <nav
+          :class="[
+            'flex items-center pl-6',
+            'border-l border-gray-200 dark:border-blueGray-600',
+          ]"
+          v-if="isLoggedIn"
+        >
           <RouterLink v-slot="{ isActive }" to="/create">
             <AtomicButton
               :disabled="isActive"
