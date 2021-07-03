@@ -52,12 +52,13 @@ export default defineComponent({
 
     const dataFastComment = ref({
       tenantId: 'lprwn3v7q',
+      locale: 'ru_ru',
       urlId: props.id,
       customCSS: style,
       sso: props.sso,
       hasDarkBackground: isDark,
       showLiveRightAway: true,
-      onRender: () => {
+      onInit: () => {
         isLoading.value = false
       },
     })

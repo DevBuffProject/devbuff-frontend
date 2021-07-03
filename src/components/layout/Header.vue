@@ -38,8 +38,10 @@
               :disabled="isActive"
               v-focusable.indexOnly="{ indexOnly: true }"
             >
-              <template #icon> <EditIcon /> </template>
-              Create new idea
+              <template #icon>
+                <EditIcon />
+              </template>
+              {{ t('newIdea') }}
             </AtomicButton>
           </RouterLink>
         </nav>
@@ -50,14 +52,15 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useAppearance } from '../../composes/utils'
+import { useAppearance, useI18n } from '../../composes/utils'
 import { useAuth } from '../../composes/core'
 
 export default defineComponent({
   setup() {
+    const { t } = useI18n('components.layout.header')
     const { isDark, isLight } = useAppearance()
     const { isLoggedIn } = useAuth()
-    return { isDark, isLight, isLoggedIn }
+    return { t, isDark, isLight, isLoggedIn }
   },
 })
 </script>
