@@ -20,9 +20,8 @@
       </AtomicCard>
     </div>
     <aside class="col-span-1">
-      <div v-if="!inspectedIdea" />
-      <AtomicLoadingSpinner v-if="pendingUsers === undefined" />
-      <div v-if="inspectedIdea" class="col-span-3">
+      <AtomicLoadingSpinner v-if="isPendingLoading" />
+      <div v-if="inspectedIdea.id" class="col-span-3">
         <h1 class="mt-0 mb-3">{{ inspectedIdea.name }}</h1>
         <p class="mt-0 mb-6 opacity-50">{{ inspectedIdea.description }}</p>
         <AtomicCard class="mb-4">
@@ -48,30 +47,28 @@
               <div class="flex flex-col items-center justify-center">
                 <StopIcon v-if="inspectedIdea.status === 'WAITING_FULL_TEAM'" />
                 <PlayIcon v-else />
-                <span>{{
-                  inspectedIdea.status === 'WAITING_FULL_TEAM'
-                    ? 'Остановить набор'
-                    : 'Продолжить набор'
-                }}</span>
+                <span>
+                  {{ t(`controls.changeStatus.${inspectedIdea.status}`) }}
+                </span>
               </div>
             </AtomicButton>
             <i class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10" />
             <AtomicButton type="danger" is-depressed is-wide>
               <div class="flex flex-col items-center justify-center">
                 <TrashIcon />
-                <span>Delete</span>
+                <span>{{ t('controls.delete') }}</span>
               </div>
             </AtomicButton>
             <i class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10" />
             <AtomicButton type="primary" is-depressed is-wide>
               <div class="flex flex-col items-center justify-center">
                 <EditIcon />
-                <span>Edit</span>
+                <span>{{ t('controls.edit') }}</span>
               </div>
             </AtomicButton>
           </div>
         </AtomicCard>
-        <h3 class="mt-0">Responses</h3>
+        <h3 class="mt-0">{{ t('responses') }}</h3>
         <div
           v-for="{
             userEntity: user,
@@ -112,6 +109,7 @@ export default defineComponent({
     useTitle(`DevBuff Dashboard`)
     const { t } = useI18n('pages.dashboard')
     const { userIdeas, getUserIdeas } = useIdeas()
+    const isPendingLoading = ref(false)
     const {
       idea: inspectedIdea,
       pendingUsers,
@@ -122,10 +120,12 @@ export default defineComponent({
 
     const route = useRoute()
 
-    const changeIdea = (ideaId) => {
+    const changeIdea = async (ideaId) => {
+      isPendingLoading.value = true
       pendingUsers.value = undefined
       getPendingUsers(ideaId)
-      getIdea(ideaId)
+      await getIdea(ideaId)
+      isPendingLoading.value = false
     }
 
     watch(
@@ -142,7 +142,7 @@ export default defineComponent({
       userIdeas,
       pendingUsers,
       inspectedIdea,
-      isPendingLoading: true,
+      isPendingLoading,
       changeIdea,
       getIdea,
       getPendingUsers,

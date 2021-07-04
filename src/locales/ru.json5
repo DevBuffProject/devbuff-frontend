@@ -17,7 +17,15 @@
     /** */
     "dashboard": {
       "notFound": "У вас нет идей",
-      "responses": "Отклики"
+      "responses": "Отклики",
+      controls: {
+        changeStatus: {
+          WAITING_FULL_TEAM: "Закрыть набор",
+          WORKING: "Открыть набор",
+        },
+        delete: "Удалить",
+        edit: "Изменить"
+      }
     },
     "email": {
       "onSuccess": "Your email successful confirmed",
@@ -75,6 +83,14 @@
       }
     },
     widget: {
+      dashboard: {
+        idea: {
+          card: {
+            waiting: 'Ожидает проверки',
+            approved: 'Проверена'
+          }
+        }
+      },
       ideas: {
         card: {
           detail: {

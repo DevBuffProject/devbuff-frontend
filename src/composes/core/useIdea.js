@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { useApi } from './useApi'
 import { set, useTimeAgo } from '@vueuse/core'
 
@@ -47,6 +47,8 @@ export const useIdea = (id) => {
       idea.value.status = 'WAITING_FULL_TEAM'
     else if (status === 'DISABLE_SET_OF_CANDIDATES')
       idea.value.status = 'WORKING'
+
+    getPendingUsers(uuid)
   }
   const approveUser = async (uuidIdea = id, uuidSpecialisation, uuidUser) => {
     await request(
