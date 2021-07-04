@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="idea.name">
     <h1>{{ idea.name }}</h1>
     <div class="flex flex-wrap items-start my-5">
       <RouterLink to="/" custom v-slot="{ navigate }">
@@ -55,33 +55,39 @@
 </template>
 
 <script>
-import { computed, defineComponent } from 'vue'
+import { defineComponent, watch, ref } from 'vue'
 import { useIdea, useUser } from '../../composes/core'
 import { useTimeAgo, useTitle } from '@vueuse/core'
 import { useI18n } from '../../composes/utils'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'IdeaDetailPreview',
   async setup() {
     const route = useRoute()
+    const publishedAgo = ref()
+    watch(
+      () => route.params,
+      async () => {
+        if (route.params?.id) {
+          await loadIdea(route.params.id)
+        }
+      },
+    )
 
-    const {
-      idea,
-      languagesForSpecialist,
-      frameworksForSpecialist,
-      getIdea,
-      changeStatusIdea,
-    } = useIdea(route.params.id)
+    const { idea, getIdea } = useIdea()
 
     const { t } = useI18n('pages.preview.idea')
 
-    const { getUserProfileUrl, getUser, user } = useUser()
+    const { getUserProfileUrl } = useUser()
 
-    await getIdea()
-    await getUser()
-
-    const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
+    const loadIdea = async (uuid) => {
+      await getIdea(uuid)
+      publishedAgo.value = useTimeAgo(idea.value.lastUpdateDate).value
+    }
+    if (route.params?.id) {
+      await loadIdea(route.params.id)
+    }
 
     useTitle(`${idea.value.name} - DevBuff`)
 
@@ -89,10 +95,7 @@ export default defineComponent({
       t,
       idea,
       publishedAgo,
-      changeStatusIdea,
       getUserProfileUrl,
-      languagesForSpecialist,
-      frameworksForSpecialist,
     }
   },
 })
