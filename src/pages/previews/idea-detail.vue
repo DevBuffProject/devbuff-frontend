@@ -22,18 +22,6 @@
       <AtomicLabel :name="t('info.status.title')" class="mt-0 mx-4 mb-4">
         {{ t(`info.status.${idea.status}`) }}
       </AtomicLabel>
-
-      <AtomicLabel
-        v-if="isOwnerIdea"
-        :name="t('info.moderationStatus.title')"
-        class="mt-0 mx-4 mb-4"
-      >
-        {{
-          idea.waitingValidation
-            ? t('info.moderationStatus.waiting')
-            : t('info.moderationStatus.approved')
-        }}
-      </AtomicLabel>
     </div>
     <div class="grid gap-2 grid-cols-12">
       <AtomicCard class="mb-3 col-span-12">
