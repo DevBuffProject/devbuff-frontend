@@ -13,13 +13,7 @@
             :title="idea.name"
             :description="idea.description"
             :waiting-validation="idea.waitingValidation"
-            @click="
-              () => {
-                pendingUsers = undefined
-                getPendingUsers(idea.id)
-                getIdea(idea.id)
-              }
-            "
+            @click="changeIdea(idea.id)"
           />
         </div>
         <div class="ml-4" v-else>{{ t('notFound') }}</div>
@@ -107,10 +101,12 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { useTitle } from '@vueuse/core'
 import { useIdeas, useIdea } from '../composes/core'
 import { useI18n } from '../composes/utils'
+import { useRoute } from 'vue-router'
+
 export default defineComponent({
   async setup() {
     useTitle(`DevBuff Dashboard`)
@@ -124,6 +120,22 @@ export default defineComponent({
       changeStatusIdea,
     } = useIdea()
 
+    const route = useRoute()
+
+    const changeIdea = (ideaId) => {
+      pendingUsers.value = undefined
+      getPendingUsers(ideaId)
+      getIdea(ideaId)
+    }
+
+    watch(
+      () => route.query,
+      async () => {
+        if (route.query?.ideaId) {
+          changeIdea(route.query?.ideaId)
+        }
+      },
+    )
     await getUserIdeas()
     return {
       t,
@@ -131,6 +143,7 @@ export default defineComponent({
       pendingUsers,
       inspectedIdea,
       isPendingLoading: true,
+      changeIdea,
       getIdea,
       getPendingUsers,
       changeStatusIdea,

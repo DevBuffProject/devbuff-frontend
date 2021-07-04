@@ -66,8 +66,8 @@
           У вас новый кандидат в команду «{{ notification.data.ideaName }}»,
           <RouterLink
             :to="{
-              name: 'idea-detail',
-              params: { id: notification.data.ideaId, _isDialog: true },
+              name: 'dashboard',
+              query: { ideaId: notification.data.ideaId },
             }"
             custom
             v-slot="{ href, navigate }"
