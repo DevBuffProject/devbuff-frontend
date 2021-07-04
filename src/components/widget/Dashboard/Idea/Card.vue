@@ -7,7 +7,7 @@
       <div class="flex items-center justify-between">
         <div>
           <div class="text-xs text-gray-400 dark:text-blueGray-400">
-            {{ date }}
+            {{ dateString }}
           </div>
           <div class="flex items-center">
             <div class="text-primary">{{ title }}</div>
@@ -58,12 +58,18 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
+  setup(props) {
     const { attrs } = useContext()
-
     const { t } = useI18n('components.widget.dashboard.idea.card')
 
-    return { t, attrs }
+    return {
+      t,
+      dateString: [
+        new Date(props.date).toLocaleTimeString(),
+        new Date(props.date).toLocaleDateString(),
+      ].join(' '),
+      attrs,
+    }
   },
 })
 </script>

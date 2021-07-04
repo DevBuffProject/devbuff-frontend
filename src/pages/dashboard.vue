@@ -54,7 +54,10 @@
             </AtomicButton>
             <i class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10" />
             <AtomicButton type="danger" is-depressed is-wide>
-              <div class="flex flex-col items-center justify-center">
+              <div
+                class="flex flex-col items-center justify-center"
+                @click="deleteIdea(inspectedIdea.id)"
+              >
                 <TrashIcon />
                 <span>{{ t('controls.delete') }}</span>
               </div>
@@ -69,29 +72,34 @@
           </div>
         </AtomicCard>
         <h3 class="mt-0">{{ t('responses') }}</h3>
-        <div
-          v-for="{
-            userEntity: user,
-            specialisationName,
-            specialisationId,
-          } of pendingUsers"
-          :key="user.id + specialisationId"
-        >
-          <WidgetDashboardIdeaUser
-            :lastname="user.lastName"
-            :firstname="user.firstName"
-            :username="user.userName"
-            :user-id="user.id"
-            :vk-contact="user.socialNetworks.vk"
-            :telegram-contact="user.socialNetworks.telegram"
-            :skype-contact="user.socialNetworks.skype"
-            :discord-contact="user.socialNetworks.discord"
-            :specialization="specialisationName"
-            :specialization-id="specialisationId"
-            :idea-id="inspectedIdea.id"
-            class="mb-6"
-          />
+        <div v-if="pendingUsers.length > 0">
+          <div
+            v-for="{
+              userEntity: user,
+              specialisationName,
+              specialisationId,
+            } of pendingUsers"
+            :key="user.id + specialisationId"
+          >
+            <WidgetDashboardIdeaUser
+              :lastname="user.lastName"
+              :firstname="user.firstName"
+              :username="user.userName"
+              :user-id="user.id"
+              :vk-contact="user.socialNetworks.vk"
+              :telegram-contact="user.socialNetworks.telegram"
+              :skype-contact="user.socialNetworks.skype"
+              :discord-contact="user.socialNetworks.discord"
+              :specialization="specialisationName"
+              :specialization-id="specialisationId"
+              :idea-id="inspectedIdea.id"
+              class="mb-6"
+            />
+          </div>
         </div>
+        <AtomicCard v-else>
+          <div class="ml-4">{{ t('nonResponses') }}</div>
+        </AtomicCard>
       </div>
     </aside>
   </div>
@@ -116,6 +124,7 @@ export default defineComponent({
       getIdea,
       getPendingUsers,
       changeStatusIdea,
+      deleteIdea: deleteIdeaComponent,
     } = useIdea()
 
     const route = useRoute()
@@ -137,12 +146,19 @@ export default defineComponent({
       },
     )
     await getUserIdeas()
+
+    const deleteIdea = async (ideaId) => {
+      await deleteIdeaComponent(ideaId)
+      await getUserIdeas()
+    }
+
     return {
       t,
       userIdeas,
       pendingUsers,
       inspectedIdea,
       isPendingLoading,
+      deleteIdea,
       changeIdea,
       getIdea,
       getPendingUsers,

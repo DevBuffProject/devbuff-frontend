@@ -59,6 +59,16 @@ export const useIdea = (id) => {
     )
   }
 
+  const deleteIdea = async (uuid = id) => {
+    await request(`/idea/${uuid}`, {
+      method: 'DELETE',
+    })
+
+    if (idea.value?.id === uuid) {
+      idea.value = {}
+    }
+  }
+
   const publishIdea = async (data) => {
     const formData = new FormData()
 
@@ -105,6 +115,7 @@ export const useIdea = (id) => {
     publishedAgo,
     pendingUsers,
     statusPositions,
+    deleteIdea,
     languagesForSpecialist,
     frameworksForSpecialist,
     getIdea,

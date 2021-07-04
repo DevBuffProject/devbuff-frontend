@@ -18,6 +18,7 @@
     "dashboard": {
       "notFound": "У вас нет идей",
       "responses": "Отклики",
+      nonResponses: 'У вас пока нет кандидатов',
       controls: {
         changeStatus: {
           WAITING_FULL_TEAM: "Закрыть набор",
@@ -88,6 +89,10 @@
           card: {
             waiting: 'Ожидает проверки',
             approved: 'Проверена'
+          },
+          user: {
+            specialist: 'Специальность',
+            approve: 'Принять в команду'
           }
         }
       },
