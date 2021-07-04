@@ -1,5 +1,5 @@
 <template>
-  <h5>Ваша команда</h5>
+  <h5>{{ t('title') }}</h5>
 
   <input type="hidden" :name="name" :id="name" :value="inputValue" />
   <div class="w-full flex justify-center pt-1 text-xs text-danger mb-2">
@@ -16,7 +16,7 @@
     >
       <div class="grid grid-cols-6">
         <div class="col-span-5">
-          {{ specialist }}
+          {{ t(`commons.specialist.${specialist}`, true) }}
         </div>
         <component
           v-if="selectedSpecialist.length < maxPerson"
@@ -25,8 +25,7 @@
           class="col-span-1 specialist-plus"
         />
         <p class="flex items-center pt-1 text-xs text-gray-400 col-span-6">
-          Description about specialist Lorem, Description about specialist
-          Lorem, Description about specialist Lorem
+          {{ t(`commons.specialistDescription.${specialist}`, true) }}
         </p>
       </div>
     </div>
@@ -98,7 +97,7 @@
             justify-between
           "
         >
-          <p>{{ specialist.name }}</p>
+          <p>{{ t(`commons.specialist.${specialist.name}`, true) }}</p>
           <component
             class="specialist-plus"
             @click="selectedSpecialist.splice(index, 1)"
@@ -129,7 +128,13 @@
               <span>
                 <component :is="language.selected ? MinusIcon : PlusIcon" />
               </span>
-              <span>{{ language.name }}</span>
+              <span>{{
+                tDefault(
+                  'commons.languages.' + language.name,
+                  language.name,
+                  true,
+                )
+              }}</span>
             </a>
           </div>
           <transition name="tech_activate">
@@ -170,6 +175,7 @@ import { useSkills } from '../../../composes/core'
 
 import { PlusIcon, CloseIcon, MinusIcon } from '@iconicicons/vue3'
 import { useField } from 'vee-validate'
+import { useI18n } from '../../../composes/utils'
 
 export default defineComponent({
   name: 'SpecialistPicker',
@@ -178,8 +184,13 @@ export default defineComponent({
       type: String,
       default: 'specialists',
     },
+    data: {
+      type: Array,
+      default: undefined,
+    },
   },
   setup(props) {
+    const { t, tDefault } = useI18n('components.widget.specialist.picker')
     const { skills, specializations, getSkills } = useSkills()
     getSkills()
     const maxPerson = 10
@@ -226,15 +237,50 @@ export default defineComponent({
 
     const selectedSpecialist = ref([])
 
-    const {
-      value: inputValue,
-      errorMessage,
-      handleBlur,
-      handleChange,
-      meta,
-    } = useField(props.name, undefined, {
-      initialValue: selectedSpecialist,
-    })
+    watch(
+      () => skills,
+      (state) => {
+        if (state.value !== undefined && props.data) {
+          //Load from exists data
+          for (const specialist of props.data) {
+            addSpecialist(specialist.name)
+
+            const createdSpecialist =
+              selectedSpecialist.value[selectedSpecialist.value.length - 1]
+
+            for (const language of createdSpecialist.languages) {
+              let searchedLanguage = specialist.languages.find((value) => {
+                return value.name === language.name
+              })
+
+              console.log(searchedLanguage)
+
+              language.selected = searchedLanguage !== undefined
+
+              if (language.selected) {
+                for (const framework of language.frameworks) {
+                  let searcherFrameworks = searchedLanguage.frameworks.find(
+                    (value) => {
+                      return value.name === framework.name
+                    },
+                  )
+                  framework.selected = searcherFrameworks !== undefined
+                }
+              }
+            }
+          }
+        }
+      },
+      { deep: true },
+    )
+
+    const { value: inputValue, errorMessage } = useField(
+      props.name,
+      undefined,
+      {
+        initialValue: selectedSpecialist,
+      },
+    )
 
     watch(
       () => selectedSpecialist,
@@ -274,6 +320,8 @@ export default defineComponent({
       { deep: true },
     )
     return {
+      t,
+      tDefault,
       inputValue,
       errorMessage,
       maxPerson,

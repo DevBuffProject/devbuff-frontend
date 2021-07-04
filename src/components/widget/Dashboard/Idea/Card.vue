@@ -7,7 +7,7 @@
       <div class="flex items-center justify-between">
         <div>
           <div class="text-xs text-gray-400 dark:text-blueGray-400">
-            {{ date }}
+            {{ dateString }}
           </div>
           <div class="flex items-center">
             <div class="text-primary">{{ title }}</div>
@@ -23,18 +23,9 @@
                   dark:text-blueGray-400
                 "
               >
-                {{ waitingValidation ? 'wait' : 'approve' }}
+                {{ waitingValidation ? t('waiting') : t('approved') }}
               </em>
             </div>
-          </div>
-        </div>
-        <div class="flex items-center">
-          <div class="opacity-50 hover:opacity-100 cursor-pointer p-3">
-            <TrashIcon class="text-sm text-danger" />
-          </div>
-
-          <div class="opacity-50 hover:opacity-100 cursor-pointer p-3">
-            <EditIcon class="text-sm text-primary" />
           </div>
         </div>
       </div>
@@ -45,6 +36,7 @@
 
 <script>
 import { defineComponent, useContext } from 'vue'
+import { useI18n } from '../../../../composes/utils'
 
 export default defineComponent({
   name: 'WidgetDashboardIdeaCard',
@@ -66,9 +58,18 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
+  setup(props) {
     const { attrs } = useContext()
-    return { attrs }
+    const { t } = useI18n('components.widget.dashboard.idea.card')
+
+    return {
+      t,
+      dateString: [
+        new Date(props.date).toLocaleTimeString(),
+        new Date(props.date).toLocaleDateString(),
+      ].join(' '),
+      attrs,
+    }
   },
 })
 </script>

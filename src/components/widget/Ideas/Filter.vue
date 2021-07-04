@@ -24,7 +24,7 @@
       >
         <div class="text-black dark:text-blueGray-50 flex items-center mb-4">
           <component :is="option.icon" class="w-[20px] h-[20px]" />
-          <span class="ml-2">{{ option.name }}</span>
+          <span class="ml-2">{{ t(`param.${option.name}`) }}</span>
         </div>
         <ul v-if="option.params" class="font-normal text-xs">
           <li
@@ -50,7 +50,18 @@
               >
                 <PlusIcon class="mr-2 opacity-50 h-[15px]" />
                 <div class="ml-1">
-                  <div>{{ param.name }}</div>
+                  <div v-if="option.name === 'specialists'">
+                    {{ t(`commons.specialist.${param.name}`, true) }}
+                  </div>
+                  <div v-if="option.name === 'languages'">
+                    {{
+                      tDefault(
+                        `commons.languages.${param.name}`,
+                        param.name,
+                        true,
+                      )
+                    }}
+                  </div>
                 </div>
               </div>
             </AtomicCheckbox>
@@ -66,6 +77,7 @@ import { computed, defineComponent, watch, triggerRef } from 'vue'
 import { useSkills } from '../../../composes/core'
 import { useVModel } from '@vueuse/core'
 import { CodeIcon, UserIcon } from '@iconicicons/vue3'
+import { useI18n } from '../../../composes/utils'
 
 const initialFilter = {
   specialists: [],
@@ -82,6 +94,7 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const { t, tDefault } = useI18n('components.widget.ideas.filter')
     const { specializations, skills, languages, getSkills } = useSkills()
     const state = useVModel(props, 'modelValue', emit)
 
@@ -137,6 +150,8 @@ export default defineComponent({
     getSkills()
 
     return {
+      t,
+      tDefault,
       state,
       options,
       languageSelected,

@@ -15,29 +15,33 @@
       </div>
       <div class="flex items-center">
         <div
+          v-if="isLoggedIn"
           :class="[
-            'flex items-center mr-4 pr-6',
+            'flex items-center mr-4 pr-6 pt-2 pb-2',
             'border-r border-gray-200 dark:border-blueGray-600',
           ]"
         >
-          <WidgetUserNotification v-if="isLoggedIn" v-focusable />
+          <WidgetUserNotification v-focusable />
         </div>
-        <div
-          :class="[
-            'flex items-center mr-4 pr-6',
-            'border-r border-gray-200 dark:border-blueGray-600',
-          ]"
-        >
+        <div class="flex items-center pr-6">
           <WidgetColorSwitcher v-focusable />
         </div>
-        <nav class="flex items-center">
+        <nav
+          :class="[
+            'flex items-center pl-6',
+            'border-l border-gray-200 dark:border-blueGray-600',
+          ]"
+          v-if="isLoggedIn"
+        >
           <RouterLink v-slot="{ isActive }" to="/create">
             <AtomicButton
               :disabled="isActive"
               v-focusable.indexOnly="{ indexOnly: true }"
             >
-              <template #icon> <EditIcon /> </template>
-              Create new idea
+              <template #icon>
+                <EditIcon />
+              </template>
+              {{ t('newIdea') }}
             </AtomicButton>
           </RouterLink>
         </nav>
@@ -48,14 +52,15 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useAppearance } from '../../composes/utils'
+import { useAppearance, useI18n } from '../../composes/utils'
 import { useAuth } from '../../composes/core'
 
 export default defineComponent({
   setup() {
+    const { t } = useI18n('components.layout.header')
     const { isDark, isLight } = useAppearance()
     const { isLoggedIn } = useAuth()
-    return { isDark, isLight, isLoggedIn }
+    return { t, isDark, isLight, isLoggedIn }
   },
 })
 </script>

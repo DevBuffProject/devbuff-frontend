@@ -15,16 +15,24 @@
           />
         </div>
       </RouterLink>
-      <AtomicLabel name="date" class="mt-0 mx-4 mb-4">
+      <AtomicLabel :name="t('info.date')" class="mt-0 mx-4 mb-4">
         {{ publishedAgo }}
       </AtomicLabel>
 
-      <AtomicLabel name="status" class="mt-0 mx-4 mb-4">
-        {{ idea.status }}
+      <AtomicLabel :name="t('info.status.title')" class="mt-0 mx-4 mb-4">
+        {{ t(`info.status.${idea.status}`) }}
       </AtomicLabel>
 
-      <AtomicLabel v-if="isOwnerIdea" name="moderation" class="mt-0 mx-4 mb-4">
-        {{ idea.waitingValidation ? 'waiting' : 'aproove' }}
+      <AtomicLabel
+        v-if="isOwnerIdea"
+        :name="t('info.moderationStatus.title')"
+        class="mt-0 mx-4 mb-4"
+      >
+        {{
+          idea.waitingValidation
+            ? t('info.moderationStatus.waiting')
+            : t('info.moderationStatus.approved')
+        }}
       </AtomicLabel>
     </div>
     <div class="grid gap-6 grid-cols-6">
@@ -33,8 +41,7 @@
       </AtomicCard>
 
       <div class="col-span-2">
-        <div class="-mt-12 mb-6 flex items-center">
-          <span class="opacity-50">вы создатель</span>
+        <div class="-mt-12 mb-6 flex items-center" v-if="isOwnerIdea">
           <AtomicDropdown by-click>
             <template #activator>
               <div
@@ -126,7 +133,7 @@
 
         <AtomicCard>
           <h4 class="mt-0 mb-0 text-sm font-normal opacity-30">
-            Позиции - {{ idea.specialist.length }}
+            {{ t('positions.title') }} - {{ idea.specialist.length }}
           </h4>
           <div class="divide-y divide-gray-200 dark:divide-blueGray-700">
             <div
@@ -135,25 +142,40 @@
               :key="specialist.id"
             >
               <h5 class="mb-4 m-0 font-normal">
-                {{ specialist.name }} Developer
+                {{ t(`commons.specialist.${specialist.name}`, true) }}
               </h5>
-              <AtomicLabel name="Стек языков">
+              <AtomicLabel
+                :name="t('positions.titleLanguages')"
+                v-if="languagesForSpecialist(specialist.id).length > 0"
+              >
                 <div class="flex flex-wrap">
                   <div
-                    v-for="language in languages"
+                    v-for="language in languagesForSpecialist(specialist.id)"
                     :key="`language-${language}-${specialist.id}`"
                   >
-                    <AtomicChip :text="language" class="mb-2" type="auto" />
+                    <AtomicChip
+                      :text="language"
+                      class="mb-2 mr-1"
+                      type="auto"
+                    />
                   </div>
                 </div>
               </AtomicLabel>
-              <AtomicLabel name="Стек фреймворков" class="mt-4">
+              <AtomicLabel
+                :name="t('positions.titleTechnologies')"
+                class="mt-4"
+                v-if="frameworksForSpecialist(specialist.id).length > 0"
+              >
                 <div class="flex flex-wrap">
                   <div
-                    v-for="framework of frameworks"
+                    v-for="framework of frameworksForSpecialist(specialist.id)"
                     :key="`language-${framework}-${specialist.id}`"
                   >
-                    <AtomicChip :text="framework" class="mb-2" type="auto" />
+                    <AtomicChip
+                      :text="framework"
+                      class="mb-2 mr-1"
+                      type="auto"
+                    />
                   </div>
                 </div>
               </AtomicLabel>
@@ -168,32 +190,30 @@
                     'transition-all hover:bg-opacity-[0.15] rounded',
                   ]"
                 >
-                  Откликнуться
+                  {{ t('positions.status.NONE') }}
                 </div>
                 <div
-                  v-else-if="getStatusAtPosition(specialist.id) === 'PENDING'"
+                  v-else
                   :class="[
                     'w-full py-2 rounded',
                     'text-center text-gray-400',
                     'bg-gray-100',
                   ]"
                 >
-                  Заявка отправлена
-                </div>
-                <div
-                  v-else-if="getStatusAtPosition(specialist.id) === 'ACCEPTED'"
-                  :class="[
-                    'w-full py-2 rounded',
-                    'text-center text-gray-400',
-                    'bg-gray-100',
-                  ]"
-                >
-                  Вы в команде
+                  {{
+                    t('positions.status.' + getStatusAtPosition(specialist.id))
+                  }}
                 </div>
               </div>
             </div>
           </div>
         </AtomicCard>
+      </div>
+      <div class="col-span-4">
+        <WidgetCommentsFast
+          :id="`idea-${idea.id}`"
+          :sso="ssoData"
+        ></WidgetCommentsFast>
       </div>
     </div>
   </div>
@@ -201,8 +221,9 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useIdea, useUser } from '../composes/core'
+import { useIdea, useUser, useSso } from '../composes/core'
 import { useTimeAgo, useTitle } from '@vueuse/core'
+import { useI18n } from '../composes/utils'
 
 export default defineComponent({
   name: 'IdeaDetail',
@@ -213,13 +234,18 @@ export default defineComponent({
     const {
       idea,
       statusPositions,
-      languages,
-      frameworks,
+      languagesForSpecialist,
+      frameworksForSpecialist,
       getIdea,
       getStatusPositions,
       joinToIdea,
       changeStatusIdea,
     } = useIdea(props.id)
+
+    const { ssoData, getSsoData } = useSso()
+
+    const { t } = useI18n('pages.idea')
+
     const { getUserProfileUrl, getUser, user } = useUser()
 
     const send = (specialistId) => {
@@ -239,6 +265,7 @@ export default defineComponent({
     await getIdea()
     await getUser()
     await getStatusPositions(idea.value.id)
+    await getSsoData()
 
     const isOwnerIdea = user.value.id === idea.value.ownerIdea.id
     const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
@@ -246,15 +273,17 @@ export default defineComponent({
     useTitle(`${idea.value.name} - DevBuff`)
 
     return {
+      t,
       idea,
+      ssoData,
       isOwnerIdea,
       publishedAgo,
-      languages,
-      frameworks,
       send,
       changeStatusIdea,
       getUserProfileUrl,
       getStatusAtPosition,
+      languagesForSpecialist,
+      frameworksForSpecialist,
     }
   },
 })

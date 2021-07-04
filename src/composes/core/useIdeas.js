@@ -25,6 +25,7 @@ export const useIdeas = () => {
 
   const userIdeas = ref([])
   const getUserIdeas = async () => {
+    userIdeas.value = []
     const response = await request('/idea/self')
     userIdeas.value = response.data
     return response

@@ -15,13 +15,15 @@
           class="mb-2"
           @click="approveUserToIdea(ideaId, specializationId, userId)"
         >
-          approve
+          {{ t('approve') }}
         </AtomicButton>
       </div>
     </div>
     <AtomicDelimiter class="my-4" />
     <div class="flex">
-      <AtomicLabel name="specialization">{{ specialization }}</AtomicLabel>
+      <AtomicLabel :name="t('specialist')">
+        {{ t(`commons.specialist.${specialization}`, true) }}
+      </AtomicLabel>
       <div class="ml-10">
         <WidgetUserContacts
           :vk="vkContact"
@@ -38,6 +40,8 @@
 import { useUser, useIdea } from '../../../../composes/core'
 
 import { tryOnUnmounted } from '@vueuse/core'
+import { useI18n } from '../../../../composes/utils'
+
 const rooElement = window.document.documentElement
 export default {
   name: 'WidgetDashboardUserCard',
@@ -92,6 +96,7 @@ export default {
     },
   },
   setup() {
+    const { t } = useI18n('components.widget.dashboard.idea.user')
     const { approveUser } = useIdea()
 
     const approveUserToIdea = (uuidIdea, uuidSpecialisation, uuidUser) => {
@@ -100,6 +105,7 @@ export default {
     }
 
     return {
+      t,
       approveUserToIdea,
     }
   },

@@ -4,7 +4,7 @@
       <AtomicCard class="px-0">
         <div
           class="divide-y divide-gray-200 dark:divide-blueGray-700"
-          v-if="userIdeas.length > 0"
+          v-if="userIdeas?.length > 0"
         >
           <WidgetDashboardIdeaCard
             v-for="idea of userIdeas"
@@ -13,27 +13,34 @@
             :title="idea.name"
             :description="idea.description"
             :waiting-validation="idea.waitingValidation"
-            @click="
-              () => {
-                pendingUsers = undefined
-                getPendingUsers(idea.id)
-                getIdea(idea.id)
-              }
-            "
+            @click="changeIdea(idea.id)"
           />
         </div>
         <div class="ml-4" v-else>{{ t('notFound') }}</div>
       </AtomicCard>
     </div>
     <aside class="col-span-1">
-      <div v-if="!inspectedIdea" />
-      <AtomicLoadingSpinner v-if="pendingUsers === undefined" />
-      <div v-if="inspectedIdea" class="col-span-3">
-        <h1 class="mt-0 mb-3">{{ inspectedIdea.name }}</h1>
+      <AtomicLoadingSpinner v-if="isPendingLoading" />
+      <div v-if="inspectedIdea.id" class="col-span-3">
+        <RouterLink
+          :to="{ name: 'idea-detail', params: { id: inspectedIdea.id } }"
+          custom
+          v-slot="{ href, navigate }"
+        >
+          <a
+            :href="href"
+            @click="navigate"
+            v-focusable
+            class="font-semibold inline-block mb-2"
+          >
+            <h1 class="m-0">{{ inspectedIdea.name }}</h1>
+          </a>
+        </RouterLink>
         <p class="mt-0 mb-6 opacity-50">{{ inspectedIdea.description }}</p>
         <AtomicCard class="mb-4">
           <div class="flex">
             <AtomicButton
+              v-if="inspectedIdea.status !== 'PUBLISH'"
               v-focusable.indexOnly
               is-depressed
               is-wide
@@ -54,83 +61,122 @@
               <div class="flex flex-col items-center justify-center">
                 <StopIcon v-if="inspectedIdea.status === 'WAITING_FULL_TEAM'" />
                 <PlayIcon v-else />
-                <span>{{
-                  inspectedIdea.status === 'WAITING_FULL_TEAM'
-                    ? 'Остановить набор'
-                    : 'Продолжить набор'
-                }}</span>
+                <span>
+                  {{ t(`controls.changeStatus.${inspectedIdea.status}`) }}
+                </span>
               </div>
             </AtomicButton>
-            <i class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10" />
+            <i
+              class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10"
+              v-if="inspectedIdea.status !== 'PUBLISH'"
+            />
             <AtomicButton type="danger" is-depressed is-wide>
-              <div class="flex flex-col items-center justify-center">
+              <div
+                class="flex flex-col items-center justify-center"
+                @click="deleteIdea(inspectedIdea.id)"
+              >
                 <TrashIcon />
-                <span>Delete</span>
+                <span>{{ t('controls.delete') }}</span>
               </div>
             </AtomicButton>
             <i class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10" />
             <AtomicButton type="primary" is-depressed is-wide>
               <div class="flex flex-col items-center justify-center">
                 <EditIcon />
-                <span>Edit</span>
+                <span>{{ t('controls.edit') }}</span>
               </div>
             </AtomicButton>
           </div>
         </AtomicCard>
-        <h3 class="mt-0">Responses</h3>
-        <div
-          v-for="{
-            userEntity: user,
-            specialisationName,
-            specialisationId,
-          } of pendingUsers"
-          :key="user.id + specialisationId"
-        >
-          <WidgetDashboardIdeaUser
-            :lastname="user.lastName"
-            :firstname="user.firstName"
-            :username="user.userName"
-            :user-id="user.id"
-            :vk-contact="user.socialNetworks.vk"
-            :telegram-contact="user.socialNetworks.telegram"
-            :skype-contact="user.socialNetworks.skype"
-            :discord-contact="user.socialNetworks.discord"
-            :specialization="specialisationName"
-            :specialization-id="specialisationId"
-            :idea-id="inspectedIdea.id"
-            class="mb-6"
-          />
+        <h3 class="mt-0">{{ t('responses') }}</h3>
+        <div v-if="pendingUsers?.length > 0">
+          <div
+            v-for="{
+              userEntity: user,
+              specialisationName,
+              specialisationId,
+            } of pendingUsers"
+            :key="user.id + specialisationId"
+          >
+            <WidgetDashboardIdeaUser
+              :lastname="user.lastName"
+              :firstname="user.firstName"
+              :username="user.userName"
+              :user-id="user.id"
+              :vk-contact="user.socialNetworks.vk"
+              :telegram-contact="user.socialNetworks.telegram"
+              :skype-contact="user.socialNetworks.skype"
+              :discord-contact="user.socialNetworks.discord"
+              :specialization="specialisationName"
+              :specialization-id="specialisationId"
+              :idea-id="inspectedIdea.id"
+              class="mb-6"
+            />
+          </div>
         </div>
+        <AtomicCard v-else>
+          <div class="ml-4">{{ t('nonResponses') }}</div>
+        </AtomicCard>
       </div>
     </aside>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { useTitle } from '@vueuse/core'
 import { useIdeas, useIdea } from '../composes/core'
 import { useI18n } from '../composes/utils'
+import { useRoute } from 'vue-router'
+
 export default defineComponent({
   async setup() {
     useTitle(`DevBuff Dashboard`)
     const { t } = useI18n('pages.dashboard')
     const { userIdeas, getUserIdeas } = useIdeas()
+    const isPendingLoading = ref(false)
     const {
       idea: inspectedIdea,
       pendingUsers,
       getIdea,
       getPendingUsers,
       changeStatusIdea,
+      deleteIdea: deleteIdeaComponent,
     } = useIdea()
 
+    const route = useRoute()
+
+    const changeIdea = async (ideaId) => {
+      isPendingLoading.value = true
+      pendingUsers.value = undefined
+      getPendingUsers(ideaId)
+      await getIdea(ideaId)
+      isPendingLoading.value = false
+    }
+
+    watch(
+      () => route.query,
+      async () => {
+        if (route.query?.ideaId) {
+          changeIdea(route.query?.ideaId)
+        }
+      },
+    )
     await getUserIdeas()
+
+    const deleteIdea = async (ideaId) => {
+      await deleteIdeaComponent(ideaId)
+      await getUserIdeas()
+    }
+
     return {
       t,
       userIdeas,
       pendingUsers,
       inspectedIdea,
-      isPendingLoading: true,
+      isPendingLoading,
+      deleteIdea,
+      changeIdea,
       getIdea,
       getPendingUsers,
       changeStatusIdea,

@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { useApi } from './useApi'
 import { set, useTimeAgo } from '@vueuse/core'
 
@@ -47,6 +47,8 @@ export const useIdea = (id) => {
       idea.value.status = 'WAITING_FULL_TEAM'
     else if (status === 'DISABLE_SET_OF_CANDIDATES')
       idea.value.status = 'WORKING'
+
+    getPendingUsers(uuid)
   }
   const approveUser = async (uuidIdea = id, uuidSpecialisation, uuidUser) => {
     await request(
@@ -55,6 +57,16 @@ export const useIdea = (id) => {
         method: 'PUT',
       },
     )
+  }
+
+  const deleteIdea = async (uuid = id) => {
+    await request(`/idea/${uuid}`, {
+      method: 'DELETE',
+    })
+
+    if (idea.value?.id === uuid) {
+      idea.value = {}
+    }
   }
 
   const publishIdea = async (data) => {
@@ -75,27 +87,45 @@ export const useIdea = (id) => {
     ).data
   }
 
-  const mapLanguages = (customIdea) =>
-    mapValuesFromArrayObjects(customIdea.specialist, 'languages')
-  const languages = computed(() =>
-    mapLanguages(idea.value).map((lang) => lang.name),
-  )
+  const updateIdea = async (uuid, data) => {
+    await request(`/idea/${uuid}`, {
+      method: 'PUT',
+      data: data,
+    })
+  }
 
-  const mapFrameworks = (customIdea) =>
-    mapValuesFromArrayObjects(mapLanguages(customIdea), 'frameworks')
-  const frameworks = computed(() =>
-    mapFrameworks(idea.value).map((framework) => framework.name),
-  )
+  const languagesForSpecialist = (specialistId) => {
+    return idea.value.specialist
+      .filter((specialist) => {
+        return specialist.id === specialistId
+      })
+      .flatMap((specialist) => {
+        return mapValuesFromArrayObjects(specialist.languages, 'name')
+      })
+  }
+
+  const frameworksForSpecialist = (specialistId) => {
+    return idea.value.specialist
+      .filter((specialist) => {
+        return specialist.id === specialistId
+      })
+      .flatMap((specialist) => {
+        return mapValuesFromArrayObjects(
+          mapValuesFromArrayObjects(specialist.languages, 'frameworks'),
+          'name',
+        )
+      })
+  }
 
   return {
     idea,
     publishedAgo,
     pendingUsers,
     statusPositions,
-    languages,
-    frameworks,
-    mapLanguages,
-    mapFrameworks,
+    updateIdea,
+    deleteIdea,
+    languagesForSpecialist,
+    frameworksForSpecialist,
     getIdea,
     getPendingUsers,
     getStatusPositions,

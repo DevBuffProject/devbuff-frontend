@@ -1,30 +1,137 @@
 {
   "pages": {
+    preview: {
+      idea: {
+        info: {
+          date: "Последнее обновление",
+          status: {
+            title: 'Статус',
+            PUBLISH: 'Опубликована',
+            WAITING_FULL_TEAM: 'Идет набор в команду',
+            WORKING: 'Набор закрыт',
+          },
+        },
+        more: 'Подробнее'
+      }
+    },
     /** */
     "dashboard": {
       "notFound": "У вас нет идей",
-      "responses": "Отклики"
+      "responses": "Отклики",
+      nonResponses: 'У вас пока нет кандидатов',
+      controls: {
+        changeStatus: {
+          WAITING_FULL_TEAM: "Закрыть набор",
+          WORKING: "Открыть набор",
+        },
+        delete: "Удалить",
+        edit: "Изменить"
+      }
     },
     "email": {
       "onSuccess": "Your email successful confirmed",
       "onError": "Something wrong, try again."
     },
     explore: {
+      filter: {
+        date: 'Дата создания',
+        lastUpdate: 'Дата обновления'
+      },
       "notFound": "С заданными параметрами идей не найдено"
     },
     idea: {
+      info: {
+        date: "Последнее обновление",
+        status: {
+          title: 'Статус',
+          PUBLISH: 'Опубликована',
+          WAITING_FULL_TEAM: 'Идет набор в команду',
+          WORKING: 'Набор закрыт',
+        },
+        moderationStatus: {
+          title: 'Верификация идеи',
+          approved: 'Проверена',
+          waiting: 'Ожидает проверки'
+        }
+      },
       positions: {
-        label: "Позиции",
+        title: "Позиции",
+        titleLanguages: "Стэк языков",
+        titleTechnologies: "Стэк технологий",
         status: {
           NONE: "Откликнуться",
           PENDING: "Заявка отправлена",
           ACCEPTED: "Вы в команде"
         }
       }
+    },
+    ideaCreation: {
+      header: 'Создание идеи',
+      name: {
+        title: 'Имя',
+        placeholder: 'Введите имя идеи'
+      },
+      description: {
+        title: 'Описание идеи',
+        placeholder: 'Попробуйте кратко описать свою идею'
+      },
+      text: {
+        title: 'Текст',
+        placeholder: 'Опишите вашу идею'
+      },
+      save: 'Сохранить'
     }
   },
-  "components": {
-    "widget": {
+  components: {
+    layout: {
+      header: {
+        newIdea: 'Рассказать об идеи'
+      },
+      sidebar: {
+        loginVia: "Войти с помощью",
+        loginReason: "Авторизуйтесь для возможности просмотра и создания идей",
+        links: {
+          explore: 'Обзор идей',
+          dashboard: 'Дашборд',
+          superuser: 'Админ панель',
+          settings: 'Настройки',
+          logout: 'Выйти'
+        }
+      }
+    },
+    widget: {
+      dashboard: {
+        idea: {
+          card: {
+            waiting: 'Ожидает проверки',
+            approved: 'Проверена'
+          },
+          user: {
+            specialist: 'Специальность',
+            approve: 'Принять в команду'
+          }
+        }
+      },
+      ideas: {
+        card: {
+          detail: {
+            specialist: 'Специалисты',
+            technologies: 'Технологии в проекте',
+            languages: 'Языки программирования',
+          },
+        },
+        filter: {
+          param: {
+            specialists: 'Специалисты',
+            languages: 'Языки программирования'
+          }
+        }
+      },
+      specialist: {
+        picker: {
+          title: 'Ваша команда'
+        }
+      }
     }
   },
   commons: {
@@ -37,6 +144,17 @@
       apple: 'Apple Developer',
       ML: 'ML Developer',
       microcontrollers: 'Microcontroller Developer',
-    }
+    },
+    specialistDescription: {
+      'back-end': 'Это специалист, который занимается внутренним устройством сайта или приложения.',
+      game: 'Это разработчик программного обеспечения, специализирующийся на разработке видеоигр',
+      'front-end': 'Это программист, который работает над пользовательским интерфейсом сайта.',
+      android: 'Это специалист, целью которого стоит создание программного обеспечения для операционной системы Android.',
+      apple: 'Разработчик, которые создает программное обеспечение для таких систем как: MacOS, IOS, iPadOS, tvOS.',
+    },
+    languages: {
+      CSharp: "C#",
+      CPlusPlus: 'C++'
+    },
   }
 }

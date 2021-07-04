@@ -1,4 +1,4 @@
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, defineComponent } from 'vue'
 
 export default [
   {
@@ -29,6 +29,17 @@ export default [
     name: 'idea-create',
     path: '/create',
     component: () => import('./pages/idea-creation.vue'),
+    meta: {
+      // preview: defineAsyncComponent(() =>
+      //   import('./components/previews/idea.vue'),
+      // ),
+      breadcrumbs: ['home', 'explore'],
+    },
+  },
+  {
+    name: 'idea-edit',
+    path: '/edit-:id',
+    component: () => import('./pages/idea-creation.vue'),
     props: true,
     meta: {
       // preview: defineAsyncComponent(() =>
@@ -43,9 +54,9 @@ export default [
     component: () => import('./pages/idea.vue'),
     props: true,
     meta: {
-      // preview: defineAsyncComponent(() =>
-      //   import('./components/previews/idea.vue'),
-      // ),
+      preview: defineAsyncComponent(() =>
+        import('./pages/previews/idea-detail.vue'),
+      ),
       breadcrumbs: ['home', 'explore'],
     },
   },
