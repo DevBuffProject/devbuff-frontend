@@ -87,6 +87,13 @@ export const useIdea = (id) => {
     ).data
   }
 
+  const updateIdea = async (uuid, data) => {
+    await request(`/idea/${uuid}`, {
+      method: 'PUT',
+      data: data,
+    })
+  }
+
   const languagesForSpecialist = (specialistId) => {
     return idea.value.specialist
       .filter((specialist) => {
@@ -115,6 +122,7 @@ export const useIdea = (id) => {
     publishedAgo,
     pendingUsers,
     statusPositions,
+    updateIdea,
     deleteIdea,
     languagesForSpecialist,
     frameworksForSpecialist,

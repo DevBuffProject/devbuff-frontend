@@ -4,7 +4,7 @@
       <AtomicCard class="px-0">
         <div
           class="divide-y divide-gray-200 dark:divide-blueGray-700"
-          v-if="userIdeas.length > 0"
+          v-if="userIdeas?.length > 0"
         >
           <WidgetDashboardIdeaCard
             v-for="idea of userIdeas"
@@ -22,11 +22,25 @@
     <aside class="col-span-1">
       <AtomicLoadingSpinner v-if="isPendingLoading" />
       <div v-if="inspectedIdea.id" class="col-span-3">
-        <h1 class="mt-0 mb-3">{{ inspectedIdea.name }}</h1>
+        <RouterLink
+          :to="{ name: 'idea-detail', params: { id: inspectedIdea.id } }"
+          custom
+          v-slot="{ href, navigate }"
+        >
+          <a
+            :href="href"
+            @click="navigate"
+            v-focusable
+            class="font-semibold inline-block mb-2"
+          >
+            <h1 class="m-0">{{ inspectedIdea.name }}</h1>
+          </a>
+        </RouterLink>
         <p class="mt-0 mb-6 opacity-50">{{ inspectedIdea.description }}</p>
         <AtomicCard class="mb-4">
           <div class="flex">
             <AtomicButton
+              v-if="inspectedIdea.status !== 'PUBLISH'"
               v-focusable.indexOnly
               is-depressed
               is-wide
@@ -52,7 +66,10 @@
                 </span>
               </div>
             </AtomicButton>
-            <i class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10" />
+            <i
+              class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10"
+              v-if="inspectedIdea.status !== 'PUBLISH'"
+            />
             <AtomicButton type="danger" is-depressed is-wide>
               <div
                 class="flex flex-col items-center justify-center"
@@ -72,7 +89,7 @@
           </div>
         </AtomicCard>
         <h3 class="mt-0">{{ t('responses') }}</h3>
-        <div v-if="pendingUsers.length > 0">
+        <div v-if="pendingUsers?.length > 0">
           <div
             v-for="{
               userEntity: user,

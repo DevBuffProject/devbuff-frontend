@@ -184,6 +184,10 @@ export default defineComponent({
       type: String,
       default: 'specialists',
     },
+    data: {
+      type: Array,
+      default: undefined,
+    },
   },
   setup(props) {
     const { t, tDefault } = useI18n('components.widget.specialist.picker')
@@ -233,15 +237,50 @@ export default defineComponent({
 
     const selectedSpecialist = ref([])
 
-    const {
-      value: inputValue,
-      errorMessage,
-      handleBlur,
-      handleChange,
-      meta,
-    } = useField(props.name, undefined, {
-      initialValue: selectedSpecialist,
-    })
+    watch(
+      () => skills,
+      (state) => {
+        if (state.value !== undefined && props.data) {
+          //Load from exists data
+          for (const specialist of props.data) {
+            addSpecialist(specialist.name)
+
+            const createdSpecialist =
+              selectedSpecialist.value[selectedSpecialist.value.length - 1]
+
+            for (const language of createdSpecialist.languages) {
+              let searchedLanguage = specialist.languages.find((value) => {
+                return value.name === language.name
+              })
+
+              console.log(searchedLanguage)
+
+              language.selected = searchedLanguage !== undefined
+
+              if (language.selected) {
+                for (const framework of language.frameworks) {
+                  let searcherFrameworks = searchedLanguage.frameworks.find(
+                    (value) => {
+                      return value.name === framework.name
+                    },
+                  )
+                  framework.selected = searcherFrameworks !== undefined
+                }
+              }
+            }
+          }
+        }
+      },
+      { deep: true },
+    )
+
+    const { value: inputValue, errorMessage } = useField(
+      props.name,
+      undefined,
+      {
+        initialValue: selectedSpecialist,
+      },
+    )
 
     watch(
       () => selectedSpecialist,
