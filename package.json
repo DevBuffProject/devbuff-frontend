@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "@babel/runtime-corejs3": "7.14.7",
-    "@nuxtjs/storybook": "4.0.4",
+    "@nuxtjs/storybook": "4.1.0",
     "@storybook/addon-knobs": "6.2.9",
     "babel-eslint": "10.1.0",
     "chromatic": "5.9.2",
