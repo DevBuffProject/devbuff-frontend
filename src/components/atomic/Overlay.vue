@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { defineComponent, useContext, onMounted, onUnmounted } from 'vue'
+import { defineComponent, onMounted, onUnmounted } from 'vue'
 
 const rooElement = window.document.documentElement
 const { overflow } = window.getComputedStyle(rooElement)
@@ -65,8 +65,7 @@ export default defineComponent({
     visible: { type: Boolean, default: false },
     hideControls: { type: Boolean, default: false },
   },
-  setup() {
-    const { emit } = useContext()
+  setup(_, { emit }) {
     const onEscapeClose = (e) => e.key === 'Escape' && onClose()
     const onClose = () => emit('onClose')
 

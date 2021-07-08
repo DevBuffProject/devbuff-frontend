@@ -23,7 +23,8 @@ export default defineComponent({
   setup(props) {
     const isExternal = computed(
       () =>
-        typeof props.to === 'string' && (props.to.startsWith('http') || props.to.startsWith('//'))
+        typeof props.to === 'string' &&
+        (props.to.startsWith('http') || props.to.startsWith('//')),
     )
 
     const { navigate } = useLink(props)

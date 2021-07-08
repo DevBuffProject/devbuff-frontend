@@ -41,94 +41,30 @@
       </AtomicCard>
 
       <div class="col-span-2">
-        <div class="-mt-12 mb-6 flex items-center" v-if="isOwnerIdea">
-          <AtomicDropdown by-click>
+        <div class="mb-6 flex items-center">
+          <span class="opacity-50">вы создатель</span>
+          <AtomicActions>
             <template #activator>
-              <div
-                role="button"
-                class="text-primary flex items-center ml-2"
-                v-focusable
-                @clock="toggleControls"
-              >
-                Управлять
-                <ChevronDownIcon />
+              <div class="text-primary flex items-center ml-2">
+                Быстрое управление <ChevronDownIcon />
               </div>
             </template>
 
-            <div class="flex justify-center items-center text-sm">
-              <AtomicButton
-                v-focusable.indexOnly
-                is-depressed
-                is-small
-                :type="
-                  idea.status === 'WAITING_FULL_TEAM' ? 'danger' : 'success'
-                "
-                @click="
-                  changeStatusIdea(
-                    idea.id,
-                    idea.status === 'WAITING_FULL_TEAM'
-                      ? 'DISABLE_SET_OF_CANDIDATES'
-                      : 'ENABLE_SET_OF_CANDIDATES',
-                  )
-                "
-              >
-                <div class="flex flex-col items-center justify-center">
-                  <StopIcon v-if="idea.status === 'WAITING_FULL_TEAM'" />
-                  <PlayIcon v-else />
-                  <span>{{
-                    idea.status === 'WAITING_FULL_TEAM'
-                      ? 'Остановить набор'
-                      : 'Продолжить набор'
-                  }}</span>
-                </div>
-              </AtomicButton>
-              <i
-                v-if="isOwnerIdea"
-                class="
-                  bg-gray-200
-                  dark:bg-blueGray-600
-                  mx-2
-                  w-px
-                  h-10
-                  opacity-20
-                "
-              />
-              <AtomicButton
-                v-if="isOwnerIdea"
-                type="primary"
-                is-depressed
-                is-small
-              >
-                <div class="flex flex-col items-center justify-center">
-                  <EditIcon />
-                  <span>Edit</span>
-                </div>
-              </AtomicButton>
-              <!-- TODO: use delimiter component or class -->
-              <i
-                v-if="isOwnerIdea"
-                class="
-                  bg-gray-200
-                  dark:bg-blueGray-600
-                  mx-2
-                  w-px
-                  h-10
-                  opacity-20
-                "
-              />
-              <AtomicButton
-                v-if="isOwnerIdea"
-                type="danger"
-                is-depressed
-                is-small
-              >
-                <div class="flex flex-col items-center justify-center">
-                  <TrashIcon />
-                  <span>Delete</span>
-                </div>
-              </AtomicButton>
+            <div class="text-xs flex flex-col">
+              <AtomicAction type="danger">
+                <template #icon><StopIcon /></template>
+                Stop company
+              </AtomicAction>
+              <AtomicAction type="danger" class="my-2">
+                <template #icon><TrashIcon /></template>
+                Delete idea
+              </AtomicAction>
+              <AtomicAction>
+                <template #icon><EditIcon /></template>
+                Edit idea
+              </AtomicAction>
             </div>
-          </AtomicDropdown>
+          </AtomicActions>
         </div>
 
         <AtomicCard>
@@ -181,27 +117,26 @@
               </AtomicLabel>
 
               <div v-if="!isOwnerIdea" class="mt-6">
-                <div
-                  role="button"
+                <AtomicButton
                   v-if="getStatusAtPosition(specialist.id) === 'NONE'"
                   @click="send(specialist.id)"
-                  :class="[
-                    'p-2 text-center text-primary bg-primary bg-opacity-10',
-                    'transition-all hover:bg-opacity-[0.15] rounded',
-                  ]"
+                  is-depressed
+                  class="w-full"
                 >
                   {{ t('positions.status.NONE') }}
-                </div>
+                </AtomicButton>
                 <div
                   v-else
-                  :class="[
-                    'w-full py-2 rounded',
-                    'text-center text-gray-400',
-                    'bg-gray-100',
-                  ]"
+                  class="
+                    w-full
+                    py-2
+                    text-center text-gray-400
+                    bg-gray-100
+                    rounded
+                  "
                 >
                   {{
-                    t('positions.status.' + getStatusAtPosition(specialist.id))
+                    t(`positions.status.${getStatusAtPosition(specialist.id)}`)
                   }}
                 </div>
               </div>
@@ -210,10 +145,8 @@
         </AtomicCard>
       </div>
       <div class="col-span-4">
-        <WidgetCommentsFast
-          :id="`idea-${idea.id}`"
-          :sso="ssoData"
-        ></WidgetCommentsFast>
+        <AtomicButton is-depressed>depressed</AtomicButton>
+        <WidgetCommentsFast :id="`idea-${idea.id}`" :sso="ssoData" />
       </div>
     </div>
   </div>
@@ -243,9 +176,7 @@ export default defineComponent({
     } = useIdea(props.id)
 
     const { ssoData, getSsoData } = useSso()
-
     const { t } = useI18n('pages.idea')
-
     const { getUserProfileUrl, getUser, user } = useUser()
 
     const send = (specialistId) => {
@@ -273,11 +204,11 @@ export default defineComponent({
     useTitle(`${idea.value.name} - DevBuff`)
 
     return {
-      t,
       idea,
       ssoData,
       isOwnerIdea,
       publishedAgo,
+      t,
       send,
       changeStatusIdea,
       getUserProfileUrl,

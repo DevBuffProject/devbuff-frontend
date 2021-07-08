@@ -1,8 +1,9 @@
 <template>
   <span
     :class="[
-      'text-xs px-4 py-px font-light rounded',
-      type !== 'auto' && 'bg-gray-200 dark:bg-blueGray-700 text-gray-500 text-blueGray-300',
+      'text-xs px-4 py-px font-light rounded-full',
+      type !== 'auto' &&
+        'bg-gray-200 dark:bg-blueGray-700 text-gray-500 text-blueGray-300',
     ]"
     :style="
       type === 'auto' && {

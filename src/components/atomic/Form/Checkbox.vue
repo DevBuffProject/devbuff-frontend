@@ -39,8 +39,8 @@ export default defineComponent({
       default: null,
     },
   },
-  setup(props) {
-    const { emit, attrs, slots } = useContext()
+  setup(props, { emit }) {
+    const { attrs, slots } = useContext()
     const isChecked = computed(() =>
       Array.isArray(props.modelValue)
         ? props.modelValue.includes(props.value)

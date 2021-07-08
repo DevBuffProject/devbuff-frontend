@@ -1,5 +1,5 @@
 <template>
-  <div v-if="idea.name">
+  <div>
     <h1>{{ idea.name }}</h1>
     <div class="flex flex-wrap items-start my-5">
       <RouterLink to="/" custom v-slot="{ navigate }">
@@ -22,68 +22,76 @@
       <AtomicLabel :name="t('info.status.title')" class="mt-0 mx-4 mb-4">
         {{ t(`info.status.${idea.status}`) }}
       </AtomicLabel>
+
+      <AtomicLabel
+        v-if="isOwnerIdea"
+        :name="t('info.moderationStatus.title')"
+        class="mt-0 mx-4 mb-4"
+      >
+        {{
+          idea.waitingValidation
+            ? t('info.moderationStatus.waiting')
+            : t('info.moderationStatus.approved')
+        }}
+      </AtomicLabel>
     </div>
-    <div class="grid gap-2 grid-cols-12">
-      <AtomicCard class="mb-3 col-span-12">
+    <div class="">
+      <AtomicCard class="mb-3">
         <div v-html="idea.text" class="overflow-hidden" />
       </AtomicCard>
-      <div class="col-start-10">
-        <RouterLink
-          :to="{ name: 'idea-detail', params: { id: idea.id } }"
-          custom
-          v-slot="{ href, navigate }"
-        >
-          <AtomicButton :href="href" @click="navigate">
-            {{ t(`more`) }}
+
+      <RouterLink
+        :to="{ name: 'idea-detail', params: { id: idea.id } }"
+        custom
+        v-slot="{ href, navigate }"
+      >
+        <a :href="href" @click="navigate">
+          <AtomicButton is-depressed class="py-4 mt-6 w-full">
+            <div class="flex items-center">
+              <span class="mr-2">{{ t(`more`) }}</span>
+              <ArrowRightIcon />
+            </div>
           </AtomicButton>
-        </RouterLink>
-      </div>
+        </a>
+      </RouterLink>
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, watch, ref } from 'vue'
+import { defineComponent, inject } from 'vue'
 import { useIdea, useUser } from '../../composes/core'
 import { useTimeAgo, useTitle } from '@vueuse/core'
 import { useI18n } from '../../composes/utils'
-import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'IdeaDetailPreview',
   async setup() {
-    const route = useRoute()
-    const publishedAgo = ref()
-    watch(
-      () => route.params,
-      async () => {
-        if (route.params?.id) {
-          await loadIdea(route.params.id)
-        }
-      },
-    )
-
-    const { idea, getIdea } = useIdea()
-
+    const { dialog: route } = inject('route')
     const { t } = useI18n('pages.preview.idea')
+    const { getUserProfileUrl, getUser } = useUser()
+    const {
+      idea,
+      getIdea,
+      changeStatusIdea,
+      languagesForSpecialist,
+      frameworksForSpecialist,
+    } = useIdea(route.value.params.id)
+    const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
 
-    const { getUserProfileUrl } = useUser()
-
-    const loadIdea = async (uuid) => {
-      await getIdea(uuid)
-      publishedAgo.value = useTimeAgo(idea.value.lastUpdateDate).value
-    }
-    if (route.params?.id) {
-      await loadIdea(route.params.id)
-    }
+    await getIdea()
+    await getUser()
 
     useTitle(`${idea.value.name} - DevBuff`)
 
     return {
-      t,
       idea,
       publishedAgo,
+      t,
+      changeStatusIdea,
       getUserProfileUrl,
+      languagesForSpecialist,
+      frameworksForSpecialist,
     }
   },
 })

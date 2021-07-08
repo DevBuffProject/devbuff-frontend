@@ -35,9 +35,10 @@ const loader = async () => {
   app.directive(focusable.name, focusable)
   app.use(router)
   app.use(MotionPlugin)
+  app.use(i18n)
 
   return App
 }
 
 const app = createApp(defineAsyncComponent({ loader }))
-app.use(i18n).mount('#app')
+app.mount('#app')

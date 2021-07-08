@@ -41,7 +41,7 @@
 </style>
 
 <script>
-import { defineComponent, useCssModule, useContext } from 'vue'
+import { defineComponent, useContext, useCssModule } from 'vue'
 import { useAppearance } from '../../composes/utils'
 
 export default defineComponent({

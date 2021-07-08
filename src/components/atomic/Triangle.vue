@@ -1,4 +1,14 @@
 <template>
+  <!--  <svg-->
+  <!--    width="78"-->
+  <!--    height="38"-->
+  <!--    viewBox="0 0 78 38"-->
+  <!--    fill="none"-->
+  <!--    xmlns="http://www.w3.org/2000/svg"-->
+  <!--  >-->
+  <!--    <path d="M1.26958 37L39 0.693888L76.7304 37H1.26958Z" v-bind="attrs" />-->
+  <!--  </svg>-->
+
   <div
     :class="[
       'relative transform inline-block',
@@ -9,19 +19,19 @@
   >
     <em
       :class="[
-        styles.Triangle_border,
-        borderClasses,
         'absolute top-0 -left-px block w-[0px] h-[0px] border-solid',
         'border border-[12px] !border-b-0',
         'border-gray-200 dark:border-blueGray-700',
+        styles.Triangle_border,
+        borderClasses,
       ]"
     />
     <em
       v-bind="attrs"
       :class="[
-        styles.Triangle,
         'block w-[0px] h-[0px] border-solid relative',
         'border border-[11px] !border-b-0 border-white dark:border-blueGray-900',
+        styles.Triangle,
       ]"
     />
   </div>
@@ -36,8 +46,6 @@
   border-right-color: transparent !important;
   border-bottom-color: transparent !important;
   border-left-color: transparent !important;
-  /*border-width: 11px;*/
-  /*left: 17px;*/
 }
 
 /* this border color controlls the outside, thin border */

@@ -30,14 +30,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-  watch,
-  onBeforeUpdate,
-  onMounted,
-  useContext,
-} from 'vue'
+import { defineComponent, ref, watch, onBeforeUpdate, onMounted } from 'vue'
 
 export default defineComponent({
   name: 'VSwitcher',
@@ -54,19 +47,14 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
-    const { emit } = useContext()
+  setup(props, { emit }) {
     const activeIndex = ref(0)
-
     const elementRefHighlight = ref()
     let elementRefButton = []
 
     const setValue = (index) => {
       const value = props.values[index] && props.values[index].value
-
-      if (value === props.value) {
-        activeIndex.value = index
-      }
+      if (value === props.value) activeIndex.value = index
       emit('update:value', value)
     }
 
@@ -76,9 +64,8 @@ export default defineComponent({
         : 0
 
       const button = elementRefButton[currentActiveIndex]
-      if (!button) {
-        return false
-      }
+
+      if (!button) return false
 
       activeIndex.value = currentActiveIndex
 

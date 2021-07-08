@@ -30,16 +30,15 @@
           :placeholder="input.placeholder"
         />
       </div>
-      <AtomicInputNew
+      <AtomicInput
         v-else-if="input.type != 'mixed'"
-        :value="input.value"
+        v-model="input.value"
         :name="input.name"
         :type="input.type"
         :label="input.label"
         :placeholder="input.placeholder"
         :svg-icon-name="input.svgIconName"
-      >
-      </AtomicInputNew>
+      />
     </div>
     <slot name="externalForms" />
     <AtomicButton class="col-start-12">Save</AtomicButton>
@@ -69,11 +68,8 @@ export default defineComponent({
     const getMetaParam = (schema, nameOfParam) => {
       let meta = schema.describe()
 
-      for (const test of meta.tests) {
-        if (test.name === nameOfParam) {
-          return test.params
-        }
-      }
+      for (const test of meta.tests)
+        if (test.name === nameOfParam) return test.params
       return undefined
     }
 
@@ -99,6 +95,7 @@ export default defineComponent({
     }
 
     const schemas = yup.object(yupObject)
+
     return {
       schemas,
     }

@@ -1,38 +1,42 @@
 <template>
   <div class="relative" ref="container">
     <div @click="isVisible ? hide() : show()">
-      <slot name="activator" v-bind="{ isVisible }" />
+      <slot name="activator" />
     </div>
 
-    <transition name="slide-up">
-      <div v-show="isVisible" class="absolute top-[100%] right-0 z-50">
-        <div ref="dropdown">
-          <div
-            class="
-              bg-white
-              border border-gray-200
-              p-4
-              -mt-px
-              z-50
-              rounded
-              shadow-xl
-            "
-          >
-            <slot />
-          </div>
-        </div>
+    <div
+      v-show="isVisible"
+      class="
+        absolute
+        top-0
+        right-0
+        z-50
+        p-2
+        -m-2
+        rounded-xl
+        overflow-hidden
+        bg-white
+      "
+      style="box-shadow: 0 3px 25px -2px rgba(0, 0, 0, 0.2)"
+    >
+      <div class="p-2 -m-2 mb-2 bg-gray-200 bg-opacity-40">
+        <slot name="activator" />
       </div>
-    </transition>
+
+      <div ref="dropdown">
+        <slot />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue'
-import { useElementTransform, useMotion } from '@vueuse/motion'
+import { useMotion } from '@vueuse/motion'
 import { onClickOutside, useMagicKeys, whenever } from '@vueuse/core'
 
 export default defineComponent({
-  name: 'AtomicDropdown',
+  name: 'AtomicActions',
   emits: ['open', 'close'],
   setup(props, { emit }) {
     const container = ref()

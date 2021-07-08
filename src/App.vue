@@ -4,7 +4,7 @@
     <div class="grid grid-cols-10 gap-8 container mx-auto mt-8">
       <Sidebar class="col-span-2" />
       <div class="col-span-8">
-        <router-view :route="renderRoute" v-slot="{ Component, route }">
+        <router-view :route="mainRoute" v-slot="{ Component, route }">
           <template v-if="Component">
             <suspense>
               <div class="h-full container">
@@ -39,13 +39,10 @@
           <template v-if="Dialog">
             <suspense>
               <AtomicDialog :visible="true" @onClose="back">
-                <component :is="dialogRoute?.meta.preview || Dialog" />
+                <component :is="dialogRoute?.meta?.preview || Dialog" />
               </AtomicDialog>
-
               <template #fallback>
-                <AtomicLoadingOverlay :visible="true">
-                  loading
-                </AtomicLoadingOverlay>
+                <AtomicLoadingOverlay :visible="true" />
               </template>
             </suspense>
           </template>
@@ -82,16 +79,16 @@ export default defineComponent({
 
     const router = useRouter()
     // fix vue-router length undefined
-    const renderRoute = shallowRef({ matched: [] }) // TODO: rename
+    const mainRoute = shallowRef({ matched: [] }) // TODO: rename
     const dialogRoute = shallowRef(null)
     const isDialog = ref(false)
     const error = ref(null)
     const breadcrumbs = computed(() => {
-      const breadcrumbs = renderRoute.value?.meta.breadcrumbs || []
+      const breadcrumbs = mainRoute.value?.meta.breadcrumbs || []
       const crumbRoutes = router.options.routes
         .filter((r) => breadcrumbs?.includes(r.name))
         .map((r) => ({ title: r.meta?.name, to: r.path }))
-      return [...crumbRoutes, { title: renderRoute.value.meta.name }]
+      return [...crumbRoutes, { title: mainRoute.value.meta.name }]
     })
 
     const back = () => router.back()
@@ -99,31 +96,26 @@ export default defineComponent({
     router.beforeResolve((to, from, next) => {
       set(isDialog, Boolean(to.params._isDialog))
       set(dialogRoute, isDialog.value ? to : null)
-
       // Prevent reactive triggers if background route isn't changed
       const bgRoute = isDialog.value ? from : to
-      if (renderRoute.value.fullPath !== bgRoute.fullPath)
-        set(renderRoute, bgRoute)
+      if (mainRoute.value.fullPath !== bgRoute.fullPath) set(mainRoute, bgRoute)
       next()
     })
 
-    onErrorCaptured((err) => {
-      set(error, err)
-    })
-    provide('backgroundRoute', renderRoute)
+    onErrorCaptured((err) => set(error, err))
+    provide('route', { main: mainRoute, dialog: dialogRoute })
 
     const LayoutHeader = ref(null)
+
     return {
       isDialog,
-      renderRoute,
+      mainRoute,
       dialogRoute,
       breadcrumbs,
-      error,
-      log: console.log,
-      back,
       LayoutHeader,
+      error,
+      back,
     }
   },
 })
 </script>
-

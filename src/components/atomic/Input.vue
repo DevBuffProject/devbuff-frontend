@@ -1,8 +1,8 @@
 <template>
-  <div class="inline-block" ref="containerRef">
+  <div class="inline-block w-full" ref="containerRef">
     <label
       :class="[
-        'block min-w-[200px] relative group z-10',
+        'block min-w-[200px] relative overflow-hidden group z-10',
         'transition-all rounded-md cursor-text',
         'bg-white dark:bg-blueGray-900 border hover:bg-gray-100',
         isFocused
@@ -13,13 +13,14 @@
       ]"
     >
       <span
+        v-if="placeholder"
         ref="placeholderRef"
         :class="[
           'whitespace-nowrap absolute flex items-center transform',
           isMounted && 'transition-all',
           isPlaceholderOverflows
             ? [
-                'top-[-50%] !-ml-2 opacity-100 translate-y-0 text-xs',
+                'top-0 !ml-1 opacity-70 translate-y-0 text-xs',
                 'cursor-pointer text-black dark:text-blueGray-500',
               ]
             : [
@@ -29,11 +30,17 @@
                   : 'opacity-70',
               ],
         ]"
-        :style="{ marginLeft: `${textWidth + 10}px` }"
+        :style="{
+          marginLeft: `${textWidth + 10}px`,
+          width: `${placeholderWidthFixed}px`,
+        }"
       >
-        <span class="-mt-px ml-3">{{ placeholder }}</span>
+        <span :class="['-mt-px ml-3']">
+          {{ placeholder }}
+        </span>
       </span>
-      <input
+      <component
+        :is="type === 'textarea' ? 'textarea' : 'input'"
         v-focusable.indexOnly
         autocomplete="off"
         v-bind="attrs"
@@ -42,7 +49,7 @@
         @focus="onFocus"
         @blur="onBlur"
         @input="onInput"
-        class="bg-transparent px-4 py-3"
+        class="bg-transparent w-full px-4 py-3"
       />
     </label>
     <AtomicTextError
@@ -60,7 +67,14 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref, useContext, onMounted } from 'vue'
+import {
+  computed,
+  defineComponent,
+  useContext,
+  unref,
+  ref,
+  onMounted,
+} from 'vue'
 import { useField } from 'vee-validate'
 import { useMotion } from '@vueuse/motion'
 import { not, useElementBounding, whenever } from '@vueuse/core'
@@ -71,23 +85,25 @@ export default defineComponent({
   props: {
     modelValue: { type: [String, Number], default: '' },
     name: { type: String, required: true },
+    type: { type: String, default: 'text' },
     rules: { type: [String, Array, Object, Function], default: null },
     placeholder: { type: String, default: '' },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const isMounted = ref(false)
     const errorMessage = ref(null)
     const isErrorVisible = ref(false)
     const isFocused = ref(false)
     const errorTextRef = ref(null)
-
     const containerRef = ref(null)
     const textRef = ref(null)
     const placeholderRef = ref(null)
-    const placeholderWidth = useElementBounding(placeholderRef).width.value
+    const placeholderWidthFixed = ref()
+
+    const { width: placeholderWidth } = useElementBounding(placeholderRef)
     const { width: containerWidth } = useElementBounding(containerRef)
     const { width: textWidth } = useElementBounding(textRef)
-    const { attrs, emit } = useContext()
+    const { attrs } = useContext()
     const {
       handleChange,
       handleBlur,
@@ -111,7 +127,7 @@ export default defineComponent({
 
     const isPlaceholderOverflows = computed(
       () =>
-        Math.ceil(placeholderWidth + textWidth.value + 15) >=
+        Math.ceil(placeholderWidth.value + textWidth.value + 15) >=
         containerWidth.value,
     )
 
@@ -119,8 +135,6 @@ export default defineComponent({
     const onBlur = (e) => (isFocused.value = false) || handleBlur(e)
     const onInput = (e) =>
       emit('update:modelValue', e.target.value) || handleChange(e)
-
-    motion.apply('initial')
 
     whenever(err, async () => {
       isErrorVisible.value = true
@@ -133,8 +147,11 @@ export default defineComponent({
       isErrorVisible.value = false
       errorMessage.value = null
     })
+    whenever(isMounted, () => {
+      placeholderWidthFixed.value = placeholderWidth.value
+    })
     onMounted(() => {
-      isMounted.value = true
+      setTimeout(() => (isMounted.value = true))
     })
 
     return {
@@ -151,6 +168,7 @@ export default defineComponent({
       textWidth,
       placeholderWidth,
       containerWidth,
+      placeholderWidthFixed,
       isPlaceholderOverflows,
       onBlur,
       onFocus,

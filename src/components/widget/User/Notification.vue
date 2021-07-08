@@ -1,111 +1,104 @@
 <template>
   <AtomicDropdown
     :by-click="true"
-    @onClose="onCloseNotificationDialog"
-    @onOpen="onOpenNotificationDialog"
+    @close="onCloseNotificationDialog"
+    @open="onOpenNotificationDialog"
   >
-    <template #activator>
-      <div role="button" v-focusable>
-        <component :is="BellIcon" />
-        <div class="absolute top-[-10px] left-[25px]">
-          {{ countUnreadNotifications }}
-        </div>
+    <template #activator="{ isVisible }">
+      <div
+        role="button"
+        :class="['py-5 px-4 hover:bg-gray-100', isVisible && 'bg-gray-100']"
+      >
+        <AtomicBadge :value="countUnreadNotifications">
+          <BellIcon class="w-[30px] h-[30px]" />
+        </AtomicBadge>
       </div>
     </template>
 
-    <div
-      class="
-        grid grid-cols-5
-        overflow-y-auto
-        scrollbar-w-2
-        scrollbar-track-gray-lighter
-        scrollbar-thumb-rounded
-        scrollbar-thumb-gray
-        scrolling-touch
-        w-[400px]
-        max-w-[280px]
-      "
-      style="width: 400px; max-height: 280px"
-    >
-      <div
-        v-if="isLoading"
-        class="col-start-3 flex items-center justify-center"
-      >
-        <AtomicLoadingBar v-if="isLoading" class="text-primary" />
-      </div>
+    <div class="-mx-4 overflow-y-auto w-[400px] max-h-[300px]">
+      <AtomicLoading v-if="isLoading" class="text-primary" />
+
       <div
         v-else-if="notifications"
         class="
-          col-span-5
           border-b
           dark:border-blueGray-700
-          grid grid-cols-12
-          pb-1
-          pt-1
+          hover:bg-gray-50
+          text-sm
+          flex
+          px-4
+          py-2
+          min-h-[50px]
         "
         v-for="(notification, index) of notifications"
         :key="index"
       >
-        <div class="col-span-1">
-          <component
+        <div class="mr-4 flex items-center justify-center">
+          <UserPlusIcon
             v-if="notification.type === 'USER_PENDING'"
-            :is="UserPlusIcon"
+            class="p-1 w-[30px] h-[30px] bg-gray-200 rounded-full"
           />
-
-          <component
+          <MailIcon
             v-if="notification.type === 'CONFIRM_EMAIL'"
-            :is="SendIcon"
+            class="
+              p-1
+              w-[30px]
+              h-[30px]
+              bg-primary-100
+              text-primary
+              rounded-full
+            "
           />
-          <component
+          <UserCheckIcon
             v-if="notification.type === 'IDEA_APPROVED'"
-            :is="UserCheckIcon"
+            class="
+              p-1
+              w-[30px]
+              h-[30px]
+              bg-success-100
+              text-success
+              rounded-full
+            "
           />
         </div>
 
-        <div class="col-span-11" v-if="notification.type === 'USER_PENDING'">
-          У вас новый кандидат в команду «{{ notification.data.ideaName }}»,
-          <RouterLink
-            :to="{
-              name: 'dashboard',
-              query: { ideaId: notification.data.ideaId },
-            }"
-            custom
-            v-slot="{ href, navigate }"
-          >
-            <a
-              :href="href"
-              @click="navigate"
-              v-focusable
-              class="font-semibold inline-block"
-            >
-              открыть
-            </a>
-          </RouterLink>
-        </div>
-        <div class="col-span-11" v-if="notification.type === 'CONFIRM_EMAIL'">
+        <RouterLink
+          v-if="notification.type === 'USER_PENDING'"
+          :to="{
+            name: 'dashboard',
+            query: { ideaId: notification.data.ideaId },
+          }"
+          custom
+          v-slot="{ navigate }"
+        >
+          <div class="group block cursor-pointer" @click="navigate">
+            У вас новый кандидат в команду
+            <em class="text-primary-700 group-hover:underline">
+              {{ notification.data.ideaName }}
+            </em>
+          </div>
+        </RouterLink>
+
+        <div v-if="notification.type === 'CONFIRM_EMAIL'">
           Мы отправили вам письмо для подтверждения
         </div>
-        <div class="col-span-11" v-if="notification.type === 'IDEA_APPROVED'">
-          Ваша идея «
-          <RouterLink
-            :to="{
-              name: 'idea-detail',
-              params: { id: notification.data.ideaId, _isDialog: true },
-            }"
-            custom
-            v-slot="{ href, navigate }"
-          >
-            <a
-              :href="href"
-              @click="navigate"
-              v-focusable
-              class="font-semibold inline-block"
-            >
-              {{ notification.data.ideaName }}
-            </a>
-          </RouterLink>
-          », была одобрена
-        </div>
+
+        <RouterLink
+          v-if="notification.type === 'IDEA_APPROVED'"
+          :to="{
+            name: 'idea-detail',
+            params: { id: notification.data.ideaId, _isDialog: true },
+          }"
+          custom
+          v-slot="{ navigate }"
+        >
+          <div class="group cursor-pointer" @click="navigate">
+            Ваша идея
+            <em class="text-primary-600 group-hover:underline">
+              {{ notification.data.ideaName }} </em
+            >, была одобрена
+          </div>
+        </RouterLink>
       </div>
       <div
         v-else

@@ -83,7 +83,7 @@ export default defineComponent({
       })
 
     const router = useRouter()
-    const route = inject('backgroundRoute')
+    const { main: route } = inject('route')
     const { isLoading, ideas, getIdeas } = useIdeas()
     const { getUserProfileUrl } = useUser()
     const { t } = useI18n('pages.explore')

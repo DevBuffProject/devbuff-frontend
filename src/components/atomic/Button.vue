@@ -1,72 +1,40 @@
 <template>
   <button
     :class="[
-      'px-6 overflow-hidden rounded relative inline-block text-center',
-      `transition-all border focus:ring ring-${colorType}-300 focus:outline-none`,
-      `bg-${colorType} border-${colorType}`,
-      `hover:bg-${colorType}-400 hover:border-${colorType}-400`,
-      `active:bg-${colorType}-600 active:border-${colorType}-600`,
-
-      isWide && 'w-full',
-      isSmall ? 'py-0.5 text-sm' : 'py-1.5',
-      isDepressed && [
-        'bg-opacity-0 border-opacity-0 hover:bg-opacity-10 hover:border-opacity-10',
-        'active:bg-opacity-20 active:border-opacity-20',
-      ],
-      {
-        'text-white': !isDepressed && !isMuted,
-        [`text-${colorType}`]: isDepressed,
-      },
+      `
+        px-6 overflow-hidden rounded relative inline-block text-center
+        transition-all border focus:ring focus:outline-none
+      `,
+      colorType === 'primary' &&
+        'bg-primary hover:bg-primary-400 active:bg-primary-600 hover:border-primary-400 active:border-primary-600 border-primary ring-primary-300',
+      colorType === 'success' &&
+        'bg-success hover:bg-success-400 active:bg-success-600 hover:border-success-400 active:border-success-600 border-success ring-success-300',
+      colorType === 'warning' &&
+        'bg-warning hover:bg-warning-400 active:bg-warning-600 hover:border-warning-400 active:border-warning-600 border-warning ring-warning-300',
+      colorType === 'danger' &&
+        'bg-danger hover:bg-danger-400 active:bg-danger-600 hover:border-danger-400 active:border-danger-600 border-danger ring-danger-300',
+      isDepressed &&
+        `
+          bg-opacity-10 border-opacity-0 hover:bg-opacity-20 hover:border-opacity-20
+          active:bg-opacity-30 active:border-opacity-30
+        `,
+      isSmall ? 'py-0.5' : 'py-1.5',
     ]"
     v-bind="$attrs"
   >
-    <!--    <div-->
-    <!--      :class="[-->
-    <!--      'px-6 overflow-hidden rounded relative inline-block text-center',-->
-    <!--      'transform transition-all border border-opacity-100',-->
-    <!--      depressed && [-->
-    <!--        '!bg-opacity-0 !border-opacity-10 hover:!bg-opacity-10 hover:!border-opacity-10',-->
-    <!--        type ? `!text-${type}` : '!text-black dark:!text-white',-->
-    <!--      ],-->
-    <!--      isSmall ? 'py-0.5 text-sm' : 'py-1.5',-->
-    <!--      !disabled-->
-    <!--        ? 'focus:ring focus:outline-none'-->
-    <!--        : [-->
-    <!--            '!bg-gray-100 !border-opacity-0 !text-gray-400 focus:!ring-0 !transform-none !transition-none',-->
-    <!--            'dark:!bg-blueGray-700 dark:!text-blueGray-900 pointer-events-none',-->
-    <!--          ],-->
-    <!--      (!type || type === 'muted') && [-->
-    <!--        'ring-primary-300 focus:border-primary',-->
-    <!--        'border-gray-300 dark:border-blueGray-600 hover:border-primary',-->
-    <!--        'active:bg-gray-200 dark:active:bg-blueGray-700',-->
-    <!--      ],-->
-    <!--      type === 'primary' && [-->
-    <!--        'focus:ring ring-primary-300 focus:border-primary-600',-->
-    <!--        'bg-primary border-primary text-white',-->
-    <!--        'hover:bg-primary-400 hover:border-primary-400 text-white',-->
-    <!--        'active:bg-primary-600 active:border-primary-600',-->
-    <!--      ],-->
-    <!--      type === 'warning' && [-->
-    <!--        'focus:ring ring-warning-300 focus:border-warning-600',-->
-    <!--        'bg-warning border-warning text-white',-->
-    <!--        'hover:bg-warning-400 hover:border-warning-400 text-white',-->
-    <!--        'active:bg-warning-600 active:border-warning-600',-->
-    <!--      ],-->
-    <!--      type === 'danger' && [-->
-    <!--        'ring-danger-300 focus:border-danger-600',-->
-    <!--        'bg-danger border-danger text-white',-->
-    <!--        'hover:bg-danger-400 hover:border-danger-400 text-white',-->
-    <!--        'active:bg-danger-600 active:border-danger-600',-->
-    <!--      ],-->
-    <!--      type === 'success' && [-->
-    <!--        'ring-success-300 focus:border-success-600',-->
-    <!--        'bg-success border-success text-white',-->
-    <!--        'hover:bg-success-400 hover:border-success-400 text-white',-->
-    <!--        'active:bg-success-600 active:border-success-600',-->
-    <!--      ],-->
-    <!--    ]"-->
-    <!--    ></div>-->
-    <span class="flex items-center justify-center">
+    <span
+      :class="[
+        'flex items-center justify-center',
+        isDepressed && [
+          colorType === 'primary' && 'text-primary',
+          colorType === 'success' && 'text-success',
+          colorType === 'warning' && 'text-warning',
+          colorType === 'danger' && 'text-danger',
+        ],
+        !isDepressed && !isMuted && 'text-white',
+        isSmall && 'text-sm',
+      ]"
+    >
       <span v-if="slots.icon" class="mr-2">
         <slot name="icon" />
       </span>

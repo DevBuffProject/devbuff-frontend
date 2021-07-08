@@ -70,7 +70,7 @@ export default defineComponent({
       handleChange,
       meta,
     } = useField(props.name, undefined, {
-      initialValue: props.value === undefined ? '' : props.value,
+      initialValue: props.value,
     })
 
     const { uploadUserImage } = useUser()
