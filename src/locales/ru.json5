@@ -80,6 +80,23 @@
         placeholder: 'Опишите вашу идею'
       },
       save: 'Сохранить'
+    },
+    settings: {
+      error: {
+        confict: 'Следующие поля пересекаются с другими пользователями',
+      },
+      form: {
+        user: 'Профиль',
+        skills: 'Ваши навыки'
+      },
+      fields: {
+        userName: 'Имя пользователя',
+        email: 'Email',
+        firstName: 'Имя',
+        lastName: 'Фамилия',
+        birthday: 'Дата рождения',
+        bio: 'О вас',
+      }
     }
   },
   components: {
@@ -130,6 +147,11 @@
       specialist: {
         picker: {
           title: 'Ваша команда'
+        }
+      },
+      profile: {
+        skills: {
+
         }
       }
     }

@@ -13,13 +13,13 @@
     <AtomicNotification
       v-if="conflictMessage"
       type="danger"
-      :message="`Conflict field's`"
+      :message="t('error.confict')"
       :description="conflictMessage"
     />
   </div>
   <div class="w-full grid grid-cols-12">
     <h3 class="col-span-12">
-      User data
+      {{ t('form.user') }}
     </h3>
     <AtomicForm
       :data="data"
@@ -29,7 +29,7 @@
   </div>
   <div class="grid grid-cols-12">
     <h3 class="col-span-12">
-      Skills settings
+      {{ t('form.skills') }}
     </h3>
     <WidgetProfileSkills class="col-span-12 w-full h-auto" />
   </div>
@@ -39,9 +39,11 @@
 import { defineComponent, ref, computed } from 'vue'
 import { useUser } from '../composes/core'
 import * as yup from 'yup'
+import { useI18n } from '../composes/utils'
 
 export default defineComponent({
   async setup() {
+    const { t } = useI18n('pages.settings')
     const { user, getUser, saveUserData, resendEmail } = useUser()
 
     const data = [
@@ -49,12 +51,14 @@ export default defineComponent({
         schema: yup.string().min(4).max(10),
         label: 'User name',
         name: 'userName',
+        placeholder: t('fields.userName'),
         value: user.value.userName,
       },
       {
         schema: yup.string().email(),
         label: 'Email',
         name: 'email',
+        placeholder: t('fields.email'),
         value: user.value.email,
       },
 
@@ -67,6 +71,7 @@ export default defineComponent({
           .required(),
         label: 'First name',
         name: 'firstName',
+        placeholder: t('fields.firstName'),
         value: user.value.firstName,
       },
       {
@@ -78,18 +83,21 @@ export default defineComponent({
           .required(),
         label: 'Last name',
         name: 'lastName',
+        placeholder: t('fields.lastName'),
         value: user.value.lastName,
       },
       {
         schema: yup.date().default(() => new Date()),
         label: 'Birthday',
         name: 'birthday',
+        placeholder: t('fields.birthday'),
         value: user.value.birthday,
       },
       {
         schema: yup.string().min(0).max(300),
         label: 'Bio',
         name: 'bio',
+        placeholder: t('fields.bio'),
         value: user.value.bio,
       },
       {
@@ -173,11 +181,14 @@ export default defineComponent({
 
     const conflictMessage = computed(() => {
       if (conflictFields.value.length === 0) return undefined
-      //TODO i18n
-      return `Conflicted: ${conflictFields.value.join(', ')}`
+
+      return conflictFields.value.map(value => {
+        return t(`fields.${value}`)
+      }).join(', ')
     })
 
     return {
+      t,
       yup,
       data,
       isVerifyEmailSent,
