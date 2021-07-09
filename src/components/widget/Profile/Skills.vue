@@ -14,14 +14,17 @@
             :key="skill.name"
             :class="['flex justify-between items-center group cursor-pointer']"
           >
-            <label class="flex items-center w-full" @click.stop>
+            <label
+              class="flex items-center w-full"
+              @click.stop
+            >
               <input
                 :id="'language' + skill.name"
                 v-model="skill.checked"
                 type="checkbox"
                 class="mr-2"
                 @change="onChangeSkill(skill)"
-              />
+              >
               <div>{{ t(`languages.${skill.name}`, skill.name) }}</div>
             </label>
             <div
@@ -54,14 +57,17 @@
             :key="specialist.name"
             :class="['flex justify-between items-center group cursor-pointer']"
           >
-            <label class="flex items-center w-full" @click.stop>
+            <label
+              class="flex items-center w-full"
+              @click.stop
+            >
               <input
                 :id="'specialist' + specialist.name + Math.random() * 1000"
                 v-model="specialist.checked"
                 type="checkbox"
                 class="mr-2"
                 @change="onChangeSkill(specialist)"
-              />
+              >
               <div>
                 {{
                   t(`specializations.${specialist.name}.title`, specialist.name)
@@ -97,21 +103,26 @@
             :key="framework.name"
             :class="['flex justify-between items-center group cursor-pointer']"
           >
-            <label class="flex items-center w-full" @click.stop>
+            <label
+              class="flex items-center w-full"
+              @click.stop
+            >
               <input
                 :id="'framework' + framework.name"
                 v-model="framework.checked"
                 type="checkbox"
                 class="mr-2"
                 @change="onChangeSkill(framework)"
-              />
+              >
               <div>{{ framework.name }}</div>
             </label>
           </AtomicListItem>
         </AtomicList>
       </swiper-slide>
     </swiper>
-    <AtomicButton @click="save"> Save </AtomicButton>
+    <AtomicButton @click="save">
+      Save
+    </AtomicButton>
   </div>
 </template>
 

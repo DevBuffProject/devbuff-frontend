@@ -7,7 +7,10 @@
         :lastname="lastname"
         :username="username"
       />
-      <div v-if="!readonly" class="text-sm flex flex-col">
+      <div
+        v-if="!readonly"
+        class="text-sm flex flex-col"
+      >
         <AtomicButton
           type="success"
           is-small

@@ -3,7 +3,9 @@
     <slot />
 
     <div
+      v-if="value"
       class="
+        px-1
         absolute
         -top-3
         -right-3
@@ -12,10 +14,10 @@
         flex
         items-center
         justify-center
-        px-1
         text-center text-xs text-white
         bg-success
         rounded-xl
+        shadow
       "
     >
       {{ value }}

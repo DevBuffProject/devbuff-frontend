@@ -1,14 +1,34 @@
 <template>
-  <AtomicOverlay to="body" :visible="visible" @onClose="onClose">
+  <AtomicOverlay
+    to="body"
+    :visible="visible"
+    @onClose="onClose"
+  >
     <div
       ref="windowRef"
-      :class="[
-        'max-w-[800px] my-8 mx-auto p-8 overflow-hidden relative z-50',
-        'bg-white dark:bg-blueGray-700 shadow-xl rounded-md',
-      ]"
+      class="
+        max-w-[800px]
+        my-8
+        mx-auto
+        p-8
+        overflow-hidden
+        relative
+        z-50
+        bg-white
+        dark:bg-blueGray-700
+        shadow-xl
+        rounded-md
+      "
     >
-      <h1 v-if="title" class="mt-0">{{ title }}</h1>
-      <div v-else-if="slots.title"><slot name="title" /></div>
+      <h1
+        v-if="title"
+        class="mt-0"
+      >
+        {{ title }}
+      </h1>
+      <div v-else-if="slots.title">
+        <slot name="title" />
+      </div>
       <slot />
     </div>
   </AtomicOverlay>

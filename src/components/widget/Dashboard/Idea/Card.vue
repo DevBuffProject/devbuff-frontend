@@ -10,11 +10,19 @@
             {{ dateString }}
           </div>
           <div class="flex items-center">
-            <div class="text-primary">{{ title }}</div>
+            <div class="text-primary">
+              {{ title }}
+            </div>
 
             <div class="flex items-center ml-4">
-              <ClockIcon v-if="waitingValidation" class="text-warning w-5" />
-              <CheckIcon v-else class="text-success w-5" />
+              <ClockIcon
+                v-if="waitingValidation"
+                class="text-warning w-5"
+              />
+              <CheckIcon
+                v-else
+                class="text-success w-5"
+              />
               <em
                 class="
                   ml-1
@@ -29,7 +37,9 @@
           </div>
         </div>
       </div>
-      <div class="mt-2">{{ description }}</div>
+      <div class="mt-2">
+        {{ description }}
+      </div>
     </div>
   </div>
 </template>

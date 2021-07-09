@@ -59,7 +59,10 @@
                 :class="state.formats[tool.format] && 'v-editor__tool--active'"
                 @click.stop.prevent="toggleInlineFormat(tool.format)"
               >
-                <v-icon :icon="tool.icon" class="v-editor__tool-icon" />
+                <v-icon
+                  :icon="tool.icon"
+                  class="v-editor__tool-icon"
+                />
               </div>
               <div
                 v-if="index + 1 < state.tools.list.inline.length"
@@ -80,7 +83,10 @@
                 :data-tool-name="`${tool.format}-${tool.value}`"
                 @click="lineFormat(tool.format, tool.value)"
               >
-                <v-icon :icon="tool.icon" class="v-editor__tool-icon" />
+                <v-icon
+                  :icon="tool.icon"
+                  class="v-editor__tool-icon"
+                />
               </div>
             </div>
 
@@ -94,7 +100,10 @@
                 :class="state.formats[tool.type] && 'v-editor__tool--active'"
                 @click="insertMedia(tool.type)"
               >
-                <v-icon :icon="tool.icon" class="v-editor__tool-icon" />
+                <v-icon
+                  :icon="tool.icon"
+                  class="v-editor__tool-icon"
+                />
               </div>
             </div>
 
@@ -106,7 +115,10 @@
                 :class="state.formats[tool.type] && 'v-editor__tool--active'"
                 activate-by-click
               >
-                <v-icon :icon="tool.icon" class="v-editor__tool-icon" />
+                <v-icon
+                  :icon="tool.icon"
+                  class="v-editor__tool-icon"
+                />
 
                 <template #tip="{ hide }">
                   <input
@@ -116,7 +128,7 @@
                     @keydown.enter.prevent.stop="
                       insertEmbed(tool.type, $event.target.value) || hide()
                     "
-                  />
+                  >
                 </template>
               </v-tooltip>
             </div>
@@ -136,13 +148,26 @@
         @keyup="state.historyMove = false"
       />
 
-      <input type="hidden" name="Текст" :value="state.text" @input="validate" />
-      <div v-if="errors.length" class="v-editor__error">
-        <v-icon :icon="['fas', 'exclamation']" class="v-editor__error-icon" />
+      <input
+        type="hidden"
+        name="Текст"
+        :value="state.text"
+        @input="validate"
+      >
+      <div
+        v-if="errors.length"
+        class="v-editor__error"
+      >
+        <v-icon
+          :icon="['fas', 'exclamation']"
+          class="v-editor__error-icon"
+        />
         <span>{{ errors[0] }}</span>
       </div>
 
-      <div class="text-xs py-3">{{ state.text.length }}/15000</div>
+      <div class="text-xs py-3">
+        {{ state.text.length }}/15000
+      </div>
     </div>
   </ValidationProvider>
 </template>

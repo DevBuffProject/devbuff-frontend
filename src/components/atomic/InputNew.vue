@@ -38,8 +38,14 @@
           @focus="onFocus"
         />
 
-        <div v-else class="flex flex-wrap items-stretch relative w-full">
-          <div class="flex" v-if="svgIconName">
+        <div
+          v-else
+          class="flex flex-wrap items-stretch relative w-full"
+        >
+          <div
+            class="flex"
+            v-if="svgIconName"
+          >
             <Svg
               class="
                 flex
@@ -83,7 +89,7 @@
             @input="handleChange"
             @blur="onBlur"
             @focus="onFocus"
-          />
+          >
         </div>
       </div>
     </label>
@@ -98,7 +104,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 import { defineComponent, ref } from 'vue'

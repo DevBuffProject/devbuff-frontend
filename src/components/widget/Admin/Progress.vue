@@ -1,7 +1,9 @@
 <template>
   <v-dialog>
     <atomic-loading-progress-bar :progress="progress" />
-    <div class="mt-4 opacity-50">{{ `${ids.length}/${done}` }}</div>
+    <div class="mt-4 opacity-50">
+      {{ `${ids.length}/${done}` }}
+    </div>
   </v-dialog>
 </template>
 

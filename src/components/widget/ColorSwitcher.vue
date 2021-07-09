@@ -6,8 +6,14 @@
     @keypress.enter="toggleDark"
     v-bind="attrs"
   >
-    <SunIcon class="w-[30px] h-[30px]" v-show="isLight" />
-    <MoonIcon class="w-[30px] h-[30px]" v-show="isDark" />
+    <SunIcon
+      class="w-[30px] h-[30px]"
+      v-show="isLight"
+    />
+    <MoonIcon
+      class="w-[30px] h-[30px]"
+      v-show="isDark"
+    />
   </div>
 </template>
 

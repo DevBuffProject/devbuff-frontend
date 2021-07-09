@@ -12,8 +12,16 @@
         />
 
         <div>
-          <a href="//vercel.com/" target="_blank" rel="nofollow">
-            <img src="/media/vercel-copy.svg" alt="powered by vercel" class="h-8" />
+          <a
+            href="//vercel.com/"
+            target="_blank"
+            rel="nofollow"
+          >
+            <img
+              src="/media/vercel-copy.svg"
+              alt="powered by vercel"
+              class="h-8"
+            >
           </a>
         </div>
       </div>

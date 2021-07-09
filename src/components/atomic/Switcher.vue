@@ -17,7 +17,7 @@
       v-for="(button, index) in values"
       :key="button.value"
       :ref="setItemRef"
-      class="py-2 px-5 cursor-pointer relative z-10 text-xs font-semibold"
+      class="py-1 px-5 cursor-pointer relative z-10 text-xs"
       :class="{
         'text-gray-500 dark:text-blueGray-500': activeIndex !== index,
         'text-black dark:text-blueGray-100': activeIndex === index,

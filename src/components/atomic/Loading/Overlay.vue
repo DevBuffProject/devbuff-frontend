@@ -8,16 +8,23 @@
     <div
       :class="[
         'py-3 px-7 rounded-xl shadow-md backdrop-filter backdrop-blur-[5px]',
-        'bg-black bg-opacity-80 dark:bg-blueGray-700 dark:bg-opacity-50',
+        'bg-black bg-opacity-60 dark:bg-blueGray-700 dark:bg-opacity-50',
       ]"
     >
-      <AtomicLoadingBar />
+      <Loading />
     </div>
   </div>
 </template>
 
 <script>
+import { onMounted } from 'vue'
+import Loading from './Bar.vue'
+
 export default {
   name: 'Overlay',
+  components: { Loading },
+  setup() {
+    onMounted(() => console.log('123'))
+  }
 }
 </script>

@@ -1,6 +1,9 @@
 <template>
   <div class="grid grid-cols-6 gap-6">
-    <div class="col-span-4" id="ideas">
+    <div
+      class="col-span-4"
+      id="ideas"
+    >
       <template v-if="!isLoading && ideas.length > 0">
         <WidgetIdeasCard
           v-for="(idea, index) of ideas"
@@ -30,7 +33,10 @@
           </template>
         </WidgetIdeasCard>
       </template>
-      <div v-else-if="isLoading" class="mt-20 flex items-center justify-center">
+      <div
+        v-else-if="isLoading"
+        class="mt-20 flex items-center justify-center"
+      >
         <AtomicLoadingLogo />
       </div>
       <template v-else>
@@ -52,8 +58,7 @@
             value: 'lastUpdate',
           },
         ]"
-      >
-      </AtomicSwitcher>
+      />
       <WidgetIdeasFilter v-model="filter" />
     </div>
   </div>

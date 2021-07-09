@@ -30,79 +30,20 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .3s var(--base-transition);
-}
-.fade-enter-from, .fade-leave-to {
-  opacity: 0;
-}
 
-.slide-enter-active, .slide-leave-active {
-  transition: all .3s var(--base-transition);
+
+.slide-up-enter-active, .slide-up-leave-active {
+  transition: opacity .2s ease, transform .3s ease;
 }
-.slide-enter-from {
+.slide-up-enter-from, .slide-up-leave-to {
   opacity: 0;
-  transform: translateY(-30%);
-}
-.slide-leave-to {
-  opacity: 0;
-  transform: translateY(20%);
+  transform: translateY(10px);
 }
 
 
 @supports (overflow: overlay) {
   html {
     overflow: overlay;
-  }
-}
-
-@layer utilities {
-  .gradientLaguna {
-    --tw-gradient-from: #007CF0;
-    --tw-gradient-to: #00DFD8;
-    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-  }
-  .text-gradient-laguna {
-    --tw-gradient-from: #007CF0;
-    --tw-gradient-to: #00DFD8;
-    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-    background: linear-gradient(var(--tw-gradient-stops));
-    color: var(--tw-gradient-from);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .gradientLuna {
-    --tw-gradient-from: #C781FF;
-    --tw-gradient-to: #3C72FF;
-    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-  }
-
-  .text-gradient-luna {
-    --tw-gradient-from: #C781FF;
-    --tw-gradient-to: #3C72FF;
-    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-    background: linear-gradient(var(--tw-gradient-stops));
-    color: var(--tw-gradient-from);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-
-  .gradientAutumn {
-    --tw-gradient-from: #FF4D4D;
-    --tw-gradient-to: #F9CB28;
-    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-  }
-
-  .text-gradient-autumn {
-    --tw-gradient-from: #FF4D4D;
-    --tw-gradient-to: #F9CB28;
-    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-    background: linear-gradient(var(--tw-gradient-stops));
-    color: var(--tw-gradient-from);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
   }
 }
 

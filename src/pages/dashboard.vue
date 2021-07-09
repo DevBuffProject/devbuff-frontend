@@ -16,12 +16,20 @@
             @click="changeIdea(idea.id)"
           />
         </div>
-        <div class="ml-4" v-else>{{ t('notFound') }}</div>
+        <div
+          class="ml-4"
+          v-else
+        >
+          {{ t('notFound') }}
+        </div>
       </AtomicCard>
     </div>
     <aside class="col-span-1">
       <AtomicLoadingSpinner v-if="isPendingLoading" />
-      <div v-if="inspectedIdea.id" class="col-span-3">
+      <div
+        v-if="inspectedIdea.id"
+        class="col-span-3"
+      >
         <RouterLink
           :to="{ name: 'idea-detail', params: { id: inspectedIdea.id } }"
           custom
@@ -36,7 +44,9 @@
             <h1 class="m-0">{{ inspectedIdea.name }}</h1>
           </a>
         </RouterLink>
-        <p class="mt-0 mb-6 opacity-50">{{ inspectedIdea.description }}</p>
+        <p class="mt-0 mb-6 opacity-50">
+          {{ inspectedIdea.description }}
+        </p>
         <AtomicCard class="mb-4">
           <div class="flex">
             <AtomicButton
@@ -70,7 +80,11 @@
               class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10"
               v-if="inspectedIdea.status !== 'PUBLISH'"
             />
-            <AtomicButton type="danger" is-depressed is-wide>
+            <AtomicButton
+              type="danger"
+              is-depressed
+              is-wide
+            >
               <div
                 class="flex flex-col items-center justify-center"
                 @click="deleteIdea(inspectedIdea.id)"
@@ -80,7 +94,11 @@
               </div>
             </AtomicButton>
             <i class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10" />
-            <AtomicButton type="primary" is-depressed is-wide>
+            <AtomicButton
+              type="primary"
+              is-depressed
+              is-wide
+            >
               <div class="flex flex-col items-center justify-center">
                 <EditIcon />
                 <span>{{ t('controls.edit') }}</span>
@@ -88,7 +106,9 @@
             </AtomicButton>
           </div>
         </AtomicCard>
-        <h3 class="mt-0">{{ t('responses') }}</h3>
+        <h3 class="mt-0">
+          {{ t('responses') }}
+        </h3>
         <div v-if="pendingUsers?.length > 0">
           <div
             v-for="{
@@ -115,7 +135,9 @@
           </div>
         </div>
         <AtomicCard v-else>
-          <div class="ml-4">{{ t('nonResponses') }}</div>
+          <div class="ml-4">
+            {{ t('nonResponses') }}
+          </div>
         </AtomicCard>
       </div>
     </aside>

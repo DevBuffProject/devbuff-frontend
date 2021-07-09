@@ -1,22 +1,24 @@
 <template>
-  <div class="relative" ref="container">
-    <div @click="isVisible ? hide() : show()">
-      <slot name="activator" v-bind="{ isVisible }" />
+  <div
+    class="relative"
+    ref="container"
+  >
+    <div @click="toggle">
+      <slot
+        name="activator"
+        v-bind="{ isVisible }"
+      />
     </div>
 
     <transition name="slide-up">
-      <div v-show="isVisible" class="absolute top-[100%] right-0 z-50">
+      <div
+        v-if="isVisible"
+        class="absolute top-[100%] right-0 z-50"
+      >
         <div ref="dropdown">
           <div
             class="
-              bg-white
-              border border-gray-200
-              p-4
-              -mt-px
-              z-50
-              rounded
-              shadow-xl
-            "
+              bg-white border border-gray-200 p-4 -mt-px z-50 rounded-md overflow-hidden shadow-2xl"
           >
             <slot />
           </div>
@@ -28,7 +30,6 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import { useElementTransform, useMotion } from '@vueuse/motion'
 import { onClickOutside, useMagicKeys, whenever } from '@vueuse/core'
 
 export default defineComponent({
@@ -41,16 +42,17 @@ export default defineComponent({
     const { escape } = useMagicKeys()
 
     const show = async () => {
-      emit('open')
+      if (!isVisible.value) emit('open')
       isVisible.value = true
     }
     const hide = async () => {
       if (isVisible.value) emit('close')
       isVisible.value = false
     }
+    const toggle = () => (isVisible.value ? hide() : show())
 
     whenever(escape, hide)
-    onClickOutside(dropdown, hide)
+    onClickOutside(container, hide)
 
     return {
       container,
@@ -58,6 +60,7 @@ export default defineComponent({
       isVisible,
       hide,
       show,
+      toggle,
     }
   },
 })

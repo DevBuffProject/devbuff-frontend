@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div v-if="isLoading" class="mt-20 flex items-center justify-center">
+    <div
+      v-if="isLoading"
+      class="mt-20 flex items-center justify-center"
+    >
       <AtomicLoadingLogo />
     </div>
     <fast-comments-vue-next

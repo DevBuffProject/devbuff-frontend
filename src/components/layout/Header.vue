@@ -1,12 +1,20 @@
 <template>
   <header
-    class="flex flex-col items-center bg-white dark:bg-blueGray-800"
+    class="flex flex-col items-center bg-white bg-opacity-80 dark:bg-opacity-80 backdrop-filter backdrop-blur-[10px] dark:bg-blueGray-800"
     style="box-shadow: 0 5px 8px #00098000, 0 5px 16px rgb(0 9 128 / 5%)"
   >
     <div class="container mx-auto flex">
       <div class="w-full flex items-center">
-        <RouterLink to="/" custom v-slot="{ href, navigate }">
-          <a :href="href" @click="navigate" v-focusable>
+        <RouterLink
+          to="/"
+          custom
+          v-slot="{ href, navigate }"
+        >
+          <a
+            :href="href"
+            @click="navigate"
+            v-focusable
+          >
             <AtomicLogo
               :src="`/images/logos/logo-${isDark ? 'light' : 'dark'}.svg`"
             />
@@ -27,7 +35,10 @@
           ]"
           v-if="isLoggedIn"
         >
-          <RouterLink v-slot="{ isActive }" to="/create">
+          <RouterLink
+            v-slot="{ isActive }"
+            to="/create"
+          >
             <AtomicButton
               :disabled="isActive"
               v-focusable.indexOnly="{ indexOnly: true }"

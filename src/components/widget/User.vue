@@ -1,5 +1,8 @@
 <template>
-  <div class="flex items-center" v-bind="attrs">
+  <div
+    class="flex items-center"
+    v-bind="attrs"
+  >
     <atomic-avatar
       v-if="avatar"
       :gradient-border="avatarGradientBorder"
@@ -7,7 +10,9 @@
       class="mr-2"
     />
     <div>
-      <div class="font-semibold">{{ firstname }} {{ lastname }}</div>
+      <div class="font-semibold">
+        {{ firstname }} {{ lastname }}
+      </div>
       <div class="text-xs text-gray-500 dark:text-blueGray-400">
         {{ `@${username}` }}
       </div>

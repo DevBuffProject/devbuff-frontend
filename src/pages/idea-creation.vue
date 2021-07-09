@@ -1,6 +1,8 @@
 <template>
   <div class="w-full grid grid-cols-12">
-    <h3 class="col-span-12">{{ t('header') }}</h3>
+    <h3 class="col-span-12">
+      {{ t('header') }}
+    </h3>
     <Form
       :validation-schema="schemas"
       @submit="onSubmit"
@@ -47,8 +49,10 @@
         <div class="col-span-12">
           <WidgetSpecialistPicker :data="data.specialists" />
         </div>
-        <AtomicButton class="col-start-11 col-span-2"
-          >{{ t('save') }}
+        <AtomicButton
+          class="col-start-11 col-span-2"
+        >
+          {{ t('save') }}
         </AtomicButton>
       </div>
     </Form>

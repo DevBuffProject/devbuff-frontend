@@ -14,7 +14,10 @@
     ]"
     v-bind="$attrs"
   >
-    <atomic-loading v-if="!ready" class="opacity-50" />
+    <atomic-loading
+      v-if="!ready"
+      class="opacity-50"
+    />
   </span>
 </template>
 

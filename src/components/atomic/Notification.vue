@@ -7,7 +7,10 @@
       `border-${type} text-${type} bg-${type}`,
     ]"
   >
-    <div v-if="icon" class="mr-4">
+    <div
+      v-if="icon"
+      class="mr-4"
+    >
       <component :is="icon" />
       <InformationIcon v-if="type === 'info'" />
       <CheckCircleIcon v-else-if="type === 'success'" />
@@ -17,7 +20,10 @@
     <div class="text-xl font-normal max-w-full text-yellow-700 flex-initial">
       <div :class="['py-2', `text-${type}`]">
         {{ message }}
-        <div class="text-sm font-base" v-if="description">
+        <div
+          class="text-sm font-base"
+          v-if="description"
+        >
           {{ description }}
         </div>
       </div>

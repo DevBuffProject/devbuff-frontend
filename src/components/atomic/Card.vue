@@ -9,7 +9,7 @@
       ]"
       v-bind="attrs"
     >
-      <template v-if="$slots.bottom || triangle"> </template>
+      <template v-if="$slots.bottom || triangle" />
       <div v-if="slots.header">
         <slot name="header" />
       </div>
@@ -18,7 +18,10 @@
         <slot />
       </div>
 
-      <div v-if="slots.footer || slots.controls" class="self-end -mb-4 py-2.5">
+      <div
+        v-if="slots.footer || slots.controls"
+        class="self-end -mb-4 py-2.5"
+      >
         <atomic-delimiter class="mb-2.5" />
         <div v-if="slots.footer">
           <slot name="footer" />
@@ -28,7 +31,10 @@
         </div>
       </div>
     </div>
-    <div v-if="slots.bottom" class="mt-2 ml-px pl-4">
+    <div
+      v-if="slots.bottom"
+      class="mt-2 ml-px pl-4"
+    >
       <slot name="bottom" />
     </div>
   </div>

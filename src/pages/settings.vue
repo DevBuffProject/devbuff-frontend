@@ -18,11 +18,19 @@
     />
   </div>
   <div class="w-full grid grid-cols-12">
-    <h3 class="col-span-12">User data</h3>
-    <AtomicForm :data="data" @submit="onSubmit" class="col-span-12" />
+    <h3 class="col-span-12">
+      User data
+    </h3>
+    <AtomicForm
+      :data="data"
+      @submit="onSubmit"
+      class="col-span-12"
+    />
   </div>
   <div class="grid grid-cols-12">
-    <h3 class="col-span-12">Skills settings</h3>
+    <h3 class="col-span-12">
+      Skills settings
+    </h3>
     <WidgetProfileSkills class="col-span-12 w-full h-auto" />
   </div>
 </template>

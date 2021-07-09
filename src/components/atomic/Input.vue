@@ -1,5 +1,8 @@
 <template>
-  <div class="inline-block w-full" ref="containerRef">
+  <div
+    class="inline-block w-full"
+    ref="containerRef"
+  >
     <label
       :class="[
         'block min-w-[200px] relative overflow-hidden group z-10',
@@ -20,15 +23,15 @@
           isMounted && 'transition-all',
           isPlaceholderOverflows
             ? [
-                'top-0 !ml-1 opacity-70 translate-y-0 text-xs',
-                'cursor-pointer text-black dark:text-blueGray-500',
-              ]
+              'top-0 !ml-1 opacity-70 translate-y-0 text-xs',
+              'cursor-pointer text-black dark:text-blueGray-500',
+            ]
             : [
-                'top-1/2 -translate-y-1/2 text-gray-600',
-                isFocused || modelValue
-                  ? 'opacity-30 dark:opacity-50'
-                  : 'opacity-70',
-              ],
+              'top-1/2 -translate-y-1/2 text-gray-600',
+              isFocused || modelValue
+                ? 'opacity-30 dark:opacity-50'
+                : 'opacity-70',
+            ],
         ]"
         :style="{
           marginLeft: `${textWidth + 10}px`,

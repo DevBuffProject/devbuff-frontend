@@ -1,15 +1,20 @@
 <template>
   <div class="h-screen flex flex-col">
-    <Header />
+    <div class="sticky top-0 z-50">
+      <Header />
+    </div>
     <div class="grid grid-cols-10 gap-8 container mx-auto mt-8">
       <Sidebar class="col-span-2" />
       <div class="col-span-8">
-        <router-view :route="mainRoute" v-slot="{ Component, route }">
+        <router-view
+          :route="mainRoute"
+          v-slot="{ Component, route }"
+        >
           <template v-if="Component">
             <suspense>
               <div class="h-full container">
                 <AtomicBreadcrumbs
-                  v-if="route.meta.breadcrumbs"
+                  v-if="route?.meta.breadcrumbs"
                   :items="breadcrumbs"
                 />
                 <h1>{{ route.meta.name }}</h1>
@@ -36,16 +41,18 @@
           :route="dialogRoute"
           v-slot="{ Component: Dialog }"
         >
-          <template v-if="Dialog">
-            <suspense>
-              <AtomicDialog :visible="true" @onClose="back">
-                <component :is="dialogRoute?.meta?.preview || Dialog" />
-              </AtomicDialog>
-              <template #fallback>
-                <AtomicLoadingOverlay :visible="true" />
-              </template>
-            </suspense>
-          </template>
+          <suspense v-if="Dialog">
+            <AtomicDialog
+              :visible="true"
+              @onClose="back"
+            >
+              <component :is="dialogRoute?.meta.preview || Dialog" />
+            </AtomicDialog>
+
+            <template #fallback>
+              <LoadingOverlay :visible="true" />
+            </template>
+          </suspense>
         </router-view>
       </div>
     </div>
@@ -64,6 +71,7 @@ import {
 } from 'vue'
 import { set, useTitle } from '@vueuse/core'
 import { useRouter } from 'vue-router'
+import LoadingOverlay from './components/atomic/Loading/Overlay.vue'
 
 export default defineComponent({
   components: {
@@ -73,6 +81,7 @@ export default defineComponent({
     Sidebar: defineAsyncComponent(() =>
       import('./components/layout/Sidebar.vue'),
     ),
+    LoadingOverlay,
   },
   setup() {
     useTitle('DefBuff')

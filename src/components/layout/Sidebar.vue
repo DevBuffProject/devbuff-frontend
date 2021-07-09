@@ -1,7 +1,12 @@
 <template>
   <aside>
     <nav>
-      <router-link v-if="isLoggedIn" to="/" custom v-slot="{ navigate }">
+      <router-link
+        v-if="isLoggedIn"
+        to="/"
+        custom
+        v-slot="{ navigate }"
+      >
         <div class="mb-8">
           <WidgetUser
             avatar-gradient-border
@@ -19,7 +24,9 @@
         v-if="!isLoggedIn"
         class="p-5 mb-5 bg-primary bg-opacity-10 rounded-xl"
       >
-        <h4 class="mt-0">{{ t('loginVia') }}</h4>
+        <h4 class="mt-0">
+          {{ t('loginVia') }}
+        </h4>
 
         <AtomicButton
           class="w-full mb-2 flex items-center justify-center"
@@ -42,11 +49,20 @@
             <span class="ml-2">GitLab</span>
           </div>
         </AtomicButton>
-        <div class="mt-0">{{ t('loginReason') }}</div>
+        <div class="mt-0">
+          {{ t('loginReason') }}
+        </div>
       </div>
 
-      <template v-for="link in nav" :key="link.title">
-        <router-link v-slot="{ href, navigate, isActive }" :to="link.to" custom>
+      <template
+        v-for="link in nav"
+        :key="link.title"
+      >
+        <router-link
+          v-slot="{ href, navigate, isActive }"
+          :to="link.to"
+          custom
+        >
           <a
             :href="href"
             :class="[
@@ -71,7 +87,10 @@
                   v-if="link.to === loadingRoute"
                   class="text-primary"
                 />
-                <component v-else :is="link.icon" />
+                <component
+                  v-else
+                  :is="link.icon"
+                />
               </div>
               <span class="text-md font-medium"> {{ link.title }} </span>
             </div>

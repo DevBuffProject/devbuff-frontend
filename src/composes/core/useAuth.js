@@ -56,6 +56,7 @@ const refresh = async () => {
 }
 const saveTokens = ({ expires_in, access_token, refresh_token }) => {
   if (!(access_token && refresh_token && expires_in)) return
+
   const now = new Date()
   const tokenExpires = new Date(
     new Date().setSeconds(now.getSeconds() + expires_in),

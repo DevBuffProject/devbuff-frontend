@@ -23,7 +23,11 @@
         />
       </clipPath>
       <linearGradient id="fill">
-        <stop offset="0.599964" stop-color="#ededed" stop-opacity="1">
+        <stop
+          offset="0.599964"
+          stop-color="#ededed"
+          stop-opacity="1"
+        >
           <animate
             attributeName="offset"
             values="-2; -2; 1"
@@ -32,7 +36,11 @@
             repeatCount="indefinite"
           />
         </stop>
-        <stop offset="1.59996" stop-color="#dbdbdb" stop-opacity="1">
+        <stop
+          offset="1.59996"
+          stop-color="#dbdbdb"
+          stop-opacity="1"
+        >
           <animate
             attributeName="offset"
             values="-1; -1; 2"
@@ -41,7 +49,11 @@
             repeatCount="indefinite"
           />
         </stop>
-        <stop offset="2.59996" stop-color="#ededed" stop-opacity="1">
+        <stop
+          offset="2.59996"
+          stop-color="#ededed"
+          stop-opacity="1"
+        >
           <animate
             attributeName="offset"
             values="0; 0; 3"

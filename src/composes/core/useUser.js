@@ -1,13 +1,13 @@
 import { useApi } from './useApi'
 import { ref } from 'vue'
 
-const { request, BASE_URL, error } = useApi()
-
 const user = ref({})
 const countUnreadNotifications = ref(0)
 const notifications = ref([])
 
 export const useUser = () => {
+  const { request, BASE_URL, ...rest } = useApi()
+
   const getUser = async (uuid = '') => {
     const response = await request(uuid ? `/profile/${uuid}` : '/profile')
     user.value = {
@@ -78,5 +78,6 @@ export const useUser = () => {
     getCountUnreadNotifications,
     getNotifications,
     uploadUserImage,
+    ...rest,
   }
 }

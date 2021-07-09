@@ -1,7 +1,11 @@
 <template>
   <AtomicLoadingSpinner v-if="statusConfirmation === 'PENDING'" />
-  <h3 v-if="statusConfirmation === 'SUCCESS'">{{ t('onSuccess') }}</h3>
-  <h3 v-if="statusConfirmation === 'ERROR'">{{ t('onError') }}</h3>
+  <h3 v-if="statusConfirmation === 'SUCCESS'">
+    {{ t('onSuccess') }}
+  </h3>
+  <h3 v-if="statusConfirmation === 'ERROR'">
+    {{ t('onError') }}
+  </h3>
 </template>
 <script>
 import { defineComponent, watch, ref } from 'vue'

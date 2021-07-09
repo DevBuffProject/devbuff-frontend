@@ -1,7 +1,10 @@
 <template>
   <div class="relative">
     <AtomicCard class="relative">
-      <div v-if="!linked" class="text-primary text-lg block font-medium">
+      <div
+        v-if="!linked"
+        class="text-primary text-lg block font-medium"
+      >
         {{ title }}
       </div>
       <RouterLink

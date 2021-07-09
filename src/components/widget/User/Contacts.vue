@@ -18,7 +18,10 @@
           <span v-else>{{ contact }}</span>
         </span>
         <span class="text-gray-400 dark:text-blueGray-500">
-          <i class="mx-1" v-text="'—'" />
+          <i
+            class="mx-1"
+            v-text="'—'"
+          />
           {{ contactName }}
         </span>
       </div>

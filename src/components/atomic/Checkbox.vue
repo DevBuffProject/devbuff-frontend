@@ -5,7 +5,10 @@
     </div>
   </template>
   <template v-else>
-    <div @click="onChange" @keypress.enter="onChange">
+    <div
+      @click="onChange"
+      @keypress.enter="onChange"
+    >
       <slot v-bind="{ isChecked, isIntermedia }" />
     </div>
   </template>

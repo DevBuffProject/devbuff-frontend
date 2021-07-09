@@ -1,10 +1,9 @@
 <template>
   <button
-    :class="[
-      `
+    class="
         px-6 overflow-hidden rounded relative inline-block text-center
-        transition-all border focus:ring focus:outline-none
-      `,
+        transition-all border focus:ring focus:outline-none"
+    :class="[
       colorType === 'primary' &&
         'bg-primary hover:bg-primary-400 active:bg-primary-600 hover:border-primary-400 active:border-primary-600 border-primary ring-primary-300',
       colorType === 'success' &&
@@ -14,10 +13,7 @@
       colorType === 'danger' &&
         'bg-danger hover:bg-danger-400 active:bg-danger-600 hover:border-danger-400 active:border-danger-600 border-danger ring-danger-300',
       isDepressed &&
-        `
-          bg-opacity-10 border-opacity-0 hover:bg-opacity-20 hover:border-opacity-20
-          active:bg-opacity-30 active:border-opacity-30
-        `,
+        `bg-opacity-10 border-opacity-0 hover:bg-opacity-20 hover:border-opacity-20 active:bg-opacity-30 active:border-opacity-30`,
       isSmall ? 'py-0.5' : 'py-1.5',
     ]"
     v-bind="$attrs"
@@ -35,7 +31,10 @@
         isSmall && 'text-sm',
       ]"
     >
-      <span v-if="slots.icon" class="mr-2">
+      <span
+        v-if="slots.icon"
+        class="mr-2"
+      >
         <slot name="icon" />
       </span>
       <span

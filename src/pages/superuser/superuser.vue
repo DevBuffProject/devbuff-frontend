@@ -1,6 +1,10 @@
 <template>
   <div class="flex">
-    <RouterLink to="/su/approve" custom v-slot="{ navigate }">
+    <RouterLink
+      to="/su/approve"
+      custom
+      v-slot="{ navigate }"
+    >
       <AtomicCard @click="navigate">
         <div class="flex items-center">
           <ShieldIcon

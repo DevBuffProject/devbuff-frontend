@@ -4,7 +4,10 @@
       <h2 class="text-primary">
         {{ name }}
       </h2>
-      <atomic-chip type="muted" :text="positionsCount" />
+      <atomic-chip
+        type="muted"
+        :text="positionsCount"
+      />
     </div>
 
     <atomic-label
@@ -21,7 +24,10 @@
       />
     </atomic-label>
 
-    <atomic-label v-if="technologies.length" :name="$t('page.ideas.view.team.technologies')">
+    <atomic-label
+      v-if="technologies.length"
+      :name="$t('page.ideas.view.team.technologies')"
+    >
       <atomic-chip
         v-for="framework in technologies"
         :key="framework"

@@ -1,7 +1,14 @@
 <template>
-  <div class="group" v-bind="attrs" @click="update">
+  <div
+    class="group"
+    v-bind="attrs"
+    @click="update"
+  >
     <div v-if="!slots.default">
-      <input type="checkbox" :checked="isChecked" />
+      <input
+        type="checkbox"
+        :checked="isChecked"
+      >
       <span> {{ label }} </span>
     </div>
     <slot />
