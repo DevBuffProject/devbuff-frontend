@@ -2,12 +2,8 @@
   <div>
     <h1>{{ idea.name }}</h1>
     <div class="flex flex-wrap items-start my-5">
-      <RouterLink
-        to="/"
-        custom
-        v-slot="{ navigate }"
-      >
-        <div class="mr-6 mb-4">
+      <RouterLink to="/" custom v-slot="{ navigate }">
+        <div class="mb-4 mr-6">
           <WidgetUser
             avatar-gradient-border
             :avatar="getUserProfileUrl(idea.ownerIdea.id)"
@@ -19,24 +15,18 @@
           />
         </div>
       </RouterLink>
-      <AtomicLabel
-        :name="t('info.date')"
-        class="mt-0 mx-4 mb-4"
-      >
+      <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">
         {{ publishedAgo }}
       </AtomicLabel>
 
-      <AtomicLabel
-        :name="t('info.status.title')"
-        class="mt-0 mx-4 mb-4"
-      >
+      <AtomicLabel :name="t('info.status.title')" class="mb-4 mt-0 mx-4">
         {{ t(`info.status.${idea.status}`) }}
       </AtomicLabel>
 
       <AtomicLabel
         v-if="isOwnerIdea"
         :name="t('info.moderationStatus.title')"
-        class="mt-0 mx-4 mb-4"
+        class="mb-4 mt-0 mx-4"
       >
         {{
           idea.waitingValidation
@@ -47,10 +37,7 @@
     </div>
     <div class="">
       <AtomicCard class="mb-3">
-        <div
-          v-html="idea.text"
-          class="overflow-hidden"
-        />
+        <div v-html="idea.text" class="overflow-hidden" />
       </AtomicCard>
 
       <RouterLink
@@ -58,14 +45,8 @@
         custom
         v-slot="{ href, navigate }"
       >
-        <a
-          :href="href"
-          @click="navigate"
-        >
-          <AtomicButton
-            is-depressed
-            class="py-4 mt-6 w-full"
-          >
+        <a :href="href" @click="navigate">
+          <AtomicButton is-depressed class="mt-6 py-4 w-full">
             <div class="flex items-center">
               <span class="mr-2">{{ t(`more`) }}</span>
               <ArrowRightIcon />
