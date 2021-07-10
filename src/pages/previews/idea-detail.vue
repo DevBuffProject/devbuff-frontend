@@ -16,16 +16,16 @@
             />
           </div>
         </RouterLink>
-        <AtomicLabel :name="t('info.date')" class="mt-0 mx-4 mb-4">
+        <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">
           {{ publishedAgo }}
         </AtomicLabel>
-        <AtomicLabel :name="t('info.status.title')" class="mt-0 mx-4 mb-4">
+        <AtomicLabel :name="t('info.status.title')" class="mb-4 mt-0 mx-4">
           {{ t(`info.status.${idea.status}`) }}
         </AtomicLabel>
         <AtomicLabel
           v-if="isOwnerIdea"
           :name="t('info.moderationStatus.title')"
-          class="mt-0 mx-4 mb-4"
+          class="mb-4 mt-0 mx-4"
         >
           {{
             idea.waitingValidation
@@ -52,8 +52,8 @@
             flex
             items-center
             justify-end
-            py-6
             -mb-8
+            py-6
             text-primary
             hover:underline
           "
