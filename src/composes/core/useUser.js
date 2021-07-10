@@ -6,7 +6,7 @@ const countUnreadNotifications = ref(0)
 const notifications = ref([])
 
 export const useUser = () => {
-  const { request, BASE_URL, ...rest } = useApi()
+  const { request, BASE_URL, error, ...rest } = useApi()
 
   const getUser = async (uuid = '') => {
     const response = await request(uuid ? `/profile/${uuid}` : '/profile')
@@ -35,8 +35,9 @@ export const useUser = () => {
 
   const confirmEmail = async (token) => {
     const response = await request(`/notification/email/confirm?token=${token}`)
+    
     if (error.value?.response?.status !== undefined)
-      throw new Error("Can't confirm email")
+      throw new Error('Can\'t confirm email')
 
     return response
   }
