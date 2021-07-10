@@ -1,20 +1,20 @@
 <template>
   <header
-    class="flex flex-col items-center bg-white bg-opacity-80 dark:bg-opacity-80 backdrop-filter backdrop-blur-[10px] dark:bg-blueGray-800"
+    class="
+      backdrop-blur-[10px]
+      flex flex-col
+      items-center
+      dark:bg-blueGray-800
+      bg-white bg-opacity-80
+      dark:bg-opacity-80
+      backdrop-filter
+    "
     style="box-shadow: 0 5px 8px #00098000, 0 5px 16px rgb(0 9 128 / 5%)"
   >
-    <div class="container mx-auto flex">
-      <div class="w-full flex items-center">
-        <RouterLink
-          to="/"
-          custom
-          v-slot="{ href, navigate }"
-        >
-          <a
-            :href="href"
-            @click="navigate"
-            v-focusable
-          >
+    <div class="container flex mx-auto">
+      <div class="flex items-center w-full">
+        <RouterLink to="/" custom v-slot="{ href, navigate }">
+          <a :href="href" @click="navigate" v-focusable>
             <AtomicLogo
               :src="`/images/logos/logo-${isDark ? 'light' : 'dark'}.svg`"
             />
@@ -25,7 +25,7 @@
         <div v-if="isLoggedIn">
           <WidgetUserNotification />
         </div>
-        <div class="flex items-center pr-6 ml-6">
+        <div class="flex items-center ml-6 pr-6">
           <WidgetColorSwitcher v-focusable />
         </div>
         <nav
@@ -35,10 +35,7 @@
           ]"
           v-if="isLoggedIn"
         >
-          <RouterLink
-            v-slot="{ isActive }"
-            to="/create"
-          >
+          <RouterLink v-slot="{ isActive }" to="/create">
             <AtomicButton
               :disabled="isActive"
               v-focusable.indexOnly="{ indexOnly: true }"

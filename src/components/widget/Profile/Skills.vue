@@ -25,7 +25,7 @@
                 class="mr-2"
                 @change="onChangeSkill(skill)"
               >
-              <div>{{ t(`languages.${skill.name}`, skill.name) }}</div>
+              <div>{{ tDefault(`commons.languages.${skill.name}`, skill.name, true) }}</div>
             </label>
             <div
               v-if="skill.specializations.length"
@@ -69,9 +69,7 @@
                 @change="onChangeSkill(specialist)"
               >
               <div>
-                {{
-                  t(`specializations.${specialist.name}.title`, specialist.name)
-                }}
+                {{ t(`commons.specialist.${specialist.name}`, true) }}
               </div>
             </label>
             <div
@@ -132,6 +130,7 @@ import { useSkills, useUser } from '../../../composes/core'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { ChevronRightIcon, ChevronLeftIcon } from '@iconicicons/vue3'
 import 'swiper/swiper.scss'
+import { useI18n } from '../../../composes/utils'
 
 export default defineComponent({
   name: 'WidgetProfileSkills',
@@ -140,6 +139,7 @@ export default defineComponent({
     SwiperSlide,
   },
   async setup() {
+    const { t, tDefault } = useI18n('components.widget.profile.skills')
     const { user, saveUserSkills } = useUser()
     const { getSkills } = useSkills()
     const swiper = ref()
@@ -295,10 +295,6 @@ export default defineComponent({
       saveUserSkills(skillsData)
     }
 
-    function t(str, fallbackStr) {
-      return fallbackStr
-    }
-
     const onSwiper = (swiperComponent) => (swiper.value = swiperComponent)
 
     return {
@@ -313,6 +309,7 @@ export default defineComponent({
       prevSlide,
       save,
       t,
+      tDefault,
       onSwiper,
     }
   },
