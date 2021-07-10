@@ -7,6 +7,10 @@ module.exports = {
   purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}', './index.html'],
   darkMode: 'class',
   theme: {
+    fontFamily: {
+      sans: ['Rubik', 'sans-serif'],
+      serif: ['Merriweather', 'serif'],
+    },
     colors: {
       transparent: 'transparent',
       white: colors.white,
@@ -26,14 +30,13 @@ module.exports = {
         800: '#161b22',
         900: '#0d1117',
       },
-      muted: colors.gray[500],
       primary: {
         DEFAULT: colors.lightBlue['500'],
         ...colors.lightBlue,
       },
       secondary: {
-        DEFAULT: colors.yellow['500'],
-        ...colors.yellow,
+        DEFAULT: colors.violet['500'],
+        ...colors.violet,
       },
       success: {
         DEFAULT: colors.green['500'],

@@ -6,10 +6,7 @@
     <div class="grid grid-cols-10 gap-8 container mx-auto mt-8">
       <Sidebar class="col-span-2" />
       <div class="col-span-8">
-        <router-view
-          :route="mainRoute"
-          v-slot="{ Component, route }"
-        >
+        <router-view :route="mainRoute" v-slot="{ Component, route }">
           <template v-if="Component">
             <suspense>
               <div class="h-full container">
@@ -42,10 +39,7 @@
           v-slot="{ Component: Dialog }"
         >
           <suspense v-if="Dialog">
-            <AtomicDialog
-              :visible="true"
-              @onClose="back"
-            >
+            <AtomicDialog :visible="true" @onClose="back">
               <component :is="dialogRoute?.meta.preview || Dialog" />
             </AtomicDialog>
 

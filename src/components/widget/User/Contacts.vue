@@ -6,7 +6,7 @@
       class="mb-2"
     >
       <div class="mb-2 flex items-center">
-        <!--        <svg-icon :name="`social/brand-${contactName}`" />-->
+        <svg :name="contactName" />
         <span class="ml-2">
           <a
             v-if="hrefs[contactName]"
@@ -18,10 +18,7 @@
           <span v-else>{{ contact }}</span>
         </span>
         <span class="text-gray-400 dark:text-blueGray-500">
-          <i
-            class="mx-1"
-            v-text="'—'"
-          />
+          <i class="mx-1" v-text="'—'" />
           {{ contactName }}
         </span>
       </div>

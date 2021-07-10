@@ -1,47 +1,25 @@
 <template>
   <div class="grid grid-cols-6 gap-6">
-    <div
-      class="col-span-4"
-      id="ideas"
-    >
-      <template v-if="!isLoading && ideas.length > 0">
+    <div class="col-span-4" id="ideas">
+      <div v-if="!isLoading && ideas.length > 0" class="grid grid-cols-2 gap-4">
         <WidgetIdeasCard
           v-for="(idea, index) of ideas"
           :key="idea.id"
-          :linked="isLoggedIn"
           :id="idea.id"
-          :title="idea.name"
-          :date="idea.publishDate || idea.datePublished"
-          :description="idea.description"
-          :specialists="idea.specialists"
+          :idea="idea"
           v-motion
           :initial="{ opacity: 0, y: -20, scale: 0.95 }"
           :enter="{ opacity: 1, y: 0, scale: 1 }"
           :delay="100 * index"
-        >
-          <template #user>
-            <div class="flex items-center mt-3 mb-6">
-              <AtomicAvatar
-                class="mr-3"
-                size="24px"
-                :avatar="getUserProfileUrl(idea.ownerIdea.id)"
-              />
-              <div class="mt-px">
-                {{ idea.ownerIdea.firstName }} {{ idea.ownerIdea.lastName }}
-              </div>
-            </div>
-          </template>
-        </WidgetIdeasCard>
-      </template>
-      <div
-        v-else-if="isLoading"
-        class="mt-20 flex items-center justify-center"
-      >
+          class="mb-6"
+        />
+      </div>
+
+      <div v-else-if="isLoading" class="mt-20 flex items-center justify-center">
         <AtomicLoadingLogo />
       </div>
-      <template v-else>
-        <span class="text-2xl">{{ t('notFound') }}</span>
-      </template>
+
+      <span v-else class="text-2xl">{{ t('notFound') }}</span>
     </div>
 
     <div class="col-span-2">
@@ -90,7 +68,6 @@ export default defineComponent({
     const router = useRouter()
     const { main: route } = inject('route')
     const { isLoading, ideas, getIdeas } = useIdeas()
-    const { getUserProfileUrl } = useUser()
     const { t } = useI18n('pages.explore')
     const { isLoggedIn } = useAuth()
     const specialists = filterQueryReactive('specialists')
@@ -104,7 +81,7 @@ export default defineComponent({
 
     watch(filter, throttledGetIdeas)
 
-    return { t, ideas, filter, isLoading, getUserProfileUrl, isLoggedIn }
+    return { t, ideas, filter, isLoading, isLoggedIn }
   },
 })
 </script>

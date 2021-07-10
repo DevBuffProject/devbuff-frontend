@@ -9,7 +9,7 @@
       ref="elementRefHighlight"
       :class="[
         'absolute z-0 top-0 left-0 h-full rounded-full transition-all shadow',
-        'bg-gray-50 dark:bg-blueGray-600 dark:text-white bg-opacity-50 text-black',
+        'bg-white dark:bg-blueGray-600 dark:text-white bg-opacity-50 text-black',
         'border border-gray-100 dark:border-blueGray-700',
       ]"
     />

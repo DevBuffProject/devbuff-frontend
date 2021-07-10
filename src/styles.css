@@ -6,12 +6,16 @@
 @import '../node_modules/tailwindcss/components.css';
 @import '../node_modules/tailwindcss/utilities.css';
 @import '../node_modules/tailwindcss/screens.css';
-
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
 
-:root {
-  --font-family: 'Rubik';
-  --base-transition: cubic-bezier(.28, .98, .44, 1);
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    @apply w-2 h-2;
+    @apply transition-all;
+  }
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-white dark:bg-opacity-10 rounded-full opacity-0;
+  }
 }
 
 * {
@@ -20,20 +24,17 @@
 
 body {
   @apply text-gray-900 dark:text-blueGray-100 bg-gray-50 dark:bg-blueGray-900 bg-opacity-90;
-  margin: 0;
   user-select: none;
-  font-family: var(--font-family);
-  font-size: 15px;
-  line-height: 1.2;
-  font-weight: 400;
-  font-variant: no-common-ligatures slashed-zero;
-  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
 }
 
-
+svg {
+  width: 1.75em;
+  height: 1.75em;
+}
 
 .slide-up-enter-active, .slide-up-leave-active {
-  transition: opacity .2s ease, transform .3s ease;
+  transition: opacity .2s ease, transform .2s ease;
 }
 .slide-up-enter-from, .slide-up-leave-to {
   opacity: 0;

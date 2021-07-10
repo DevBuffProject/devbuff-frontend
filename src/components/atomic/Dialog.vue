@@ -1,9 +1,5 @@
 <template>
-  <AtomicOverlay
-    to="body"
-    :visible="visible"
-    @onClose="onClose"
-  >
+  <AtomicOverlay to="body" :visible="visible" @onClose="onClose">
     <div
       ref="windowRef"
       class="
@@ -16,14 +12,11 @@
         z-50
         bg-white
         dark:bg-blueGray-700
-        shadow-xl
-        rounded-md
+        shadow-2xl
+        rounded-xl
       "
     >
-      <h1
-        v-if="title"
-        class="mt-0"
-      >
+      <h1 v-if="title" class="mt-0">
         {{ title }}
       </h1>
       <div v-else-if="slots.title">

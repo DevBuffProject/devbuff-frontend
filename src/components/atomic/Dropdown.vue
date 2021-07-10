@@ -1,24 +1,23 @@
 <template>
-  <div
-    class="relative"
-    ref="container"
-  >
+  <div class="relative" ref="container">
     <div @click="toggle">
-      <slot
-        name="activator"
-        v-bind="{ isVisible }"
-      />
+      <slot name="activator" v-bind="{ isVisible }" />
     </div>
 
     <transition name="slide-up">
-      <div
-        v-if="isVisible"
-        class="absolute top-[100%] right-0 z-50"
-      >
-        <div ref="dropdown">
+      <div v-if="isVisible" class="absolute top-[100%] -right-2 z-50">
+        <div ref="dropdown" class="relative">
           <div
             class="
-              bg-white border border-gray-200 p-4 -mt-px z-50 rounded-md overflow-hidden shadow-2xl"
+              bg-white
+              dark:bg-blueGray-800
+              p-4
+              -mt-px
+              z-50
+              rounded-xl
+              overflow-hidden
+            "
+            style="box-shadow: 0 20px 50px 0 rgb(0 0 0 / 20%)"
           >
             <slot />
           </div>

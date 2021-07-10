@@ -38,14 +38,7 @@
         </div>
 
         <template #fallback>
-          <div
-            :class="[
-              'py-3 px-7 rounded-xl shadow-md backdrop-filter backdrop-blur-[5px]',
-              'bg-black bg-opacity-80 dark:bg-blueGray-700 dark:bg-opacity-50',
-            ]"
-          >
-            <AtomicLoadingBar />
-          </div>
+          <AtomicLoadingOverlay />
         </template>
       </suspense>
     </div>
@@ -79,7 +72,9 @@ export default defineComponent({
       window.removeEventListener('keyup', onEscapeClose)
     })
 
-    return { onClose }
+    return {
+      onClose,
+    }
   },
 })
 </script>

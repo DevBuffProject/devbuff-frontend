@@ -1,12 +1,7 @@
 <template>
   <aside>
     <nav>
-      <router-link
-        v-if="isLoggedIn"
-        to="/"
-        custom
-        v-slot="{ navigate }"
-      >
+      <router-link v-if="isLoggedIn" to="/" custom v-slot="{ navigate }">
         <div class="mb-8">
           <WidgetUser
             avatar-gradient-border
@@ -54,15 +49,8 @@
         </div>
       </div>
 
-      <template
-        v-for="link in nav"
-        :key="link.title"
-      >
-        <router-link
-          v-slot="{ href, navigate, isActive }"
-          :to="link.to"
-          custom
-        >
+      <template v-for="link in nav" :key="link.title">
+        <router-link :to="link.to" custom v-slot="{ href, navigate, isActive }">
           <a
             :href="href"
             :class="[
@@ -74,9 +62,9 @@
           >
             <div
               :class="[
-                'flex items-center pr-4 pl-3 py-2 rounded-full transition-colors',
-                'group-focus:bg-primary group-focus:text-primary group-focus:bg-opacity-10',
-                'group-hover:bg-primary group-hover:text-primary group-hover:bg-opacity-10 group-active:bg-opacity-20',
+                'flex items-center pr-4 pl-3 py-1.5 rounded-full transition-colors',
+                'group-focus:bg-primary-400 group-focus:text-primary group-focus:bg-opacity-10',
+                'group-hover:bg-primary-400 group-hover:text-primary group-hover:bg-opacity-10 group-active:bg-opacity-20',
                 link.activeState !== false && isActive
                   ? 'text-primary'
                   : 'text-gray-900 dark:text-blueGray-300',
@@ -87,10 +75,7 @@
                   v-if="link.to === loadingRoute"
                   class="text-primary"
                 />
-                <component
-                  v-else
-                  :is="link.icon"
-                />
+                <component v-else :is="link.icon" />
               </div>
               <span class="text-md font-medium"> {{ link.title }} </span>
             </div>
@@ -101,7 +86,7 @@
         <AtomicDelimiter class="mx-10 my-4" />
         <div
           :class="[
-            'flex items-center rounded-full px-4 py-2 mb-2 cursor-pointer transition-all',
+            'flex items-center rounded-full px-4 py-1 mb-2 cursor-pointer transition-all',
             'hover:bg-danger text-danger hover:bg-opacity-10 focus:bg-danger focus:bg-opacity-10',
           ]"
           v-focusable.indexOnly

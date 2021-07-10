@@ -1,22 +1,34 @@
 <template>
   <button
     class="
-        px-6 overflow-hidden rounded relative inline-block text-center
-        transition-all border focus:ring focus:outline-none"
+      px-6
+      overflow-hidden
+      rounded-md
+      relative
+      inline-block
+      text-center
+      transition-all
+      border
+      focus:ring
+      focus:outline-none
+    "
     :class="[
-      colorType === 'primary' &&
-        'bg-primary hover:bg-primary-400 active:bg-primary-600 hover:border-primary-400 active:border-primary-600 border-primary ring-primary-300',
-      colorType === 'success' &&
-        'bg-success hover:bg-success-400 active:bg-success-600 hover:border-success-400 active:border-success-600 border-success ring-success-300',
-      colorType === 'warning' &&
-        'bg-warning hover:bg-warning-400 active:bg-warning-600 hover:border-warning-400 active:border-warning-600 border-warning ring-warning-300',
-      colorType === 'danger' &&
-        'bg-danger hover:bg-danger-400 active:bg-danger-600 hover:border-danger-400 active:border-danger-600 border-danger ring-danger-300',
-      isDepressed &&
-        `bg-opacity-10 border-opacity-0 hover:bg-opacity-20 hover:border-opacity-20 active:bg-opacity-30 active:border-opacity-30`,
-      isSmall ? 'py-0.5' : 'py-1.5',
+      {
+        'bg-primary hover:bg-primary-400 active:bg-primary-600 hover:border-primary-400 active:border-primary-600 border-primary ring-primary-300':
+          colorType === 'primary',
+        'bg-success hover:bg-success-400 active:bg-success-600 hover:border-success-400 active:border-success-600 border-success ring-success-300':
+          colorType === 'success',
+        'bg-warning hover:bg-warning-400 active:bg-warning-600 hover:border-warning-400 active:border-warning-600 border-warning ring-warning-300':
+          colorType === 'warning',
+        'bg-danger hover:bg-danger-400 active:bg-danger-600 hover:border-danger-400 active:border-danger-600 border-danger ring-danger-300':
+          colorType === 'danger',
+        'bg-opacity-10 border-opacity-0 hover:bg-opacity-20 hover:border-opacity-0 active:bg-opacity-30 active:border-opacity-0 focus:ring-opacity-30':
+          isDepressed,
+        'py-1': isSmall,
+        'py-1.5': !isSmall,
+      },
     ]"
-    v-bind="$attrs"
+    v-bind="attrs"
   >
     <span
       :class="[
@@ -31,16 +43,13 @@
         isSmall && 'text-sm',
       ]"
     >
-      <span
-        v-if="slots.icon"
-        class="mr-2"
-      >
+      <span v-if="slots.icon" class="mr-2">
         <slot name="icon" />
       </span>
       <span
         v-if="slots.default"
         :class="[
-          'font-normal whitespace-nowrap',
+          'font-semibold whitespace-nowrap',
           loading && 'invisible relative',
         ]"
       >
@@ -68,7 +77,7 @@
 </template>
 
 <script>
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, useContext } from 'vue'
 
 const types = ['muted', 'primary', 'success', 'warning', 'danger']
 const defaultType = 'muted'
@@ -106,14 +115,15 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props, ctx) {
+  setup(props) {
+    const { attrs, slots } = useContext()
     const isMuted = computed(() => props.type === 'muted')
     const isTypeSupports = computed(() => types.includes(props.type))
     const colorType = computed(() =>
       isTypeSupports.value ? props.type : defaultType,
     )
 
-    return { isMuted, isTypeSupports, colorType, ...ctx }
+    return { attrs, slots, isMuted, isTypeSupports, colorType }
   },
 })
 </script>

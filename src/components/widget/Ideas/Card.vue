@@ -1,15 +1,20 @@
 <template>
   <div class="relative">
     <AtomicCard class="relative">
-      <div
-        v-if="!linked"
-        class="text-primary text-lg block font-medium"
-      >
-        {{ title }}
+      <div class="flex items-center mb-3">
+        <AtomicAvatar
+          class="mr-2"
+          size="30px"
+          :avatar="getUserProfileUrl(idea.ownerIdea.id)"
+        />
+        <div class="mt-px text-xs">
+          {{ idea.ownerIdea.firstName }} {{ idea.ownerIdea.lastName }}
+          <div class="opacity-50">@{{ idea.ownerIdea.userName }}</div>
+        </div>
       </div>
+
       <RouterLink
-        v-else
-        :to="{ name: 'idea-detail', params: { id, _isDialog: true } }"
+        :to="{ name: 'idea-detail', params: { id: idea.id, _isDialog: true } }"
         custom
         v-slot="{ href, navigate }"
       >
@@ -17,24 +22,24 @@
           :href="href"
           @click="navigate"
           v-focusable
-          class="font-semibold inline-block"
+          class="font-semibold text-lg inline-block"
         >
-          {{ title }}
+          {{ idea.name }}
         </a>
       </RouterLink>
 
       <div class="mt-2 text-sm text-gray-500 leading-5">
-        {{ description }}
+        {{ idea.description }}
       </div>
 
       <AtomicLabel
-        v-if="specialists.length"
+        v-if="idea.specialists.length"
         :name="t('detail.specialist')"
         class="mt-4"
       >
         <div class="flex flex-wrap">
           <AtomicChip
-            v-for="(spec, index) in specialists"
+            v-for="(spec, index) in idea.specialists"
             :key="'spec' + spec.name + index"
             :text="t(`commons.specialist.${spec.name}`, true)"
             class="mr-2 mb-2"
@@ -73,76 +78,44 @@
         </div>
       </AtomicLabel>
     </AtomicCard>
-
-    <div class="ml-4">
-      <div class="-mt-1">
-        <AtomicTriangle direction="bottom" />
-      </div>
-      <slot name="user" />
-    </div>
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import { useI18n } from '../../../composes/utils'
+import { useUser } from '../../../composes/core'
 
 export default defineComponent({
   name: 'WidgetIdeasCard',
   props: {
-    date: {
-      type: String,
-      default: '',
-    },
-    linked: {
-      type: Boolean,
-      default: true,
-    },
-    id: {
-      type: String,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    specialists: {
-      type: Array,
-      default: () => [],
+    idea: {
+      type: Object,
+      default: () => ({}),
     },
   },
   setup(props, context) {
     const { t, tDefault } = useI18n('components.widget.ideas.card')
     const { slots } = context
+    const { getUserProfileUrl } = useUser()
 
-    const languages = props.specialists
-      .flatMap((specialist) => {
-        return specialist.languages.map((language) => {
-          return language.name
-        })
-      })
-      .filter((item, index, array) => {
-        return array.indexOf(item) === index
-      })
-    const technologies = props.specialists
-      .flatMap((specialist) => {
-        return specialist.languages.flatMap((languages) => {
-          return languages.technologies.map((technology) => {
-            return technology.name
-          })
-        })
-      })
-      .filter((item, index, array) => {
-        return array.indexOf(item) === index
-      })
+    const languages = props.idea.specialists
+      .flatMap((specialist) =>
+        specialist.languages.map((language) => language.name),
+      )
+      .filter((item, index, array) => array.indexOf(item) === index)
+    const technologies = props.idea.specialists
+      .flatMap((specialist) =>
+        specialist.languages.flatMap((languages) =>
+          languages.technologies.map((technology) => technology.name),
+        ),
+      )
+      .filter((item, index, array) => array.indexOf(item) === index)
 
     return {
       t,
       tDefault,
+      getUserProfileUrl,
       slots,
       languages,
       technologies,

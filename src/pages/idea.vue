@@ -2,12 +2,8 @@
   <div>
     <h1>{{ idea.name }}</h1>
     <div class="flex flex-wrap items-start my-5">
-      <RouterLink
-        to="/"
-        custom
-        v-slot="{ navigate }"
-      >
-        <div class="mr-6 mb-4">
+      <RouterLink to="/" custom v-slot="{ navigate }">
+        <div class="mb-4 mr-6">
           <WidgetUser
             avatar-gradient-border
             :avatar="getUserProfileUrl(idea.ownerIdea.id)"
@@ -19,24 +15,18 @@
           />
         </div>
       </RouterLink>
-      <AtomicLabel
-        :name="t('info.date')"
-        class="mt-0 mx-4 mb-4"
-      >
+      <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">
         {{ publishedAgo }}
       </AtomicLabel>
 
-      <AtomicLabel
-        :name="t('info.status.title')"
-        class="mt-0 mx-4 mb-4"
-      >
+      <AtomicLabel :name="t('info.status.title')" class="mb-4 mt-0 mx-4">
         {{ t(`info.status.${idea.status}`) }}
       </AtomicLabel>
 
       <AtomicLabel
         v-if="isOwnerIdea"
         :name="t('info.moderationStatus.title')"
-        class="mt-0 mx-4 mb-4"
+        class="mb-4 mt-0 mx-4"
       >
         {{
           idea.waitingValidation
@@ -46,49 +36,40 @@
       </AtomicLabel>
     </div>
     <div class="grid gap-6 grid-cols-6">
-      <AtomicCard class="mb-3 col-span-4">
-        <div
-          v-html="idea.text"
-          class="overflow-hidden"
-        />
+      <AtomicCard class="col-span-4 mb-3">
+        <div v-html="idea.text" class="overflow-hidden" />
       </AtomicCard>
 
       <div class="col-span-2">
-        <div class="mb-6 flex items-center" v-if="isOwnerIdea">
+        <div class="flex items-center mb-6" v-if="isOwnerIdea">
           <span class="opacity-50">вы создатель</span>
           <AtomicActions>
             <template #activator>
-              <div class="text-primary flex items-center ml-2">
+              <div class="flex items-center ml-2 text-primary">
                 Быстрое управление
                 <ChevronDownIcon />
               </div>
             </template>
-
-            <div class="text-xs flex flex-col items-start">
-              <AtomicAction type="danger">
+            <div class="flex flex-col items-start -mx-4 text-xs">
+              <AtomicAction type="danger" class="w-full">
                 <template #icon>
                   <StopIcon />
                 </template>
                 Stop company
               </AtomicAction>
-              <AtomicAction
-                type="danger"
-                class="my-2"
-              >
+
+              <AtomicAction type="danger" class="w-full">
                 <template #icon>
                   <TrashIcon />
                 </template>
                 Delete idea
               </AtomicAction>
-
               <RouterLink
+                class="w-full"
                 :to="{ name: 'idea-edit', params: { id: idea.id } }"
                 v-slot="{ href, navigate }"
               >
-                <AtomicAction
-                  :href="href"
-                  @click="navigate"
-                >
+                <AtomicAction :href="href" @click="navigate">
                   <template #icon>
                     <EditIcon />
                   </template>
@@ -100,16 +81,16 @@
         </div>
 
         <AtomicCard>
-          <h4 class="mt-0 mb-0 text-sm font-normal opacity-30">
+          <h4 class="mb-0 mt-0 text-sm font-normal opacity-30">
             {{ t('positions.title') }} - {{ idea.specialist.length }}
           </h4>
-          <div class="divide-y divide-gray-200 dark:divide-blueGray-700">
+          <div class="dark:divide-blueGray-700 divide-gray-200 divide-y">
             <div
               class="-mx-4 mt-3 px-4 py-3"
               v-for="specialist in idea.specialist"
               :key="specialist.id"
             >
-              <h5 class="mb-4 m-0 font-normal">
+              <h5 class="m-0 mb-4 font-normal">
                 {{ t(`commons.specialist.${specialist.name}`, true) }}
               </h5>
               <AtomicLabel
@@ -153,20 +134,19 @@
                 :name="t('positions.titleAcceptedUsers')"
                 class="mt-4"
               >
-
                 <div class="flex flex-wrap">
-                  <span class="text-xs" v-for="(acceptedUser, key) of specialist.acceptedUsers"
-                        :key="`acceptedUser`+key"
+                  <span
+                    class="text-xs"
+                    v-for="(acceptedUser, key) of specialist.acceptedUsers"
+                    :key="`acceptedUser` + key"
                   >
-                    {{ acceptedUser.firstName }} {{ acceptedUser.lastName }} (@{{ acceptedUser.userName }})
+                    {{ acceptedUser.firstName }}
+                    {{ acceptedUser.lastName }} (@{{ acceptedUser.userName }})
                   </span>
                 </div>
               </AtomicLabel>
 
-              <div
-                v-if="!isOwnerIdea"
-                class="mt-6"
-              >
+              <div v-if="!isOwnerIdea" class="mt-6">
                 <AtomicButton
                   v-if="getStatusAtPosition(specialist.id) === 'NONE'"
                   @click="send(specialist.id)"
@@ -178,8 +158,8 @@
                 <div
                   v-else
                   class="
-                    w-full
                     py-2
+                    w-full
                     text-center text-gray-400
                     bg-gray-100
                     rounded
@@ -195,10 +175,7 @@
         </AtomicCard>
       </div>
       <div class="col-span-4">
-        <WidgetCommentsFast
-          :id="`idea-${idea.id}`"
-          :sso="ssoData"
-        />
+        <WidgetCommentsFast :id="`idea-${idea.id}`" :sso="ssoData" />
       </div>
     </div>
   </div>

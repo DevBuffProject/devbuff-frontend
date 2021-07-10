@@ -1,32 +1,25 @@
 <template>
-  <button>
-    <div
-      class="inline-flex items-center cursor-pointer group transition-colors"
-      v-focusable.indexOnly
-    >
+  <button
+    class="hover:bg-gray-100 focus:bg-gray-100 transition-colors"
+    v-focusable.indexOnly
+  >
+    <div class="py-2 px-6 flex items-center cursor-pointer transition-colors">
       <div
+        class="bg-opacity-[.15]"
         :class="[
           {
-            'text-primary bg-primary': type === 'primary',
-            'text-secondary bg-secondary': type === 'secondary',
-            'text-warning bg-warning': type === 'warning',
-            'text-danger bg-danger': type === 'danger',
-            'text-success bg-success': type === 'success',
-            'bg-gray-500': type === 'muted',
+            'rounded-md': rounded,
+            'text-primary': type === 'primary',
+            'text-secondary': type === 'secondary',
+            'text-warning': type === 'warning',
+            'text-danger ': type === 'danger',
+            'text-success': type === 'success',
           },
-          `
-            bg-opacity-[.15] rounded-full p-1
-            group-hover:bg-opacity-20 group-active:bg-opacity-30
-            transform group-active:scale-90
-          `,
         ]"
       >
         <slot name="icon" />
       </div>
-      <div
-        v-if="slots.default"
-        :class="slots.icon && slots.default && 'ml-2'"
-      >
+      <div v-if="slots.default" :class="slots.icon && slots.default && 'ml-1'">
         <slot />
       </div>
     </div>
@@ -47,9 +40,14 @@ export default defineComponent({
       default: 'muted',
       validate: (v) => types.includes(v),
     },
+    rounded: {
+      type: Boolean,
+      default: true,
+    },
   },
   setup() {
     const { attrs, slots } = useContext()
+
     return {
       attrs,
       slots,
