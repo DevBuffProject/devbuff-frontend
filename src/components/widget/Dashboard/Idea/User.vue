@@ -12,6 +12,7 @@
         class="text-sm flex flex-col"
       >
         <AtomicButton
+          v-if="!isApproved"
           type="success"
           is-small
           is-outline
@@ -41,8 +42,7 @@
 
 <script>
 import { useUser, useIdea } from '../../../../composes/core'
-
-import { tryOnUnmounted } from '@vueuse/core'
+import { ref } from 'vue'
 import { useI18n } from '../../../../composes/utils'
 
 const rooElement = window.document.documentElement
@@ -101,14 +101,15 @@ export default {
   setup() {
     const { t } = useI18n('components.widget.dashboard.idea.user')
     const { approveUser } = useIdea()
-
+    const isApproved = ref(false)
     const approveUserToIdea = (uuidIdea, uuidSpecialisation, uuidUser) => {
+      isApproved.value = true
       approveUser(uuidIdea, uuidSpecialisation, uuidUser)
-      //TODO unmount component
     }
 
     return {
       t,
+      isApproved,
       approveUserToIdea,
     }
   },

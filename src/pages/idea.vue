@@ -54,16 +54,17 @@
       </AtomicCard>
 
       <div class="col-span-2">
-        <div class="mb-6 flex items-center">
+        <div class="mb-6 flex items-center" v-if="isOwnerIdea">
           <span class="opacity-50">вы создатель</span>
           <AtomicActions>
             <template #activator>
               <div class="text-primary flex items-center ml-2">
-                Быстрое управление <ChevronDownIcon />
+                Быстрое управление
+                <ChevronDownIcon />
               </div>
             </template>
 
-            <div class="text-xs flex flex-col">
+            <div class="text-xs flex flex-col items-start">
               <AtomicAction type="danger">
                 <template #icon>
                   <StopIcon />
@@ -79,12 +80,21 @@
                 </template>
                 Delete idea
               </AtomicAction>
-              <AtomicAction>
-                <template #icon>
-                  <EditIcon />
-                </template>
-                Edit idea
-              </AtomicAction>
+
+              <RouterLink
+                :to="{ name: 'idea-edit', params: { id: idea.id } }"
+                v-slot="{ href, navigate }"
+              >
+                <AtomicAction
+                  :href="href"
+                  @click="navigate"
+                >
+                  <template #icon>
+                    <EditIcon />
+                  </template>
+                  Edit idea
+                </AtomicAction>
+              </RouterLink>
             </div>
           </AtomicActions>
         </div>
@@ -138,6 +148,21 @@
                 </div>
               </AtomicLabel>
 
+              <AtomicLabel
+                v-if="specialist.acceptedUsers.length > 0"
+                :name="t('positions.titleAcceptedUsers')"
+                class="mt-4"
+              >
+
+                <div class="flex flex-wrap">
+                  <span class="text-xs" v-for="(acceptedUser, key) of specialist.acceptedUsers"
+                        :key="`acceptedUser`+key"
+                  >
+                    {{ acceptedUser.firstName }} {{ acceptedUser.lastName }} (@{{ acceptedUser.userName }})
+                  </span>
+                </div>
+              </AtomicLabel>
+
               <div
                 v-if="!isOwnerIdea"
                 class="mt-6"
@@ -170,9 +195,6 @@
         </AtomicCard>
       </div>
       <div class="col-span-4">
-        <AtomicButton is-depressed>
-          depressed
-        </AtomicButton>
         <WidgetCommentsFast
           :id="`idea-${idea.id}`"
           :sso="ssoData"

@@ -58,6 +58,7 @@
         title: "Позиции",
         titleLanguages: "Стэк языков",
         titleTechnologies: "Стэк технологий",
+        titleAcceptedUsers: 'Уже в команде',
         status: {
           NONE: "Откликнуться",
           PENDING: "Заявка отправлена",
