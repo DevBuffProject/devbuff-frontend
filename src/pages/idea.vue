@@ -2,11 +2,7 @@
   <div>
     <h1>{{ idea.name }}</h1>
     <div class="flex flex-wrap items-start my-5">
-      <RouterLink
-        to="/"
-        custom
-        v-slot="{ navigate }"
-      >
+      <RouterLink to="/" custom v-slot="{ navigate }">
         <div class="mr-6 mb-4">
           <WidgetUser
             avatar-gradient-border
@@ -19,17 +15,11 @@
           />
         </div>
       </RouterLink>
-      <AtomicLabel
-        :name="t('info.date')"
-        class="mt-0 mx-4 mb-4"
-      >
+      <AtomicLabel :name="t('info.date')" class="mt-0 mx-4 mb-4">
         {{ publishedAgo }}
       </AtomicLabel>
 
-      <AtomicLabel
-        :name="t('info.status.title')"
-        class="mt-0 mx-4 mb-4"
-      >
+      <AtomicLabel :name="t('info.status.title')" class="mt-0 mx-4 mb-4">
         {{ t(`info.status.${idea.status}`) }}
       </AtomicLabel>
 
@@ -47,10 +37,7 @@
     </div>
     <div class="grid gap-6 grid-cols-6">
       <AtomicCard class="mb-3 col-span-4">
-        <div
-          v-html="idea.text"
-          class="overflow-hidden"
-        />
+        <div v-html="idea.text" class="overflow-hidden" />
       </AtomicCard>
 
       <div class="col-span-2">
@@ -63,23 +50,22 @@
               </div>
             </template>
 
-            <div class="text-xs flex flex-col">
-              <AtomicAction type="danger">
+            <div class="text-xs flex flex-col items-start -mx-4">
+              <AtomicAction type="danger" class="w-full">
                 <template #icon>
                   <StopIcon />
                 </template>
                 Stop company
               </AtomicAction>
-              <AtomicAction
-                type="danger"
-                class="my-2"
-              >
+
+              <AtomicAction type="danger" class="w-full">
                 <template #icon>
                   <TrashIcon />
                 </template>
                 Delete idea
               </AtomicAction>
-              <AtomicAction>
+
+              <AtomicAction class="w-full">
                 <template #icon>
                   <EditIcon />
                 </template>
@@ -138,10 +124,7 @@
                 </div>
               </AtomicLabel>
 
-              <div
-                v-if="!isOwnerIdea"
-                class="mt-6"
-              >
+              <div v-if="!isOwnerIdea" class="mt-6">
                 <AtomicButton
                   v-if="getStatusAtPosition(specialist.id) === 'NONE'"
                   @click="send(specialist.id)"
@@ -170,13 +153,8 @@
         </AtomicCard>
       </div>
       <div class="col-span-4">
-        <AtomicButton is-depressed>
-          depressed
-        </AtomicButton>
-        <WidgetCommentsFast
-          :id="`idea-${idea.id}`"
-          :sso="ssoData"
-        />
+        <AtomicButton is-depressed> depressed </AtomicButton>
+        <WidgetCommentsFast :id="`idea-${idea.id}`" :sso="ssoData" />
       </div>
     </div>
   </div>

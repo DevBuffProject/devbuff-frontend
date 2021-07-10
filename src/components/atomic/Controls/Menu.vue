@@ -1,5 +1,8 @@
 <template>
-  <div class="relative" ref="container">
+  <div
+    class="relative"
+    ref="container"
+  >
     <div @click="isVisible ? hide() : show()">
       <slot name="activator" />
     </div>
@@ -13,13 +16,13 @@
         z-50
         p-2
         -m-2
-        rounded-lg
+        rounded-xl
         overflow-hidden
         bg-white
       "
       style="box-shadow: 0 3px 25px -2px rgba(0, 0, 0, 0.2)"
     >
-      <div class="p-2 -m-2 mb-2 bg-gray-200 bg-opacity-50">
+      <div class="p-2 -m-2 mb-2 bg-gray-200 bg-opacity-40">
         <slot name="activator" />
       </div>
 

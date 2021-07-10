@@ -1,56 +1,43 @@
 <template>
   <div>
     <h1>{{ idea.name }}</h1>
-    <div class="flex flex-wrap items-start my-5">
-      <RouterLink
-        to="/"
-        custom
-        v-slot="{ navigate }"
-      >
-        <div class="mr-6 mb-4">
-          <WidgetUser
-            avatar-gradient-border
-            :avatar="getUserProfileUrl(idea.ownerIdea.id)"
-            :firstname="idea.ownerIdea.firstName"
-            :lastname="idea.ownerIdea.lastName"
-            :username="idea.ownerIdea.userName"
-            @click="navigate"
-            v-focusable
-          />
-        </div>
-      </RouterLink>
-      <AtomicLabel
-        :name="t('info.date')"
-        class="mt-0 mx-4 mb-4"
-      >
-        {{ publishedAgo }}
-      </AtomicLabel>
-
-      <AtomicLabel
-        :name="t('info.status.title')"
-        class="mt-0 mx-4 mb-4"
-      >
-        {{ t(`info.status.${idea.status}`) }}
-      </AtomicLabel>
-
-      <AtomicLabel
-        v-if="isOwnerIdea"
-        :name="t('info.moderationStatus.title')"
-        class="mt-0 mx-4 mb-4"
-      >
-        {{
-          idea.waitingValidation
-            ? t('info.moderationStatus.waiting')
-            : t('info.moderationStatus.approved')
-        }}
-      </AtomicLabel>
+    <div class="mb-4 px-2">
+      <div class="flex flex-wrap items-start">
+        <RouterLink to="/" custom v-slot="{ navigate }">
+          <div class="mr-6">
+            <WidgetUser
+              avatar-gradient-border
+              :avatar="getUserProfileUrl(idea.ownerIdea.id)"
+              :firstname="idea.ownerIdea.firstName"
+              :lastname="idea.ownerIdea.lastName"
+              :username="idea.ownerIdea.userName"
+              @click="navigate"
+              v-focusable
+            />
+          </div>
+        </RouterLink>
+        <AtomicLabel :name="t('info.date')" class="mt-0 mx-4 mb-4">
+          {{ publishedAgo }}
+        </AtomicLabel>
+        <AtomicLabel :name="t('info.status.title')" class="mt-0 mx-4 mb-4">
+          {{ t(`info.status.${idea.status}`) }}
+        </AtomicLabel>
+        <AtomicLabel
+          v-if="isOwnerIdea"
+          :name="t('info.moderationStatus.title')"
+          class="mt-0 mx-4 mb-4"
+        >
+          {{
+            idea.waitingValidation
+              ? t('info.moderationStatus.waiting')
+              : t('info.moderationStatus.approved')
+          }}
+        </AtomicLabel>
+      </div>
     </div>
     <div class="">
-      <AtomicCard class="mb-3">
-        <div
-          v-html="idea.text"
-          class="overflow-hidden"
-        />
+      <AtomicCard class="">
+        <div v-html="idea.text" class="overflow-hidden" />
       </AtomicCard>
 
       <RouterLink
@@ -61,16 +48,18 @@
         <a
           :href="href"
           @click="navigate"
+          class="
+            flex
+            items-center
+            justify-end
+            py-6
+            -mb-8
+            text-primary
+            hover:underline
+          "
         >
-          <AtomicButton
-            is-depressed
-            class="py-4 mt-6 w-full"
-          >
-            <div class="flex items-center">
-              <span class="mr-2">{{ t(`more`) }}</span>
-              <ArrowRightIcon />
-            </div>
-          </AtomicButton>
+          <span class="mr-2">{{ t(`more`) }}</span>
+          <ArrowRightIcon />
         </a>
       </RouterLink>
     </div>

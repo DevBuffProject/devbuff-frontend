@@ -1,16 +1,24 @@
 <template>
-  <AtomicDropdown
-    @close="onClose"
-    @open="onOpen"
-  >
+  <AtomicDropdown @open="onOpen">
     <template #activator="{ isVisible }">
       <div
         role="button"
-        class="py-4 px-4 hover:bg-gray-100 group transition-opacity"
-        :class="{ 'bg-gray-100 opacity-100': isVisible }"
+        class="
+          hover:bg-gray-100
+          dark:hover:bg-blueGray-900
+          py-4
+          px-4
+          group
+          transition-opacity
+        "
+        :class="{
+          'bg-gray-100 dark:bg-blueGray-900 text-primary': isVisible,
+        }"
       >
         <AtomicBadge
-          :value="countUnreadNotifications > 0 && countUnreadNotifications"
+          :value="
+            countUnreadNotifications > 0 ? countUnreadNotifications : null
+          "
         >
           <BellIcon
             class="w-[30px] h-[30px] opacity-70 group-hover:opacity-100"
@@ -21,125 +29,113 @@
     </template>
 
     <div class="-m-4">
-      <div class="py-2 px-6 border-b">
+      <div class="py-3 px-6 border-b border-gray-200 dark:border-blueGray-900">
         Уведомления
       </div>
-
       <div
-        class="overflow-y-auto w-[400px] h-[300px]"
+        class="overflow-y-auto w-[400px] h-[400px] scrollbar"
         ref="container"
       >
         <div
-          v-if="isLoading"
+          v-if="isLoading && !notifications"
           class="h-full w-full flex items-center justify-center"
         >
           <AtomicLoadingSpinner class="text-primary" />
         </div>
 
-        <div
-          v-else-if="notifications"
-          class="divide-y dark:border-blueGray-700"
-        >
-          <div
-            v-for="(notification, index) of notifications"
-            :key="index"
-            class="hover:bg-gray-50 text-sm flex px-4 py-2 min-h-[50px]"
-            :class="{ 'bg-primary-50': !notification.read }"
-          >
-            <div class="mr-4 flex items-center justify-center">
-              <UserPlusIcon
-                v-if="notification.type === 'USER_PENDING'"
-                class="p-1 w-[30px] h-[30px] bg-gray-200 rounded-full"
-              />
-              <MailIcon
-                v-if="notification.type === 'CONFIRM_EMAIL'"
-                class="
-                p-1
-                w-[30px]
-                h-[30px]
-                bg-primary-100
-                text-primary
-                rounded-full
-              "
-              />
-              <UserCheckIcon
-                v-if="notification.type === 'IDEA_APPROVED'"
-                class="
-                p-1
-                w-[30px]
-                h-[30px]
-                bg-success-100
-                text-success
-                rounded-full
-              "
-              />
-            </div>
-
+        <AtomicList v-if="notifications">
+          <div v-for="(notify, index) of notifications" :key="index">
             <RouterLink
-              v-if="notification.type === 'USER_PENDING'"
+              v-if="notify.type === 'USER_PENDING'"
               :to="{
                 name: 'dashboard',
-                query: { ideaId: notification.data.ideaId },
+                query: { ideaId: notify.data.ideaId },
               }"
               custom
               v-slot="{ navigate }"
             >
-              <div
-                class="group block cursor-pointer"
+              <AtomicCardNotification
+                :date="timeAgo(notify.dateCreation)"
+                type="primary"
                 @click="navigate"
+                class="cursor-pointer"
+                :class="{ 'bg-primary-100 bg-opacity-50': !notify.read }"
               >
+                <template #icon>
+                  <UserPlusIcon />
+                </template>
+
                 У вас новый кандидат в команду
                 <em class="text-primary-700 group-hover:underline">
-                  {{ notification.data.ideaName }}
+                  {{ notify.data.ideaName }}
                 </em>
-              </div>
+              </AtomicCardNotification>
             </RouterLink>
-            <div v-if="notification.type === 'CONFIRM_EMAIL'">
-              Мы отправили вам письмо для подтверждения
-            </div>
+
             <RouterLink
-              v-if="notification.type === 'IDEA_APPROVED'"
+              v-if="notify.type === 'IDEA_APPROVED'"
               :to="{
                 name: 'idea-detail',
-                params: { id: notification.data.ideaId, _isDialog: true },
+                params: { id: notify.data.ideaId, _isDialog: true },
               }"
               custom
               v-slot="{ navigate }"
             >
-              <div
-                class="group cursor-pointer"
+              <AtomicCardNotification
+                :date="timeAgo(notify.dateCreation)"
+                type="success"
+                class="cursor-pointer"
+                :class="{ 'bg-primary-100 bg-opacity': !notify.read }"
                 @click="navigate"
               >
+                <template #icon>
+                  <CheckIcon />
+                </template>
+
                 Ваша идея
                 <em class="text-primary-600 group-hover:underline">
-                  {{ notification.data.ideaName }} </em>, была одобрена
-              </div>
+                  {{ notify.data.ideaName }}
+                </em>
+                {{ ', ' }} была одобрена
+              </AtomicCardNotification>
             </RouterLink>
+
+            <AtomicCardNotification
+              v-if="notify.type === 'CONFIRM_EMAIL'"
+              :date="timeAgo(notify.dateCreation)"
+              :class="{ 'bg-primary-100 bg-opacity': !notify.read }"
+            >
+              <template #icon>
+                <MailIcon />
+              </template>
+
+              Мы отправили вам письмо для подтверждения
+            </AtomicCardNotification>
           </div>
 
           <div
-            class="
-            text-primary text-center
-            hover:underline hover:bg-primary-100 hover:bg-opacity-20
-            cursor-pointer
-            py-4
-          "
+            v-if="!endOfNotifications"
+            class="text-primary text-center hover:underline cursor-pointer py-4"
             @click="more"
           >
             Еще
           </div>
-        </div>
+          <div v-else class="text-center py-4">
+            <span class="text-2xl mr-2">🤷</span>
+            <span class="opacity-50"> Это пока все </span>
+          </div>
+        </AtomicList>
 
         <div
           v-else
           class="
-          col-start-2 col-span-3
-          flex
-          items-center
-          justify-center
-          w-full
-          p-4
-        "
+            col-start-2 col-span-3
+            flex
+            items-center
+            justify-center
+            w-full
+            p-4
+          "
         >
           У вас нет уведомлений
         </div>
@@ -151,6 +147,7 @@
 <script>
 import { defineComponent, ref, onBeforeUnmount } from 'vue'
 import { useUser } from '../../../composes/core'
+import { useTimeAgo } from '@vueuse/core'
 
 export default defineComponent({
   name: 'WidgetUserNotification',
@@ -163,15 +160,23 @@ export default defineComponent({
       isLoading,
     } = useUser()
     const container = ref()
+    const endOfNotifications = ref(false)
     let currentPage = 1
 
-    const onOpen = async () => await getNotifications(1)
-    const onClose = () => (notifications.value = [])
+    const onOpen = async () => {
+      if (!notifications.value.length) {
+        await getNotifications(1)
+        currentPage = 1
+      }
+    }
     const more = async () => {
       const scrollTop = container.value.scrollTop
-      await getNotifications(++currentPage)
+      const { data } = await getNotifications(++currentPage)
       container.value.scrollTop = scrollTop
+
+      if (data.notifications.length < 10) endOfNotifications.value = true
     }
+    const timeAgo = (time) => useTimeAgo(new Date(time)).value
 
     getCountUnreadNotifications()
 
@@ -184,9 +189,10 @@ export default defineComponent({
       notifications,
       container,
       currentPage,
+      endOfNotifications,
       more,
       onOpen,
-      onClose,
+      timeAgo,
     }
   },
 })

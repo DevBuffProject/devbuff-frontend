@@ -16,6 +16,7 @@
         'rotate-[180deg]': direction === 'top',
       },
     ]"
+    v-bind="attrs"
   >
     <em
       :class="[
@@ -27,7 +28,6 @@
       ]"
     />
     <em
-      v-bind="attrs"
       :class="[
         'block w-[0px] h-[0px] border-solid relative',
         'border border-[11px] !border-b-0 border-white dark:border-blueGray-900',

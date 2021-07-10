@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="relative rounded-full overflow-hidden border border-secondary p-0.5"
-  >
+  <div class="relative rounded-full overflow-hidden p-0.5">
     <div
       :key="random"
       class="
@@ -11,9 +9,6 @@
         justify-center
         rounded-full
         bg-white
-        dark:bg-blueGray-900
-        border border-gray-200
-        dark:border-blueGray-800
         h-full
         w-full,
         relative
