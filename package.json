@@ -5,7 +5,15 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore . --fix"
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore . --fix",
+    "lint-staged": "lint-staged",
+    "prepare": "husky install",
+    "postinstall": "husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
+  },
+  "lint-staged": {
+    "*.{js,vue}": "eslint"
   },
   "dependencies": {
     "@iconicicons/vue3": "^1.5.0",
@@ -45,7 +53,9 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier-vue": "^3.0.0",
     "eslint-plugin-vue": "^7.9.0",
-    "husky": "^7.0.1",
+    "husky": "^7.0.0",
+    "lint-staged": "^11.0.0",
+    "pinst": ">=2",
     "postcss": "^8.2.15",
     "prettier": "^2.3.2",
     "prettier-plugin-tailwind": "^2.2.12",
