@@ -3,8 +3,7 @@
     class="
       border-t border-gray-200
       bg-white
-      dark:bg-blueGray-800
-      dark:border-blueGray-700
+      dark:bg-blueGray-800 dark:border-blueGray-700
       py-4
     "
   >

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, useContext } from 'vue'
+import { computed, defineComponent, useAttrs, useSlots } from 'vue'
 
 export default defineComponent({
   name: 'AtomicCheckbox',
@@ -40,7 +40,8 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const { attrs, slots } = useContext()
+    const attrs = useAttrs()
+    const slots = useSlots()
     const isChecked = computed(() =>
       Array.isArray(props.modelValue)
         ? props.modelValue.includes(props.value)

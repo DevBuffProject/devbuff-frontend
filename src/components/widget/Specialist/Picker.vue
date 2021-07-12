@@ -1,15 +1,56 @@
 <template>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <h5>{{ t('title') }}</h5>
 
   <input type="hidden" :name="name" :id="name" :value="inputValue" />
-  <div class="flex justify-center mb-2 pt-1 w-full text-danger text-xs">
+  <div class="flex justify-center mb-2 pt-1 w-full text-danger-500 text-xs">
     <span class="mt-px">{{ errorMessage }}</span>
   </div>
   <div class="grid gap-2 grid-cols-12">
     <div
       :class="[
         'col-span-3 bg-white border border-gray-300 border-opacity-30 dark:border-blueGray-700 dark:bg-blueGray-900 p-4 rounded-xl relative',
-        errorMessage && '!border-danger !ring-danger-200 dark:!ring-danger-900',
+        errorMessage &&
+          '!border-danger-500 !ring-danger-200 dark:!ring-danger-900',
       ]"
       v-for="(specialist, index) of specializations"
       :key="specialist + index"
@@ -169,6 +210,46 @@
       </li>
     </ul>
   </transition-group>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </template>
 
 <script>

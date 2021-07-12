@@ -19,7 +19,6 @@
       </div>
 
       <div v-if="slots.footer || slots.controls" class="self-end -mb-4 py-2.5">
-        <atomic-delimiter class="mb-2.5" />
         <div v-if="slots.footer">
           <slot name="footer" />
         </div>
@@ -41,7 +40,7 @@
 </style>
 
 <script>
-import { defineComponent, useContext, useCssModule } from 'vue'
+import { defineComponent, useAttrs, useCssModule, useSlots } from 'vue'
 import { useAppearance } from '../../composes/utils'
 
 export default defineComponent({
@@ -54,7 +53,8 @@ export default defineComponent({
   },
   setup() {
     const styles = useCssModule()
-    const { attrs, slots } = useContext()
+    const attrs = useAttrs()
+    const slots = useSlots()
     const { isDark } = useAppearance()
 
     return {

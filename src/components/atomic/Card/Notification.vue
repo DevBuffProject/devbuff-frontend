@@ -16,11 +16,11 @@
     <div
       class="bg-opacity-[.15] rounded-full p-1 text-xs"
       :class="{
-        'text-primary bg-primary': type === 'primary',
-        'text-secondary bg-secondary': type === 'secondary',
+        'text-primary-500 bg-primary-500': type === 'primary',
+        'text-secondary-500 bg-secondary-500': type === 'secondary',
         'text-warning bg-warning': type === 'warning',
-        'text-danger bg-danger': type === 'danger',
-        'text-success bg-success': type === 'success',
+        'text-danger-500 bg-danger-500': type === 'danger',
+        'text-success-500 bg-success-500': type === 'success',
         'bg-gray-500': type === 'muted',
       }"
     >
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { defineComponent, useContext } from 'vue'
+import { defineComponent, useAttrs } from 'vue'
 
 export default defineComponent({
   name: 'AtomicCardNotification',
@@ -50,7 +50,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const { attrs } = useContext()
+    const attrs = useAttrs()
 
     return { attrs }
   },

@@ -9,7 +9,7 @@
     <div
       :class="[
         {
-          'border-danger': errors.length,
+          'border-danger-500': errors.length,
           'border-gray-200 dark:border-blueGray-700': errors.length === 0,
         },
         'p-4 pb-0 rounded-lg border bg-white dark:bg-blueGray-800',
@@ -58,7 +58,7 @@
           :class="[
             {
               'border-gray-200 dark:border-blueGray-700': errors.length === 0,
-              'border-danger border-t-gray-200': errors.length,
+              'border-danger-500 border-t-gray-200': errors.length,
             },
             'rounded-lg rounded-t-none border border-t-0 -mt-px bg-gray-100 dark:bg-blueGray-900 pb-2 px-4',
           ]"
@@ -389,7 +389,7 @@ export default {
 <style lang="scss" scoped>
 .v-editor {
   &__error {
-    @apply text-danger;
+    @apply text-danger-500;
   }
 
   &__shadow-input {
@@ -412,7 +412,7 @@ export default {
   }
 
   &__history-control {
-    @apply py-2 px-3 my-1 cursor-pointer transition-colors flex text-gray-900 dark:text-blueGray-400 hover:text-primary;
+    @apply py-2 px-3 my-1 cursor-pointer transition-colors flex text-gray-900 dark:text-blueGray-400 hover:text-primary-500;
   }
 
   &__history-control:first-of-type {
@@ -421,7 +421,7 @@ export default {
 
   &__history-control:active,
   &__history-control--active {
-    @apply text-primary #{!important};
+    @apply text-primary-500 #{!important};
   }
 
   &__toolbar {
@@ -483,7 +483,7 @@ export default {
   }
 
   &__tool--active {
-    @apply text-primary;
+    @apply text-primary-500;
   }
 
   &__area /deep/ .ql-editor {

@@ -23,7 +23,7 @@
       v-motion="'errorMessage'"
       :initial="{ marginTop: -10, opacity: 0 }"
       :enter="{ marginTop: 0, opacity: 1 }"
-      class="flex items-center pt-1 text-xs text-danger"
+      class="flex items-center pt-1 text-xs text-danger-500"
     >
       <span class="mt-px">{{ errorMessage }}</span>
     </div>

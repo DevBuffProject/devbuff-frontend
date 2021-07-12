@@ -10,13 +10,13 @@
             {{ dateString }}
           </div>
           <div class="flex items-center">
-            <div class="text-primary">
+            <div class="text-primary-500">
               {{ title }}
             </div>
 
             <div class="flex items-center ml-4">
               <ClockIcon v-if="waitingValidation" class="text-warning w-5" />
-              <CheckIcon v-else class="text-success w-5" />
+              <CheckIcon v-else class="text-success-500 w-5" />
               <em
                 class="
                   ml-1
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { defineComponent, useContext } from 'vue'
+import { defineComponent, useAttrs, useSlots } from 'vue'
 import { useI18n } from '../../../../composes/utils'
 
 export default defineComponent({
@@ -63,7 +63,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { attrs } = useContext()
+    const attrs = useAttrs()
     const { t } = useI18n('components.widget.dashboard.idea.card')
 
     return {

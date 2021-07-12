@@ -1,4 +1,25 @@
 <template>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <AtomicLoadingOverlay :visible="isLoading" />
   <div class="grid gap-6 grid-cols-2">
     <div class="col-span-1">
       <AtomicCard class="px-0">
@@ -22,7 +43,6 @@
       </AtomicCard>
     </div>
     <aside class="col-span-1">
-      <AtomicLoadingSpinner v-if="isPendingLoading" />
       <div v-if="inspectedIdea.id" class="col-span-3">
         <RouterLink
           :to="{ name: 'idea-detail', params: { id: inspectedIdea.id } }"
@@ -46,8 +66,6 @@
             <AtomicButton
               v-if="inspectedIdea.status !== 'PUBLISH'"
               v-focusable.indexOnly
-              is-depressed
-              is-wide
               :type="
                 inspectedIdea.status === 'WAITING_FULL_TEAM'
                   ? 'danger'
@@ -74,7 +92,7 @@
               class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10"
               v-if="inspectedIdea.status !== 'PUBLISH'"
             />
-            <AtomicButton type="danger" is-depressed is-wide>
+            <AtomicButton type="danger">
               <div
                 class="flex flex-col items-center justify-center"
                 @click="deleteIdea(inspectedIdea.id)"
@@ -84,7 +102,7 @@
               </div>
             </AtomicButton>
             <i class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10" />
-            <AtomicButton type="primary" is-depressed is-wide>
+            <AtomicButton type="primary">
               <div class="flex flex-col items-center justify-center">
                 <EditIcon />
                 <span>{{ t('controls.edit') }}</span>
@@ -128,6 +146,26 @@
       </div>
     </aside>
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </template>
 
 <script>
@@ -142,7 +180,7 @@ export default defineComponent({
     useTitle(`DevBuff Dashboard`)
     const { t } = useI18n('pages.dashboard')
     const { userIdeas, getUserIdeas } = useIdeas()
-    const isPendingLoading = ref(false)
+    const isLoading = ref(false)
     const {
       idea: inspectedIdea,
       pendingUsers,
@@ -151,43 +189,34 @@ export default defineComponent({
       changeStatusIdea,
       deleteIdea: deleteIdeaComponent,
     } = useIdea()
-
     const route = useRoute()
 
     const changeIdea = async (ideaId) => {
-      isPendingLoading.value = true
+      isLoading.value = true
       pendingUsers.value = undefined
-      getPendingUsers(ideaId)
       await getIdea(ideaId)
-      isPendingLoading.value = false
+      await getPendingUsers(ideaId)
+      isLoading.value = false
     }
-
-    watch(
-      () => route.query,
-      async () => {
-        if (route.query?.ideaId) {
-          changeIdea(route.query?.ideaId)
-        }
-      },
-    )
-    await getUserIdeas()
-
     const deleteIdea = async (ideaId) => {
       await deleteIdeaComponent(ideaId)
       await getUserIdeas()
     }
 
+    await getUserIdeas()
+    if (route.query?.ideaId) await changeIdea(route.query?.ideaId)
+
     return {
       t,
-      userIdeas,
-      pendingUsers,
-      inspectedIdea,
-      isPendingLoading,
       deleteIdea,
       changeIdea,
       getIdea,
       getPendingUsers,
       changeStatusIdea,
+      userIdeas,
+      pendingUsers,
+      inspectedIdea,
+      isLoading,
     }
   },
 })

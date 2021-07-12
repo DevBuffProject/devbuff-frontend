@@ -54,7 +54,7 @@
             justify-end
             -mb-8
             py-6
-            text-primary
+            text-primary-500
             hover:underline
           "
         >

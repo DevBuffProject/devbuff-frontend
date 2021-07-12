@@ -7,11 +7,11 @@
       <div
         :class="[
           {
-            'text-primary bg-primary': type === 'primary',
-            'text-secondary bg-secondary': type === 'secondary',
+            'text-primary-500 bg-primary-500': type === 'primary',
+            'text-secondary-500 bg-secondary-500': type === 'secondary',
             'text-warning bg-warning': type === 'warning',
-            'text-danger bg-danger': type === 'danger',
-            'text-success bg-success': type === 'success',
+            'text-danger-500 bg-danger-500': type === 'danger',
+            'text-success-500 bg-success-500': type === 'success',
             'bg-gray-500': type === 'muted',
           },
           `
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { defineComponent, useContext } from 'vue'
+import { defineComponent, useAttrs, useSlots } from 'vue'
 
 const types = ['primary', 'secondary', 'warning', 'danger', 'success', 'muted']
 
@@ -46,7 +46,8 @@ export default defineComponent({
     },
   },
   setup() {
-    const { attrs, slots } = useContext()
+    const attrs = useAttrs()
+    const slots = useSlots()
     return {
       attrs,
       slots,

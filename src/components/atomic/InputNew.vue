@@ -14,9 +14,9 @@
           'items-baseline cursor-pointer transition-all outline-none',
           'border-2 bg-white dark:bg-blueGray-700',
           errorMessage &&
-            '!border-danger !ring-danger-200 dark:!ring-danger-900',
+            '!border-danger-500 !ring-danger-200 dark:!ring-danger-900',
           isFocused
-            ? 'ring ring-primary-200 dark:ring-primary-900 border-primary'
+            ? 'ring ring-primary-200 dark:ring-primary-900 border-primary-500'
             : 'border-gray-300 dark:border-blueGray-700',
         ]"
         @mousedown="setFocus"
@@ -92,7 +92,7 @@
       v-motion="'errorMessage'"
       :initial="{ marginTop: -10, opacity: 0 }"
       :enter="{ marginTop: 0, opacity: 1 }"
-      class="flex items-center pt-1 text-xs text-danger"
+      class="flex items-center pt-1 text-xs text-danger-500"
     >
       <span class="mt-px">{{ errorMessage }}</span>
     </div>

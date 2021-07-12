@@ -11,7 +11,7 @@
           <a
             v-if="hrefs[contactName]"
             :href="`${hrefs[contactName]}/${contact}`"
-            class="text-primary hover:underline"
+            class="text-primary-500 hover:underline"
           >
             {{ contact }}
           </a>

@@ -3,7 +3,7 @@
     <template v-for="(item, index) in items" :key="item.title">
       <component
         :is="item.to && index < items.length - 1 ? 'router-link' : 'span'"
-        :class="[index < items.length - 1 && 'text-primary', 'focusable']"
+        :class="[index < items.length - 1 && 'text-primary-500', 'focusable']"
         v-bind="item"
         v-focusable
       >

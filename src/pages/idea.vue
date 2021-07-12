@@ -45,7 +45,7 @@
           <span class="opacity-50">вы создатель</span>
           <AtomicActions>
             <template #activator>
-              <div class="flex items-center ml-2 text-primary">
+              <div class="flex items-center ml-2 text-primary-500">
                 Быстрое управление
                 <ChevronDownIcon />
               </div>
@@ -69,7 +69,7 @@
                 :to="{ name: 'idea-edit', params: { id: idea.id } }"
                 v-slot="{ href, navigate }"
               >
-                <AtomicAction :href="href" @click="navigate">
+                <AtomicAction :href="href" @click="navigate" class="w-full">
                   <template #icon>
                     <EditIcon />
                   </template>

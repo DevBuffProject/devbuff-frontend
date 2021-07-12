@@ -20,7 +20,6 @@
         </AtomicButton>
       </div>
     </div>
-    <AtomicDelimiter class="my-4" />
     <div class="flex">
       <AtomicLabel :name="t('specialist')">
         {{ t(`commons.specialist.${specialization}`, true) }}

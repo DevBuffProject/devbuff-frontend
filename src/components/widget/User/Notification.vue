@@ -12,7 +12,7 @@
           transition-opacity
         "
         :class="{
-          'bg-gray-100 dark:bg-blueGray-900 text-primary': isVisible,
+          'bg-gray-100 dark:bg-blueGray-900 text-primary-500': isVisible,
         }"
       >
         <AtomicBadge
@@ -40,7 +40,7 @@
           v-if="isLoading && !notifications"
           class="h-full w-full flex items-center justify-center"
         >
-          <AtomicLoadingSpinner class="text-primary" />
+          <AtomicLoadingSpinner class="text-primary-500" />
         </div>
 
         <AtomicList v-if="notifications">
@@ -115,7 +115,12 @@
 
           <div
             v-if="!endOfNotifications"
-            class="text-primary text-center hover:underline cursor-pointer py-4"
+            class="
+              text-primary-500 text-center
+              hover:underline
+              cursor-pointer
+              py-4
+            "
             @click="more"
           >
             Еще

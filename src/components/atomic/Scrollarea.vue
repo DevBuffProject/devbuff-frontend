@@ -6,12 +6,12 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, useContext } from 'vue'
+import { defineComponent, onMounted, ref, useAttrs } from 'vue'
 
 defineComponent({
   name: 'AtomicScrollarea',
   setup() {
-    const { attrs } = useContext()
+    const attrs = useAttrs()
     const container = ref()
     // alert()
     onMounted(() => {

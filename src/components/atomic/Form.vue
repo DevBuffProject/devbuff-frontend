@@ -6,8 +6,7 @@
       gap-4
       bg-white
       border border-gray-300 border-opacity-30
-      dark:border-blueGray-700
-      dark:bg-blueGray-900
+      dark:border-blueGray-700 dark:bg-blueGray-900
       p-4
       rounded-xl
       relative

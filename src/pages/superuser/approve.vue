@@ -14,12 +14,12 @@
         ]"
       >
         <button class="mr-2 inline-flex items-center" @click="apply('approve')">
-          <CheckCircleIcon class="text-success" />
+          <CheckCircleIcon class="text-success-500" />
           <span class="ml-2 font-medium">Одобрить все</span>
         </button>
         <em class="mx-2 w-px h-6 bg-gray-300 dark:bg-blueGray-700 block" />
         <button class="mr-2 inline-flex items-center" @click="apply('decline')">
-          <TrashIcon class="text-danger" />
+          <TrashIcon class="text-danger-500" />
           <span class="ml-2 font-medium">Удалить все</span>
         </button>
       </div>
@@ -47,7 +47,7 @@
                   name: 'idea-detail',
                   params: { id: idea.id, _isDialog: true },
                 }"
-                class="text-primary hover:underline w-min whitespace-nowrap"
+                class="text-primary-500 hover:underline w-min whitespace-nowrap"
               >
                 {{ idea.name }}
               </router-link>

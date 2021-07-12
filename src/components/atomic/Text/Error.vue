@@ -1,5 +1,5 @@
 <template>
-  <span class="text-danger flex items-center">
+  <span class="text-danger-500 flex items-center">
     <WarningTriangleIcon class="mr-1 w-5" />
     <span class="text-xs">{{ text }}</span>
   </span>

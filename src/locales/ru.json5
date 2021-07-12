@@ -33,10 +33,6 @@
       "onError": "Something wrong, try again."
     },
     explore: {
-      filter: {
-        date: 'Дата создания',
-        lastUpdate: 'Дата обновления'
-      },
       "notFound": "С заданными параметрами идей не найдено"
     },
     idea: {
@@ -179,5 +175,7 @@
       CSharp: "C#",
       CPlusPlus: 'C++'
     },
+    date: 'Дата создания',
+    lastUpdate: 'Дата обновления'
   }
 }

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, onUnmounted } from 'vue'
+import { defineComponent } from 'vue'
 import AtomicOverlay from './Overlay.vue'
 
 export default defineComponent({

@@ -6,10 +6,10 @@
         'transition-all rounded-md cursor-text',
         'bg-white dark:bg-blueGray-900 border hover:bg-gray-100',
         isFocused
-          ? 'border-primary ring ring-primary-200 dark:ring-primary-900'
+          ? 'border-primary-500 ring ring-primary-200 dark:ring-primary-900'
           : 'border-gray-300 dark:border-blueGray-600',
         !!errors.length &&
-          '!border-danger !ring-danger-200 dark:!ring-danger-900',
+          '!border-danger-500 !ring-danger-200 dark:!ring-danger-900',
       ]"
     >
       <span
@@ -70,10 +70,10 @@
 import {
   computed,
   defineComponent,
-  useContext,
-  unref,
   ref,
   onMounted,
+  useAttrs,
+  useSlots,
 } from 'vue'
 import { useField } from 'vee-validate'
 import { useMotion } from '@vueuse/motion'
@@ -103,7 +103,7 @@ export default defineComponent({
     const { width: placeholderWidth } = useElementBounding(placeholderRef)
     const { width: containerWidth } = useElementBounding(containerRef)
     const { width: textWidth } = useElementBounding(textRef)
-    const { attrs } = useContext()
+    const attrs = useAttrs()
     const {
       handleChange,
       handleBlur,

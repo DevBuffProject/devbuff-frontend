@@ -9,11 +9,11 @@
         :class="[
           {
             'rounded-md': rounded,
-            'text-primary': type === 'primary',
-            'text-secondary': type === 'secondary',
+            'text-primary-500': type === 'primary',
+            'text-secondary-500': type === 'secondary',
             'text-warning': type === 'warning',
-            'text-danger ': type === 'danger',
-            'text-success': type === 'success',
+            'text-danger-500 ': type === 'danger',
+            'text-success-500': type === 'success',
           },
         ]"
       >
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { defineComponent, useContext } from 'vue'
+import { defineComponent, useAttrs, useSlots } from 'vue'
 
 const types = ['primary', 'secondary', 'warning', 'danger', 'success', 'muted']
 
@@ -46,7 +46,8 @@ export default defineComponent({
     },
   },
   setup() {
-    const { attrs, slots } = useContext()
+    const slots = useSlots()
+    const attrs = useAttrs()
 
     return {
       attrs,

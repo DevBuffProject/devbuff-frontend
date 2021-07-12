@@ -1,15 +1,18 @@
 import { createApp, defineAsyncComponent } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { createI18n } from 'vue-i18n'
 import { MotionPlugin } from '@vueuse/motion'
 import { useQueryString } from './composes/utils'
 import { createMiddleware, getUser } from './middlewares'
-import { createI18n } from 'vue-i18n'
+import mitt from 'mitt'
 import messages from '@intlify/vite-plugin-vue-i18n/messages'
 import focusable from './app/directives/focusable'
-import mitt from 'mitt'
-import App from './App.vue'
 import routes from './routes'
+import App from './App.vue'
+
 import 'virtual:svg-icons-register'
+import 'virtual:windi.css'
+import 'virtual:windi-devtools'
 
 const qs = useQueryString()
 const emitter = mitt()

@@ -32,7 +32,7 @@
               v-if="skill.specializations.length"
               :class="[
                 'px-4 py-1 transition-colors rounded',
-                'group-hover:bg-primary group-hover:bg-opacity-10 active:text-primary',
+                'group-hover:bg-primary-500 group-hover:bg-opacity-10 active:text-primary-500',
               ]"
               @click="nextSlide(skill, skill.specializations)"
             >
@@ -47,7 +47,7 @@
           <div
             :class="[
               'px-4 py-1 transition-colors rounded',
-              'group-hover:bg-primary group-hover:bg-opacity-10 active:text-primary',
+              'group-hover:bg-primary-500 group-hover:bg-opacity-10 active:text-primary-500',
             ]"
             @click="prevSlide()"
           >
@@ -74,7 +74,7 @@
               v-if="specialist.frameworks.length"
               :class="[
                 'px-4 py-1 transition-colors rounded',
-                'group-hover:bg-primary group-hover:bg-opacity-10 active:text-primary',
+                'group-hover:bg-primary-500 group-hover:bg-opacity-10 active:text-primary-500',
               ]"
               @click="nextSlide(specialist, specialist.frameworks)"
             >
@@ -88,7 +88,7 @@
           <div
             :class="[
               'px-4 py-1 transition-colors rounded',
-              'group-hover:bg-primary group-hover:bg-opacity-10 active:text-primary',
+              'group-hover:bg-primary-500 group-hover:bg-opacity-10 active:text-primary-500',
             ]"
             @click="prevSlide()"
           >

@@ -1,10 +1,12 @@
 // eslint-disable-next-line no-undef
-const colors = require('tailwindcss/colors')
+const colors = require('windicss/colors')
 
-// eslint-disable-next-line no-undef
-module.exports = {
-  mode: 'jit',
-  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}', './index.html'],
+export default {
+  purge: {},
+  extract: {
+    include: ['index.html', 'src/**/*.{vue,html,jsx,tsx}'],
+    exclude: ['node_modules/**/*', '.git/**/*'],
+  },
   darkMode: 'class',
   theme: {
     fontFamily: {
@@ -31,23 +33,18 @@ module.exports = {
         900: '#0d1117',
       },
       primary: {
-        DEFAULT: colors.lightBlue['500'],
-        ...colors.lightBlue,
+        ...colors.sky,
       },
       secondary: {
-        DEFAULT: colors.violet['500'],
         ...colors.violet,
       },
       success: {
-        DEFAULT: colors.green['500'],
         ...colors.green,
       },
       danger: {
-        DEFAULT: colors.red['500'],
         ...colors.red,
       },
       warning: {
-        DEFAULT: colors.yellow['500'],
         ...colors.yellow,
       },
     },
