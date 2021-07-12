@@ -2,10 +2,10 @@
   <h5>{{ t('title') }}</h5>
 
   <input type="hidden" :name="name" :id="name" :value="inputValue" />
-  <div class="w-full flex justify-center pt-1 text-xs text-danger mb-2">
+  <div class="flex justify-center mb-2 pt-1 w-full text-danger text-xs">
     <span class="mt-px">{{ errorMessage }}</span>
   </div>
-  <div class="grid grid-cols-12 gap-2">
+  <div class="grid gap-2 grid-cols-12">
     <div
       :class="[
         'col-span-3 bg-white border border-gray-300 border-opacity-30 dark:border-blueGray-700 dark:bg-blueGray-900 p-4 rounded-xl relative',
@@ -22,19 +22,19 @@
           v-if="selectedSpecialist.length < maxPerson"
           :is="PlusIcon"
           @click="addSpecialist(specialist)"
-          class="col-span-1 specialist-plus"
+          class="specialist-plus col-span-1"
         />
-        <p class="flex items-center pt-1 text-xs text-gray-400 col-span-6">
+        <p class="flex col-span-6 items-center pt-1 text-gray-400 text-xs">
           {{ t(`commons.specialistDescription.${specialist}`, true) }}
         </p>
       </div>
     </div>
   </div>
 
-  <hr class="mt-2 mb-2" />
+  <hr class="mb-2 mt-2" />
 
   <div
-    class="bg-gray-900 rounded h-6 mb-5"
+    class="mb-5 h-6 bg-gray-900 rounded"
     role="progressbar"
     :aria-valuenow="maxCountPercent"
     aria-valuemin="0"
@@ -75,13 +75,14 @@
       class="
         w-40%
         break-avoid
-        bg-white
-        border border-gray-300 border-opacity-30
-        dark:border-blueGray-700
-        dark:bg-blueGray-900
-        rounded-xl
         relative
         mb-4
+        dark:bg-blueGray-900
+        bg-white
+        border
+        dark:border-blueGray-700
+        border-gray-300 border-opacity-30
+        rounded-xl
       "
       v-for="(specialist, index) in selectedSpecialist"
       :key="specialist + index + '_selected'"
@@ -89,12 +90,13 @@
       <li class="flex flex-col flex-wrap rounded">
         <div
           class="
-            p-2
-            border-b-2 border-gray-300 border-opacity-30
-            dark:border-blueGray-700
-            mb-2
             flex
             justify-between
+            mb-2
+            p-2
+            border-b-2
+            dark:border-blueGray-700
+            border-gray-300 border-opacity-30
           "
         >
           <p>{{ t(`commons.specialist.${specialist.name}`, true) }}</p>
@@ -112,16 +114,16 @@
           <div class="ml-3">
             <a
               class="
+                dark:hover:bg-primary-800
                 flex flex-wrap
                 items-center
+                p-1
+                hover:bg-primary-400
+                rounded
+                cursor-pointer
                 transition
                 duration-500
                 ease-in-out
-                dark:hover:bg-primary-800
-                hover:bg-primary-400
-                p-1
-                cursor-pointer
-                rounded
               "
               @click="language.selected = !language.selected"
             >
@@ -196,12 +198,15 @@ export default defineComponent({
     const maxPerson = 10
     const maxCountPercent = ref(0)
 
-    const addSpecialist = (specialistName) => {
+    const addSpecialist = (specialistName, specialistId = undefined) => {
       if (selectedSpecialist.value.length === maxPerson) {
         return
       }
       const specialistObject = {}
 
+      if (specialistId !== undefined) {
+        specialistObject.id = specialistId
+      }
       specialistObject.name = specialistName
       specialistObject.count = 1
       specialistObject.languages = []
@@ -243,7 +248,7 @@ export default defineComponent({
         if (state.value !== undefined && props.data) {
           //Load from exists data
           for (const specialist of props.data) {
-            addSpecialist(specialist.name)
+            addSpecialist(specialist.name, specialist.id)
 
             const createdSpecialist =
               selectedSpecialist.value[selectedSpecialist.value.length - 1]
@@ -291,6 +296,9 @@ export default defineComponent({
             count: specialist.count,
             languages: [],
           }
+          if (specialist.id !== undefined) {
+            specialistValue.id = specialist.id
+          }
 
           for (const language of specialist.languages) {
             if (!language.selected) {
@@ -320,7 +328,6 @@ export default defineComponent({
     return {
       t,
       tDefault,
-      addSpecialist,
       inputValue,
       errorMessage,
       maxPerson,
@@ -328,6 +335,7 @@ export default defineComponent({
       PlusIcon,
       MinusIcon,
       CloseIcon,
+      addSpecialist,
       selectedSpecialist,
       maxCountPercent,
     }
