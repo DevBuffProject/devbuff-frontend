@@ -15,14 +15,8 @@
             </div>
 
             <div class="flex items-center ml-4">
-              <ClockIcon
-                v-if="waitingValidation"
-                class="text-warning w-5"
-              />
-              <CheckIcon
-                v-else
-                class="text-success w-5"
-              />
+              <ClockIcon v-if="waitingValidation" class="text-warning w-5" />
+              <CheckIcon v-else class="text-success w-5" />
               <em
                 class="
                   ml-1

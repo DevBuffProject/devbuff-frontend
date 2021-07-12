@@ -49,9 +49,7 @@
         <div class="col-span-12">
           <WidgetSpecialistPicker :data="data.specialists" />
         </div>
-        <AtomicButton
-          class="col-start-11 col-span-2"
-        >
+        <AtomicButton class="col-start-11 col-span-2">
           {{ t('save') }}
         </AtomicButton>
       </div>

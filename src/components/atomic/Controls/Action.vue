@@ -23,10 +23,7 @@
       >
         <slot name="icon" />
       </div>
-      <div
-        v-if="slots.default"
-        :class="slots.icon && slots.default && 'ml-2'"
-      >
+      <div v-if="slots.default" :class="slots.icon && slots.default && 'ml-2'">
         <slot />
       </div>
     </div>

@@ -1,10 +1,6 @@
 <template>
   <label>
-    <input
-      type="file"
-      accept="image/*"
-      @change="upload"
-    >
+    <input type="file" accept="image/*" @change="upload" />
     <AtomicAvatar />
   </label>
 </template>

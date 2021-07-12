@@ -16,20 +16,14 @@
             @click="changeIdea(idea.id)"
           />
         </div>
-        <div
-          class="ml-4"
-          v-else
-        >
+        <div class="ml-4" v-else>
           {{ t('notFound') }}
         </div>
       </AtomicCard>
     </div>
     <aside class="col-span-1">
       <AtomicLoadingSpinner v-if="isPendingLoading" />
-      <div
-        v-if="inspectedIdea.id"
-        class="col-span-3"
-      >
+      <div v-if="inspectedIdea.id" class="col-span-3">
         <RouterLink
           :to="{ name: 'idea-detail', params: { id: inspectedIdea.id } }"
           custom
@@ -80,11 +74,7 @@
               class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10"
               v-if="inspectedIdea.status !== 'PUBLISH'"
             />
-            <AtomicButton
-              type="danger"
-              is-depressed
-              is-wide
-            >
+            <AtomicButton type="danger" is-depressed is-wide>
               <div
                 class="flex flex-col items-center justify-center"
                 @click="deleteIdea(inspectedIdea.id)"
@@ -94,11 +84,7 @@
               </div>
             </AtomicButton>
             <i class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10" />
-            <AtomicButton
-              type="primary"
-              is-depressed
-              is-wide
-            >
+            <AtomicButton type="primary" is-depressed is-wide>
               <div class="flex flex-col items-center justify-center">
                 <EditIcon />
                 <span>{{ t('controls.edit') }}</span>

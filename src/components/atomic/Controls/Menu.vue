@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="relative"
-    ref="container"
-  >
+  <div class="relative" ref="container">
     <div @click="isVisible ? hide() : show()">
       <slot name="activator" />
     </div>

@@ -12,10 +12,7 @@
     >
       clear
     </a>
-    <ul
-      v-if="options.length"
-      class="rounded-lg"
-    >
+    <ul v-if="options.length" class="rounded-lg">
       <li
         v-for="(option, index) in options"
         :key="option.name"
@@ -26,16 +23,10 @@
         :delay="50 * index * 2"
       >
         <div class="text-black dark:text-blueGray-50 flex items-center mb-4">
-          <component
-            :is="option.icon"
-            class="w-[20px] h-[20px]"
-          />
+          <component :is="option.icon" class="w-[20px] h-[20px]" />
           <span class="ml-2">{{ t(`param.${option.name}`) }}</span>
         </div>
-        <ul
-          v-if="option.params"
-          class="font-normal text-xs"
-        >
+        <ul v-if="option.params" class="font-normal text-xs">
           <li
             v-for="(param, paramIndex) in option.params"
             :key="param.value"

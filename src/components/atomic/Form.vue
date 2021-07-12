@@ -41,9 +41,7 @@
       />
     </div>
     <slot name="externalForms" />
-    <AtomicButton class="col-start-12">
-      Save
-    </AtomicButton>
+    <AtomicButton class="col-start-12"> Save </AtomicButton>
   </Form>
 </template>
 

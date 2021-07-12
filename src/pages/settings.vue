@@ -21,11 +21,7 @@
     <h3 class="col-span-12">
       {{ t('form.user') }}
     </h3>
-    <AtomicForm
-      :data="data"
-      @submit="onSubmit"
-      class="col-span-12"
-    />
+    <AtomicForm :data="data" @submit="onSubmit" class="col-span-12" />
   </div>
   <div class="grid grid-cols-12">
     <h3 class="col-span-12">
@@ -182,9 +178,11 @@ export default defineComponent({
     const conflictMessage = computed(() => {
       if (conflictFields.value.length === 0) return undefined
 
-      return conflictFields.value.map(value => {
-        return t(`fields.${value}`)
-      }).join(', ')
+      return conflictFields.value
+        .map((value) => {
+          return t(`fields.${value}`)
+        })
+        .join(', ')
     })
 
     return {

@@ -4,12 +4,7 @@
     itemscope
     itemtype="https://schema.org/Brand"
   >
-    <img
-      itemprop="logo"
-      :src="src"
-      alt="Devbuff logo"
-      class="w-full"
-    >
+    <img itemprop="logo" :src="src" alt="Devbuff logo" class="w-full" />
   </div>
 </template>
 

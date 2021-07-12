@@ -1,9 +1,6 @@
 <template>
   <div class="flex items-center">
-    <template
-      v-for="(item, index) in items"
-      :key="item.title"
-    >
+    <template v-for="(item, index) in items" :key="item.title">
       <component
         :is="item.to && index < items.length - 1 ? 'router-link' : 'span'"
         :class="[index < items.length - 1 && 'text-primary', 'focusable']"

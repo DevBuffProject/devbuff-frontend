@@ -1,12 +1,7 @@
 <template>
   <h5>{{ t('title') }}</h5>
 
-  <input
-    type="hidden"
-    :name="name"
-    :id="name"
-    :value="inputValue"
-  >
+  <input type="hidden" :name="name" :id="name" :value="inputValue" />
   <div class="w-full flex justify-center pt-1 text-xs text-danger mb-2">
     <span class="mt-px">{{ errorMessage }}</span>
   </div>
@@ -36,7 +31,7 @@
     </div>
   </div>
 
-  <hr class="mt-2 mb-2">
+  <hr class="mt-2 mb-2" />
 
   <div
     class="bg-gray-900 rounded h-6 mb-5"
@@ -75,11 +70,7 @@
     </div>
   </div>
 
-  <transition-group
-    name="zoom"
-    tag="div"
-    class="masonory"
-  >
+  <transition-group name="zoom" tag="div" class="masonory">
     <ul
       class="
         w-40%
@@ -155,12 +146,12 @@
                 v-for="(technology, indexTechnology) of language.frameworks"
                 :key="
                   specialist +
-                    index +
-                    '_selected' +
-                    indexLanguage +
-                    language +
-                    technology +
-                    indexTechnology
+                  index +
+                  '_selected' +
+                  indexLanguage +
+                  language +
+                  technology +
+                  indexTechnology
                 "
                 class="mb-1 ml-10"
               >
@@ -262,8 +253,6 @@ export default defineComponent({
                 return value.name === language.name
               })
 
-              console.log(searchedLanguage)
-
               language.selected = searchedLanguage !== undefined
 
               if (language.selected) {
@@ -331,6 +320,7 @@ export default defineComponent({
     return {
       t,
       tDefault,
+      addSpecialist,
       inputValue,
       errorMessage,
       maxPerson,
@@ -338,7 +328,6 @@ export default defineComponent({
       PlusIcon,
       MinusIcon,
       CloseIcon,
-      addSpecialist,
       selectedSpecialist,
       maxCountPercent,
     }
