@@ -4,14 +4,14 @@
       ref="windowRef"
       class="
         max-w-[800px]
-        my-8
+        my-10
         mx-auto
-        p-8
+        p-4
         overflow-hidden
         relative
         z-50
         bg-white
-        dark:bg-blueGray-700
+        dark:bg-blueGray-700 dark:border-2 dark:border-blueGray-500
         shadow-2xl
         rounded-xl
       "

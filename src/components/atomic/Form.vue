@@ -1,16 +1,7 @@
 <template>
   <Form
     :validation-schema="schemas"
-    class="
-      grid grid-cols-12
-      gap-4
-      bg-white
-      border border-gray-300 border-opacity-30
-      dark:border-blueGray-700 dark:bg-blueGray-900
-      p-4
-      rounded-xl
-      relative
-    "
+    class="grid grid-cols-12 gap-4 p-4 relative"
   >
     <div
       v-for="(input, index) in data"

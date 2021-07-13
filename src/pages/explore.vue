@@ -1,6 +1,5 @@
 <template>
   <main>
-    <AtomicFormFile v-model="files" />
     <div class="grid grid-cols-6 gap-6">
       <div class="col-span-4" id="ideas">
         <div v-if="ideas.length > 0" class="grid grid-cols-2 gap-4">
@@ -14,7 +13,10 @@
         <AtomicLoadingOverlay :visible="isLoading" />
       </div>
 
-      <WidgetIdeasFilter v-model="filter" class="col-span-2" />
+      <WidgetIdeasFilter
+        v-model="filter"
+        class="col-span-2 sticky top-26 h-min"
+      />
     </div>
   </main>
 </template>

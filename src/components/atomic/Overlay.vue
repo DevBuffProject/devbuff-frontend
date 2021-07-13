@@ -10,7 +10,7 @@
         <div
           :class="[
             'fixed z-50 top-0 left-0 w-full h-full',
-            'flex items-center bg-black bg-opacity-70',
+            'flex items-center bg-black bg-opacity-40',
           ]"
         >
           <div

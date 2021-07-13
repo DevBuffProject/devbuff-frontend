@@ -1,47 +1,41 @@
 <template>
   <div>
-    <LoadingOverlay :visible="isPageLoading" />
-    <div class="h-screen flex flex-col">
-      <div class="sticky top-0 z-50">
-        <Header />
-      </div>
-      <div class="grid grid-cols-10 gap-8 container mx-auto mt-8">
-        <Sidebar class="col-span-2" />
-        <div class="col-span-8">
-          <router-view :route="mainRoute" v-slot="{ Component, route }">
-            <template v-if="Component">
-              <suspense>
-                <div class="h-full container" :key="route.name">
-                  <AtomicBreadcrumbs
-                    v-if="route?.meta.breadcrumbs"
-                    :items="breadcrumbs"
-                  />
-                  <h1>{{ route.meta.name }}</h1>
-                  <component :is="Component" />
-                </div>
-                <template #fallback>
-                  <LoadingOverlay visible />
-                </template>
-              </suspense>
-            </template>
-          </router-view>
+    <div class="grid grid-cols-10 gap-8 container mx-auto mt-26">
+      <Header class="fixed w-full top-0 left-0 z-50" />
 
-          <router-view
-            v-if="isDialog"
-            :route="dialogRoute"
-            v-slot="{ Component: Dialog }"
-          >
-            <suspense v-if="Dialog">
-              <AtomicDialog :visible="true" @onClose="back">
-                <component :is="dialogRoute?.meta.preview || Dialog" />
-              </AtomicDialog>
-
-              <template #fallback>
-                <LoadingOverlay :visible="true" />
-              </template>
+      <Sidebar class="col-span-2 h-min sticky top-26" />
+      <div class="col-span-8">
+        <router-view :route="mainRoute" v-slot="{ Component, route }">
+          <template v-if="Component">
+            <suspense>
+              <div class="h-full container" :key="route.name">
+                <AtomicBreadcrumbs
+                  v-if="route?.meta.breadcrumbs"
+                  :items="breadcrumbs"
+                />
+                <h1>{{ route.meta.name }}</h1>
+                <component :is="Component" />
+              </div>
+              <template #fallback> </template>
             </suspense>
-          </router-view>
-        </div>
+          </template>
+        </router-view>
+
+        <router-view
+          v-if="isDialog"
+          :route="dialogRoute"
+          v-slot="{ Component: Dialog }"
+        >
+          <suspense v-if="Dialog">
+            <AtomicDialog :visible="true" @onClose="back">
+              <component :is="dialogRoute?.meta.preview || Dialog" />
+            </AtomicDialog>
+
+            <template #fallback>
+              <LoadingOverlay :visible="true" />
+            </template>
+          </suspense>
+        </router-view>
       </div>
     </div>
   </div>

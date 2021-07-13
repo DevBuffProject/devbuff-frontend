@@ -71,7 +71,6 @@
                 </em>
               </AtomicCardNotification>
             </RouterLink>
-
             <RouterLink
               v-if="notify.type === 'IDEA_APPROVED'"
               :to="{
@@ -99,7 +98,6 @@
                 {{ ', ' }} была одобрена
               </AtomicCardNotification>
             </RouterLink>
-
             <AtomicCardNotification
               v-if="notify.type === 'CONFIRM_EMAIL'"
               :date="timeAgo(notify.dateCreation)"
@@ -151,7 +149,7 @@
 
 <script>
 import { defineComponent, ref, onBeforeUnmount } from 'vue'
-import { useUser } from '../../../composes/core'
+import { useNotifications } from '../../../composes/core'
 import { useTimeAgo } from '@vueuse/core'
 
 export default defineComponent({
@@ -163,7 +161,7 @@ export default defineComponent({
       getCountUnreadNotifications,
       getNotifications,
       isLoading,
-    } = useUser()
+    } = useNotifications()
     const container = ref()
     const endOfNotifications = ref(false)
     let currentPage = 1

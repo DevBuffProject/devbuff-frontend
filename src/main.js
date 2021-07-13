@@ -16,6 +16,7 @@ import 'virtual:windi-devtools'
 
 const qs = useQueryString()
 const emitter = mitt()
+
 const router = createRouter({
   routes,
   history: createWebHistory(),
@@ -30,8 +31,6 @@ const i18n = createI18n({
 })
 
 const loader = async () => {
-  await getUser()
-
   router.beforeResolve(createMiddleware(getUser, { throttle: 1000 * 5 }))
 
   app.config.globalProperties.emitter = emitter

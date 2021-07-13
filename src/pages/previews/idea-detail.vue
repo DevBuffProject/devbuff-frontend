@@ -5,15 +5,15 @@
       <div class="flex flex-wrap items-start">
         <RouterLink to="/" custom v-slot="{ navigate }">
           <div class="mr-6">
-            <WidgetUser
-              avatar-gradient-border
-              :avatar="getUserProfileUrl(idea.ownerIdea.id)"
-              :firstname="idea.ownerIdea.firstName"
-              :lastname="idea.ownerIdea.lastName"
-              :username="idea.ownerIdea.userName"
-              @click="navigate"
-              v-focusable
-            />
+            <!--            <WidgetUser-->
+            <!--              avatar-gradient-border-->
+            <!--              :avatar="getUserProfileUrl(idea.ownerIdea.id)"-->
+            <!--              :firstname="idea.ownerIdea.firstName"-->
+            <!--              :lastname="idea.ownerIdea.lastName"-->
+            <!--              :username="idea.ownerIdea.userName"-->
+            <!--              @click="navigate"-->
+            <!--              v-focusable-->
+            <!--            />-->
           </div>
         </RouterLink>
         <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">

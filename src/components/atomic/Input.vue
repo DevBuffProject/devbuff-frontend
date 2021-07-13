@@ -1,10 +1,22 @@
 <template>
   <div class="inline-block w-full" ref="containerRef">
     <label
+      class="
+        block
+        min-w-[200px]
+        relative
+        overflow-hidden
+        group
+        z-10
+        transition-all
+        rounded-xl
+        cursor-text
+        bg-white
+        dark:bg-blueGray-800
+        border
+        hover:bg-gray-100
+      "
       :class="[
-        'block min-w-[200px] relative overflow-hidden group z-10',
-        'transition-all rounded-md cursor-text',
-        'bg-white dark:bg-blueGray-900 border hover:bg-gray-100',
         isFocused
           ? 'border-primary-500 ring ring-primary-200 dark:ring-primary-900'
           : 'border-gray-300 dark:border-blueGray-600',
@@ -15,16 +27,16 @@
       <span
         v-if="placeholder"
         ref="placeholderRef"
+        class="whitespace-nowrap absolute flex items-center transform"
         :class="[
-          'whitespace-nowrap absolute flex items-center transform',
           isMounted && 'transition-all',
-          isPlaceholderOverflows
+          isPlaceholderOverflows || type === 'textarea'
             ? [
                 'top-0 !ml-1 opacity-70 translate-y-0 text-xs',
                 'cursor-pointer text-black dark:text-blueGray-500',
               ]
             : [
-                'top-1/2 -translate-y-1/2 text-gray-600',
+                'top-6 -translate-y-1/2 text-gray-600',
                 isFocused || modelValue
                   ? 'opacity-30 dark:opacity-50'
                   : 'opacity-70',
@@ -44,6 +56,7 @@
         v-focusable.indexOnly
         autocomplete="off"
         v-bind="attrs"
+        :type="type === 'textarea' && type"
         :name="name"
         :value="modelValue"
         @focus="onFocus"

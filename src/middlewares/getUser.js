@@ -10,7 +10,6 @@ export default async () => {
 
   try {
     const status = await check()
-    console.log(status)
     if (!status.active) await refresh()
 
     const { data: user } = await getUser()

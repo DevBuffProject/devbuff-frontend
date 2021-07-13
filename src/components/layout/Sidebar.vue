@@ -4,11 +4,7 @@
       <router-link v-if="isLoggedIn" to="/" custom v-slot="{ navigate }">
         <div class="mb-8">
           <WidgetUser
-            avatar-gradient-border
-            :avatar="user.avatar"
-            :firstname="user.firstName"
-            :lastname="user.lastName"
-            :username="user.userName"
+            :user="user"
             @click="navigate"
             class="block"
             v-focusable
@@ -85,13 +81,13 @@
       <template v-if="isLoggedIn">
         <div
           :class="[
-            'flex items-center rounded-full px-4 py-1 mb-2 cursor-pointer transition-all',
+            'flex items-center rounded-full px-4 py-1 mt-8 cursor-pointer transition-all',
             'hover:bg-danger-500 text-danger-500 hover:bg-opacity-10 focus:bg-danger-500 focus:bg-opacity-10',
           ]"
           v-focusable.indexOnly
           @click="logout"
         >
-          <LogOutIcon class="mr-4" />
+          <LogOutIcon class="mr-3" />
           <span class="text-md font-medium"> {{ t('links.logout') }} </span>
         </div>
       </template>

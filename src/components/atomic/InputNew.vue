@@ -10,7 +10,7 @@
       </div>
       <div
         :class="[
-          'relative w-full inline-flex rounded-md overflow-hidden rounded box-border',
+          'relative w-full inline-flex rounded-lg overflow-hidden box-border',
           'items-baseline cursor-pointer transition-all outline-none',
           'border-2 bg-white dark:bg-blueGray-700',
           errorMessage &&
@@ -24,10 +24,16 @@
         <textarea
           v-if="type === 'textarea'"
           ref="field"
-          :class="[
-            'w-full py-2 px-4 bg-transparent outline-none w-full',
-            'resize-none min-h-[100px]',
-          ]"
+          class="
+            w-full
+            py-2
+            px-4
+            bg-transparent
+            outline-none
+            w-full
+            resize-none
+            min-h-[100px]
+          "
           :name="name"
           :id="name"
           :type="type"

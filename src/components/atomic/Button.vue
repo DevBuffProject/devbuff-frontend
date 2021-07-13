@@ -1,9 +1,9 @@
 <template>
   <button
     class="
-      px-6
+      px-10
       overflow-hidden
-      rounded-md
+      rounded-lg
       relative
       inline-block
       text-center
@@ -31,7 +31,7 @@
         'bg-danger-500 ring-danger-500 hover:bg-danger-400 active:bg-danger-600':
           colorType === 'danger',
       },
-      isSmall ? 'py-1' : 'py-1.5',
+      isSmall ? 'py-1' : 'py-2',
     ]"
     v-bind="attrs"
   >
@@ -53,7 +53,8 @@
       </span>
       <span
         v-if="slots.default"
-        :class="['whitespace-nowrap', loading && 'invisible relative']"
+        class="whitespace-nowrap"
+        :class="loading && 'invisible relative'"
       >
         <slot />
       </span>

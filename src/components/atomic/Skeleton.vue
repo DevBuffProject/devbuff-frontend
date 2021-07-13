@@ -1,71 +1,17 @@
 <template>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <div
-    :class="[
-      styles.Skeleton,
-      'min-h-[14px] my-[10px] min-w-[20px] relative overflow-hidden rounded-full',
-      'bg-gray-200 dark:bg-blueGray-800',
-    ]"
-  />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    class="
+      min-h-[14px]
+      my-[10px]
+      min-w-[14px]
+      relative
+      overflow-hidden
+      rounded-full
+      bg-gray-200
+      dark:bg-blueGray-800
+    "
+    :class="styles.Skeleton"
+  ></div>
 </template>
 
 <style module>
