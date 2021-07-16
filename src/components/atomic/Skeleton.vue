@@ -1,16 +1,10 @@
 <template>
   <div
-    class="
-      min-h-[14px]
-      my-[10px]
-      min-w-[14px]
-      relative
-      overflow-hidden
-      rounded-full
-      bg-gray-200
-      dark:bg-blueGray-800
-    "
-    :class="styles.Skeleton"
+    :class="[
+      styles.Skeleton,
+      'min-h-[14px] my-[10px] min-w-[20px] relative overflow-hidden rounded-full',
+      'bg-gray-200 dark:bg-blueGray-800',
+    ]"
   ></div>
 </template>
 
