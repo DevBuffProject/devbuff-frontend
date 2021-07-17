@@ -32,13 +32,11 @@
 </template>
 
 <script>
-import { ref, computed, defineComponent, reactive, inject, watch } from 'vue'
-import { templateRef, useThrottleFn, useTitle } from '@vueuse/core'
+import { computed, defineComponent, reactive, inject, watch } from 'vue'
+import { useThrottleFn, useTitle } from '@vueuse/core'
 import { useIdeas, useAuth } from '../composes/core'
 import { useI18n } from '../composes/utils'
 import { useRouter } from 'vue-router'
-import { useRouteQuery } from '@vueuse/router'
-import { useMasonry } from '../composes/dom'
 
 export default defineComponent({
   async setup() {
@@ -69,8 +67,6 @@ export default defineComponent({
       async () => await getIdeas(filter),
       500,
     )
-
-    // const { masonry } = useMasonry(templateRef('ideasRef'), { gutter: 20 })
 
     watch(filter, throttledGetIdeas)
     await getIdeas(filter)
