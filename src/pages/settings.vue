@@ -1,5 +1,5 @@
 <template>
-  <div class="w-max-[700px]">
+  <div class="w-max-[800px]">
     <AtomicAlert> This page under develop </AtomicAlert>
     <AtomicAlert
       v-if="!user.statusEmailConfirm && isVerifyEmailSent"
