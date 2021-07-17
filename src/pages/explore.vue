@@ -1,13 +1,23 @@
 <template>
   <main>
-    <div class="grid grid-cols-14 gap-6">
+    <div class="grid grid-cols-14 gap-2">
       <div class="col-span-10" id="ideas">
-        <div ref="ideasRef" v-if="ideas.length > 0" class="">
+        <div
+          v-if="ideas.length > 0"
+          v-masonry
+          transition-duration="0"
+          :gutter="20"
+        >
           <WidgetIdeasCard
-            v-for="idea of ideas"
+            v-for="(idea, index) of ideas"
             :key="idea.id"
             :idea="idea"
-            class="mb-6 w-[calc(50%-10px)]"
+            v-masonry-tile
+            v-motion
+            :initial="{ scale: 0.95, opacity: 0 }"
+            :enter="{ scale: 1, opacity: 1 }"
+            :delay="50 * index"
+            class="mb-6 w-[calc(50%-20px)]"
           />
         </div>
         <AtomicLoadingOverlay :visible="isLoading" />
@@ -60,7 +70,7 @@ export default defineComponent({
       500,
     )
 
-    useMasonry(templateRef('ideasRef'), { gutter: 10 })
+    // const { masonry } = useMasonry(templateRef('ideasRef'), { gutter: 20 })
 
     watch(filter, throttledGetIdeas)
     await getIdeas(filter)
@@ -71,7 +81,6 @@ export default defineComponent({
       filter,
       isLoading,
       isLoggedIn,
-      files: ref([]),
     }
   },
 })

@@ -39,6 +39,7 @@ specifiers:
   vite-plugin-windicss: ^1.2.4
   vue: ^3.1.4
   vue-i18n: ^9.1.7
+  vue-masonry: ^0.13.0
   vue-nprogress: ^0.2.0
   vue-router: ^4.0.10
   vue3-perfect-scrollbar: ^1.5.5
@@ -69,6 +70,7 @@ dependencies:
   vite-plugin-windicss: 1.2.4_vite@2.4.2
   vue: 3.1.4
   vue-i18n: 9.1.7_vue@3.1.4
+  vue-masonry: 0.13.0
   vue-nprogress: 0.2.0_vue@3.1.4
   vue-router: 4.0.10_vue@3.1.4
   vue3-perfect-scrollbar: 1.5.5
@@ -2086,6 +2088,12 @@ packages:
     engines: {node: '>=0.10.0'}
     hasBin: true
     dev: true
+
+  /imagesloaded/4.1.4:
+    resolution: {integrity: sha512-ltiBVcYpc/TYTF5nolkMNsnREHW+ICvfQ3Yla2Sgr71YFwQ86bDwV9hgpFhFtrGPuwEx5+LqOHIrdXBdoWwwsA==}
+    dependencies:
+      ev-emitter: 1.1.1
+    dev: false
 
   /import-fresh/2.0.0:
     resolution: {integrity: sha1-2BNVwVYS04bGH53dOSLUMEgipUY=}
@@ -4420,6 +4428,14 @@ packages:
       vue: 3.1.4
     dev: false
 
+  /vue-masonry/0.13.0:
+    resolution: {integrity: sha512-HzrqRxu6oamhKQ+i9FC5SGimwMaxQzJAyD5XGD2qUZp/egXGtpi2Cnt6Ahcoh8JNrEdnAwMvxCJLl0E80sQToA==}
+    dependencies:
+      imagesloaded: 4.1.4
+      masonry-layout: 4.2.2
+      vue: 2.6.14
+    dev: false
+
   /vue-nprogress/0.2.0_vue@3.1.4:
     resolution: {integrity: sha512-lTJvEQEt7Pxdc6jwUZf3m4t8emrrBecXxzSLT1G9eIjRQE4kOh7Y+ECjc5R1qrNyyuDqHCTKZMaH5bXy17IS5g==}
     peerDependencies:
@@ -4436,6 +4452,10 @@ packages:
     dependencies:
       '@vue/devtools-api': 6.0.0-beta.15
       vue: 3.1.4
+    dev: false
+
+  /vue/2.6.14:
+    resolution: {integrity: sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==}
     dev: false
 
   /vue/3.1.4:

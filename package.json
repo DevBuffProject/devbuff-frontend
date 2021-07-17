@@ -39,6 +39,7 @@
     "vite-plugin-windicss": "^1.2.4",
     "vue": "^3.1.4",
     "vue-i18n": "^9.1.7",
+    "vue-masonry": "^0.13.0",
     "vue-nprogress": "^0.2.0",
     "vue-router": "^4.0.10",
     "vue3-perfect-scrollbar": "^1.5.5",

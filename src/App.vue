@@ -8,12 +8,14 @@
         <router-view :route="mainRoute" v-slot="{ Component, route }">
           <template v-if="Component">
             <suspense>
-              <div class="h-full container" :key="route.name">
+              <div class="h-full container">
                 <AtomicBreadcrumbs
                   v-if="route?.meta.breadcrumbs"
                   :items="breadcrumbs"
                 />
-                <h1>{{ route.meta.name }}</h1>
+                <h2 class="sticky top-3 z-50 inline-block">
+                  {{ route.meta.name }}
+                </h2>
                 <component :is="Component" />
               </div>
               <template #fallback>
@@ -62,7 +64,7 @@ import {
   onErrorCaptured,
   watch,
 } from 'vue'
-import { set, useStorage, useTitle } from '@vueuse/core'
+import { set, useStorage, useTitle, useWindowScroll } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 import LoadingOverlay from './components/atomic/Loading/Overlay.vue'
 import Header from './components/layout/Header.vue'
@@ -81,6 +83,7 @@ export default defineComponent({
     useTitle('DefBuff')
 
     const router = useRouter()
+    const { y: windowScroll } = useWindowScroll()
     // fix vue-router length undefined
     const mainRoute = shallowRef({ matched: [] })
     const dialogRoute = shallowRef(null)
@@ -120,14 +123,17 @@ export default defineComponent({
 
     onErrorCaptured((err) => set(error, err))
     provide('route', { main: mainRoute, dialog: dialogRoute })
+
     return {
       isDialog,
       mainRoute,
       dialogRoute,
       breadcrumbs,
       isPageLoading,
+      windowScroll,
       error,
       back,
+      a: computed(() => windowScroll.value),
     }
   },
 })
