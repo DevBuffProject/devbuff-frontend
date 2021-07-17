@@ -1,9 +1,9 @@
+// TODO: rename as useProfile
+
 import { useApi } from './useApi'
 import { ref } from 'vue'
 
 const user = ref({})
-const countUnreadNotifications = ref(0)
-const notifications = ref([])
 
 export const useUser = () => {
   const { request, BASE_URL, error, ...rest } = useApi()
@@ -11,6 +11,7 @@ export const useUser = () => {
   const getUser = async (uuid = '') => {
     const response = await request(uuid ? `/profile/${uuid}` : '/profile')
     user.value = {
+      // TODO: Backend: response with avatar url
       avatar: getUserProfileUrl(response?.data.id),
       ...response?.data,
     }
@@ -27,58 +28,23 @@ export const useUser = () => {
 
   const saveUserData = async (data) => {
     const response = await request('/profile', { method: 'patch', data })
-    //conflict data
+    // If data stored on server are conflicted with sent
+    // TODO: check for error triggered on code less than 300
     if (error.value?.response?.status === 409)
       throw new Error(error.value.response.data)
-    return response
-  }
-
-  const confirmEmail = async (token) => {
-    const response = await request(`/notification/email/confirm?token=${token}`)
-    
-    if (error.value?.response?.status !== undefined)
-      throw new Error('Can\'t confirm email')
-
     return response
   }
 
   const resendEmail = async () =>
     await request('/profile/resendEmail', { method: 'post' })
 
-  const getCountUnreadNotifications = async () => {
-    const response = await request(`/notification/unread`)
-    countUnreadNotifications.value = response.data.count
-    return countUnreadNotifications.value
-  }
-
-  const getNotifications = async (page) => {
-    const response = await request(`/notification?page=${page}`)
-    notifications.value = notifications.value.concat(
-      response.data.notifications,
-    )
-    countUnreadNotifications.value = response.data.countUnread
-    return response
-  }
-  const uploadUserImage = async (file) => {
-    const data = new FormData()
-    data.append('image', file, file.fileName)
-    const response = await request('image', { method: 'post', data })
-
-    return `${BASE_URL}/image/${response.data.imagePath}`
-  }
   return {
     user,
-    notifications,
-    countUnreadNotifications,
     getUser,
     getUserProfileUrl,
     saveUserSkills,
     saveUserData,
-    confirmEmail,
     resendEmail,
-    getCountUnreadNotifications,
-    getNotifications,
-    uploadUserImage,
     ...rest,
   }
 }

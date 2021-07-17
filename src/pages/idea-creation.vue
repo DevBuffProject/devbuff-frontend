@@ -15,7 +15,12 @@
         bg-white
         border
         dark:border-blueGray-700
-        border-gray-300 border-opacity-30
+        border-gray-300
+        border-opacity-30
+        border
+        border-gray-300
+        border-opacity-30
+        dark:border-blueGray-700 dark:bg-blueGray-900
         rounded-xl
       "
     >
@@ -50,7 +55,7 @@
         <div class="col-span-12">
           <WidgetSpecialistPicker :data="data.specialists" />
         </div>
-        <AtomicButton class="col-span-2 col-start-11">
+        <AtomicButton class="col-start-11 col-span-2">
           {{ t('save') }}
         </AtomicButton>
       </div>

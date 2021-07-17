@@ -5,7 +5,7 @@
       m-0
       list-none
       divide-y divide-gray-200 divide-opacity-80
-      dark:divide-blueGray-700
+      dark:divide-white dark:divide-opacity-05
     "
   >
     <slot />

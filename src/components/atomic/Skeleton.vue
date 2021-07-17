@@ -5,7 +5,7 @@
       'min-h-[14px] my-[10px] min-w-[20px] relative overflow-hidden rounded-full',
       'bg-gray-200 dark:bg-blueGray-800',
     ]"
-  />
+  ></div>
 </template>
 
 <style module>

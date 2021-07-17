@@ -1,58 +1,36 @@
 <template>
-  <div
-    class="flex items-center"
-    v-bind="attrs"
-  >
-    <atomic-avatar
-      v-if="avatar"
-      :gradient-border="avatarGradientBorder"
-      :avatar="avatar"
-      class="mr-2"
-    />
-    <div>
-      <div class="font-semibold">
-        {{ firstname }} {{ lastname }}
+  <div class="flex grow items-center" v-bind="attrs">
+    <atomic-avatar v-if="user.avatar" :src="user.avatar" />
+    <AtomicSkeleton v-else class="w-[40px] h-[40px]" />
+    <div class="ml-2 flex-1">
+      <div v-if="user.firstName || user.lastName" class="font-semibold">
+        {{ user.firstName }} {{ user.lastName }}
       </div>
-      <div class="text-xs text-gray-500 dark:text-blueGray-400">
-        {{ `@${username}` }}
+      <AtomicSkeleton v-else />
+      <div
+        v-if="!!user.userName"
+        class="text-xs text-gray-500 dark:text-blueGray-400"
+      >
+        {{ `@${user.userName}` }}
       </div>
+      <AtomicSkeleton v-else class="h-[14px] w-1/2" />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, useAttrs } from 'vue'
 
 export default defineComponent({
   name: 'WidgetUser',
   props: {
-    userId: {
-      type: String,
-      default: null,
-    },
-    avatarGradientBorder: {
-      type: Boolean,
-      default: false,
-    },
-    avatar: {
-      type: String,
-      default: null,
-    },
-    firstname: {
-      type: String,
-      default: null,
-    },
-    lastname: {
-      type: String,
-      default: null,
-    },
-    username: {
-      type: String,
+    user: {
+      type: Object,
       default: null,
     },
   },
-  setup(_, ctx) {
-    const { attrs } = ctx
+  setup() {
+    const attrs = useAttrs()
     return { attrs }
   },
 })

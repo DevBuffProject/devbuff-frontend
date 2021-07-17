@@ -10,13 +10,13 @@
       </div>
       <div
         :class="[
-          'relative w-full inline-flex rounded-md overflow-hidden rounded box-border',
+          'relative w-full inline-flex rounded-lg overflow-hidden box-border',
           'items-baseline cursor-pointer transition-all outline-none',
           'border-2 bg-white dark:bg-blueGray-700',
           errorMessage &&
-            '!border-danger !ring-danger-200 dark:!ring-danger-900',
+            '!border-danger-500 !ring-danger-200 dark:!ring-danger-900',
           isFocused
-            ? 'ring ring-primary-200 dark:ring-primary-900 border-primary'
+            ? 'ring ring-primary-200 dark:ring-primary-900 border-primary-500'
             : 'border-gray-300 dark:border-blueGray-700',
         ]"
         @mousedown="setFocus"
@@ -24,10 +24,16 @@
         <textarea
           v-if="type === 'textarea'"
           ref="field"
-          :class="[
-            'w-full py-2 px-4 bg-transparent outline-none w-full',
-            'resize-none min-h-[100px]',
-          ]"
+          class="
+            w-full
+            py-2
+            px-4
+            bg-transparent
+            outline-none
+            w-full
+            resize-none
+            min-h-[100px]
+          "
           :name="name"
           :id="name"
           :type="type"
@@ -38,14 +44,8 @@
           @focus="onFocus"
         />
 
-        <div
-          v-else
-          class="flex flex-wrap items-stretch relative w-full"
-        >
-          <div
-            class="flex"
-            v-if="svgIconName"
-          >
+        <div v-else class="flex flex-wrap items-stretch relative w-full">
+          <div class="flex" v-if="svgIconName">
             <Svg
               class="
                 flex
@@ -89,7 +89,7 @@
             @input="handleChange"
             @blur="onBlur"
             @focus="onFocus"
-          >
+          />
         </div>
       </div>
     </label>
@@ -98,7 +98,7 @@
       v-motion="'errorMessage'"
       :initial="{ marginTop: -10, opacity: 0 }"
       :enter="{ marginTop: 0, opacity: 1 }"
-      class="flex items-center pt-1 text-xs text-danger"
+      class="flex items-center pt-1 text-xs text-danger-500"
     >
       <span class="mt-px">{{ errorMessage }}</span>
     </div>

@@ -7,10 +7,7 @@
         :lastname="lastname"
         :username="username"
       />
-      <div
-        v-if="!readonly"
-        class="text-sm flex flex-col"
-      >
+      <div v-if="!readonly" class="text-sm flex flex-col">
         <AtomicButton
           v-if="!isApproved"
           type="success"
@@ -23,7 +20,6 @@
         </AtomicButton>
       </div>
     </div>
-    <AtomicDelimiter class="my-4" />
     <div class="flex">
       <AtomicLabel :name="t('specialist')">
         {{ t(`commons.specialist.${specialization}`, true) }}

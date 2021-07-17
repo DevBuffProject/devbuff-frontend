@@ -56,6 +56,7 @@
 import { defineComponent } from 'vue'
 import { useAppearance, useI18n } from '../../composes/utils'
 import { useAuth } from '../../composes/core'
+import { useGlobalState } from '../../composes/core/useGlobalState'
 
 export default defineComponent({
   setup() {

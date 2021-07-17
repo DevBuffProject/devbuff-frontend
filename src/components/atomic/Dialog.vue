@@ -4,16 +4,16 @@
       ref="windowRef"
       class="
         max-w-[800px]
-        my-8
+        my-10
         mx-auto
-        p-8
+        p-4
         overflow-hidden
         relative
         z-50
         bg-white
-        dark:bg-blueGray-700
+        dark:bg-blueGray-700 dark:border dark:border-blueGray-500
         shadow-2xl
-        rounded-xl
+        rounded-2xl
       "
     >
       <h1 v-if="title" class="mt-0">
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, onUnmounted } from 'vue'
+import { defineComponent } from 'vue'
 import AtomicOverlay from './Overlay.vue'
 
 export default defineComponent({

@@ -1,9 +1,13 @@
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, watch, onBeforeUpdate, onUpdated } from 'vue'
 import Masonry from 'masonry-layout'
+import { get, set, whenever } from '@vueuse/core'
 
 export const useMasonry = (target, options) => {
   const masonry = ref()
-  nextTick(() => (masonry.value = new Masonry('#ideas', options)))
+  onUpdated(target, alert)
+  whenever(target, () =>
+    nextTick(() => set(masonry, new Masonry(get(target), options))),
+  )
 
-  return { masonry: masonry.value }
+  return { masonry }
 }

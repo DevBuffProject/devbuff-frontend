@@ -2,28 +2,26 @@ import { useCookies } from '@vueuse/integrations'
 import { useApi } from './useApi'
 import { computed, ref } from 'vue'
 
+const { request } = useApi()
+
+const cookieBaseOptions = { SameSite: 'Lax', path: '/' }
 const PROVIDERS = {
   GitHub: 'GitHub',
   GitLab: 'GitLab',
 }
 
-const { request } = useApi()
+const isAdmin = ref(false)
+
 const cookies = useCookies(['access_token', 'refresh_token'], {
   autoUpdateDependencies: true,
 })
-const cookieBaseOptions = { SameSite: 'Lax', path: '/' }
-
-const tokens = computed(() => {
-  return {
-    accessToken: cookies.get('access_token'),
-    refreshToken: cookies.get('refresh_token'),
-  }
-})
+const tokens = computed(() => ({
+  accessToken: cookies.get('access_token'),
+  refreshToken: cookies.get('refresh_token'),
+}))
 const isLoggedIn = computed(
   () => !!(tokens.value.accessToken || tokens.value.refreshToken),
 )
-
-const isAdmin = ref(false)
 
 const initAuth = (provider) => {
   if (!PROVIDERS[provider]) throw Error(`Unknown auth provider "${provider}"`)
@@ -79,9 +77,8 @@ const check = async () => {
     method: 'post',
     data: credentials,
   })
-  if (response.data?.authorities?.indexOf('ROLE_ADMIN') !== -1) {
+  if (response.data?.authorities?.indexOf('ROLE_ADMIN') !== -1)
     isAdmin.value = true
-  }
   return response.data
 }
 const logout = () => {

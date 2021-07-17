@@ -4,11 +4,7 @@
       <router-link v-if="isLoggedIn" to="/" custom v-slot="{ navigate }">
         <div class="mb-8">
           <WidgetUser
-            avatar-gradient-border
-            :avatar="user.avatar"
-            :firstname="user.firstName"
-            :lastname="user.lastName"
-            :username="user.userName"
+            :user="user"
             @click="navigate"
             class="block"
             v-focusable
@@ -17,7 +13,7 @@
       </router-link>
       <div
         v-if="!isLoggedIn"
-        class="p-5 mb-5 bg-primary bg-opacity-10 rounded-xl"
+        class="p-5 mb-5 bg-primary-500 bg-opacity-10 rounded-xl"
       >
         <h4 class="mt-0">
           {{ t('loginVia') }}
@@ -63,17 +59,17 @@
             <div
               :class="[
                 'flex items-center pr-4 pl-3 py-1.5 rounded-full transition-colors',
-                'group-focus:bg-primary-400 group-focus:text-primary group-focus:bg-opacity-10',
-                'group-hover:bg-primary-400 group-hover:text-primary group-hover:bg-opacity-10 group-active:bg-opacity-20',
+                'group-focus:bg-primary-400 group-focus:text-primary-500 group-focus:bg-opacity-10',
+                'group-hover:bg-primary-400 group-hover:text-primary-500 group-hover:bg-opacity-10 group-active:bg-opacity-20',
                 link.activeState !== false && isActive
-                  ? 'text-primary'
+                  ? 'text-primary-500'
                   : 'text-gray-900 dark:text-blueGray-300',
               ]"
             >
               <div class="mr-4 w-6 h-6 flex items-center justify-center">
                 <AtomicLoadingSpinner
                   v-if="link.to === loadingRoute"
-                  class="text-primary"
+                  class="text-primary-500"
                 />
                 <component v-else :is="link.icon" />
               </div>
@@ -83,16 +79,15 @@
         </router-link>
       </template>
       <template v-if="isLoggedIn">
-        <AtomicDelimiter class="mx-10 my-4" />
         <div
           :class="[
-            'flex items-center rounded-full px-4 py-1 mb-2 cursor-pointer transition-all',
-            'hover:bg-danger text-danger hover:bg-opacity-10 focus:bg-danger focus:bg-opacity-10',
+            'flex items-center rounded-full px-4 py-1 mt-8 cursor-pointer transition-all',
+            'hover:bg-danger-500 text-danger-500 hover:bg-opacity-10 focus:bg-danger-500 focus:bg-opacity-10',
           ]"
           v-focusable.indexOnly
           @click="logout"
         >
-          <LogOutIcon class="mr-4" />
+          <LogOutIcon class="mr-3" />
           <span class="text-md font-medium"> {{ t('links.logout') }} </span>
         </div>
       </template>

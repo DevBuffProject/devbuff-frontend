@@ -1,37 +1,46 @@
 <template>
-  <div
-    class="inline-block w-full"
-    ref="containerRef"
-  >
+  <div class="inline-block w-full" ref="containerRef">
     <label
+      class="
+        block
+        min-w-[200px]
+        relative
+        overflow-hidden
+        group
+        z-10
+        transition-all
+        rounded-xl
+        cursor-text
+        bg-white
+        dark:bg-blueGray-800
+        border
+        hover:bg-gray-100
+      "
       :class="[
-        'block min-w-[200px] relative overflow-hidden group z-10',
-        'transition-all rounded-md cursor-text',
-        'bg-white dark:bg-blueGray-900 border hover:bg-gray-100',
         isFocused
-          ? 'border-primary ring ring-primary-200 dark:ring-primary-900'
+          ? 'border-primary-500 ring ring-primary-200 dark:ring-primary-900'
           : 'border-gray-300 dark:border-blueGray-600',
         !!errors.length &&
-          '!border-danger !ring-danger-200 dark:!ring-danger-900',
+          '!border-danger-500 !ring-danger-200 dark:!ring-danger-900',
       ]"
     >
       <span
         v-if="placeholder"
         ref="placeholderRef"
+        class="whitespace-nowrap absolute flex items-center transform"
         :class="[
-          'whitespace-nowrap absolute flex items-center transform',
           isMounted && 'transition-all',
-          isPlaceholderOverflows
+          isPlaceholderOverflows || type === 'textarea'
             ? [
-              'top-0 !ml-1 opacity-70 translate-y-0 text-xs',
-              'cursor-pointer text-black dark:text-blueGray-500',
-            ]
+                'top-0 !ml-1 opacity-70 translate-y-0 text-xs',
+                'cursor-pointer text-black dark:text-blueGray-500',
+              ]
             : [
-              'top-1/2 -translate-y-1/2 text-gray-600',
-              isFocused || modelValue
-                ? 'opacity-30 dark:opacity-50'
-                : 'opacity-70',
-            ],
+                'top-6 -translate-y-1/2 text-gray-600',
+                isFocused || modelValue
+                  ? 'opacity-30 dark:opacity-50'
+                  : 'opacity-70',
+              ],
         ]"
         :style="{
           marginLeft: `${textWidth + 10}px`,
@@ -47,6 +56,7 @@
         v-focusable.indexOnly
         autocomplete="off"
         v-bind="attrs"
+        :type="type === 'textarea' && type"
         :name="name"
         :value="modelValue"
         @focus="onFocus"
@@ -73,10 +83,10 @@
 import {
   computed,
   defineComponent,
-  useContext,
-  unref,
   ref,
   onMounted,
+  useAttrs,
+  useSlots,
 } from 'vue'
 import { useField } from 'vee-validate'
 import { useMotion } from '@vueuse/motion'
@@ -106,7 +116,7 @@ export default defineComponent({
     const { width: placeholderWidth } = useElementBounding(placeholderRef)
     const { width: containerWidth } = useElementBounding(containerRef)
     const { width: textWidth } = useElementBounding(textRef)
-    const { attrs } = useContext()
+    const attrs = useAttrs()
     const {
       handleChange,
       handleBlur,

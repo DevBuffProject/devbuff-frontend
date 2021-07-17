@@ -2,17 +2,9 @@
   <div>
     <h1>{{ idea.name }}</h1>
     <div class="flex flex-wrap items-start my-5">
-      <RouterLink to="/" custom v-slot="{ navigate }">
+      <RouterLink to="/" custom>
         <div class="mb-4 mr-6">
-          <WidgetUser
-            avatar-gradient-border
-            :avatar="getUserProfileUrl(idea.ownerIdea.id)"
-            :firstname="idea.ownerIdea.firstName"
-            :lastname="idea.ownerIdea.lastName"
-            :username="idea.ownerIdea.userName"
-            @click="navigate"
-            v-focusable
-          />
+          <!--          <WidgetUser :user="user" @click="navigate" v-focusable />-->
         </div>
       </RouterLink>
       <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">
@@ -45,7 +37,7 @@
           <span class="opacity-50">вы создатель</span>
           <AtomicActions>
             <template #activator>
-              <div class="flex items-center ml-2 text-primary">
+              <div class="flex items-center ml-2 text-primary-500">
                 {{ t('control.title') }}
                 <ChevronDownIcon />
               </div>

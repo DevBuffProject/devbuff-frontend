@@ -1,6 +1,11 @@
 <template>
   <footer
-    class="border-t border-gray-200 bg-white dark:bg-blueGray-800 dark:border-blueGray-700 py-4"
+    class="
+      border-t border-gray-200
+      bg-white
+      dark:bg-blueGray-800 dark:border-blueGray-700
+      py-4
+    "
   >
     <div class="container mx-auto">
       <div class="flex justify-between">
@@ -12,16 +17,12 @@
         />
 
         <div>
-          <a
-            href="//vercel.com/"
-            target="_blank"
-            rel="nofollow"
-          >
+          <a href="//vercel.com/" target="_blank" rel="nofollow">
             <img
               src="/media/vercel-copy.svg"
               alt="powered by vercel"
               class="h-8"
-            >
+            />
           </a>
         </div>
       </div>

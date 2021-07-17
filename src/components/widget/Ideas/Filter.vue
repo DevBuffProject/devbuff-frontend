@@ -1,91 +1,114 @@
 <template>
-  <div class="relative">
-    <a
-      v-if="somethingSelected"
-      :class="[
-        'absolute right-4 pt-px pl-4 cursor-pointer',
-        'text-xs text-primary font-medium hover:underline',
-        'border-l border-gray-200 dark:border-blueGray-600',
+  <div>
+    <AtomicSwitcher
+      class="mb-4"
+      v-model:value="state.sort"
+      :values="[
+        {
+          title: t('commons.date', true),
+          value: 'date',
+        },
+        {
+          title: t('commons.lastUpdate', true),
+          value: 'lastUpdate',
+        },
       ]"
-      style="z-index: 99"
-      @click="reset"
-    >
-      clear
-    </a>
-    <ul
-      v-if="options.length"
-      class="rounded-lg"
-    >
-      <li
-        v-for="(option, index) in options"
-        :key="option.name"
-        class="mb-8"
+    />
+    <div class="relative">
+      <a
+        v-if="somethingSelected"
+        :class="[
+          'absolute right-4 pt-px pl-4 cursor-pointer',
+          'text-xs text-primary-500 font-medium hover:underline',
+          'border-l border-gray-200 dark:border-blueGray-600 z-50',
+        ]"
+        @click="reset"
+      >
+        clear
+      </a>
+
+      <div class="text-black dark:text-blueGray-50 flex items-center mb-4">
+        <UserIcon class="w-[20px] h-[20px]" />
+        <span class="ml-2">{{ t(`param.specialists`) }}</span>
+      </div>
+
+      <div v-if="!specialistsOptions.length">
+        <AtomicSkeleton class="mb-2 w-2/4" />
+        <AtomicSkeleton class="mb-2 w-1/4" />
+        <AtomicSkeleton class="mb-2 w-2/3" />
+      </div>
+
+      <div
+        v-for="(param, paramIndex) in specialistsOptions"
+        :key="param.value"
         v-motion
         :initial="{ opacity: 0 }"
         :enter="{ opacity: 1 }"
-        :delay="50 * index * 2"
+        :delay="10 * paramIndex"
+        class="mb-2 font-normal text-xs"
       >
-        <div class="text-black dark:text-blueGray-50 flex items-center mb-4">
-          <component
-            :is="option.icon"
-            class="w-[20px] h-[20px]"
-          />
-          <span class="ml-2">{{ t(`param.${option.name}`) }}</span>
-        </div>
-        <ul
-          v-if="option.params"
-          class="font-normal text-xs"
+        <AtomicCheckbox
+          v-model="state.specialists"
+          :value="param.value"
+          v-slot="{ isChecked }"
+          v-focusable
         >
-          <li
-            v-for="(param, paramIndex) in option.params"
-            :key="param.value"
-            v-motion
-            :initial="{ opacity: 0 }"
-            :enter="{ opacity: 1 }"
-            :delay="10 * paramIndex"
-            class="mb-2"
+          <div
+            class="flex items-center -m-1 p-1 rounded cursor-pointer"
+            :class="isChecked && 'bg-primary-500 text-white'"
           >
-            <AtomicCheckbox
-              v-model="state[option.value]"
-              :value="param.value"
-              v-slot="{ isChecked }"
-              v-focusable
-            >
-              <div
-                :class="[
-                  'flex items-center -m-1 p-1 rounded cursor-pointer',
-                  isChecked && 'bg-primary text-white',
-                ]"
-              >
-                <PlusIcon class="mr-2 opacity-50 h-[15px]" />
-                <div class="ml-1">
-                  <div v-if="option.name === 'specialists'">
-                    {{ t(`commons.specialist.${param.name}`, true) }}
-                  </div>
-                  <div v-if="option.name === 'languages'">
-                    {{
-                      tDefault(
-                        `commons.languages.${param.name}`,
-                        param.name,
-                        true,
-                      )
-                    }}
-                  </div>
-                </div>
-              </div>
-            </AtomicCheckbox>
-          </li>
-        </ul>
-      </li>
-    </ul>
+            <PlusIcon class="mr-2 opacity-50 h-[15px]" />
+            <div class="ml-1">
+              {{ t(`commons.specialist.${param.name}`, true) }}
+            </div>
+          </div>
+        </AtomicCheckbox>
+      </div>
+
+      <div
+        v-if="languagesOptions.length"
+        class="text-black dark:text-blueGray-50 flex items-center mb-4 mt-6"
+      >
+        <CodeIcon class="w-[20px] h-[20px]" />
+        <span class="ml-2">{{ t(`param.languages`) }}</span>
+      </div>
+
+      <div
+        v-for="(param, paramIndex) in languagesOptions"
+        :key="param.value"
+        v-motion
+        :initial="{ opacity: 0 }"
+        :enter="{ opacity: 1 }"
+        :delay="10 * paramIndex"
+        class="mb-2 font-normal text-xs"
+      >
+        <AtomicCheckbox
+          v-model="state.languages"
+          :value="param.value"
+          v-slot="{ isChecked }"
+          v-focusable
+        >
+          <div
+            class="flex items-center -m-1 p-1 rounded cursor-pointer"
+            :class="isChecked && 'bg-primary-500 text-white'"
+          >
+            <PlusIcon class="mr-2 opacity-50 h-[15px]" />
+            <div class="ml-1">
+              {{
+                tDefault(`commons.languages.${param.name}`, param.name, true)
+              }}
+            </div>
+          </div>
+        </AtomicCheckbox>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { computed, defineComponent, watch, triggerRef } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
+import { not, useVModel, whenever } from '@vueuse/core'
 import { useSkills } from '../../../composes/core'
-import { useVModel } from '@vueuse/core'
-import { CodeIcon, UserIcon } from '@iconicicons/vue3'
 import { useI18n } from '../../../composes/utils'
 
 const initialFilter = {
@@ -114,59 +137,44 @@ export default defineComponent({
     const somethingSelected = computed(
       () => languageSelected.value || specialistSelected.value,
     )
-    const options = computed(() =>
-      [
-        {
-          name: 'specialists',
-          value: 'specialists',
-          icon: UserIcon,
-          params: specializations.value.map((specialist) => ({
-            value: specialist,
-            name: specialist,
-          })),
-        },
-        specialistSelected.value && {
-          name: 'languages',
-          value: 'languages',
-          icon: CodeIcon,
-          params: languages.value
-            .filter((languageSearched) => {
-              let data = skills.value.find((language) => {
-                return (
-                  language.name === languageSearched &&
-                  language.specializations.find((specialist) => {
-                    return state.value.specialists.includes(specialist.name)
-                  })
-                )
-              })
-
-              return data !== undefined
-            })
-            .map((language) => ({
-              value: language,
-              name: language,
-            })),
-        },
-      ].filter((s) => !!s),
+    const specialistsOptions = computed(() =>
+      specializations.value.map((specialist) => ({
+        value: specialist,
+        name: specialist,
+      })),
+    )
+    const languagesOptions = computed(() =>
+      languages.value
+        .filter((languageSearched) =>
+          skills.value.find(
+            (language) =>
+              language.name === languageSearched &&
+              language.specializations.find((specialist) =>
+                state.value.specialists.includes(specialist.name),
+              ),
+          ),
+        )
+        .map((language) => ({
+          value: language,
+          name: language,
+        })),
     )
 
     const reset = () => (state.value.specialists = [])
 
-    watch(
-      specialistSelected,
-      () => !specialistSelected.value && (state.value.languages = []),
-    )
+    whenever(not(specialistSelected), () => (state.value.languages = []))
     getSkills()
 
     return {
       t,
+      reset,
       tDefault,
       state,
-      options,
       languageSelected,
       specialistSelected,
       somethingSelected,
-      reset,
+      specialistsOptions,
+      languagesOptions,
     }
   },
 })

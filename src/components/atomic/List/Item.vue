@@ -1,8 +1,5 @@
 <template>
-  <li
-    class="px-4 py-2"
-    v-bind="$attrs"
-  >
+  <li class="py-2" v-bind="$attrs">
     <slot />
   </li>
 </template>

@@ -33,7 +33,7 @@ export const useIdea = (id) => {
   }
 
   const joinToIdea = async (uuidIdea = id, uuidSpecialist) => {
-    await request('/idea/join/' + uuidIdea + '/' + uuidSpecialist, {
+    await request(`/idea/join/${uuidIdea}/${uuidSpecialist}`, {
       method: 'put',
     })
   }
@@ -53,9 +53,7 @@ export const useIdea = (id) => {
   const approveUser = async (uuidIdea = id, uuidSpecialisation, uuidUser) => {
     await request(
       `/idea/approve/${uuidIdea}/${uuidSpecialisation}/${uuidUser}`,
-      {
-        method: 'PUT',
-      },
+      { method: 'PUT' },
     )
   }
 

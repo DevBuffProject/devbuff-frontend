@@ -1,5 +1,5 @@
 <template>
-  <div class="relative rounded-full overflow-hidden p-0.5">
+  <div class="relative rounded-full overflow-hidden">
     <div
       :key="random"
       class="
@@ -15,7 +15,7 @@
         z-10
       "
       :style="{
-        backgroundImage: `url(${avatar}?${random})`,
+        backgroundImage: `url(${src})`,
         width: size,
         height: size,
         flex: `0 0 ${size}`,
@@ -30,22 +30,15 @@ import { defineComponent, computed } from 'vue'
 export default defineComponent({
   name: 'AtomicAvatar',
   props: {
-    avatar: {
+    src: {
       type: String,
       default: null,
-    },
-    gradientBorder: {
-      type: Boolean,
-      default: false,
     },
     size: {
       type: String,
       default: '40px',
     },
   },
-  setup() {
-    const random = computed(() => Math.ceil(Math.random() * 1000))
-    return { random }
-  },
+  setup() {},
 })
 </script>

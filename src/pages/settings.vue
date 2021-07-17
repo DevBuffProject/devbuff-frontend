@@ -1,50 +1,57 @@
 <template>
-  <div class="flex">
-    <AtomicNotification
+  <div class="w-max-[800px]">
+    <AtomicAlert> This page under develop </AtomicAlert>
+    <AtomicAlert
       v-if="!user.statusEmailConfirm && isVerifyEmailSent"
-      @click="onResendEmail"
       style="cursor: pointer"
       type="warning"
-      :message="`Your email not confirmed`"
-      :description="`Для того чтобы вы могли получать уведомления о ваших идеях, необходимо подтвердить Email. Переотправить письмо на адрес ${user.email}`"
-    />
-  </div>
-  <div class="flex">
+    >
+      <strong>Your email not confirmed</strong>
+      Для того чтобы вы могли получать уведомления о ваших идеях, необходимо
+      подтвердить Email.
+      <div class="mt-4">
+        <AtomicButton
+          is-small
+          type="success"
+          @click="onResendEmail"
+          class="mr-2"
+        >
+          Отправить
+        </AtomicButton>
+        еще раз письмо на адрес <u>{{ user.email }}</u>
+      </div>
+    </AtomicAlert>
+
+    <div class="flex justify-center">
+      <WidgetSettingsAvatar class="my-4" />
+    </div>
     <AtomicNotification
       v-if="conflictMessage"
       type="danger"
       :message="t('error.confict')"
       :description="conflictMessage"
     />
-  </div>
-  <div class="w-full grid grid-cols-12">
-    <h3 class="col-span-12">
-      {{ t('form.user') }}
-    </h3>
-    <AtomicForm
-      :data="data"
-      @submit="onSubmit"
-      class="col-span-12"
-    />
-  </div>
-  <div class="grid grid-cols-12">
-    <h3 class="col-span-12">
-      {{ t('form.skills') }}
-    </h3>
-    <WidgetProfileSkills class="col-span-12 w-full h-auto" />
+    <AtomicForm :data="data" @submit="onSubmit" />
+    <div>
+      <div>
+        <WidgetProfileSkills />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { defineComponent, ref, computed } from 'vue'
 import { useUser } from '../composes/core'
-import * as yup from 'yup'
 import { useI18n } from '../composes/utils'
+import * as yup from 'yup'
 
 export default defineComponent({
   async setup() {
     const { t } = useI18n('pages.settings')
     const { user, getUser, saveUserData, resendEmail } = useUser()
+
+    await getUser()
 
     const data = [
       {
@@ -111,7 +118,7 @@ export default defineComponent({
         name: 'socialNetworks:telegram',
         value: user.value.socialNetworks.telegram,
         placeholder: 'username',
-        svgIconName: 'Telegram',
+        // svgIconName: 'Telegram',
       },
       {
         schema: yup
@@ -122,7 +129,7 @@ export default defineComponent({
         name: 'socialNetworks:discord',
         value: user.value.socialNetworks.discord,
         placeholder: 'DevBuffUser#1234',
-        svgIconName: 'Discord',
+        // svgIconName: 'Discord',
       },
       {
         schema: yup
@@ -133,7 +140,7 @@ export default defineComponent({
         name: 'socialNetworks:skype',
         value: user.value.socialNetworks.skype,
         placeholder: 'username',
-        svgIconName: 'Skype',
+        // svgIconName: 'Skype',
       },
       {
         schema: yup
@@ -182,9 +189,11 @@ export default defineComponent({
     const conflictMessage = computed(() => {
       if (conflictFields.value.length === 0) return undefined
 
-      return conflictFields.value.map(value => {
-        return t(`fields.${value}`)
-      }).join(', ')
+      return conflictFields.value
+        .map((value) => {
+          return t(`fields.${value}`)
+        })
+        .join(', ')
     })
 
     return {

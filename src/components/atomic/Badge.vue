@@ -15,7 +15,7 @@
         items-center
         justify-center
         text-center text-xs text-white
-        bg-success
+        bg-success-500
         rounded-xl
         shadow
       "
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { useContext } from 'vue'
+import { useAttrs } from 'vue'
 
 export default {
   name: 'AtomicBadge',
@@ -34,7 +34,7 @@ export default {
     value: { type: [String, Number], default: null },
   },
   setup() {
-    const { attrs } = useContext()
+    const attrs = useAttrs()
 
     return {
       attrs,

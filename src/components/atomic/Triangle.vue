@@ -58,7 +58,7 @@
 </style>
 
 <script>
-import { defineComponent, useContext, useCssModule } from 'vue'
+import { defineComponent, useAttrs, useCssModule } from 'vue'
 
 export default defineComponent({
   name: 'AtomicTriangle',
@@ -72,7 +72,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const { attrs } = useContext()
+    const attrs = useAttrs()
     const styles = useCssModule()
 
     return { styles, attrs }

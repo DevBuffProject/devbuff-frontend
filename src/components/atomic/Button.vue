@@ -1,45 +1,50 @@
 <template>
   <button
     class="
-      px-6
+      px-10
       overflow-hidden
-      rounded-md
+      rounded-lg
       relative
       inline-block
       text-center
       transition-all
-      border
-      focus:ring
-      focus:outline-none
+      focus:(outline-none
+      ring ring-opacity-50)
     "
     :class="[
+      colorType === 'muted' && [
+        `
+          bg-gray-500 hover:bg-opacity-20 active:bg-opacity-30
+          dark:(bg-blueGray-500 hover:bg-opacity-30 active:bg-opacity-20)
+        `,
+        isDepressed
+          ? 'bg-opacity-0 dark:bg-opacity-0'
+          : 'bg-opacity-10 dark:bg-opacity-40',
+      ],
       {
-        'bg-primary hover:bg-primary-400 active:bg-primary-600 hover:border-primary-400 active:border-primary-600 border-primary ring-primary-300':
+        'bg-primary-500 ring-primary-500 hover:bg-primary-400 active:bg-primary-600':
           colorType === 'primary',
-        'bg-success hover:bg-success-400 active:bg-success-600 hover:border-success-400 active:border-success-600 border-success ring-success-300':
+        'bg-success-500 ring-success-500 hover:bg-success-400 active:bg-success-600':
           colorType === 'success',
-        'bg-warning hover:bg-warning-400 active:bg-warning-600 hover:border-warning-400 active:border-warning-600 border-warning ring-warning-300':
+        'bg-warning ring-warning-500 hover:bg-warning-400 active:bg-warning-600':
           colorType === 'warning',
-        'bg-danger hover:bg-danger-400 active:bg-danger-600 hover:border-danger-400 active:border-danger-600 border-danger ring-danger-300':
+        'bg-danger-500 ring-danger-500 hover:bg-danger-400 active:bg-danger-600':
           colorType === 'danger',
-        'bg-opacity-10 border-opacity-0 hover:bg-opacity-20 hover:border-opacity-0 active:bg-opacity-30 active:border-opacity-0 focus:ring-opacity-30':
-          isDepressed,
-        'py-1': isSmall,
-        'py-1.5': !isSmall,
       },
+      isSmall ? 'py-1' : 'py-2',
     ]"
     v-bind="attrs"
   >
     <span
       :class="[
-        'flex items-center justify-center',
+        'flex items-center justify-center font-medium',
         isDepressed && [
-          colorType === 'primary' && 'text-primary',
-          colorType === 'success' && 'text-success',
+          colorType === 'primary' && 'text-primary-500',
+          colorType === 'success' && 'text-success-500',
           colorType === 'warning' && 'text-warning',
-          colorType === 'danger' && 'text-danger',
+          colorType === 'danger' && 'text-danger-500',
         ],
-        !isDepressed && !isMuted && 'text-white',
+        type === 'muted' ? 'dark:text-white' : 'text-white',
         isSmall && 'text-sm',
       ]"
     >
@@ -48,10 +53,8 @@
       </span>
       <span
         v-if="slots.default"
-        :class="[
-          'font-semibold whitespace-nowrap',
-          loading && 'invisible relative',
-        ]"
+        class="whitespace-nowrap"
+        :class="loading && 'invisible relative'"
       >
         <slot />
       </span>
@@ -70,14 +73,14 @@
       "
     >
       <atomic-loading-spinner
-        :class="isMuted ? 'text-black dark:text-white' : 'text-white'"
+        :class="type === 'muted' ? 'text-black dark:text-white' : 'text-white'"
       />
     </span>
   </button>
 </template>
 
 <script>
-import { defineComponent, computed, useContext } from 'vue'
+import { defineComponent, computed, useAttrs, useSlots } from 'vue'
 
 const types = ['muted', 'primary', 'success', 'warning', 'danger']
 const defaultType = 'muted'
@@ -116,14 +119,14 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { attrs, slots } = useContext()
-    const isMuted = computed(() => props.type === 'muted')
+    const attrs = useAttrs()
+    const slots = useSlots()
     const isTypeSupports = computed(() => types.includes(props.type))
     const colorType = computed(() =>
       isTypeSupports.value ? props.type : defaultType,
     )
 
-    return { attrs, slots, isMuted, isTypeSupports, colorType }
+    return { attrs, slots, isTypeSupports, colorType }
   },
 })
 </script>

@@ -1,20 +1,21 @@
 <template>
-  <div class="h-screen flex flex-col">
-    <div class="sticky top-0 z-50">
-      <Header />
-    </div>
-    <div class="grid grid-cols-10 gap-8 container mx-auto mt-8">
-      <Sidebar class="col-span-2" />
+  <div>
+    <div class="grid grid-cols-10 gap-8 container mx-auto mt-26">
+      <Header class="fixed w-full top-0 left-0 z-50" />
+
+      <Sidebar class="col-span-2 h-min sticky top-26" />
       <div class="col-span-8">
         <router-view :route="mainRoute" v-slot="{ Component, route }">
           <template v-if="Component">
             <suspense>
-              <div class="h-full container">
+              <div class="h-full container" :key="route.name">
                 <AtomicBreadcrumbs
                   v-if="route?.meta.breadcrumbs"
                   :items="breadcrumbs"
                 />
-                <h1>{{ route.meta.name }}</h1>
+                <h2 class="sticky top-3 z-50 inline-block">
+                  {{ route.meta.name }}
+                </h2>
                 <component :is="Component" />
               </div>
               <template #fallback>
@@ -39,7 +40,7 @@
           v-slot="{ Component: Dialog }"
         >
           <suspense v-if="Dialog">
-            <AtomicDialog :visible="true" @onClose="back">
+            <AtomicDialog visible @onClose="back">
               <component :is="dialogRoute?.meta.preview || Dialog" />
             </AtomicDialog>
 
@@ -61,31 +62,35 @@ import {
   computed,
   shallowRef,
   onErrorCaptured,
-  defineAsyncComponent,
+  watch,
 } from 'vue'
-import { set, useTitle } from '@vueuse/core'
+import { set, useStorage, useTitle, useWindowScroll } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 import LoadingOverlay from './components/atomic/Loading/Overlay.vue'
+import Header from './components/layout/Header.vue'
+import Sidebar from './components/layout/Sidebar.vue'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+import { useGlobalState } from './composes/core/useGlobalState'
 
 export default defineComponent({
   components: {
-    Header: defineAsyncComponent(() =>
-      import('./components/layout/Header.vue'),
-    ),
-    Sidebar: defineAsyncComponent(() =>
-      import('./components/layout/Sidebar.vue'),
-    ),
+    Header,
+    Sidebar,
     LoadingOverlay,
   },
   setup() {
     useTitle('DefBuff')
 
     const router = useRouter()
+    const { y: windowScroll } = useWindowScroll()
     // fix vue-router length undefined
-    const mainRoute = shallowRef({ matched: [] }) // TODO: rename
+    const mainRoute = shallowRef({ matched: [] })
     const dialogRoute = shallowRef(null)
     const isDialog = ref(false)
+    const isPageLoading = ref(false)
     const error = ref(null)
+    // TODO: useBreadcrumbs
     const breadcrumbs = computed(() => {
       const breadcrumbs = mainRoute.value?.meta.breadcrumbs || []
       const crumbRoutes = router.options.routes
@@ -96,7 +101,18 @@ export default defineComponent({
 
     const back = () => router.back()
 
+    router.beforeEach(() => {
+      NProgress.start()
+      set(isPageLoading, true)
+    })
+    router.afterEach(() =>
+      setTimeout(() => {
+        NProgress.done()
+        set(isPageLoading, false)
+      }, 100),
+    )
     router.beforeResolve((to, from, next) => {
+      set(isPageLoading, true)
       set(isDialog, Boolean(to.params._isDialog))
       set(dialogRoute, isDialog.value ? to : null)
       // Prevent reactive triggers if background route isn't changed
@@ -108,16 +124,16 @@ export default defineComponent({
     onErrorCaptured((err) => set(error, err))
     provide('route', { main: mainRoute, dialog: dialogRoute })
 
-    const LayoutHeader = ref(null)
-
     return {
       isDialog,
       mainRoute,
       dialogRoute,
       breadcrumbs,
-      LayoutHeader,
+      isPageLoading,
+      windowScroll,
       error,
       back,
+      a: computed(() => windowScroll.value),
     }
   },
 })

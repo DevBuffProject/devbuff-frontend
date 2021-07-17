@@ -1,9 +1,6 @@
 <template>
   <div class="relative">
-    <input
-      type="hidden"
-      :value="selectedValue"
-    >
+    <input type="hidden" :value="selectedValue" />
     <atomic-form-input
       v-model="searchValue"
       :placeholder="selectedValue || placeholder"
@@ -14,10 +11,7 @@
       @input="onInput"
     >
       <template #dropdown="{ hideDropdown }">
-        <v-scroll
-          class="w-full"
-          style="max-height: 200px"
-        >
+        <v-scroll class="w-full" style="max-height: 200px">
           <div class="divide-y divide-gray-200 dark:divide-blueGray-700">
             <div
               :class="[
@@ -84,14 +78,17 @@ export default {
     },
     relatedOption() {
       return this.options.find(
-        ({ value }) => String(value).toLowerCase() === String(this.value).toLowerCase()
+        ({ value }) =>
+          String(value).toLowerCase() === String(this.value).toLowerCase(),
       )
     },
     finalOptions() {
       return this.noSearch
         ? this.options
         : this.options.filter(({ label }) =>
-            String(label).toLowerCase().startsWith(this.searchValue.toLowerCase())
+            String(label)
+              .toLowerCase()
+              .startsWith(this.searchValue.toLowerCase()),
           )
     },
   },

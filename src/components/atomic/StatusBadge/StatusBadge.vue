@@ -17,7 +17,7 @@
       target="_blank"
       :class="[
         'transition-colors border-b',
-        'border-opacity-10 hover:text-primary hover:border-primary hover:border-opacity-20',
+        'border-opacity-10 hover:text-primary-500 hover:border-primary-500 hover:border-opacity-20',
       ]"
     >
       {{ description }}

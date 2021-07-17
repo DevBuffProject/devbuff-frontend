@@ -3,17 +3,17 @@
     <h1>{{ idea.name }}</h1>
     <div class="mb-4 px-2">
       <div class="flex flex-wrap items-start">
-        <RouterLink to="/" custom v-slot="{ navigate }">
+        <RouterLink to="/" custom>
           <div class="mr-6">
-            <WidgetUser
-              avatar-gradient-border
-              :avatar="getUserProfileUrl(idea.ownerIdea.id)"
-              :firstname="idea.ownerIdea.firstName"
-              :lastname="idea.ownerIdea.lastName"
-              :username="idea.ownerIdea.userName"
-              @click="navigate"
-              v-focusable
-            />
+            <!--            <WidgetUser-->
+            <!--              avatar-gradient-border-->
+            <!--              :avatar="getUserProfileUrl(idea.ownerIdea.id)"-->
+            <!--              :firstname="idea.ownerIdea.firstName"-->
+            <!--              :lastname="idea.ownerIdea.lastName"-->
+            <!--              :username="idea.ownerIdea.userName"-->
+            <!--              @click="navigate"-->
+            <!--              v-focusable-->
+            <!--            />-->
           </div>
         </RouterLink>
         <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">
@@ -54,7 +54,7 @@
             justify-end
             -mb-8
             py-6
-            text-primary
+            text-primary-500
             hover:underline
           "
         >

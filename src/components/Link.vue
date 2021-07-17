@@ -1,15 +1,8 @@
 <template>
-  <a
-    v-if="isExternal"
-    :href="to"
-    target="_blank"
-  >
+  <a v-if="isExternal" :href="to" target="_blank">
     <slot />
   </a>
-  <RouterLink
-    v-else
-    :to="{ ...to, params: { _isDialog: true } }"
-  >
+  <RouterLink v-else :to="{ ...to, params: { _isDialog: true } }">
     <slot />
   </RouterLink>
 </template>
