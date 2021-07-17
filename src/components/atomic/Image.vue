@@ -2,7 +2,7 @@
   <span
     :class="[
       'overflow-hidden bg-cover inline-flex justify-center items-center',
-      'bg-center bg-gray-200 dark:bg-blueGray-600',
+      'bg-center bg-gray-200 dark:bg-dark-600',
     ]"
     :style="[
       ready && { backgroundImage: `url(${src})` },

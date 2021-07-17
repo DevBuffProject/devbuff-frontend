@@ -22,7 +22,7 @@
       :class="[
         'absolute top-0 -left-px block w-[0px] h-[0px] border-solid',
         'border border-[12px] !border-b-0',
-        'border-gray-200 dark:border-blueGray-700',
+        'border-gray-200 dark:border-dark-700',
         styles.Triangle_border,
         borderClasses,
       ]"
@@ -30,7 +30,7 @@
     <em
       :class="[
         'block w-[0px] h-[0px] border-solid relative',
-        'border border-[11px] !border-b-0 border-white dark:border-blueGray-900',
+        'border border-[11px] !border-b-0 border-white dark:border-dark-900',
         styles.Triangle,
       ]"
     />

@@ -10,9 +10,9 @@
       :class="[
         {
           'border-danger-500': errors.length,
-          'border-gray-200 dark:border-blueGray-700': errors.length === 0,
+          'border-gray-200 dark:border-dark-700': errors.length === 0,
         },
-        'p-4 pb-0 rounded-lg border bg-white dark:bg-blueGray-800',
+        'p-4 pb-0 rounded-lg border bg-white dark:bg-dark-800',
       ]"
     >
       <div class="flex justify-between items-center -mt-4 mb-6 px-0 pt-0 py-4">
@@ -45,7 +45,7 @@
               font-medium
               uppercase
               text-gray-500
-              dark:text-blueGray-500
+              dark:text-dark-500
             "
           >
             ctrl + (shift) + z
@@ -57,10 +57,10 @@
           ref="toolbar"
           :class="[
             {
-              'border-gray-200 dark:border-blueGray-700': errors.length === 0,
+              'border-gray-200 dark:border-dark-700': errors.length === 0,
               'border-danger-500 border-t-gray-200': errors.length,
             },
-            'rounded-lg rounded-t-none border border-t-0 -mt-px bg-gray-100 dark:bg-blueGray-900 pb-2 px-4',
+            'rounded-lg rounded-t-none border border-t-0 -mt-px bg-gray-100 dark:bg-dark-900 pb-2 px-4',
           ]"
         >
           <div class="v-editor__toolbar-tools">
@@ -412,11 +412,11 @@ export default {
   }
 
   &__history-control {
-    @apply py-2 px-3 my-1 cursor-pointer transition-colors flex text-gray-900 dark:text-blueGray-400 hover:text-primary-500;
+    @apply py-2 px-3 my-1 cursor-pointer transition-colors flex text-gray-900 dark:text-dark-400 hover:text-primary-500;
   }
 
   &__history-control:first-of-type {
-    @apply border-r border-gray-200 dark:border-blueGray-700;
+    @apply border-r border-gray-200 dark:border-dark-700;
   }
 
   &__history-control:active,
@@ -435,7 +435,7 @@ export default {
   }
 
   &__toolbar-hightlight {
-    @apply bg-gray-300 dark:bg-blueGray-700 absolute h-4 opacity-0 rounded-md box-border;
+    @apply bg-gray-300 dark:bg-dark-700 absolute h-4 opacity-0 rounded-md box-border;
 
     transform: translate(calc(8px - 0.5rem));
     transition: opacity 0.3s var(--base-transition);
@@ -464,7 +464,7 @@ export default {
   }
 
   &__tools-delimiter {
-    @apply h-4 w-px bg-gray-300 dark:bg-blueGray-700 mx-4;
+    @apply h-4 w-px bg-gray-300 dark:bg-dark-700 mx-4;
   }
 
   &__tool {
