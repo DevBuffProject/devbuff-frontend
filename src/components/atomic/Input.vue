@@ -12,8 +12,8 @@
         rounded-xl
         cursor-text
         bg-white
-        dark:bg-dark-800
         border
+        dark:bg-dark-800
         hover:bg-gray-100
       "
       :class="[
@@ -62,7 +62,7 @@
         @focus="onFocus"
         @blur="onBlur"
         @input="onInput"
-        class="bg-transparent w-full px-4 py-3"
+        class="bg-[transparent] w-full px-4 py-3"
       />
     </label>
     <AtomicTextError
