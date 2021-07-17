@@ -8,7 +8,7 @@
         <router-view :route="mainRoute" v-slot="{ Component, route }">
           <template v-if="Component">
             <suspense>
-              <div class="h-full container">
+              <div class="h-full container" :key="route.name">
                 <AtomicBreadcrumbs
                   v-if="route?.meta.breadcrumbs"
                   :items="breadcrumbs"
