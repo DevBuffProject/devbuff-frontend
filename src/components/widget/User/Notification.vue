@@ -5,14 +5,14 @@
         role="button"
         class="
           hover:bg-gray-100
-          dark:hover:bg-blueGray-900
+          dark:hover:bg-dark-900
           py-4
           px-4
           group
           transition-opacity
         "
         :class="{
-          'bg-gray-100 dark:bg-blueGray-900 text-primary-500': isVisible,
+          'bg-gray-100 dark:bg-dark-900 text-primary-500': isVisible,
         }"
       >
         <AtomicBadge
@@ -29,7 +29,7 @@
     </template>
 
     <div class="-m-4">
-      <div class="py-3 px-6 border-b border-gray-200 dark:border-blueGray-900">
+      <div class="py-3 px-6 border-b border-gray-200 dark:border-dark-900">
         Уведомления
       </div>
       <div
