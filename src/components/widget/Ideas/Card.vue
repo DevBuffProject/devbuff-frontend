@@ -4,12 +4,12 @@
       <div class="flex items-center mb-3">
         <AtomicAvatar
           class="mr-2"
-          size="30px"
-          :avatar="getUserProfileUrl(idea.ownerIdea.id)"
+          size="20px"
+          :src="getUserProfileUrl(idea.ownerIdea.id)"
         />
         <div class="mt-px text-xs">
           {{ idea.ownerIdea.firstName }} {{ idea.ownerIdea.lastName }}
-          <div class="opacity-50">@{{ idea.ownerIdea.userName }}</div>
+          <em class="opacity-30 ml-1">@{{ idea.ownerIdea.userName }}</em>
         </div>
       </div>
 

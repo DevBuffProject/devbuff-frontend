@@ -11,9 +11,9 @@
         relative
         z-50
         bg-white
-        dark:bg-blueGray-700 dark:border-2 dark:border-blueGray-500
+        dark:bg-blueGray-700 dark:border dark:border-blueGray-500
         shadow-2xl
-        rounded-xl
+        rounded-2xl
       "
     >
       <h1 v-if="title" class="mt-0">

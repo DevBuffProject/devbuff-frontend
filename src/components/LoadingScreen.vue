@@ -1,12 +1,7 @@
 <template>
-  <AtomicOverlay
-    visible
-    hide-controls
-    transparent
-    class="backdrop-filter backdrop-blur-[10px]"
-  >
-    <img src="/images/icon.png" alt="logo" class="w-[60px]" />
-  </AtomicOverlay>
+  <div class="h-screen w-screen flex items-center justify-center">
+    <AtomicLoadingLogo />
+  </div>
 </template>
 
 <script>

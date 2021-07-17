@@ -2,7 +2,6 @@
 const colors = require('windicss/colors')
 
 export default {
-  purge: {},
   extract: {
     include: ['index.html', 'src/**/*.{vue,html,jsx,tsx}'],
     exclude: ['node_modules/**/*', '.git/**/*'],

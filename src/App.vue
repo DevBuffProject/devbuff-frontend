@@ -16,7 +16,18 @@
                 <h1>{{ route.meta.name }}</h1>
                 <component :is="Component" />
               </div>
-              <template #fallback> </template>
+              <template #fallback>
+                <div>
+                  <div class="flex items-center">
+                    <AtomicSkeleton class="w-[80px] mr-4" />
+                    <AtomicSkeleton class="w-[120px]" />
+                  </div>
+
+                  <AtomicSkeleton
+                    class="!w-[200px] !h-[40px] !rounded-md mt-4"
+                  />
+                </div>
+              </template>
             </suspense>
           </template>
         </router-view>
@@ -27,7 +38,7 @@
           v-slot="{ Component: Dialog }"
         >
           <suspense v-if="Dialog">
-            <AtomicDialog :visible="true" @onClose="back">
+            <AtomicDialog visible @onClose="back">
               <component :is="dialogRoute?.meta.preview || Dialog" />
             </AtomicDialog>
 
@@ -49,14 +60,16 @@ import {
   computed,
   shallowRef,
   onErrorCaptured,
+  watch,
 } from 'vue'
-import { set, useTitle } from '@vueuse/core'
+import { set, useStorage, useTitle } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 import LoadingOverlay from './components/atomic/Loading/Overlay.vue'
 import Header from './components/layout/Header.vue'
 import Sidebar from './components/layout/Sidebar.vue'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import { useGlobalState } from './composes/core/useGlobalState'
 
 export default defineComponent({
   components: {
@@ -74,6 +87,7 @@ export default defineComponent({
     const isDialog = ref(false)
     const isPageLoading = ref(false)
     const error = ref(null)
+    // TODO: useBreadcrumbs
     const breadcrumbs = computed(() => {
       const breadcrumbs = mainRoute.value?.meta.breadcrumbs || []
       const crumbRoutes = router.options.routes
@@ -86,12 +100,12 @@ export default defineComponent({
 
     router.beforeEach(() => {
       NProgress.start()
-      isPageLoading.value = true
+      set(isPageLoading, true)
     })
     router.afterEach(() =>
       setTimeout(() => {
-        isPageLoading.value = false
         NProgress.done()
+        set(isPageLoading, false)
       }, 100),
     )
     router.beforeResolve((to, from, next) => {
@@ -106,7 +120,6 @@ export default defineComponent({
 
     onErrorCaptured((err) => set(error, err))
     provide('route', { main: mainRoute, dialog: dialogRoute })
-
     return {
       isDialog,
       mainRoute,

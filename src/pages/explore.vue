@@ -1,13 +1,13 @@
 <template>
   <main>
-    <div class="grid grid-cols-6 gap-6">
-      <div class="col-span-4" id="ideas">
-        <div v-if="ideas.length > 0" class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-14 gap-6">
+      <div class="col-span-10" id="ideas">
+        <div ref="ideasRef" v-if="ideas.length > 0" class="">
           <WidgetIdeasCard
             v-for="idea of ideas"
             :key="idea.id"
             :idea="idea"
-            class="mb-6"
+            class="mb-6 w-[calc(50%-10px)]"
           />
         </div>
         <AtomicLoadingOverlay :visible="isLoading" />
@@ -15,7 +15,7 @@
 
       <WidgetIdeasFilter
         v-model="filter"
-        class="col-span-2 sticky top-26 h-min"
+        class="col-span-4 sticky top-26 h-min"
       />
     </div>
   </main>
@@ -23,11 +23,12 @@
 
 <script>
 import { ref, computed, defineComponent, reactive, inject, watch } from 'vue'
-import { useThrottleFn, useTitle } from '@vueuse/core'
+import { templateRef, useThrottleFn, useTitle } from '@vueuse/core'
 import { useIdeas, useAuth } from '../composes/core'
 import { useI18n } from '../composes/utils'
 import { useRouter } from 'vue-router'
 import { useRouteQuery } from '@vueuse/router'
+import { useMasonry } from '../composes/dom'
 
 export default defineComponent({
   async setup() {
@@ -48,14 +49,18 @@ export default defineComponent({
     const { t } = useI18n('pages.explore')
     const { isLoggedIn } = useAuth()
     const router = useRouter()
+
     const sort = filterQueryReactive('sort', true)
     const specialists = filterQueryReactive('specialists')
     const languages = filterQueryReactive('languages')
     const filter = reactive({ specialists, languages, sort })
+
     const throttledGetIdeas = useThrottleFn(
       async () => await getIdeas(filter),
       500,
     )
+
+    useMasonry(templateRef('ideasRef'), { gutter: 10 })
 
     watch(filter, throttledGetIdeas)
     await getIdeas(filter)
