@@ -46,7 +46,7 @@
           <AtomicActions>
             <template #activator>
               <div class="flex items-center ml-2 text-primary">
-                Быстрое управление
+                {{ t('control.title') }}
                 <ChevronDownIcon />
               </div>
             </template>
@@ -58,22 +58,26 @@
                 Stop company
               </AtomicAction>
 
-              <AtomicAction type="danger" class="w-full">
+              <AtomicAction
+                type="danger"
+                class="w-full"
+                @click="deleteIdeaProcess"
+              >
                 <template #icon>
                   <TrashIcon />
                 </template>
-                Delete idea
+                {{ t('control.delete') }}
               </AtomicAction>
               <RouterLink
                 class="w-full"
                 :to="{ name: 'idea-edit', params: { id: idea.id } }"
                 v-slot="{ href, navigate }"
               >
-                <AtomicAction :href="href" @click="navigate">
+                <AtomicAction :href="href" @click="navigate" class="w-full">
                   <template #icon>
                     <EditIcon />
                   </template>
-                  Edit idea
+                  {{ t('control.edit') }}
                 </AtomicAction>
               </RouterLink>
             </div>
@@ -186,6 +190,7 @@ import { defineComponent } from 'vue'
 import { useIdea, useUser, useSso } from '../composes/core'
 import { useTimeAgo, useTitle } from '@vueuse/core'
 import { useI18n } from '../composes/utils'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'IdeaDetail',
@@ -197,13 +202,14 @@ export default defineComponent({
       idea,
       statusPositions,
       languagesForSpecialist,
+      deleteIdea,
       frameworksForSpecialist,
       getIdea,
       getStatusPositions,
       joinToIdea,
       changeStatusIdea,
     } = useIdea(props.id)
-
+    const router = useRouter()
     const { ssoData, getSsoData } = useSso()
     const { t } = useI18n('pages.idea')
     const { getUserProfileUrl, getUser, user } = useUser()
@@ -220,6 +226,14 @@ export default defineComponent({
         (statusPosition) => statusPosition.specializationId === specialistId,
       )
       return result && result.positionStatus
+    }
+
+    const deleteIdeaProcess = () => {
+      deleteIdea().then(() => {
+        router.replace({
+          name: `dashboard`,
+        })
+      })
     }
 
     await getIdea()
@@ -239,6 +253,7 @@ export default defineComponent({
       publishedAgo,
       t,
       send,
+      deleteIdeaProcess,
       changeStatusIdea,
       getUserProfileUrl,
       getStatusAtPosition,

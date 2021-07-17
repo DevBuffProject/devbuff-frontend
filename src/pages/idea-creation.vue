@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full grid grid-cols-12">
+  <div class="grid grid-cols-12 w-full">
     <h3 class="col-span-12">
       {{ t('header') }}
     </h3>
@@ -7,15 +7,16 @@
       :validation-schema="schemas"
       @submit="onSubmit"
       class="
-        col-span-12
-        gap-4
-        bg-white
-        border border-gray-300 border-opacity-30
-        dark:border-blueGray-700
-        dark:bg-blueGray-900
-        p-4
-        rounded-xl
         relative
+        gap-4
+        col-span-12
+        p-4
+        dark:bg-blueGray-900
+        bg-white
+        border
+        dark:border-blueGray-700
+        border-gray-300 border-opacity-30
+        rounded-xl
       "
     >
       <div class="grid grid-cols-12">
@@ -49,9 +50,7 @@
         <div class="col-span-12">
           <WidgetSpecialistPicker :data="data.specialists" />
         </div>
-        <AtomicButton
-          class="col-start-11 col-span-2"
-        >
+        <AtomicButton class="col-span-2 col-start-11">
           {{ t('save') }}
         </AtomicButton>
       </div>
@@ -80,7 +79,9 @@ export default defineComponent({
     const { idea, publishIdea, getIdea, updateIdea } = useIdea()
     const router = useRouter()
     let isEditingMode = false
-    let data = {}
+    let data = {
+      text: '',
+    }
 
     useTitle('Создание идеи')
 

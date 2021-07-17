@@ -2,7 +2,7 @@
   <div :style="[errorMessage && 'border-color: red ']">
     <div
       v-if="label"
-      class="font-medium text-xs mt-2 mb-1 mr-6"
+      class="mb-1 mr-6 mt-2 text-xs font-medium"
       style="min-width: 70px; max-width: 150px"
     >
       {{ label }}
@@ -23,7 +23,7 @@
       v-motion="'errorMessage'"
       :initial="{ marginTop: -10, opacity: 0 }"
       :enter="{ marginTop: 0, opacity: 1 }"
-      class="flex items-center pt-1 text-xs text-danger"
+      class="flex items-center pt-1 text-danger text-xs"
     >
       <span class="mt-px">{{ errorMessage }}</span>
     </div>
