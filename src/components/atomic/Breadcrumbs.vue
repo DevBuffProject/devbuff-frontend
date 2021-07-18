@@ -11,7 +11,7 @@
       </component>
       <ChevronRightIcon
         v-if="index < items.length - 1"
-        class="mx-0.5 -my-2 text-gray-300 dark:text-blueGray-500"
+        class="mx-0.5 -my-2 text-gray-300 dark:text-dark-500"
       />
     </template>
   </div>

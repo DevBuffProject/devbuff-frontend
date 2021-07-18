@@ -12,14 +12,14 @@
         rounded-xl
         cursor-text
         bg-white
-        dark:bg-blueGray-800
         border
+        dark:bg-dark-800
         hover:bg-gray-100
       "
       :class="[
         isFocused
           ? 'border-primary-500 ring ring-primary-200 dark:ring-primary-900'
-          : 'border-gray-300 dark:border-blueGray-600',
+          : 'border-gray-300 dark:border-dark-600',
         !!errors.length &&
           '!border-danger-500 !ring-danger-200 dark:!ring-danger-900',
       ]"
@@ -33,7 +33,7 @@
           isPlaceholderOverflows || type === 'textarea'
             ? [
                 'top-0 !ml-1 opacity-70 translate-y-0 text-xs',
-                'cursor-pointer text-black dark:text-blueGray-500',
+                'cursor-pointer text-black dark:text-dark-500',
               ]
             : [
                 'top-6 -translate-y-1/2 text-gray-600',
@@ -62,7 +62,7 @@
         @focus="onFocus"
         @blur="onBlur"
         @input="onInput"
-        class="bg-transparent w-full px-4 py-3"
+        class="bg-[transparent] w-full px-4 py-3"
       />
     </label>
     <AtomicTextError

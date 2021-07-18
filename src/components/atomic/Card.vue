@@ -3,7 +3,7 @@
     <div
       :class="[
         'bg-white border border-gray-300 border-opacity-30',
-        'dark:border-blueGray-700 dark:bg-blueGray-800 dark:bg-opacity-50',
+        'dark:border-dark-700 dark:bg-dark-800 dark:bg-opacity-50',
         'grid p-4 rounded-xl relative',
         styles.CardShadow,
       ]"

@@ -9,7 +9,7 @@
       <AtomicSkeleton v-else />
       <div
         v-if="!!user.userName"
-        class="text-xs text-gray-500 dark:text-blueGray-400"
+        class="text-xs text-gray-500 dark:text-dark-400"
       >
         {{ `@${user.userName}` }}
       </div>
