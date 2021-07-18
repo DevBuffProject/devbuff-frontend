@@ -2,22 +2,16 @@
   <main>
     <div class="grid grid-cols-14 gap-2">
       <div class="col-span-10" id="ideas">
-        <div
-          v-if="ideas.length > 0"
-          v-masonry
-          transition-duration="0"
-          :gutter="20"
-        >
+        <div v-if="ideas.length > 0">
           <WidgetIdeasCard
             v-for="(idea, index) of ideas"
             :key="idea.id"
             :idea="idea"
-            v-masonry-tile
             v-motion
             :initial="{ scale: 0.95, opacity: 0 }"
             :enter="{ scale: 1, opacity: 1 }"
             :delay="50 * index"
-            class="mb-6 w-[calc(50%-20px)]"
+            class="mb-6"
           />
         </div>
         <AtomicLoadingOverlay :visible="isLoading" />

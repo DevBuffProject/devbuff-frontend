@@ -4,7 +4,8 @@ import { createI18n } from 'vue-i18n'
 import { useQueryString } from './composes/utils'
 import { createMiddleware, getUser } from './middlewares'
 import { MotionPlugin } from '@vueuse/motion'
-import { VueMasonryPlugin } from 'vue-masonry/src/masonry-vue3.plugin'
+// Will raised build error "undefined nextTick"
+// import { VueMasonryPlugin } from 'vue-masonry/src/masonry-vue3.plugin'
 import mitt from 'mitt'
 import messages from '@intlify/vite-plugin-vue-i18n/messages'
 import focusable from './app/directives/focusable'
@@ -44,6 +45,7 @@ app.directive(focusable.name, focusable)
 app.use(router)
 app.use(i18n)
 app.use(MotionPlugin)
-app.use(VueMasonryPlugin)
+// see file head
+// app.use(VueMasonryPlugin)
 
 app.mount('#app')
