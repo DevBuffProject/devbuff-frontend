@@ -1,12 +1,12 @@
 <template>
-  <Form :validation-schema="schemas" class="grid grid-cols-12 gap-4 relative">
+  <Form :validation-schema="schemas" class="grid grid-cols-2 gap-4 relative">
     <div
       v-for="(input, index) in data"
       :key="`key_form-${input.name + index}`"
       :class="[
         input.type === 'textarea' || input.type === 'editor'
-          ? 'col-span-12'
-          : 'col-span-6',
+          ? 'col-span-2'
+          : 'col-span-1',
       ]"
     >
       <div v-if="input.type === 'editor'">
@@ -28,7 +28,7 @@
       />
     </div>
     <slot name="externalForms" />
-    <AtomicButton class="col-start-12"> Save </AtomicButton>
+    <div><AtomicButton class=""> Save </AtomicButton></div>
   </Form>
 </template>
 
