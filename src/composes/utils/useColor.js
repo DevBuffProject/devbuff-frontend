@@ -10,11 +10,8 @@ const isColor = (color) => {
 export const useColor = (colorString) => {
   let color
 
-  if (isColor(colorString)) {
-    color = Color(colorString)
-  } else {
-    color = Color(Stc(colorString))
-  }
+  if (isColor(colorString)) color = Color(colorString)
+  else color = Color(Stc(colorString))
 
   return {
     isColor,

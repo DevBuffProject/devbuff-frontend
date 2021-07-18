@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-12 w-full">
+  <div class="w-full grid grid-cols-12">
     <h3 class="col-span-12">
       {{ t('header') }}
     </h3>
@@ -7,21 +7,14 @@
       :validation-schema="schemas"
       @submit="onSubmit"
       class="
-        relative
-        gap-4
         col-span-12
-        p-4
-        dark:bg-blueGray-900
+        gap-4
         bg-white
-        border
-        dark:border-blueGray-700
-        border-gray-300
-        border-opacity-30
-        border
-        border-gray-300
-        border-opacity-30
-        dark:border-blueGray-700 dark:bg-blueGray-900
+        border border-gray-300 border-opacity-30
+        dark:border-dark-700 dark:bg-dark-900
+        p-4
         rounded-xl
+        relative
       "
     >
       <div class="grid grid-cols-12">
@@ -84,9 +77,7 @@ export default defineComponent({
     const { idea, publishIdea, getIdea, updateIdea } = useIdea()
     const router = useRouter()
     let isEditingMode = false
-    let data = {
-      text: '',
-    }
+    let data = {}
 
     useTitle('Создание идеи')
 
