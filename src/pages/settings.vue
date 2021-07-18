@@ -31,12 +31,15 @@
       :message="t('error.confict')"
       :description="conflictMessage"
     />
-    <AtomicForm :data="data" @submit="onSubmit" />
-    <div>
-      <div>
-        <WidgetProfileSkills />
-      </div>
-    </div>
+    <AtomicTabs>
+      <AtomicTabsTab name="О себе">
+        <AtomicForm :data="data" @submit="onSubmit" />
+      </AtomicTabsTab>
+
+      <AtomicTabsTab name="Скиллы">
+        <WidgetSettingsSkills />
+      </AtomicTabsTab>
+    </AtomicTabs>
   </div>
 </template>
 

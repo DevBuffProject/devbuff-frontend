@@ -367,15 +367,19 @@ export default {
   border-top-color: theme('colors.primary.DEFAULT') !important;
   animation: spinner 5s linear infinite !important;
 }
+
 .ql-clipboard {
   display: none;
 }
+
 .ql-editor.ql-blank {
   position: relative;
 }
+
 .ql-editor {
   overflow: hidden;
 }
+
 .ql-editor.ql-blank::before {
   color: var(--color-muted-darken);
   content: attr(data-placeholder);

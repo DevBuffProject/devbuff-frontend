@@ -17,7 +17,7 @@
           flex
           items-center
           justify-center
-          bg-black bg-opacity-30
+          bg-black bg-opacity-50
         "
         @click="pickFiles"
       >
@@ -26,14 +26,17 @@
           :size="200"
           :percent="uploadProgress"
         />
-        <PhotoIcon
+        <UploadIcon
           class="
-            text-lg text-white
+            p-2
+            text-3xl text-white
             transition-all
-            opacity-50
+            opacity-100
             scale-90
             transform
-            group-hover:opacity-100 group-hover:scale-110
+            bg-black bg-opacity-50
+            group-hover:bg-opacity-100 group-hover:scale-110
+            rounded-full
           "
         />
       </span>

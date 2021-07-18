@@ -3,7 +3,7 @@
     <h1>{{ idea.name }}</h1>
     <div class="mb-4 px-2">
       <div class="flex flex-wrap items-start">
-        <RouterLink to="/" custom v-slot="{ navigate }">
+        <RouterLink to="/" custom>
           <div class="mr-6">
             <!--            <WidgetUser-->
             <!--              avatar-gradient-border-->

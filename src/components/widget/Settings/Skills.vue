@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <swiper
       :simulate-touch="false"
       :lazy="true"
@@ -12,7 +12,7 @@
           <AtomicListItem
             v-for="skill of skills"
             :key="skill.name"
-            :class="['flex justify-between items-center group cursor-pointer']"
+            class="flex justify-between items-center group cursor-pointer"
           >
             <label class="flex items-center w-full" @click.stop>
               <input
@@ -41,7 +41,6 @@
           </AtomicListItem>
         </AtomicList>
       </swiper-slide>
-
       <swiper-slide>
         <AtomicList class="divide-y divide-gray-200">
           <div
