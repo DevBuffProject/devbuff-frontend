@@ -1,9 +1,6 @@
 <template>
   <transition name="slide-up" :css="isTransitionEnabled">
-    <div
-      v-show="isTabVisible"
-      class="absolute top-0 left-0 h-full w-full rounded-xl bg-red-500"
-    >
+    <div v-show="isTabVisible" class="absolute top-0 left-0 h-full w-full">
       <div ref="tab">
         <div class="p-2">
           <slot />
