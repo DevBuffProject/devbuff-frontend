@@ -10,7 +10,7 @@
           <div
             class="
               bg-white
-              dark:bg-blueGray-800
+              dark:bg-dark-800
               p-4
               -mt-px
               z-50

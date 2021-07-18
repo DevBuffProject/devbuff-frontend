@@ -1,46 +1,67 @@
 <template>
   <div v-if="visible">
     <div
-      :class="[
-        'fixed z-50 top-0 left-0 w-screen h-screen',
-        'flex items-center justify-center',
-      ]"
+      class="
+        fixed
+        z-50
+        top-0
+        left-0
+        w-screen
+        h-screen
+        flex
+        items-center
+        justify-center
+      "
     >
-      <suspense>
+      <div
+        class="
+          fixed
+          z-50
+          top-0
+          left-0
+          w-full
+          h-full
+          flex
+          items-center
+          bg-black bg-opacity-80
+        "
+      >
         <div
-          :class="[
-            'fixed z-50 top-0 left-0 w-full h-full',
-            'flex items-center bg-black bg-opacity-40',
-          ]"
+          class="
+            fixed
+            z-40
+            right-0
+            p-8
+            w-1/2
+            h-full
+            flex
+            justify-end
+            group
+            cursor-pointer
+            group
+            cursor-pointer
+          "
+          @click="onClose"
         >
-          <div
-            :class="[
-              'fixed z-40 right-0 p-8 w-1/2 h-full flex justify-end group cursor-pointer',
-              'group cursor-pointer',
-            ]"
-            @click="onClose"
-          >
-            <CloseIcon
-              :class="[
-                'w-[40px] h-[40px] text-white transition-all',
-                'opacity-30 group-hover:opacity-100',
-              ]"
-            />
-          </div>
-          <div
-            class="relative z-50 w-full h-auto max-h-screen py-10"
-            style="overflow: auto; overflow: overlay"
-          >
-            <div class="max-w-[900px] mx-auto">
-              <slot />
-            </div>
-          </div>
+          <CloseIcon
+            class="
+              w-[40px]
+              h-[40px]
+              text-white
+              transition-all
+              opacity-30
+              group-hover:opacity-100
+              ]
+            "
+          />
         </div>
-
-        <template #fallback>
-          <AtomicLoadingOverlay />
-        </template>
-      </suspense>
+        <div
+          class="relative z-50 w-full h-auto max-h-screen"
+          style="overflow: auto; overflow: overlay"
+        >
+          <slot />
+        </div>
+      </div>
     </div>
   </div>
 </template>

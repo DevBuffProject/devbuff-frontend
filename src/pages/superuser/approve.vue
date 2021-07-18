@@ -17,7 +17,7 @@
           <CheckCircleIcon class="text-success-500" />
           <span class="ml-2 font-medium">Одобрить все</span>
         </button>
-        <em class="mx-2 w-px h-6 bg-gray-300 dark:bg-blueGray-700 block" />
+        <em class="mx-2 w-px h-6 bg-gray-300 dark:bg-dark-700 block" />
         <button class="mr-2 inline-flex items-center" @click="apply('decline')">
           <TrashIcon class="text-danger-500" />
           <span class="ml-2 font-medium">Удалить все</span>
@@ -31,7 +31,7 @@
           v-for="idea of pendingIdeas"
           :key="idea.id"
           :class="[
-            // 'bg-gray-100 bg-opacity-50 dark:bg-blueGray-800 dark:bg-opacity-50',
+            // 'bg-gray-100 bg-opacity-50 dark:bg-dark-800 dark:bg-opacity-50',
             '-mx-4 px-4 py-4',
           ]"
         >
