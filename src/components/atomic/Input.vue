@@ -18,7 +18,7 @@
       "
       :class="[
         isFocused
-          ? 'border-primary-500 ring ring-primary-200 dark:ring-primary-900'
+          ? 'border-primary-400 ring ring-primary-200 dark:ring-primary-900'
           : 'border-gray-300 dark:border-dark-600',
         !!errors.length &&
           '!border-danger-500 !ring-danger-200 dark:!ring-danger-900',
@@ -160,9 +160,8 @@ export default defineComponent({
       isErrorVisible.value = false
       errorMessage.value = null
     })
-    whenever(isMounted, () => {
-      placeholderWidthFixed.value = placeholderWidth.value
-    })
+    setTimeout(() => (placeholderWidthFixed.value = placeholderWidth.value))
+    whenever(isMounted, () => {})
     onMounted(() => {
       setTimeout(() => (isMounted.value = true))
     })
