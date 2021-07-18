@@ -1,7 +1,7 @@
 <template>
   <div>
     <AtomicSwitcher
-      class="mb-4"
+      class="mb-8"
       v-model:value="state.sort"
       :values="[
         {
@@ -15,19 +15,18 @@
       ]"
     />
     <div class="relative">
-      <a
-        v-if="somethingSelected"
-        :class="[
-          'absolute right-4 pt-px pl-4 cursor-pointer',
-          'text-xs text-primary-500 font-medium hover:underline',
-          'border-l border-gray-200 dark:border-blueGray-600 z-50',
-        ]"
-        @click="reset"
-      >
-        clear
-      </a>
+      <div class="absolute z-50 -top-1 right-0">
+        <AtomicButton
+          v-if="somethingSelected"
+          is-small
+          type="muted"
+          @click="reset"
+        >
+          clear
+        </AtomicButton>
+      </div>
 
-      <div class="text-black dark:text-blueGray-50 flex items-center mb-4">
+      <div class="text-black dark:text-dark-50 flex items-center mb-4">
         <UserIcon class="w-[20px] h-[20px]" />
         <span class="ml-2">{{ t(`param.specialists`) }}</span>
       </div>
@@ -45,17 +44,35 @@
         :initial="{ opacity: 0 }"
         :enter="{ opacity: 1 }"
         :delay="10 * paramIndex"
-        class="mb-2 font-normal text-xs"
+        class="font-normal text-xs"
       >
         <AtomicCheckbox
           v-model="state.specialists"
           :value="param.value"
           v-slot="{ isChecked }"
-          v-focusable
+          v-focusable.indexOnly
+          class="
+            rounded-md
+            focus:ring focus:ring-primary-200
+            dark:focus:ring-primary-900
+            mb-1
+            -mx-2.5
+          "
         >
           <div
-            class="flex items-center -m-1 p-1 rounded cursor-pointer"
-            :class="isChecked && 'bg-primary-500 text-white'"
+            class="
+              px-2
+              py-1
+              flex
+              transition-all
+              items-center
+              cursor-pointer
+              rounded-md
+            "
+            :class="{
+              'hover:bg-light-700 dark:hover:bg-dark-500': !isChecked,
+              'bg-primary-500 text-white': isChecked,
+            }"
           >
             <PlusIcon class="mr-2 opacity-50 h-[15px]" />
             <div class="ml-1">
@@ -67,7 +84,7 @@
 
       <div
         v-if="languagesOptions.length"
-        class="text-black dark:text-blueGray-50 flex items-center mb-4 mt-6"
+        class="text-black dark:text-dark-50 flex items-center mb-4 mt-6"
       >
         <CodeIcon class="w-[20px] h-[20px]" />
         <span class="ml-2">{{ t(`param.languages`) }}</span>
@@ -86,11 +103,29 @@
           v-model="state.languages"
           :value="param.value"
           v-slot="{ isChecked }"
-          v-focusable
+          v-focusable.indexOnly
+          class="
+            rounded-md
+            focus:ring focus:ring-primary-200
+            dark:focus:ring-primary-900
+            mb-1
+            -mx-2.5
+          "
         >
           <div
-            class="flex items-center -m-1 p-1 rounded cursor-pointer"
-            :class="isChecked && 'bg-primary-500 text-white'"
+            class="
+              px-2
+              py-1
+              flex
+              transition-all
+              items-center
+              cursor-pointer
+              rounded-md
+            "
+            :class="{
+              'hover:bg-light-700': !isChecked,
+              'bg-primary-500 text-white': isChecked,
+            }"
           >
             <PlusIcon class="mr-2 opacity-50 h-[15px]" />
             <div class="ml-1">
