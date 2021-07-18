@@ -69,13 +69,13 @@ export default defineComponent({
     const tabRef = computed(() => get(activeTab, 'tabRef'))
     const { height: tabHeight } = useElementSize(tabRef)
     syncRef(tabHeight, containerHeight)
-    setTimeout(() => {
-      containerRef.value.classList.add('transition-all')
-      containerRef.value.classList.add('ease-linear')
-      containerRef.value.classList.add('duration-1000')
-    })
-
-    // set(containerHeight, tabHeight)
+    onMounted(() =>
+      setTimeout(() => {
+        containerRef.value.classList.add('transition-all')
+        containerRef.value.classList.add('ease-linear')
+        containerRef.value.classList.add('duration-200')
+      }),
+    )
 
     return {
       tabs,
