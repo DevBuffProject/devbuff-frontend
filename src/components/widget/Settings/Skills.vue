@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="efsda">
     <swiper
       :simulate-touch="false"
       :lazy="true"

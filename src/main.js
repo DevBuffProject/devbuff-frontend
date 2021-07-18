@@ -1,4 +1,4 @@
-import { createApp, defineAsyncComponent, defineComponent } from 'vue'
+import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
 import { useQueryString } from './composes/utils'

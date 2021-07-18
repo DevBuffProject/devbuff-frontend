@@ -1,12 +1,13 @@
 <template>
-  <transition name="fade" :css="isTransitionEnabled">
+  <transition name="slide-up" :css="isTransitionEnabled">
     <div
       v-show="isTabVisible"
       class="absolute top-0 left-0 h-full w-full rounded-xl"
     >
-      {{ height }}
       <div ref="tab">
-        <slot />
+        <div class="p-2">
+          <slot />
+        </div>
       </div>
     </div>
   </transition>
@@ -18,13 +19,13 @@ import {
   defineComponent,
   inject,
   nextTick,
-  onMounted,
   ref,
+  onMounted,
 } from 'vue'
 import { get, templateRef } from '@vueuse/core'
 
 export default defineComponent({
-  name: 'TabsSlide',
+  name: 'TabsTab',
   props: {
     name: String,
   },
