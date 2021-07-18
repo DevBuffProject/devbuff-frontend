@@ -5,7 +5,7 @@
       rounded-full
       overflow-hidden
       bg-gray-200
-      dark:bg-blueGray-600
+      dark:bg-dark-600
       relative
     "
     style="min-width: 300px"

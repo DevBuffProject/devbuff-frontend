@@ -17,8 +17,8 @@ export default defineConfig({
       config: 'tailwind.config.js',
     }),
     ViteSvgIcons({
-      iconDirs: [path.resolve(process.cwd()), 'src/assets/svg'],
-      symbolId: 'icon-[dir]-[name]',
+      iconDirs: [path.resolve('src/assets/svg')],
+      symbolId: 'icon-[name]',
     }),
     ViteComponents({
       directoryAsNamespace: true,
