@@ -20,26 +20,28 @@
         </h4>
 
         <AtomicButton
-          class="w-full mb-2 flex items-center justify-center"
+          class="w-full flex items-center justify-center"
           v-focusable.indexOnly
           @click="initAuth(AuthProviders.GitHub)"
         >
           <div class="text-white dark:text-dark-50 flex items-center">
-            <Svg name="Github" />
+            <Svg class="dark:text-black" name="Github" />
             <span class="ml-2">GitHub</span>
           </div>
         </AtomicButton>
 
-        <AtomicButton
-          class="w-full mb-4 flex items-center justify-center"
-          v-focusable.indexOnly
-          @click="initAuth(AuthProviders.GitLab)"
-        >
-          <div class="text-white dark:text-dark-50 flex items-center">
-            <Svg name="Gitlab" />
-            <span class="ml-2">GitLab</span>
-          </div>
-        </AtomicButton>
+        <div class="mt-2 mb-2">
+          <AtomicButton
+            class="w-full flex items-center justify-center"
+            v-focusable.indexOnly
+            @click="initAuth(AuthProviders.GitLab)"
+          >
+            <div class="text-white dark:text-dark-50 flex items-center">
+              <Svg name="Gitlab" />
+              <span class="ml-2">GitLab</span>
+            </div>
+          </AtomicButton>
+        </div>
         <div class="mt-0">
           {{ t('loginReason') }}
         </div>
