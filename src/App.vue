@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="grid grid-cols-10 gap-8 container mx-auto mt-26">
+    <div class="grid grid-cols-10 gap-8 container mx-auto">
       <Header class="fixed w-full top-0 left-0 z-50" />
 
       <Sidebar class="col-span-2 h-min sticky top-26" />
-      <div class="col-span-8">
+      <div class="col-span-8 my-26">
         <router-view :route="mainRoute" v-slot="{ Component, route }">
           <template v-if="Component">
             <suspense>
