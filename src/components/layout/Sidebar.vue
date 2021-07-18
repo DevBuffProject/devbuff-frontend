@@ -20,26 +20,28 @@
         </h4>
 
         <AtomicButton
-          class="w-full mb-2 flex items-center justify-center"
+          class="w-full flex items-center justify-center"
           v-focusable.indexOnly
           @click="initAuth(AuthProviders.GitHub)"
         >
-          <div class="text-white dark:text-blueGray-50 flex items-center">
-            <Svg name="Github" />
+          <div class="text-white dark:text-dark-50 flex items-center">
+            <Svg class="dark:text-black" name="Github" />
             <span class="ml-2">GitHub</span>
           </div>
         </AtomicButton>
 
-        <AtomicButton
-          class="w-full mb-4 flex items-center justify-center"
-          v-focusable.indexOnly
-          @click="initAuth(AuthProviders.GitLab)"
-        >
-          <div class="text-white dark:text-blueGray-50 flex items-center">
-            <Svg name="Gitlab" />
-            <span class="ml-2">GitLab</span>
-          </div>
-        </AtomicButton>
+        <div class="mt-2 mb-2">
+          <AtomicButton
+            class="w-full flex items-center justify-center"
+            v-focusable.indexOnly
+            @click="initAuth(AuthProviders.GitLab)"
+          >
+            <div class="text-white dark:text-dark-50 flex items-center">
+              <Svg name="Gitlab" />
+              <span class="ml-2">GitLab</span>
+            </div>
+          </AtomicButton>
+        </div>
         <div class="mt-0">
           {{ t('loginReason') }}
         </div>
@@ -57,14 +59,25 @@
             v-focusable.indexOnly
           >
             <div
-              :class="[
-                'flex items-center pr-4 pl-3 py-1.5 rounded-full transition-colors',
-                'group-focus:bg-primary-400 group-focus:text-primary-500 group-focus:bg-opacity-10',
-                'group-hover:bg-primary-400 group-hover:text-primary-500 group-hover:bg-opacity-10 group-active:bg-opacity-20',
-                link.activeState !== false && isActive
-                  ? 'text-primary-500'
-                  : 'text-gray-900 dark:text-blueGray-300',
-              ]"
+              class="
+                flex
+                items-center
+                pr-4
+                pl-3
+                py-1.5
+                rounded-full
+                transition-colors
+                group-focus:bg-primary-400
+                group-focus:text-primary-500
+                group-focus:bg-opacity-10
+                group-hover:bg-primary-400
+                group-hover:text-primary-500
+                group-hover:bg-opacity-10
+                group-active:bg-opacity-20
+              "
+              :class="{
+                'text-primary-500': link.activeState !== false && isActive,
+              }"
             >
               <div class="mr-4 w-6 h-6 flex items-center justify-center">
                 <AtomicLoadingSpinner

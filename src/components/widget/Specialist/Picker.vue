@@ -9,7 +9,7 @@
     <div class="grid gap-2 grid-cols-12">
       <div
         :class="[
-          'col-span-3 bg-white border border-gray-300 border-opacity-30 dark:border-blueGray-700 dark:bg-blueGray-900 p-4 rounded-xl relative',
+          'col-span-3 bg-white border border-gray-300 border-opacity-30 dark:border-dark-700 dark:bg-dark-900 p-4 rounded-xl relative',
           errorMessage &&
             '!border-danger-500 !ring-danger-200 dark:!ring-danger-900',
         ]"
@@ -79,10 +79,10 @@
           break-avoid
           relative
           mb-4
-          dark:bg-blueGray-900
+          dark:bg-dark-900
           bg-white
           border
-          dark:border-blueGray-700
+          dark:border-dark-700
           border-gray-300 border-opacity-30
           rounded-xl
         "
@@ -97,7 +97,7 @@
               mb-2
               p-2
               border-b-2
-              dark:border-blueGray-700
+              dark:border-dark-700
               border-gray-300 border-opacity-30
             "
           >

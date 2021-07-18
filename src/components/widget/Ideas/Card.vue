@@ -21,8 +21,8 @@
         <a
           :href="href"
           @click="navigate"
-          v-focusable
-          class="font-semibold text-lg inline-block"
+          v-focusable.indexOnly
+          class="font-semibold text-lg"
         >
           {{ idea.name }}
         </a>
