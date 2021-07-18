@@ -2,7 +2,7 @@
   <div
     class="
       hover:bg-gray-50
-      dark:hover:bg-blueGray-900
+      dark:hover:bg-dark-900
       text-sm
       flex
       items-start

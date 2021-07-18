@@ -5,7 +5,7 @@
       <div class="col-span-1">
         <AtomicCard class="px-0">
           <div
-            class="divide-y divide-gray-200 dark:divide-blueGray-700"
+            class="divide-y divide-gray-200 dark:divide-dark-700"
             v-if="userIdeas?.length > 0"
           >
             <WidgetDashboardIdeaCard
@@ -72,7 +72,7 @@
                 </div>
               </AtomicButton>
               <i
-                class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10"
+                class="bg-gray-200 dark:bg-dark-600 mx-2 w-px h-10"
                 v-if="inspectedIdea.status !== 'PUBLISH'"
               />
               <AtomicButton type="danger">
@@ -84,7 +84,7 @@
                   <span>{{ t('controls.delete') }}</span>
                 </div>
               </AtomicButton>
-              <i class="bg-gray-200 dark:bg-blueGray-600 mx-2 w-px h-10" />
+              <i class="bg-gray-200 dark:bg-dark-600 mx-2 w-px h-10" />
               <AtomicButton type="primary">
                 <div class="flex flex-col items-center justify-center">
                   <EditIcon />

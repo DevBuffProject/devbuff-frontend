@@ -22,7 +22,7 @@
           shadow-md
           backdrop-filter backdrop-blur-[5px]
           bg-black bg-opacity-40
-          dark:bg-blueGray-700 dark:bg-opacity-50
+          dark:bg-dark-700 dark:bg-opacity-50
           text-xl
         "
       >

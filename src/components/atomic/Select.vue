@@ -12,7 +12,7 @@
     >
       <template #dropdown="{ hideDropdown }">
         <v-scroll class="w-full" style="max-height: 200px">
-          <div class="divide-y divide-gray-200 dark:divide-blueGray-700">
+          <div class="divide-y divide-gray-200 dark:divide-dark-700">
             <div
               :class="[
                 'px-4 py-2 cursor-pointer flex items-center',

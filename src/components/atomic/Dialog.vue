@@ -11,7 +11,7 @@
         relative
         z-50
         bg-white
-        dark:bg-blueGray-700 dark:border dark:border-blueGray-500
+        dark:bg-dark-900 dark:border dark:border-dark-500
         shadow-2xl
         rounded-2xl
       "

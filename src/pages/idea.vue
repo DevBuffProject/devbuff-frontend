@@ -80,7 +80,7 @@
           <h4 class="mb-0 mt-0 text-sm font-normal opacity-30">
             {{ t('positions.title') }} - {{ idea.specialist.length }}
           </h4>
-          <div class="dark:divide-blueGray-700 divide-gray-200 divide-y">
+          <div class="dark:divide-dark-700 divide-gray-200 divide-y">
             <div
               class="-mx-4 mt-3 px-4 py-3"
               v-for="specialist in idea.specialist"
