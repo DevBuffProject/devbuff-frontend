@@ -1,11 +1,8 @@
 <template>
-  <Form
-    :validation-schema="schemas"
-    class="grid grid-cols-12 gap-4 p-4 relative"
-  >
+  <Form :validation-schema="schemas" class="grid grid-cols-12 gap-4 relative">
     <div
       v-for="(input, index) in data"
-      :key="`key_form` + input.name + index"
+      :key="`key_form-${input.name + index}`"
       :class="[
         input.type === 'textarea' || input.type === 'editor'
           ? 'col-span-12'
