@@ -3,7 +3,7 @@
 }
 
 body {
-  @apply text-gray-900 dark:text-blueGray-100 bg-gray-50 dark:bg-blueGray-900 bg-opacity-90;
+  @apply text-dark-900 dark:text-white bg-light-50 dark:bg-dark-900 bg-opacity-90;
   user-select: none;
   font-size: 14px;
 }
@@ -41,6 +41,7 @@ svg {
     overflow: overlay;
   }
 }
+
 @layer utilities {
   .scrollbar::-webkit-scrollbar {
     @apply w-2 h-2;
@@ -50,6 +51,7 @@ svg {
     @apply bg-gray-300 dark:bg-white dark:bg-opacity-10 rounded-full opacity-0;
   }
 }
+
 @layer components {
   .container {
     @apply mx-auto w-[1024px]
