@@ -110,16 +110,8 @@ export default defineComponent({
       if (!(to.meta.middleware instanceof Function)) {
         //Ignore page without required middleware
         next()
-      } else if (
-        to.meta.preview !== undefined &&
-        to.params._isDialog === 'true'
-      ) {
-        //Hack for Idea-view :(
-        //Maybe change _isDialog to _isPreview (View without auth)
-        //Or... create 2 different routes
-        next()
       } else {
-        let resultMiddleware = await to.meta.middleware.call()
+        let resultMiddleware = await to.meta.middleware.call(this, to)
         console.log('Result of middleware', resultMiddleware)
         if (resultMiddleware === false) {
           next({

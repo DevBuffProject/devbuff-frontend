@@ -1,5 +1,10 @@
 import { defineAsyncComponent } from 'vue'
-import { createMiddleware, getUser, isAdmin } from './middlewares'
+import {
+  createMiddleware,
+  getUser,
+  isAdmin,
+  isAuthenticated,
+} from './middlewares'
 
 export default [
   {
@@ -61,7 +66,7 @@ export default [
         import('./pages/previews/idea-detail.vue'),
       ),
       breadcrumbs: ['home', 'explore'],
-      middleware: createMiddleware(getUser),
+      middleware: createMiddleware(isAuthenticated),
     },
   },
   {

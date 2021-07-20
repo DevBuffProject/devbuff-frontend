@@ -60,7 +60,6 @@ export default defineComponent({
     const { isLoggedIn } = useAuth()
     const router = useRouter()
 
-    console.log(route.value.query)
     const missingAuthorization = ref(
       Boolean(route.value.query?.missingAuthorization),
     )
