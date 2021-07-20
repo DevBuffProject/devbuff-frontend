@@ -12,7 +12,7 @@ specifiers:
   '@vueuse/motion': 1.5.6
   '@vueuse/router': 4.11.2
   axios: 0.21.1
-  color: 3.2.1
+  color: 4.0.0
   eslint: 7.31.0
   eslint-config-prettier: 8.3.0
   eslint-plugin-prettier-vue: 3.1.0
@@ -52,7 +52,7 @@ dependencies:
   '@vueuse/motion': 1.5.6_vue@3.1.5
   '@vueuse/router': 4.11.2_vue-router@4.0.10+vue@3.1.5
   axios: 0.21.1
-  color: 3.2.1
+  color: 4.0.0
   fastcomments-vue-next: 2.0.1
   lodash: 4.17.21
   masonry-layout: 4.2.2
@@ -916,10 +916,10 @@ packages:
       simple-swizzle: 0.2.2
     dev: false
 
-  /color/3.2.1:
-    resolution: {integrity: sha512-aBl7dZI9ENN6fUGC7mWpMTPNHmWUSNan9tuWN6ahh5ZLNk9baLJOnSMlrQkHcrfFgz2/RigjUVAjdx36VcemKA==}
+  /color/4.0.0:
+    resolution: {integrity: sha512-aVUOa5aYWJSimvei14J5rdxLeljG0EB/uXTovVaaSokW+D4MsAz3MrKsRNaKqPa2KL7Wfvh7PZyIIaaX4lYdzQ==}
     dependencies:
-      color-convert: 1.9.3
+      color-convert: 2.0.1
       color-string: 1.6.0
     dev: false
 
