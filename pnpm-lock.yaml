@@ -10,7 +10,7 @@ specifiers:
   '@vueuse/core': 4.11.2
   '@vueuse/integrations': 4.11.2
   '@vueuse/motion': 1.5.6
-  '@vueuse/router': 4.11.2
+  '@vueuse/router': 5.1.4
   axios: 0.21.1
   color: 3.2.1
   eslint: 7.31.0
@@ -50,7 +50,7 @@ dependencies:
   '@vueuse/core': 4.11.2_vue@3.1.5
   '@vueuse/integrations': 4.11.2_vue@3.1.5
   '@vueuse/motion': 1.5.6_vue@3.1.5
-  '@vueuse/router': 4.11.2_vue-router@4.0.10+vue@3.1.5
+  '@vueuse/router': 5.1.4_vue-router@4.0.10+vue@3.1.5
   axios: 0.21.1
   color: 3.2.1
   fastcomments-vue-next: 2.0.1
@@ -480,12 +480,12 @@ packages:
       vue-demi: 0.10.1_vue@3.1.5
     dev: false
 
-  /@vueuse/router/4.11.2_vue-router@4.0.10+vue@3.1.5:
-    resolution: {integrity: sha512-E98nlkS6MN1eXBi5K5irJzkQeiZ1s5sjmcj9R62bMdST2qbTHb0wGulk3OS/O421OLKnLaBP0+3r1pnDOV6pTQ==}
+  /@vueuse/router/5.1.4_vue-router@4.0.10+vue@3.1.5:
+    resolution: {integrity: sha512-uxqeJMJma/IShPcq462kLQeMQk1dY15J1vjQtffqdMXq8kgpGD6UcjaLJ5c/SOZBOHeBvCMjL3bE3WylpJe3Ag==}
     peerDependencies:
       vue-router: '>=4.0.0-rc.1'
     dependencies:
-      '@vueuse/shared': 4.11.2_vue@3.1.5
+      '@vueuse/shared': 5.1.4_vue@3.1.5
       vue-demi: 0.10.1_vue@3.1.5
       vue-router: 4.0.10_vue@3.1.5
     transitivePeerDependencies:
@@ -495,6 +495,15 @@ packages:
 
   /@vueuse/shared/4.11.2_vue@3.1.5:
     resolution: {integrity: sha512-vTbTi6ou7ljH3CkKVoaIaCAoWB5T1ewSogpL6VnO1duMPNuiv7x8K/LunMbnTg4tVyt6QwaiCuEq/kyS6AUBRg==}
+    dependencies:
+      vue-demi: 0.10.1_vue@3.1.5
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
+  /@vueuse/shared/5.1.4_vue@3.1.5:
+    resolution: {integrity: sha512-C0xiMv8+sFI3WhXdlrcLKI4d4dFnouHe4Te51cxWgcmpW7S8eUiM8fXPaQVxUQZ4E9PCx3zEZpNpCLzQa+6Lag==}
     dependencies:
       vue-demi: 0.10.1_vue@3.1.5
     transitivePeerDependencies:
