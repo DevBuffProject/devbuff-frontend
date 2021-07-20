@@ -1,4 +1,5 @@
-import { defineAsyncComponent, defineComponent } from 'vue'
+import { defineAsyncComponent } from 'vue'
+import { createMiddleware, getUser, isAdmin } from './middlewares'
 
 export default [
   {
@@ -28,6 +29,7 @@ export default [
     meta: {
       name: 'Dashboard',
       breadcrumbs: ['home', 'explore'],
+      middleware: createMiddleware(getUser),
     },
   },
   {
@@ -35,10 +37,8 @@ export default [
     path: '/create',
     component: () => import('./pages/idea-creation.vue'),
     meta: {
-      // preview: defineAsyncComponent(() =>
-      //   import('./components/previews/idea.vue'),
-      // ),
       breadcrumbs: ['home', 'explore'],
+      middleware: createMiddleware(getUser),
     },
   },
   {
@@ -47,10 +47,8 @@ export default [
     component: () => import('./pages/idea-creation.vue'),
     props: true,
     meta: {
-      // preview: defineAsyncComponent(() =>
-      //   import('./components/previews/idea.vue'),
-      // ),
       breadcrumbs: ['home', 'explore'],
+      middleware: createMiddleware(getUser),
     },
   },
   {
@@ -63,6 +61,7 @@ export default [
         import('./pages/previews/idea-detail.vue'),
       ),
       breadcrumbs: ['home', 'explore'],
+      middleware: createMiddleware(getUser),
     },
   },
   {
@@ -72,6 +71,7 @@ export default [
     meta: {
       name: 'Settings',
       breadcrumbs: ['home'],
+      middleware: createMiddleware(getUser),
     },
   },
   {
@@ -81,6 +81,7 @@ export default [
     meta: {
       name: 'Superuser',
       breadcrumbs: ['home'],
+      middleware: createMiddleware(isAdmin),
     },
   },
   {
@@ -90,6 +91,7 @@ export default [
     meta: {
       name: 'Approve',
       breadcrumbs: ['home', 'superuser'],
+      middleware: createMiddleware(isAdmin),
     },
   },
 

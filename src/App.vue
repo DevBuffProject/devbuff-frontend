@@ -61,12 +61,14 @@ import { set, useTitle } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import { useAuth } from './composes/core'
 
 export default defineComponent({
   setup() {
     useTitle('DefBuff')
     const router = useRouter()
 
+    const { isLoggedIn, isAdmin } = useAuth()
     // fix vue-router
     const breadcrumbs = computed(() => {
       const breadcrumbs = mainRoute.value?.meta.breadcrumbs || []
@@ -103,6 +105,34 @@ export default defineComponent({
         set(isPageLoading, false)
       }, 100),
     )
+
+    router.beforeEach(async (to, from, next) => {
+      if (!(to.meta.middleware instanceof Function)) {
+        //Ignore page without required middleware
+        next()
+      } else if (
+        to.meta.preview !== undefined &&
+        to.params._isDialog === 'true'
+      ) {
+        //Hack for Idea-view :(
+        //Maybe change _isDialog to _isPreview (View without auth)
+        //Or... create 2 different routes
+        next()
+      } else {
+        let resultMiddleware = await to.meta.middleware.call()
+        console.log('Result of middleware', resultMiddleware)
+        if (resultMiddleware === false) {
+          next({
+            name: 'explore',
+            query: {
+              missingAuthorization: true,
+            },
+          })
+        } else {
+          next()
+        }
+      }
+    })
 
     const back = () => router.back()
 
