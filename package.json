@@ -3,6 +3,7 @@
   "version": "3.0.0",
   "scripts": {
     "dev": "vite",
+    "devWithNetwork": "vite --host",
     "build": "vite build",
     "serve": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore . --fix",
