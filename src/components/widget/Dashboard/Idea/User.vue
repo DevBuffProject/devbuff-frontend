@@ -1,12 +1,7 @@
 <template>
   <AtomicCard class="mb-6">
     <div class="flex items-center justify-between">
-      <WidgetUser
-        :avatar="avatar"
-        :firstname="firstname"
-        :lastname="lastname"
-        :username="username"
-      />
+      <WidgetUser :user="userData" />
       <div v-if="!readonly" class="text-sm flex flex-col">
         <AtomicButton
           v-if="!isApproved"
@@ -38,7 +33,7 @@
 
 <script>
 import { useUser, useIdea } from '../../../../composes/core'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from '../../../../composes/utils'
 
 const rooElement = window.document.documentElement
@@ -94,8 +89,9 @@ export default {
       default: '',
     },
   },
-  setup() {
+  setup(props) {
     const { t } = useI18n('components.widget.dashboard.idea.user')
+    const { getUserProfileUrl } = useUser()
     const { approveUser } = useIdea()
     const isApproved = ref(false)
     const approveUserToIdea = (uuidIdea, uuidSpecialisation, uuidUser) => {
@@ -103,17 +99,19 @@ export default {
       approveUser(uuidIdea, uuidSpecialisation, uuidUser)
     }
 
+    const userData = {
+      avatar: getUserProfileUrl(props.userId),
+      userName: props.username,
+      lastName: props.lastname,
+      firstName: props.firstname,
+    }
+
     return {
       t,
+      userData,
       isApproved,
       approveUserToIdea,
     }
-  },
-  computed: {
-    avatar() {
-      const { getUserProfileUrl } = useUser()
-      return getUserProfileUrl(this.userId)
-    },
   },
 }
 </script>

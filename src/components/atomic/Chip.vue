@@ -1,10 +1,10 @@
 <template>
   <span
-    :class="[
-      'text-xs px-4 py-px font-light rounded-full',
-      type !== 'auto' &&
-        'bg-gray-200 dark:bg-blueGray-700 text-gray-500 text-blueGray-300',
-    ]"
+    class="text-xs px-4 py-px font-light rounded-full"
+    :class="{
+      'bg-gray-200 dark:bg-dark-500 text-dark-50 dark:text-dark-50':
+        type !== 'auto',
+    }"
     :style="
       type === 'auto' && {
         backgroundColor: colors.bg,

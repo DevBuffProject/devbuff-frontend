@@ -4,7 +4,7 @@
       backdrop-blur-[10px]
       flex flex-col
       items-center
-      dark:bg-blueGray-800
+      dark:bg-dark-800
       bg-white bg-opacity-80
       dark:bg-opacity-80
       backdrop-filter
@@ -31,7 +31,7 @@
         <nav
           :class="[
             'flex items-center pl-6',
-            'border-l border-gray-200 dark:border-blueGray-600',
+            'border-l border-gray-200 dark:border-dark-600',
           ]"
           v-if="isLoggedIn"
         >

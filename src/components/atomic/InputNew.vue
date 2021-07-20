@@ -12,12 +12,12 @@
         :class="[
           'relative w-full inline-flex rounded-lg overflow-hidden box-border',
           'items-baseline cursor-pointer transition-all outline-none',
-          'border-2 bg-white dark:bg-blueGray-700',
+          'border-2 bg-white dark:bg-dark-700',
           errorMessage &&
             '!border-danger-500 !ring-danger-200 dark:!ring-danger-900',
           isFocused
             ? 'ring ring-primary-200 dark:ring-primary-900 border-primary-500'
-            : 'border-gray-300 dark:border-blueGray-700',
+            : 'border-gray-300 dark:border-dark-700',
         ]"
         @mousedown="setFocus"
       >
