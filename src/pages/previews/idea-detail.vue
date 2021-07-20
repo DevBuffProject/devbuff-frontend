@@ -22,17 +22,6 @@
         <AtomicLabel :name="t('info.status.title')" class="mb-4 mt-0 mx-4">
           {{ t(`info.status.${idea.status}`) }}
         </AtomicLabel>
-        <AtomicLabel
-          v-if="isOwnerIdea"
-          :name="t('info.moderationStatus.title')"
-          class="mb-4 mt-0 mx-4"
-        >
-          {{
-            idea.waitingValidation
-              ? t('info.moderationStatus.waiting')
-              : t('info.moderationStatus.approved')
-          }}
-        </AtomicLabel>
       </div>
     </div>
     <div class="">
@@ -77,7 +66,7 @@ export default defineComponent({
   async setup() {
     const { dialog: route } = inject('route')
     const { t } = useI18n('pages.preview.idea')
-    const { getUserProfileUrl, getUser } = useUser()
+    const { getUserProfileUrl } = useUser()
     const {
       idea,
       getIdea,
@@ -88,7 +77,6 @@ export default defineComponent({
     const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
 
     await getIdea()
-    await getUser()
 
     useTitle(`${idea.value.name} - DevBuff`)
 
