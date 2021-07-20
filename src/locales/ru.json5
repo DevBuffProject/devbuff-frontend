@@ -34,7 +34,11 @@
     },
     explore: {
       notFound: "С заданными параметрами идей не найдено",
-      missingAuthorization: "Необходимо авторизоваться для доступа ко всем разделам площадки"
+      missingAuthorization: {
+        notAuthorization: "Необходимо авторизоваться для доступа ко всем разделам площадки",
+        notHavePermission: "У вас нет доступа!"
+      },
+
     },
     idea: {
       info: {

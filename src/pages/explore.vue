@@ -7,7 +7,12 @@
         type="danger"
         class="col-span-10"
       >
-        {{ t('missingAuthorization') }}
+        <div v-if="!isLoggedIn">
+          {{ t('missingAuthorization.notAuthorization') }}
+        </div>
+        <div v-else>
+          {{ t('missingAuthorization.notHavePermission') }}
+        </div>
       </AtomicAlert>
       <div class="col-span-10" id="ideas">
         <div v-if="ideas.length > 0">

@@ -4,6 +4,7 @@ import {
   getUser,
   isAdmin,
   isAuthenticated,
+  isOwnerOfIdea,
 } from './middlewares'
 
 export default [
@@ -53,7 +54,7 @@ export default [
     props: true,
     meta: {
       breadcrumbs: ['home', 'explore'],
-      middleware: createMiddleware(getUser),
+      middleware: createMiddleware(isOwnerOfIdea),
     },
   },
   {
