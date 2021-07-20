@@ -26,20 +26,32 @@
           text-xl
         "
       >
-        <Loading class="text-white" />
+        <AtomicLoadingSpinner class="text-white" />
       </div>
     </div>
   </transition>
 </template>
 
 <script>
-import Loading from './Spinner.vue'
+import { defineComponent, onMounted, onUnmounted } from 'vue'
 
-export default {
+export default defineComponent({
   name: 'LoadingOverlay',
+  emits: ['close', 'update:visible'],
   props: {
     visible: { type: Boolean, default: true },
   },
-  components: { Loading },
-}
+  setup(props, ctx) {
+    const { emit } = ctx
+    const onEscapeClose = (e) => {
+      if (e.key === 'Escape') {
+        emit('close')
+        emit('update:visible', false)
+      }
+    }
+
+    onMounted(() => window.addEventListener('keyup', onEscapeClose))
+    onUnmounted(() => window.removeEventListener('keyup', onEscapeClose))
+  },
+})
 </script>

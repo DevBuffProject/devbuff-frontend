@@ -24,7 +24,7 @@ import { get, templateRef } from '@vueuse/core'
 export default defineComponent({
   name: 'TabsTab',
   props: {
-    name: String,
+    name: { type: String, required: true },
   },
   setup(props) {
     const isTransitionEnabled = ref(false)

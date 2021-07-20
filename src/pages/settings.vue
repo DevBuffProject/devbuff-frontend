@@ -51,6 +51,7 @@ import * as yup from 'yup'
 
 export default defineComponent({
   async setup() {
+    await new Promise((resolve) => setTimeout(resolve, 100000))
     const { t } = useI18n('pages.settings')
     const { user, getUser, saveUserData, resendEmail } = useUser()
 

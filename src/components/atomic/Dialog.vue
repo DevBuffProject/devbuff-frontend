@@ -1,5 +1,5 @@
 <template>
-  <AtomicOverlay to="body" :visible="visible" @onClose="onClose">
+  <AtomicOverlay to="body" :visible="visible">
     <div
       ref="windowRef"
       class="
@@ -16,37 +16,34 @@
         rounded-2xl
       "
     >
-      <h1 v-if="title" class="mt-0">
-        {{ title }}
-      </h1>
-      <div v-else-if="slots.title">
-        <slot name="title" />
-      </div>
       <slot />
     </div>
   </AtomicOverlay>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, onUnmounted } from 'vue'
 import AtomicOverlay from './Overlay.vue'
 
 export default defineComponent({
   components: { AtomicOverlay },
-  emits: ['onClose'],
+  emits: ['close'],
   props: {
     title: { type: String, default: '' },
     visible: { type: Boolean, default: false },
   },
   setup(props, ctx) {
     const { slots, emit } = ctx
-    const onEscapeClose = (e) => e.key === 'Escape' && onClose()
-    const onClose = () =>
-      emit('onClose') || window.removeEventListener('keyup', onEscapeClose)
+    const onEscapeClose = (e) => e.key === 'Escape' && close()
+    const close = () =>
+      emit('close') || window.removeEventListener('keyup', onEscapeClose)
+
+    onMounted(() => window.addEventListener('keyup', onEscapeClose))
+    onUnmounted(() => window.removeEventListener('keyup', onEscapeClose))
 
     return {
       slots,
-      onClose,
+      close,
     }
   },
 })

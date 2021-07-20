@@ -56,13 +56,12 @@ export default defineComponent({
     const specialists = filterQueryReactive('specialists')
     const languages = filterQueryReactive('languages')
     const filter = reactive({ specialists, languages, sort })
-
     const throttledGetIdeas = useThrottleFn(
       async () => await getIdeas(filter),
       500,
     )
-
     watch(filter, throttledGetIdeas)
+
     await getIdeas(filter)
 
     return {

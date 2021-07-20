@@ -1,5 +1,14 @@
 <template>
   <div>
+    <suspense>
+      <AtomicDialog visible>
+        <Dialog></Dialog>
+      </AtomicDialog>
+
+      <template #fallback>
+        <AtomicLoadingOverlay></AtomicLoadingOverlay>
+      </template>
+    </suspense>
     <AtomicTabs>
       <AtomicTabsTab name="О себе">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab autem,
@@ -8,13 +17,11 @@
         recusandae totam voluptas?
       </AtomicTabsTab>
 
-      <AtomicTabsTab name="Скиллы">
-        <WidgetSettingsSkills />
-      </AtomicTabsTab>
+      <AtomicTabsTab name="Скиллы"> </AtomicTabsTab>
     </AtomicTabs>
   </div>
 </template>
 
-<script>
-export default {}
+<script setup>
+import Dialog from './settings.vue'
 </script>

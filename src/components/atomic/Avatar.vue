@@ -1,7 +1,6 @@
 <template>
   <div class="relative rounded-full overflow-hidden">
     <div
-      :key="random"
       class="
         bg-cover
         flex
