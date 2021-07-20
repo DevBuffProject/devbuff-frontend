@@ -16,3 +16,4 @@ export const createMiddleware = (
 }
 
 export { default as getUser } from './getUser'
+export { default as isAdmin } from './isAdmin'
