@@ -9,7 +9,7 @@
       w-screen
       h-screen
       flex
-      bg-black
+      bg-black bg-opacity-50
       items-center
       justify-center
     "
