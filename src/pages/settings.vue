@@ -51,11 +51,8 @@ import * as yup from 'yup'
 
 export default defineComponent({
   async setup() {
-    await new Promise((resolve) => setTimeout(resolve, 100000))
     const { t } = useI18n('pages.settings')
     const { user, getUser, saveUserData, resendEmail } = useUser()
-
-    await getUser()
 
     const data = [
       {
@@ -122,7 +119,7 @@ export default defineComponent({
         name: 'socialNetworks:telegram',
         value: user.value.socialNetworks.telegram,
         placeholder: 'username',
-        // svgIconName: 'Telegram',
+        svgIconName: 'Telegram',
       },
       {
         schema: yup
@@ -133,7 +130,7 @@ export default defineComponent({
         name: 'socialNetworks:discord',
         value: user.value.socialNetworks.discord,
         placeholder: 'DevBuffUser#1234',
-        // svgIconName: 'Discord',
+        svgIconName: 'Discord',
       },
       {
         schema: yup
@@ -144,7 +141,7 @@ export default defineComponent({
         name: 'socialNetworks:skype',
         value: user.value.socialNetworks.skype,
         placeholder: 'username',
-        // svgIconName: 'Skype',
+        svgIconName: 'Skype',
       },
       {
         schema: yup
@@ -162,14 +159,11 @@ export default defineComponent({
     const conflictFields = ref([])
 
     const onSubmit = async (data) => {
-      // TODO
-      // !reduce
+      // TODO: !reduce
       for (const indexValue of Object.keys(data)) {
         if (indexValue.indexOf(':') > -1) {
           const split = indexValue.split(':')
-          if (data[split[0]] === undefined) {
-            data[split[0]] = {}
-          }
+          if (data[split[0]] === undefined) data[split[0]] = {}
           data[split[0]][split[1]] = data[indexValue]
           delete data[indexValue]
         }
@@ -194,9 +188,7 @@ export default defineComponent({
       if (conflictFields.value.length === 0) return undefined
 
       return conflictFields.value
-        .map((value) => {
-          return t(`fields.${value}`)
-        })
+        .map((value) => t(`fields.${value}`))
         .join(', ')
     })
 
