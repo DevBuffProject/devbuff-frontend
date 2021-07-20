@@ -1,6 +1,14 @@
 <template>
   <main>
     <div class="grid grid-cols-14 gap-2">
+      <AtomicAlert
+        v-if="missingAuthorization"
+        style="cursor: pointer"
+        type="danger"
+        class="col-span-10"
+      >
+        {{ t('missingAuthorization') }}
+      </AtomicAlert>
       <div class="col-span-10" id="ideas">
         <div v-if="ideas.length > 0">
           <WidgetIdeasCard
@@ -26,8 +34,8 @@
 </template>
 
 <script>
-import { computed, defineComponent, reactive, inject, watch } from 'vue'
-import { useThrottleFn, useTitle } from '@vueuse/core'
+import { computed, defineComponent, reactive, inject, watch, ref } from 'vue'
+import { useThrottleFn, useTitle, whenever } from '@vueuse/core'
 import { useIdeas, useAuth } from '../composes/core'
 import { useI18n } from '../composes/utils'
 import { useRouter } from 'vue-router'
@@ -52,6 +60,23 @@ export default defineComponent({
     const { isLoggedIn } = useAuth()
     const router = useRouter()
 
+    const missingAuthorization = ref(
+      Boolean(route.value.query?.missingAuthorization),
+    )
+
+    watch(
+      () => route.value.query,
+      (state) => {
+        if (
+          missingAuthorization.value === false &&
+          state?.missingAuthorization
+        ) {
+          missingAuthorization.value = true
+        }
+      },
+      { deep: true },
+    )
+
     const sort = filterQueryReactive('sort', true)
     const specialists = filterQueryReactive('specialists')
     const languages = filterQueryReactive('languages')
@@ -70,6 +95,7 @@ export default defineComponent({
       filter,
       isLoading,
       isLoggedIn,
+      missingAuthorization,
     }
   },
 })
