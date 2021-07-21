@@ -8,7 +8,7 @@ specifiers:
   '@vue/eslint-config-prettier': 6.0.0
   '@vueup/vue-quill': 1.0.0-beta.7
   '@vueuse/core': 5.1.4
-  '@vueuse/integrations': 4.11.2
+  '@vueuse/integrations': 5.1.4
   '@vueuse/motion': 1.5.6
   '@vueuse/router': 5.1.4
   axios: 0.21.1
@@ -48,7 +48,7 @@ dependencies:
   '@iconicicons/vue3': 1.5.0_vue@3.1.5
   '@vueup/vue-quill': 1.0.0-beta.7_vue@3.1.5
   '@vueuse/core': 5.1.4_vue@3.1.5
-  '@vueuse/integrations': 4.11.2_vue@3.1.5
+  '@vueuse/integrations': 5.1.4_vue@3.1.5
   '@vueuse/motion': 1.5.6_vue@3.1.5
   '@vueuse/router': 5.1.4_vue-router@4.0.10+vue@3.1.5
   axios: 0.21.1
@@ -457,10 +457,10 @@ packages:
       - vue
     dev: false
 
-  /@vueuse/integrations/4.11.2_vue@3.1.5:
-    resolution: {integrity: sha512-sksW5CCWHjrBgzuLFI3wleIA0HYJnIQlmUUVnFcukA68sbLaDOWNYl9qYzolgMzs1LSWw3Ws0izlUR99JCRqzw==}
+  /@vueuse/integrations/5.1.4_vue@3.1.5:
+    resolution: {integrity: sha512-zOhsK+w3DtEX2NEJwyV55KNe5c6wplLIRh5H2uUUZPzxFw8P4NdgP4gX2aYEFJGtQb4By6KOSRtAVOq7WhNeXg==}
     dependencies:
-      '@vueuse/shared': 4.11.2_vue@3.1.5
+      '@vueuse/shared': 5.1.4_vue@3.1.5
       vue-demi: 0.10.1_vue@3.1.5
     optionalDependencies:
       axios: 0.21.1
