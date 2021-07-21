@@ -31,7 +31,7 @@ specifiers:
   sass: 1.35.2
   string-to-color: 2.2.2
   swiper: 6.7.5
-  vee-validate: 4.4.6
+  vee-validate: 4.4.7
   vite: 2.4.2
   vite-plugin-components: 0.13.0
   vite-plugin-fonts: 0.2.2
@@ -63,7 +63,7 @@ dependencies:
   sass: 1.35.2
   string-to-color: 2.2.2
   swiper: 6.7.5
-  vee-validate: 4.4.6_vue@3.1.5
+  vee-validate: 4.4.7_vue@3.1.5
   vite-plugin-components: 0.13.0_vite@2.4.2
   vite-plugin-windicss: 1.2.4_vite@2.4.2
   vue: 3.1.5
@@ -3546,8 +3546,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /vee-validate/4.4.6_vue@3.1.5:
-    resolution: {integrity: sha512-Bv9w+/2dDQDu10KPP3Phm6okupP990up3wUUPi1tZhjui8Bgxgj1idDiIMdIFbtWd0ki1s7c1OLY65MbFTGIDw==}
+  /vee-validate/4.4.7_vue@3.1.5:
+    resolution: {integrity: sha512-Yb5sMWbR4iNMlKH6lb16wfKPEV8GewnynakF5GdLXVShXAT459qXjb98kd0xeUCmDE3KorJh9OywlrkDLkiYUg==}
     peerDependencies:
       vue: ^3.0.0
     dependencies:
