@@ -32,7 +32,7 @@ specifiers:
   string-to-color: 2.2.2
   swiper: 6.7.5
   vee-validate: 4.4.7
-  vite: 2.4.2
+  vite: 2.4.3
   vite-plugin-components: 0.13.0
   vite-plugin-fonts: 0.2.2
   vite-plugin-svg-icons: 0.7.1
@@ -64,8 +64,8 @@ dependencies:
   string-to-color: 2.2.2
   swiper: 6.7.5
   vee-validate: 4.4.7_vue@3.1.5
-  vite-plugin-components: 0.13.0_vite@2.4.2
-  vite-plugin-windicss: 1.2.4_vite@2.4.2
+  vite-plugin-components: 0.13.0_vite@2.4.3
+  vite-plugin-windicss: 1.2.4_vite@2.4.3
   vue: 3.1.5
   vue-i18n: 9.1.7_vue@3.1.5
   vue-nprogress: 0.2.0_vue@3.1.5
@@ -73,7 +73,7 @@ dependencies:
   yup: 0.32.9
 
 devDependencies:
-  '@intlify/vite-plugin-vue-i18n': 2.3.2_abd161d3fb3139f9be469f8a374973f9
+  '@intlify/vite-plugin-vue-i18n': 2.3.2_9ccaa6a5b46572045d48a469e4f693e9
   '@vitejs/plugin-vue': 1.2.5_@vue+compiler-sfc@3.1.5
   '@vue/compiler-sfc': 3.1.5_vue@3.1.5
   '@vue/eslint-config-prettier': 6.0.0_eslint@7.31.0+prettier@2.3.2
@@ -85,9 +85,9 @@ devDependencies:
   lint-staged: 11.0.1
   pinst: 2.1.6
   prettier: 2.3.2
-  vite: 2.4.2
-  vite-plugin-fonts: 0.2.2_vite@2.4.2
-  vite-plugin-svg-icons: 0.7.1_vite@2.4.2
+  vite: 2.4.3
+  vite-plugin-fonts: 0.2.2_vite@2.4.3
+  vite-plugin-svg-icons: 0.7.1_vite@2.4.3
   windicss: 3.1.5
 
 packages:
@@ -245,7 +245,7 @@ packages:
     resolution: {integrity: sha512-zt0zlUdalumvT9AjQNxPXA36UgOndUyvBMplh8uRZU0fhWHAwhnJTcf0NaG9Qvr8I1n3HPSs96+kLb/YdwTavQ==}
     engines: {node: '>= 10'}
 
-  /@intlify/vite-plugin-vue-i18n/2.3.2_abd161d3fb3139f9be469f8a374973f9:
+  /@intlify/vite-plugin-vue-i18n/2.3.2_9ccaa6a5b46572045d48a469e4f693e9:
     resolution: {integrity: sha512-p8Ku0txXdcexDgdd9tiGAfstpJ6rIFmE3a2mDEgYuZBdgrJ5Ap6B5yplvn6DDg9faW40WuGEI75c5+5qfdN5ng==}
     engines: {node: '>= 12'}
     peerDependencies:
@@ -257,7 +257,7 @@ packages:
       '@rollup/pluginutils': 4.1.0
       debug: 4.3.2
       fast-glob: 3.2.7
-      vite: 2.4.2
+      vite: 2.4.3
       vue-i18n: 9.1.7_vue@3.1.5
     transitivePeerDependencies:
       - eslint
@@ -3554,7 +3554,7 @@ packages:
       vue: 3.1.5
     dev: false
 
-  /vite-plugin-components/0.13.0_vite@2.4.2:
+  /vite-plugin-components/0.13.0_vite@2.4.3:
     resolution: {integrity: sha512-MpaUrolJ/rYrshGmrUzF1rwqz+XDRxrvNMWWGaiL3mXsa+uZYmcOInScwHL3PIJqrTewi8kNi/0ZeTBvPXrxUg==}
     peerDependencies:
       vite: ^2.0.0
@@ -3563,20 +3563,20 @@ packages:
       fast-glob: 3.2.7
       magic-string: 0.25.7
       minimatch: 3.0.4
-      vite: 2.4.2
+      vite: 2.4.3
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /vite-plugin-fonts/0.2.2_vite@2.4.2:
+  /vite-plugin-fonts/0.2.2_vite@2.4.3:
     resolution: {integrity: sha512-fhzhsrTiuzlDjSO6g5sV5EVIIvbb8lmsaIY6eUTBM4lcF55x40UBpHrcyvNwIhQG211g0lu83XC7oZlkmvdkMA==}
     peerDependencies:
       vite: ^2.0.0
     dependencies:
-      vite: 2.4.2
+      vite: 2.4.3
     dev: true
 
-  /vite-plugin-svg-icons/0.7.1_vite@2.4.2:
+  /vite-plugin-svg-icons/0.7.1_vite@2.4.3:
     resolution: {integrity: sha512-yUUxIrXnsJLtYiaw3/ad7D1r/A9ULYirlE7lphcBUWWTKAy5nJ3JJO2XLcr9PuymApkt1oohkHHq5MVMu4+aeg==}
     peerDependencies:
       vite: '>=2.0.0'
@@ -3588,12 +3588,12 @@ packages:
       fs-extra: 10.0.0
       svg-baker: 1.7.0
       svgo: 2.3.1
-      vite: 2.4.2
+      vite: 2.4.3
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /vite-plugin-windicss/1.2.4_vite@2.4.2:
+  /vite-plugin-windicss/1.2.4_vite@2.4.3:
     resolution: {integrity: sha512-U+mW8AiPRgC5wbUqjtvEIbZR3LzOwhNU0wnYQueT2SjjTfjlP74vcQg37yrULxycKibpdTYVHZuDuW4QkglPng==}
     peerDependencies:
       vite: ^2.0.1
@@ -3601,14 +3601,14 @@ packages:
       '@windicss/plugin-utils': 1.2.4
       chalk: 4.1.1
       debug: 4.3.2
-      vite: 2.4.2
+      vite: 2.4.3
       windicss: 3.1.5
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /vite/2.4.2:
-    resolution: {integrity: sha512-2MifxD2I9fjyDmmEzbULOo3kOUoqX90A58cT6mECxoVQlMYFuijZsPQBuA14mqSwvV3ydUsqnq+BRWXyO9Qa+w==}
+  /vite/2.4.3:
+    resolution: {integrity: sha512-iT6NPeiUUZ2FkzC3eazytOEMRaM4J+xgRQcNcpRcbmfYjakCFP4WKPJpeEz1U5JEKHAtwv3ZBQketQUFhFU3ng==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
