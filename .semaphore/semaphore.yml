@@ -27,8 +27,8 @@ promotions:
   - name: Build Linux
     pipeline_file: pipeline_2.yml
     auto_promote:
-      when: branch = 'vite' AND result = 'passed'
+      when: result = 'passed'
   - name: Build macOS
     pipeline_file: pipeline_3.yml
     auto_promote:
-      when: branch = 'vite' AND result = 'passed'
+      when: ' result = ''passed'''
