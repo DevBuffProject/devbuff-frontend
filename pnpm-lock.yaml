@@ -36,7 +36,7 @@ specifiers:
   vite-plugin-components: 0.13.0
   vite-plugin-fonts: 0.2.2
   vite-plugin-svg-icons: 0.7.1
-  vite-plugin-windicss: 1.2.4
+  vite-plugin-windicss: 1.2.5
   vue: 3.1.5
   vue-i18n: 9.1.7
   vue-nprogress: 0.2.0
@@ -65,7 +65,7 @@ dependencies:
   swiper: 6.7.5
   vee-validate: 4.4.7_vue@3.1.5
   vite-plugin-components: 0.13.0_vite@2.4.3
-  vite-plugin-windicss: 1.2.4_vite@2.4.3
+  vite-plugin-windicss: 1.2.5_vite@2.4.3
   vue: 3.1.5
   vue-i18n: 9.1.7_vue@3.1.5
   vue-nprogress: 0.2.0_vue@3.1.5
@@ -521,8 +521,8 @@ packages:
       - vue
     dev: false
 
-  /@windicss/config/1.2.4:
-    resolution: {integrity: sha512-81oah5NF7m/ltHrP2VpKu12qejP03erelNckH9ho86vuItsSd/tNehW3oJqOThZYsbuROCzIU55QDfe7MBd+Iw==}
+  /@windicss/config/1.2.5:
+    resolution: {integrity: sha512-XzbvVQ9crDRnzHLA9t0atejAIus0X+P4l9SFPmGhUXycI63Ae0SfNzdw5q56MM5Et3Xbtju0esJ89K8bkRe+xA==}
     dependencies:
       debug: 4.3.2
       jiti: 1.10.1
@@ -531,11 +531,11 @@ packages:
       - supports-color
     dev: false
 
-  /@windicss/plugin-utils/1.2.4:
-    resolution: {integrity: sha512-0G0zPx+gLfnP2isVMrsY+C0BDXASgFwtiT7g+YL+0LCTxjPxGOMnu5lCaAoYq+1LAskliPagqnu5mgKUYMyf2Q==}
+  /@windicss/plugin-utils/1.2.5:
+    resolution: {integrity: sha512-RUFhW5l3YYkuNwYM1u7F/RoIpibULE7qe2N7D/rtiJVDf67lL9S8hjTll1/d7pvvW5XtI+fDuc8GpmGwARg83A==}
     dependencies:
       '@antfu/utils': 0.2.4
-      '@windicss/config': 1.2.4
+      '@windicss/config': 1.2.5
       debug: 4.3.2
       fast-glob: 3.2.7
       magic-string: 0.25.7
@@ -3593,12 +3593,12 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-windicss/1.2.4_vite@2.4.3:
-    resolution: {integrity: sha512-U+mW8AiPRgC5wbUqjtvEIbZR3LzOwhNU0wnYQueT2SjjTfjlP74vcQg37yrULxycKibpdTYVHZuDuW4QkglPng==}
+  /vite-plugin-windicss/1.2.5_vite@2.4.3:
+    resolution: {integrity: sha512-6z2XXQpV0WhSEoyWim4gaWyxrBhszhbufjQ3oiyJbtENoft90trJtnWYvPHXaTB0sspy1LIfSSQquru8N7KZJQ==}
     peerDependencies:
       vite: ^2.0.1
     dependencies:
-      '@windicss/plugin-utils': 1.2.4
+      '@windicss/plugin-utils': 1.2.5
       chalk: 4.1.1
       debug: 4.3.2
       vite: 2.4.3
