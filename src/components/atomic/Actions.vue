@@ -16,10 +16,11 @@
         rounded-lg
         overflow-hidden
         bg-white
+        dark:bg-dark-800
       "
       style="box-shadow: 0 3px 25px -2px rgba(0, 0, 0, 0.2)"
     >
-      <div class="p-2 -m-2 mb-2 bg-gray-200 bg-opacity-50">
+      <div class="p-2 -m-2 mb-2 bg-gray-200 bg-opacity-50 dark:bg-dark-900">
         <slot name="activator" />
       </div>
 
