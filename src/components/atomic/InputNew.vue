@@ -32,6 +32,8 @@
             outline-none
             w-full
             resize-none
+            dark:bg-dark-800
+            hover:bg-gray-100
             min-h-[100px]
           "
           :name="name"
@@ -80,6 +82,8 @@
               bg-transparent
               outline-none
               resize-none
+              dark:bg-dark-800
+              hover:bg-gray-100
             "
             :name="name"
             :id="name"
