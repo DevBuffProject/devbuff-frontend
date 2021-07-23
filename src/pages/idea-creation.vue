@@ -77,7 +77,9 @@ export default defineComponent({
     const { idea, publishIdea, getIdea, updateIdea } = useIdea()
     const router = useRouter()
     let isEditingMode = false
-    let data = {}
+    let data = {
+      text: '',
+    }
 
     useTitle('Создание идеи')
 

@@ -12,7 +12,10 @@ export const createMiddleware = (
   if (debounce > 0) middlewareWrap = useDebounceFn(middlewareWrap, debounce)
   if (throttle > 0) middlewareWrap = useThrottleFn(middlewareWrap, throttle)
 
-  return () => middlewareWrap()
+  return (page) => middlewareWrap(page)
 }
 
 export { default as getUser } from './getUser'
+export { default as isAdmin } from './isAdmin'
+export { default as isAuthenticated } from './isAuthenticated'
+export { default as isOwnerOfIdea } from './isOwnerOfIdea'
