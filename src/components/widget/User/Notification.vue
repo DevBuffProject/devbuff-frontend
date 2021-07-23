@@ -59,7 +59,9 @@
                 type="primary"
                 @click="navigate"
                 class="cursor-pointer"
-                :class="{ 'bg-primary-100 bg-opacity-50': !notify.read }"
+                :class="{
+                  'bg-primary-100 bg-opacity dark:bg-dark-900': !notify.read,
+                }"
               >
                 <template #icon>
                   <UserPlusIcon />
@@ -84,7 +86,9 @@
                 :date="timeAgo(notify.dateCreation)"
                 type="success"
                 class="cursor-pointer"
-                :class="{ 'bg-primary-100 bg-opacity': !notify.read }"
+                :class="{
+                  'bg-primary-100 bg-opacity dark:bg-dark-900': !notify.read,
+                }"
                 @click="navigate"
               >
                 <template #icon>
@@ -101,7 +105,9 @@
             <AtomicCardNotification
               v-if="notify.type === 'CONFIRM_EMAIL'"
               :date="timeAgo(notify.dateCreation)"
-              :class="{ 'bg-primary-100 bg-opacity': !notify.read }"
+              :class="{
+                'bg-primary-100 bg-opacity dark:bg-dark-900': !notify.read,
+              }"
             >
               <template #icon>
                 <MailIcon />
