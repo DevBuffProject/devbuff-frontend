@@ -33,7 +33,7 @@ specifiers:
   swiper: 6.8.0
   vee-validate: 4.4.7
   vite: 2.4.3
-  vite-plugin-components: 0.13.0
+  vite-plugin-components: 0.13.2
   vite-plugin-fonts: 0.2.2
   vite-plugin-svg-icons: 1.0.1
   vite-plugin-windicss: 1.2.5
@@ -64,7 +64,7 @@ dependencies:
   string-to-color: 2.2.2
   swiper: 6.8.0
   vee-validate: 4.4.7_vue@3.1.5
-  vite-plugin-components: 0.13.0_vite@2.4.3
+  vite-plugin-components: 0.13.2_vite@2.4.3
   vite-plugin-windicss: 1.2.5_vite@2.4.3
   vue: 3.1.5
   vue-i18n: 9.1.7_vue@3.1.5
@@ -3554,8 +3554,8 @@ packages:
       vue: 3.1.5
     dev: false
 
-  /vite-plugin-components/0.13.0_vite@2.4.3:
-    resolution: {integrity: sha512-MpaUrolJ/rYrshGmrUzF1rwqz+XDRxrvNMWWGaiL3mXsa+uZYmcOInScwHL3PIJqrTewi8kNi/0ZeTBvPXrxUg==}
+  /vite-plugin-components/0.13.2_vite@2.4.3:
+    resolution: {integrity: sha512-Fv5iTlZUvqUUjODdAkTadijobcys+SvrtYclj27/SCE7b4LtwNySd+nHvJcGI/GsL8npTdccj2IRwGsWLrTcvQ==}
     peerDependencies:
       vite: ^2.0.0
     dependencies:
