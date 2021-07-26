@@ -7,7 +7,7 @@ specifiers:
   '@vue/compiler-sfc': 3.1.5
   '@vue/eslint-config-prettier': 6.0.0
   '@vueup/vue-quill': 1.0.0-beta.7
-  '@vueuse/core': 5.1.4
+  '@vueuse/core': 5.2.0
   '@vueuse/integrations': 5.1.4
   '@vueuse/motion': 1.5.6
   '@vueuse/router': 5.1.4
@@ -47,7 +47,7 @@ specifiers:
 dependencies:
   '@iconicicons/vue3': 1.5.0_vue@3.1.5
   '@vueup/vue-quill': 1.0.0-beta.7_vue@3.1.5
-  '@vueuse/core': 5.1.4_vue@3.1.5
+  '@vueuse/core': 5.2.0_vue@3.1.5
   '@vueuse/integrations': 5.1.4_vue@3.1.5
   '@vueuse/motion': 1.5.6_vue@3.1.5
   '@vueuse/router': 5.1.4_vue-router@4.0.10+vue@3.1.5
@@ -447,10 +447,10 @@ packages:
       - vue
     dev: false
 
-  /@vueuse/core/5.1.4_vue@3.1.5:
-    resolution: {integrity: sha512-iuRhSaScI1GJS4N3CFPc1GajOr6F6J1Nng1I6ocNOjLx+evss6egImx9wnuX45fxqQstnh7Vfqe3FF7+0NgoWg==}
+  /@vueuse/core/5.2.0_vue@3.1.5:
+    resolution: {integrity: sha512-IS2QnVZ4lTlRUtgPHJ4ttTatXGWRZuvj/GJDVp8FRlUjzKXD0YjZtx0280FCg7y3YejXV2QGhY+/YrXybMjpPw==}
     dependencies:
-      '@vueuse/shared': 5.1.4_vue@3.1.5
+      '@vueuse/shared': 5.2.0_vue@3.1.5
       vue-demi: 0.10.1_vue@3.1.5
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -514,6 +514,15 @@ packages:
 
   /@vueuse/shared/5.1.4_vue@3.1.5:
     resolution: {integrity: sha512-C0xiMv8+sFI3WhXdlrcLKI4d4dFnouHe4Te51cxWgcmpW7S8eUiM8fXPaQVxUQZ4E9PCx3zEZpNpCLzQa+6Lag==}
+    dependencies:
+      vue-demi: 0.10.1_vue@3.1.5
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
+  /@vueuse/shared/5.2.0_vue@3.1.5:
+    resolution: {integrity: sha512-PD2PBaEcdl+pXXeKjhU+LZqQuA9xX/6mtVGIYG29xsjH7W3IjU164nwCAfDe2Lsy8rMaYmVqVSB6PHtiZZyDSg==}
     dependencies:
       vue-demi: 0.10.1_vue@3.1.5
     transitivePeerDependencies:
