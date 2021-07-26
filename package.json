@@ -21,7 +21,7 @@
     "@vueuse/core": "5.2.0",
     "@vueuse/integrations": "5.2.0",
     "@vueuse/motion": "1.5.6",
-    "@vueuse/router": "5.1.4",
+    "@vueuse/router": "5.2.0",
     "axios": "0.21.1",
     "color": "4.0.0",
     "fastcomments-vue-next": "2.0.1",
