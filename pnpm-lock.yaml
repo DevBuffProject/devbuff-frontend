@@ -41,7 +41,7 @@ specifiers:
   vue-i18n: 9.1.7
   vue-nprogress: 0.2.0
   vue-router: 4.0.10
-  windicss: 3.1.5
+  windicss: 3.1.6
   yup: 0.32.9
 
 dependencies:
@@ -88,7 +88,7 @@ devDependencies:
   vite: 2.4.3
   vite-plugin-fonts: 0.2.2_vite@2.4.3
   vite-plugin-svg-icons: 1.0.1_vite@2.4.3
-  windicss: 3.1.5
+  windicss: 3.1.6
 
 packages:
 
@@ -3708,6 +3708,13 @@ packages:
     resolution: {integrity: sha512-sGi2YiN6Bp/vWJS0jlpJhMmh7O2TBQ+yTbL6oqoRXz32q1VKELOUMfF+5pdtVL5uoVnfKf4gOUQs2XKNgU30Lw==}
     engines: {node: '>= 12'}
     hasBin: true
+    dev: false
+
+  /windicss/3.1.6:
+    resolution: {integrity: sha512-9/ShTPRs2pg/AJo4PtbgDv9p7BUgR52WqL7Gpr8VSO6LH8z4I/oKamUAlSXqyLsWD6yKS+xtxF3FRiHVJwYcuQ==}
+    engines: {node: '>= 12'}
+    hasBin: true
+    dev: true
 
   /word-wrap/1.2.3:
     resolution: {integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==}
