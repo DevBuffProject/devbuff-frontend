@@ -62,18 +62,15 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-  provide,
-  computed,
-  onErrorCaptured,
-  defineAsyncComponent,
-} from 'vue'
+import { defineComponent, ref, computed, onErrorCaptured } from 'vue'
 import { get, set, useTitle } from '@vueuse/core'
-import { useAuth } from './composes/core'
-import { useRouter } from 'vue-router'
-import { mainRoute, dialogRoute, isDialog } from './router'
+import {
+  useMainRoute,
+  useDialogRoute,
+  useRouter,
+  dialogRoute,
+  mainRoute,
+} from './router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
@@ -81,8 +78,9 @@ export default defineComponent({
   setup() {
     useTitle('DefBuff')
     const router = useRouter()
+    const mainRoute = useMainRoute()
+    // const dialogRoute = useDialogRoute()
 
-    const { isLoggedIn, isAdmin } = useAuth()
     const breadcrumbs = computed(() => {
       const breadcrumbs = mainRoute.value?.meta.breadcrumbs || []
       const crumbRoutes = router.options.routes
@@ -90,34 +88,14 @@ export default defineComponent({
         .map((r) => ({ title: r.meta?.name, to: r.path }))
       return [...crumbRoutes, { title: mainRoute.value.meta.name }]
     })
-    provide('route', { main: mainRoute, dialog: dialogRoute })
 
     const error = ref(null)
     const isPageLoading = ref(false)
-    onErrorCaptured((err) => (error.value = err))
+    onErrorCaptured((err) => set(error, err))
     router.beforeEach(NProgress.start)
     router.afterEach(() => setTimeout(NProgress.done, 100))
 
-    router.beforeEach(async (to, from, next) => {
-      if (!(to.meta.middleware instanceof Function)) {
-        //Ignore page without required middleware
-        next()
-      } else {
-        let resultMiddleware = await to.meta.middleware.call(this, to)
-        console.log('Result of middleware', resultMiddleware)
-        if (resultMiddleware === false) {
-          next({
-            name: 'explore',
-            query: {
-              missingAuthorization: true,
-            },
-          })
-        } else {
-          next()
-        }
-      }
-    })
-
+    // TODO: redirect to background route
     const back = () => router.back()
 
     return {
@@ -126,7 +104,6 @@ export default defineComponent({
       error,
       mainRoute,
       dialogRoute,
-      isDialog,
       back,
     }
   },

@@ -3,19 +3,9 @@
     <h1>{{ idea.name }}</h1>
     <div class="mb-4 px-2">
       <div class="flex flex-wrap items-start">
-        <RouterLink to="/" custom>
-          <div class="mr-6">
-            <!--            <WidgetUser-->
-            <!--              avatar-gradient-border-->
-            <!--              :avatar="getUserProfileUrl(idea.ownerIdea.id)"-->
-            <!--              :firstname="idea.ownerIdea.firstName"-->
-            <!--              :lastname="idea.ownerIdea.lastName"-->
-            <!--              :username="idea.ownerIdea.userName"-->
-            <!--              @click="navigate"-->
-            <!--              v-focusable-->
-            <!--            />-->
-          </div>
-        </RouterLink>
+        <div class="mr-6">
+          <WidgetUser :user="idea.ownerIdea" @click="navigate" />
+        </div>
         <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">
           {{ publishedAgo }}
         </AtomicLabel>
@@ -56,15 +46,16 @@
 </template>
 
 <script>
-import { defineComponent, inject } from 'vue'
+import { defineComponent } from 'vue'
 import { useIdea, useUser } from '../../composes/core'
 import { useTimeAgo, useTitle } from '@vueuse/core'
 import { useI18n } from '../../composes/utils'
+import { useDialogRoute } from '../../router'
 
 export default defineComponent({
   name: 'IdeaDetailPreview',
   async setup() {
-    const { dialog: route } = inject('route')
+    const route = useDialogRoute()
     const { t } = useI18n('pages.preview.idea')
     const { getUserProfileUrl } = useUser()
     const {
@@ -74,9 +65,9 @@ export default defineComponent({
       languagesForSpecialist,
       frameworksForSpecialist,
     } = useIdea(route.value.params.id)
-    const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
-
     await getIdea()
+
+    const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
 
     useTitle(`${idea.value.name} - DevBuff`)
 

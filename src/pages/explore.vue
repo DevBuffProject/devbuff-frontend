@@ -39,16 +39,18 @@
 </template>
 
 <script>
-import { computed, defineComponent, reactive, inject, watch, ref } from 'vue'
+import { computed, defineComponent, reactive, watch, ref } from 'vue'
 import { useThrottleFn, useTitle, whenever } from '@vueuse/core'
 import { useIdeas, useAuth } from '../composes/core'
 import { useI18n } from '../composes/utils'
 import { useRouter } from 'vue-router'
+import { useMainRoute } from '../router'
 
 export default defineComponent({
   async setup() {
     useTitle('Explore ideas - Devbuff')
 
+    const router = useRouter()
     const filterQueryReactive = (name, plain) =>
       computed({
         get: () =>
@@ -59,28 +61,14 @@ export default defineComponent({
           router.replace({ query: { ...route.value.query, [name]: value } }),
       })
 
-    const { main: route } = inject('route')
+    const route = useMainRoute()
     const { isLoading, ideas, getIdeas } = useIdeas()
     const { t } = useI18n('pages.explore')
     const { isLoggedIn } = useAuth()
-    const router = useRouter()
 
     const missingAuthorization = ref(
       Boolean(route.value.query?.missingAuthorization),
     )
-
-    // watch(
-    //   () => route.value.query,
-    //   (state) => {
-    //     if (
-    //       missingAuthorization.value === false &&
-    //       state?.missingAuthorization
-    //     ) {
-    //       missingAuthorization.value = true
-    //     }
-    //   },
-    //   { deep: true },
-    // )
 
     const sort = filterQueryReactive('sort', true)
     const specialists = filterQueryReactive('specialists')
@@ -90,6 +78,8 @@ export default defineComponent({
       async () => await getIdeas(filter),
       500,
     )
+
+    // TODO: reactify function
     watch(filter, throttledGetIdeas)
 
     await getIdeas(filter)

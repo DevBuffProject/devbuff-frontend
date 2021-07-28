@@ -1,8 +1,8 @@
 import { createApp } from 'vue'
+import { createOverlayRouter } from './router'
 import { createWebHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
 import { useQueryString } from './composes/utils'
-import { createMiddleware, getUser } from './middlewares'
 import { MotionPlugin } from '@vueuse/motion'
 // Will raised build error "undefined nextTick"
 // import { VueMasonryPlugin } from 'vue-masonry/src/masonry-vue3.plugin'
@@ -15,7 +15,7 @@ import App from './App.vue'
 import 'virtual:svg-icons-register'
 import 'virtual:windi.css'
 import 'virtual:windi-devtools'
-import { createOverlayRouter } from './router'
+import { useAuth, useUser } from './composes/core'
 
 const qs = useQueryString()
 const emitter = mitt()
@@ -34,15 +34,17 @@ const i18n = createI18n({
 })
 
 const app = createApp(App)
-
-router.beforeResolve(createMiddleware(getUser, { throttle: 1000 * 5 }))
-
 app.config.globalProperties.emitter = emitter
 app.directive(focusable.name, focusable)
 app.use(router)
 app.use(i18n)
 app.use(MotionPlugin)
-// see file head
+// see head
 // app.use(VueMasonryPlugin)
+
+const { isLoggedIn } = useAuth()
+if (isLoggedIn) {
+  useUser().getUser()
+}
 
 app.mount('#app')

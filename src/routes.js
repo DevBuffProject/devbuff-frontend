@@ -16,17 +16,9 @@ export default [
     meta: { name: 'Main' },
   },
   {
-    name: 'test',
-    path: '/test',
-    component: () => import('./pages/test.vue'),
-    meta: {
-      isDialog: true,
-    },
-  },
-  {
     name: 'explore',
     path: '/explore',
-    component: /*explore*/ () => import('./pages/explore.vue'),
+    component: () => import('./pages/explore.vue'),
     meta: {
       name: 'Explore',
       breadcrumbs: ['home'],
@@ -36,10 +28,10 @@ export default [
     name: 'dashboard',
     path: '/dashboard',
     component: () => import('./pages/dashboard.vue'),
+    beforeEnter: createMiddleware(isAuthenticated),
     meta: {
       name: 'Dashboard',
       breadcrumbs: ['home', 'explore'],
-      middleware: createMiddleware(getUser),
     },
   },
   {
@@ -48,30 +40,27 @@ export default [
     component: () => import('./pages/idea-creation.vue'),
     meta: {
       breadcrumbs: ['home', 'explore'],
-      middleware: createMiddleware(getUser),
     },
   },
   {
     name: 'idea-edit',
     path: '/edit-:id',
     component: () => import('./pages/idea-creation.vue'),
-    props: true,
+    beforeEnter: createMiddleware(isOwnerOfIdea),
     meta: {
       breadcrumbs: ['home', 'explore'],
-      middleware: createMiddleware(isOwnerOfIdea),
     },
   },
   {
     name: 'idea-detail',
     path: '/view-:id',
     component: () => import('./pages/idea.vue'),
-    props: true,
+    beforeEnter: createMiddleware(isAuthenticated),
     meta: {
       preview: defineAsyncComponent(() =>
         import('./pages/previews/idea-detail.vue'),
       ),
       breadcrumbs: ['home', 'explore'],
-      middleware: createMiddleware(isAuthenticated),
     },
   },
   {
@@ -81,7 +70,6 @@ export default [
     meta: {
       name: 'Settings',
       breadcrumbs: ['home'],
-      middleware: createMiddleware(getUser),
       isDialog: true,
     },
   },
@@ -89,20 +77,20 @@ export default [
     name: 'superuser',
     path: '/su',
     component: () => import('./pages/superuser/superuser.vue'),
+    beforeEnter: createMiddleware(isAdmin),
     meta: {
       name: 'Superuser',
       breadcrumbs: ['home'],
-      middleware: createMiddleware(isAdmin),
     },
   },
   {
     name: 'approve',
     path: '/su/approve',
     component: () => import('./pages/superuser/approve.vue'),
+    beforeEnter: createMiddleware(isAdmin),
     meta: {
       name: 'Approve',
       breadcrumbs: ['home', 'superuser'],
-      middleware: createMiddleware(isAdmin),
     },
   },
 
