@@ -13,7 +13,10 @@
                     v-if="route?.meta.breadcrumbs"
                     :items="breadcrumbs"
                   />
-                  <h2 class="sticky top-3 z-50 inline-block">
+                  <h2
+                    class="sticky top-3 z-50 inline-block"
+                    v-if="route?.meta.name"
+                  >
                     {{ route.meta.name }}
                   </h2>
                   <component :is="Component" />
@@ -38,13 +41,16 @@
     </div>
 
     <router-view
-      v-if="isDialog"
+      v-if="dialogRoute"
       :route="dialogRoute"
-      v-slot="{ Component: Dialog }"
+      v-slot="{ Component, route }"
     >
-      <suspense v-if="Dialog">
+      <suspense v-if="Component">
         <AtomicDialog visible @close="back">
-          <component :is="dialogRoute?.meta.preview || Dialog" />
+          <h2 v-if="route?.meta.name" class="mt-2">
+            {{ route.meta.name }}
+          </h2>
+          <component :is="route?.meta.preview || Component" />
         </AtomicDialog>
 
         <template #fallback>
@@ -56,12 +62,20 @@
 </template>
 
 <script>
-import { defineComponent, ref, provide, computed, onErrorCaptured } from 'vue'
-import { set, useTitle } from '@vueuse/core'
+import {
+  defineComponent,
+  ref,
+  provide,
+  computed,
+  onErrorCaptured,
+  defineAsyncComponent,
+} from 'vue'
+import { get, set, useTitle } from '@vueuse/core'
+import { useAuth } from './composes/core'
 import { useRouter } from 'vue-router'
+import { mainRoute, dialogRoute, isDialog } from './router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import { useAuth } from './composes/core'
 
 export default defineComponent({
   setup() {
@@ -69,7 +83,6 @@ export default defineComponent({
     const router = useRouter()
 
     const { isLoggedIn, isAdmin } = useAuth()
-    // fix vue-router
     const breadcrumbs = computed(() => {
       const breadcrumbs = mainRoute.value?.meta.breadcrumbs || []
       const crumbRoutes = router.options.routes
@@ -77,34 +90,13 @@ export default defineComponent({
         .map((r) => ({ title: r.meta?.name, to: r.path }))
       return [...crumbRoutes, { title: mainRoute.value.meta.name }]
     })
-    const mainRoute = ref({ matched: [] })
-    const dialogRoute = ref(null)
-    const isDialog = ref(false)
     provide('route', { main: mainRoute, dialog: dialogRoute })
-    router.beforeResolve((to, from, next) => {
-      set(isDialog, Boolean(to.params._isDialog))
-      set(dialogRoute, isDialog.value ? to : null)
-      // Prevent reactive triggers if background route isn't changed
-      const bgRoute = isDialog.value ? from : to
-      if (mainRoute.value.fullPath !== bgRoute.fullPath) set(mainRoute, bgRoute)
-      next()
-    })
 
     const error = ref(null)
     const isPageLoading = ref(false)
-    provide('isPageLoading', isPageLoading)
     onErrorCaptured((err) => (error.value = err))
-    router.beforeResolve(() => {
-      NProgress.start()
-      set(isPageLoading, true)
-    })
-    router.afterEach(() =>
-      setTimeout(() => {
-        NProgress.done()
-        NProgress.remove()
-        set(isPageLoading, false)
-      }, 100),
-    )
+    router.beforeEach(NProgress.start)
+    router.afterEach(() => setTimeout(NProgress.done, 100))
 
     router.beforeEach(async (to, from, next) => {
       if (!(to.meta.middleware instanceof Function)) {
@@ -129,12 +121,12 @@ export default defineComponent({
     const back = () => router.back()
 
     return {
-      isDialog,
-      mainRoute,
-      dialogRoute,
       breadcrumbs,
       isPageLoading,
       error,
+      mainRoute,
+      dialogRoute,
+      isDialog,
       back,
     }
   },

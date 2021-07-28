@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createWebHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
 import { useQueryString } from './composes/utils'
 import { createMiddleware, getUser } from './middlewares'
@@ -15,11 +15,12 @@ import App from './App.vue'
 import 'virtual:svg-icons-register'
 import 'virtual:windi.css'
 import 'virtual:windi-devtools'
+import { createOverlayRouter } from './router'
 
 const qs = useQueryString()
 const emitter = mitt()
 
-const router = createRouter({
+const router = createOverlayRouter({
   routes,
   history: createWebHistory(),
   parseQuery: qs.parse,
@@ -31,10 +32,6 @@ const i18n = createI18n({
   locale: 'ru',
   messages,
 })
-
-const loader = async () => {
-  return App
-}
 
 const app = createApp(App)
 

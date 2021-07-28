@@ -6,6 +6,7 @@ import {
   isAuthenticated,
   isOwnerOfIdea,
 } from './middlewares'
+import explore from './pages/explore.vue'
 
 export default [
   {
@@ -18,11 +19,14 @@ export default [
     name: 'test',
     path: '/test',
     component: () => import('./pages/test.vue'),
+    meta: {
+      isDialog: true,
+    },
   },
   {
     name: 'explore',
     path: '/explore',
-    component: () => import('./pages/explore.vue'),
+    component: /*explore*/ () => import('./pages/explore.vue'),
     meta: {
       name: 'Explore',
       breadcrumbs: ['home'],
@@ -78,6 +82,7 @@ export default [
       name: 'Settings',
       breadcrumbs: ['home'],
       middleware: createMiddleware(getUser),
+      isDialog: true,
     },
   },
   {

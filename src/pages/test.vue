@@ -1,27 +1,10 @@
 <template>
   <div>
-    <suspense>
-      <AtomicDialog visible>
-        <Dialog></Dialog>
-      </AtomicDialog>
-
-      <template #fallback>
-        <AtomicLoadingOverlay></AtomicLoadingOverlay>
-      </template>
-    </suspense>
-    <AtomicTabs>
-      <AtomicTabsTab name="О себе">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab autem,
-        consequuntur laboriosam laudantium minus molestias nobis obcaecati quae
-        repellendus tempora. Ab architecto commodi excepturi nisi quia quibusdam
-        recusandae totam voluptas?
-      </AtomicTabsTab>
-
-      <AtomicTabsTab name="Скиллы"> </AtomicTabsTab>
-    </AtomicTabs>
+    <div>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto ratione
+      repudiandae sit totam voluptate? Consequuntur dolorum excepturi facilis
+      fuga harum iste magni maxime neque nulla quas, quo soluta tempore
+      veritatis!
+    </div>
   </div>
 </template>
-
-<script setup>
-import Dialog from './settings.vue'
-</script>

@@ -18,7 +18,7 @@
     v-focusable.indexOnly
   >
     <div
-      class="px-10 rounded-md transition-colors"
+      class="w-full px-10 rounded-md transition-colors"
       :class="[
         colorType === 'muted' && [
           `

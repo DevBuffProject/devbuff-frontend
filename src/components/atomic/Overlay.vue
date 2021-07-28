@@ -30,7 +30,6 @@ export default defineComponent({
   name: 'AtomicOverlay',
   props: {
     visible: { type: Boolean, default: false },
-    hideControls: { type: Boolean, default: false },
   },
   setup() {
     const rooElement = window.document.documentElement

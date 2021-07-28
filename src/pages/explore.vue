@@ -56,7 +56,7 @@ export default defineComponent({
             ? route.value.query?.[name] ?? null
             : [route.value.query?.[name] ?? null].flat().filter(Boolean),
         set: (value) =>
-          router.push({ query: { ...route.value.query, [name]: value } }),
+          router.replace({ query: { ...route.value.query, [name]: value } }),
       })
 
     const { main: route } = inject('route')
@@ -69,18 +69,18 @@ export default defineComponent({
       Boolean(route.value.query?.missingAuthorization),
     )
 
-    watch(
-      () => route.value.query,
-      (state) => {
-        if (
-          missingAuthorization.value === false &&
-          state?.missingAuthorization
-        ) {
-          missingAuthorization.value = true
-        }
-      },
-      { deep: true },
-    )
+    // watch(
+    //   () => route.value.query,
+    //   (state) => {
+    //     if (
+    //       missingAuthorization.value === false &&
+    //       state?.missingAuthorization
+    //     ) {
+    //       missingAuthorization.value = true
+    //     }
+    //   },
+    //   { deep: true },
+    // )
 
     const sort = filterQueryReactive('sort', true)
     const specialists = filterQueryReactive('specialists')

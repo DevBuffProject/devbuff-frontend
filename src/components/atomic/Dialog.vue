@@ -1,5 +1,5 @@
 <template>
-  <AtomicOverlay to="body" :visible="visible">
+  <AtomicOverlay :visible="visible">
     <div
       ref="windowRef"
       class="
@@ -15,6 +15,7 @@
         shadow-2xl
         rounded-2xl
       "
+      v-bind="attrs"
     >
       <slot />
     </div>
@@ -22,18 +23,24 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, onUnmounted } from 'vue'
+import {
+  defineComponent,
+  useAttrs,
+  useSlots,
+  onMounted,
+  onUnmounted,
+} from 'vue'
 import AtomicOverlay from './Overlay.vue'
 
 export default defineComponent({
   components: { AtomicOverlay },
   emits: ['close'],
   props: {
-    title: { type: String, default: '' },
     visible: { type: Boolean, default: false },
   },
-  setup(props, ctx) {
-    const { slots, emit } = ctx
+  setup(props, { emit }) {
+    const slots = useSlots()
+    const attrs = useAttrs()
     const onEscapeClose = (e) => e.key === 'Escape' && close()
     const close = () =>
       emit('close') || window.removeEventListener('keyup', onEscapeClose)
@@ -43,6 +50,7 @@ export default defineComponent({
 
     return {
       slots,
+      attrs,
       close,
     }
   },

@@ -54,6 +54,8 @@ export default defineComponent({
     const { t } = useI18n('pages.settings')
     const { user, getUser, saveUserData, resendEmail } = useUser()
 
+    await getUser()
+
     const data = [
       {
         schema: yup.string().min(4).max(10),
@@ -181,8 +183,6 @@ export default defineComponent({
       await resendEmail()
       isVerifyEmailSent.value = false
     }
-
-    await getUser()
 
     const conflictMessage = computed(() => {
       if (conflictFields.value.length === 0) return undefined
