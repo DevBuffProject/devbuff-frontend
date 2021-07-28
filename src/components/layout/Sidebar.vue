@@ -98,7 +98,7 @@
             'hover:bg-danger-500 text-danger-500 hover:bg-opacity-10 focus:bg-danger-500 focus:bg-opacity-10',
           ]"
           v-focusable.indexOnly
-          @click="logout"
+          @click="logoutProcess"
         >
           <LogOutIcon class="mr-3" />
           <span class="text-md font-medium"> {{ t('links.logout') }} </span>
@@ -167,6 +167,11 @@ export default defineComponent({
       await next(event)
     }
 
+    const logoutProcess = () => {
+      router.replace({ name: 'explore' })
+      logout()
+    }
+
     router.afterEach(() => (loadingRoute.value = ''))
 
     return {
@@ -177,8 +182,8 @@ export default defineComponent({
       nav,
       loadingRoute,
       initAuth,
-      logout,
       goNavigate,
+      logoutProcess,
     }
   },
 })
