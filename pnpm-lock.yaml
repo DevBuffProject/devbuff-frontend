@@ -3,7 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@iconicicons/vue3': 1.5.0
   '@intlify/vite-plugin-vue-i18n': 2.4.0
-  '@vitejs/plugin-vue': 1.2.5
+  '@vitejs/plugin-vue': 1.3.0
   '@vue/compiler-sfc': 3.1.5
   '@vue/eslint-config-prettier': 6.0.0
   '@vueup/vue-quill': 1.0.0-beta.7
@@ -74,7 +74,7 @@ dependencies:
 
 devDependencies:
   '@intlify/vite-plugin-vue-i18n': 2.4.0_b59696038833e510bf9500cbbdeb26f6
-  '@vitejs/plugin-vue': 1.2.5_@vue+compiler-sfc@3.1.5
+  '@vitejs/plugin-vue': 1.3.0_@vue+compiler-sfc@3.1.5
   '@vue/compiler-sfc': 3.1.5_vue@3.1.5
   '@vue/eslint-config-prettier': 6.0.0_eslint@7.31.0+prettier@2.3.2
   eslint: 7.31.0
@@ -331,8 +331,8 @@ packages:
     resolution: {integrity: sha512-5eQEtSCoESnh2FsiLTxE121IiE60hnMqcb435fShf4bpLRjEu1Eoekht23y6zXS9Ts3l+Szu3TARnTsA0GkOkQ==}
     dev: false
 
-  /@vitejs/plugin-vue/1.2.5_@vue+compiler-sfc@3.1.5:
-    resolution: {integrity: sha512-GIR31mdXTEfvElmBUaRhDc5v7lfdkEdawWQqJRiaRL/5qKsH+xusukglkvJz5y7+c6dEpxgmvcATv2BbB7+fzQ==}
+  /@vitejs/plugin-vue/1.3.0_@vue+compiler-sfc@3.1.5:
+    resolution: {integrity: sha512-wJvuJdTBjvucUX0vK4fuy60t+A9bJSZxc59vp1Y+8kiOd0NU5kFt4lay72gMWPeR+lSUjrTmGUq8Uzb99Jbw3A==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       '@vue/compiler-sfc': ^3.0.8
