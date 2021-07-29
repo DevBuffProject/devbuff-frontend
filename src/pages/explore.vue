@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="grid grid-cols-14 gap-2">
+    <div class="grid grid-cols-14 gap-6">
       <AtomicAlert
         v-if="missingAuthorization"
         style="cursor: pointer"

@@ -7,14 +7,28 @@
     <link rel="icon" href="/favicon.ico" />
     <link rel="stylesheet" href="/src/styles.css">
     <title>Devbuff</title>
-
   </head>
+
   <body>
     <div id="app">
       <div style="position: absolute; top:50%; left: 50%; transform: translate(-50%, -50%)">
-        <img src="./src/assets/svg/loading/Logo.svg" width="45px">
+        <img id='progress-dark' src="./src/assets/svg/loading/LogoDark.svg" style='display:none' width="45px">
+        <img id="progress-light" src="./src/assets/svg/loading/Logo.svg" style='display:none' width="45px">
       </div>
     </div>
+    <script>
+      const isDark = localStorage.getItem('vueuse-color-scheme') === 'dark'
+      if (isDark) {
+        document.getElementById('progress-dark').style.display = 'block'
+        window.document.documentElement.classList.add('dark')
+      } else {
+        document.getElementById('progress-light').style.display = 'block'
+      }
+    </script>
+    <style>
+      .dark .progress-dark {  }
+      .progress-light {}
+    </style>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

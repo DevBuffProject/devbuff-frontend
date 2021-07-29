@@ -12,10 +12,14 @@ import focusable from './app/directives/focusable'
 import routes from './routes'
 import App from './App.vue'
 
+import { useAuth, useUser } from './composes/core'
+import { useDark } from '@vueuse/core'
+
 import 'virtual:svg-icons-register'
 import 'virtual:windi.css'
 import 'virtual:windi-devtools'
-import { useAuth, useUser } from './composes/core'
+
+console.log(useDark())
 
 const qs = useQueryString()
 const emitter = mitt()
@@ -43,8 +47,6 @@ app.use(MotionPlugin)
 // app.use(VueMasonryPlugin)
 
 const { isLoggedIn } = useAuth()
-if (isLoggedIn) {
-  useUser().getUser()
-}
+if (isLoggedIn) useUser().getUser()
 
 app.mount('#app')

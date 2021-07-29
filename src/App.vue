@@ -63,14 +63,8 @@
 
 <script>
 import { defineComponent, ref, computed, onErrorCaptured } from 'vue'
-import { get, set, useTitle } from '@vueuse/core'
-import {
-  useMainRoute,
-  useDialogRoute,
-  useRouter,
-  dialogRoute,
-  mainRoute,
-} from './router'
+import { set, useTitle } from '@vueuse/core'
+import { useDialogRoute, useMainRoute, useRouter } from './router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
@@ -79,7 +73,7 @@ export default defineComponent({
     useTitle('DefBuff')
     const router = useRouter()
     const mainRoute = useMainRoute()
-    // const dialogRoute = useDialogRoute()
+    const dialogRoute = useDialogRoute()
 
     const breadcrumbs = computed(() => {
       const breadcrumbs = mainRoute.value?.meta.breadcrumbs || []
