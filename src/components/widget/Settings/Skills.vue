@@ -14,20 +14,16 @@
             :key="skill.name"
             class="flex justify-between items-center group cursor-pointer"
           >
-            <label class="flex items-center w-full" @click.stop>
-              <input
-                :id="'language' + skill.name"
-                v-model="skill.checked"
-                type="checkbox"
-                class="mr-2"
-                @change="onChangeSkill(skill)"
-              />
-              <div>
-                {{
-                  tDefault(`commons.languages.${skill.name}`, skill.name, true)
-                }}
-              </div>
-            </label>
+            <AtomicFormCheckbox
+              :id="'language' + skill.name"
+              :label="
+                tDefault(`commons.languages.${skill.name}`, skill.name, true)
+              "
+              v-model="skill.checked"
+              type="checkbox"
+              class="mr-2"
+              @update:modelValue="onChangeSkill(skill)"
+            />
             <div
               v-if="skill.specializations.length"
               :class="[
@@ -41,6 +37,7 @@
           </AtomicListItem>
         </AtomicList>
       </swiper-slide>
+
       <swiper-slide>
         <AtomicList class="divide-y divide-gray-200">
           <div
@@ -57,18 +54,14 @@
             :key="specialist.name"
             :class="['flex justify-between items-center group cursor-pointer']"
           >
-            <label class="flex items-center w-full" @click.stop>
-              <input
-                :id="'specialist' + specialist.name + Math.random() * 1000"
-                v-model="specialist.checked"
-                type="checkbox"
-                class="mr-2"
-                @change="onChangeSkill(specialist)"
-              />
-              <div>
-                {{ t(`commons.specialist.${specialist.name}`, true) }}
-              </div>
-            </label>
+            <AtomicFormCheckbox
+              :id="'specialist' + specialist.name + Math.random() * 1000"
+              :label="t(`commons.specialist.${specialist.name}`, true)"
+              v-model="specialist.checked"
+              type="checkbox"
+              class="mr-2"
+              @update:modelValue="onChangeSkill(specialist)"
+            />
             <div
               v-if="specialist.frameworks.length"
               :class="[
@@ -82,6 +75,7 @@
           </AtomicListItem>
         </AtomicList>
       </swiper-slide>
+
       <swiper-slide>
         <AtomicList class="divide-y divide-gray-200">
           <div
@@ -98,16 +92,14 @@
             :key="framework.name"
             :class="['flex justify-between items-center group cursor-pointer']"
           >
-            <label class="flex items-center w-full" @click.stop>
-              <input
-                :id="'framework' + framework.name"
-                v-model="framework.checked"
-                type="checkbox"
-                class="mr-2"
-                @change="onChangeSkill(framework)"
-              />
-              <div>{{ framework.name }}</div>
-            </label>
+            <AtomicFormCheckbox
+              :id="'framework' + framework.name"
+              :label="framework.name"
+              v-model="framework.checked"
+              type="checkbox"
+              class="mr-2"
+              @update:modelValue="onChangeSkill(framework)"
+            />
           </AtomicListItem>
         </AtomicList>
       </swiper-slide>
@@ -127,6 +119,7 @@ import { useI18n } from '../../../composes/utils'
 export default defineComponent({
   name: 'WidgetProfileSkills',
   components: {
+    Checkbox: () => import('../../atomic/Form/Checkbox.vue'),
     Swiper,
     SwiperSlide,
   },

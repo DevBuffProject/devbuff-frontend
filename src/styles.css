@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+
 * {
   outline: none !important;
 }
 
 body {
   @apply text-dark-900 dark:text-white bg-light-50 dark:bg-dark-900 bg-opacity-90;
+  font-family: Rubik, sans-serif;
   user-select: none;
   font-size: 14px;
 }
@@ -11,6 +14,14 @@ body {
 svg {
   width: 1.75em;
   height: 1.75em;
+}
+
+.collapse-enter-active, .collapse-leave-active {
+  transition: opacity .2s ease, transform .2s ease;
+}
+.collapse-enter-from, .collapse-leave-to {
+  opacity: 0;
+  transform: scale(0);
 }
 
 .slide-up-enter-active, .slide-up-leave-active {

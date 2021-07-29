@@ -18,7 +18,7 @@
           @click="setActiveTab(tab)"
           class="py-2 px-6 cursor-pointer transition-all"
           :class="{
-            'text-primary-500 bg-primary-200 dark:bg-primary-900':
+            'text-dark-900 dark:text-light-100 bg-gray-200 dark:bg-dark-200':
               tab.name === activeTab.name,
             'border-opacity-0': tab.name !== activeTab.name,
           }"
