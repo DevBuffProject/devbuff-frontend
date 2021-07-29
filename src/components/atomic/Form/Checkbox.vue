@@ -1,8 +1,33 @@
 <template>
-  <div class="group" v-bind="attrs" @click="update">
-    <div v-if="!slots.default">
-      <input type="checkbox" :checked="isChecked" />
-      <span> {{ label }} </span>
+  <div class="group cursor-pointer" v-bind="attrs" @click="update">
+    <div v-if="!slots.default" class="flex items-center">
+      <div
+        class="w-[20px] h-[20px] transition-all rounded relative border-2"
+        :class="{
+          'bg-primary-500 border-primary-500': isChecked,
+          ['bg-opacity-50 border-gray-300 group-hover:border-gray-400 group-active:bg-light-700 dark:border-dark-200 dark:group-hover:border-dark-100 dark:group-active:bg-dark-500']:
+            !isChecked,
+        }"
+      >
+        <transition name="collapse">
+          <div v-show="isChecked" class="w-full h-full">
+            <div
+              class="
+                transition-none
+                w-[6px]
+                h-[16px]
+                border-r-2 border-b-2 border-white
+                transform
+                rotate-45
+                absolute
+                top-[-2px]
+                left-[5px]
+              "
+            />
+          </div>
+        </transition>
+      </div>
+      <span class="mt-px ml-2"> {{ label }} </span>
     </div>
     <slot />
   </div>
@@ -13,6 +38,7 @@ import { computed, defineComponent, useAttrs, useSlots } from 'vue'
 
 export default defineComponent({
   name: 'AtomicCheckbox',
+  emits: ['update:modelValue'],
   props: {
     isIntermedia: {
       type: Boolean,
