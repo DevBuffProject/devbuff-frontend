@@ -61,28 +61,26 @@ svg {
   }
 }
 
-@layer utilities {
-  .scrollbar::-webkit-scrollbar {
-    @apply w-2 h-2;
-    @apply transition-all;
-  }
-  .scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 dark:bg-white dark:bg-opacity-10 rounded-full opacity-0;
-  }
+.scrollbar::-webkit-scrollbar {
+  @apply w-2 h-2;
+  @apply transition-all;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-white dark:bg-opacity-10 rounded-full opacity-0;
 }
 
 h1 {
-  @apply text-4xl font-semibold mb-8 mt-4;
+  @apply text-4xl font-semibold mb-8 mt-4 !important;
 }
 h2 {
-  @apply text-3xl font-semibold mb-6 mt-4;
+  @apply text-3xl font-semibold mb-6 mt-4 !important;
 }
 h3 {
-  @apply text-2xl font-semibold mb-4 mt-4;
+  @apply text-2xl font-semibold mb-4 mt-4 !important;
 }
 h4 {
-  @apply text-xl font-semibold mb-4 mt-4;
+  @apply text-xl font-semibold mb-4 mt-4 !important;
 }
 h5 {
-  @apply text-lg font-medium mb-4 mt-4;
+  @apply text-lg font-medium mb-4 mt-4 !important;
 }
