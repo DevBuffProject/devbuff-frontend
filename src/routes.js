@@ -1,7 +1,6 @@
 import { defineAsyncComponent } from 'vue'
 import {
   createMiddleware,
-  getUser,
   isAdmin,
   isAuthenticated,
   isOwnerOfIdea,
@@ -21,6 +20,15 @@ export default [
     component: () => import('./pages/explore.vue'),
     meta: {
       name: 'Explore',
+      breadcrumbs: ['home'],
+    },
+  },
+  {
+    name: 'test',
+    path: '/test',
+    component: () => import('./pages/test.vue'),
+    meta: {
+      name: 'Test',
       breadcrumbs: ['home'],
     },
   },
