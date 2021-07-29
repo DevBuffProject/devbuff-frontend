@@ -1,7 +1,6 @@
 import { defineAsyncComponent } from 'vue'
 import {
   createMiddleware,
-  getUser,
   isAdmin,
   isAuthenticated,
   isOwnerOfIdea,
