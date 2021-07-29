@@ -2,7 +2,7 @@
   <button
     class="
       overflow-hidden
-      rounded-md
+      rounded-lg
       relative
       text-center
       transition-all
@@ -18,7 +18,7 @@
     v-focusable.indexOnly
   >
     <div
-      class="w-full px-10 rounded-md transition-colors"
+      class="w-full px-10 rounded-lg transition-colors"
       :class="[
         colorType === 'muted' && [
           `

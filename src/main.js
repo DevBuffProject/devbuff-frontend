@@ -19,8 +19,6 @@ import 'virtual:svg-icons-register'
 import 'virtual:windi.css'
 import 'virtual:windi-devtools'
 
-console.log(useDark())
-
 const qs = useQueryString()
 const emitter = mitt()
 

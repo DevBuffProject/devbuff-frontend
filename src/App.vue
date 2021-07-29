@@ -84,7 +84,6 @@ export default defineComponent({
     })
 
     const error = ref(null)
-    const isPageLoading = ref(false)
     onErrorCaptured((err) => set(error, err))
     router.beforeEach(NProgress.start)
     router.afterEach(() => setTimeout(NProgress.done, 100))
@@ -94,8 +93,6 @@ export default defineComponent({
 
     return {
       breadcrumbs,
-      isPageLoading,
-      error,
       mainRoute,
       dialogRoute,
       back,
