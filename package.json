@@ -37,7 +37,7 @@
     "sass": "1.36.0",
     "string-to-color": "2.2.2",
     "swiper": "6.8.0",
-    "vee-validate": "4.4.7",
+    "vee-validate": "4.4.8",
     "vite-plugin-components": "0.13.2",
     "vite-plugin-windicss": "1.2.7",
     "vue": "3.1.5",
