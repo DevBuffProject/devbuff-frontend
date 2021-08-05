@@ -36,7 +36,7 @@ specifiers:
   quill-image-uploader: 1.2.2
   sass: 1.37.5
   string-to-color: 2.2.2
-  swiper: 6.8.0
+  swiper: 6.8.1
   vee-validate: 4.4.8
   vite: 2.4.4
   vite-plugin-components: 0.13.2
@@ -70,7 +70,7 @@ dependencies:
   quill-image-uploader: 1.2.2
   sass: 1.37.5
   string-to-color: 2.2.2
-  swiper: 6.8.0
+  swiper: 6.8.1
   vee-validate: 4.4.8_vue@3.1.5
   vite-plugin-components: 0.13.2_vite@2.4.4
   vite-plugin-windicss: 1.2.7_vite@2.4.4
@@ -11601,8 +11601,8 @@ packages:
       stable: 0.1.8
     dev: true
 
-  /swiper/6.8.0:
-    resolution: {integrity: sha512-6H3e7VOihasMp8sPXNhRDkc61UD0XeFlefbWfUHecBLBTtmA+9WxJiKDBMdzgetK1cny+5+mKfVcsmxYgnEDSw==}
+  /swiper/6.8.1:
+    resolution: {integrity: sha512-Gc2rKe0XH3zoB0ogonlielduGM9DDQCJtXAeFeD2ujwzhEqw+5udwebCMNjhAcQ+xl9ygM5PnRoziAUol3Dx5w==}
     engines: {node: '>= 4.7.0'}
     requiresBuild: true
     dependencies:
