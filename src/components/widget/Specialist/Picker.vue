@@ -1,399 +1,134 @@
 <template>
   <div>
     <h5>{{ t('title') }}</h5>
-
-    <input type="hidden" :name="name" :id="name" :value="inputValue" />
-    <div class="flex justify-center mb-2 pt-1 w-full text-danger-500 text-xs">
-      <span class="mt-px">{{ errorMessage }}</span>
+    <div class="flex">
+      <!--      <pre>{{ model }}</pre>-->
+      <!--      <pre>{{ skills }}</pre>-->
+      <!--      <pre>-->
+      <!--        {{ languagesForSpecialist('back-end') }}-->
+      <!--      </pre>-->
     </div>
-    <div class="grid gap-2 grid-cols-12">
+    <div class="grid grid-cols-3 gap-4">
       <div
-        :class="[
-          'col-span-3 bg-white border border-gray-300 border-opacity-30 dark:border-dark-700 dark:bg-dark-900 p-4 rounded-xl relative',
-          errorMessage &&
-            '!border-danger-500 !ring-danger-200 dark:!ring-danger-900',
-        ]"
-        v-for="(specialist, index) of specializations"
-        :key="specialist + index"
-      >
-        <div class="grid grid-cols-6">
-          <div class="col-span-5">
-            {{ t(`commons.specialist.${specialist}`, true) }}
-          </div>
-          <component
-            v-if="selectedSpecialist.length < maxPerson"
-            :is="PlusIcon"
-            @click="addSpecialist(specialist)"
-            class="specialist-plus col-span-1"
-          />
-          <p class="flex col-span-6 items-center pt-1 text-gray-400 text-xs">
-            {{ t(`commons.specialistDescription.${specialist}`, true) }}
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <hr class="mb-2 mt-2" />
-
-    <div
-      class="mb-5 h-6 bg-gray-900 rounded"
-      role="progressbar"
-      :aria-valuenow="maxCountPercent"
-      aria-valuemin="0"
-      aria-valuemax="100"
-    >
-      <div
-        :class="[
-          `
-        rounded
-        h-6
-        text-center text-white text-sm
-        transition`,
-          (selectedSpecialist.length * 100) / maxPerson >= 0
-            ? 'bg-primary-400'
-            : '',
-          (selectedSpecialist.length * 100) / maxPerson >= 40
-            ? 'bg-warning-400'
-            : '',
-          (selectedSpecialist.length * 100) / maxPerson >= 71
-            ? 'bg-danger-400'
-            : '',
-          (selectedSpecialist.length * 100) / maxPerson === 100
-            ? 'bg-danger-700'
-            : '',
-        ]"
-        :style="`width: ${
-          (selectedSpecialist.length * 100) / maxPerson
-        }%; transition: width 2s;`"
-      >
-        <span v-if="selectedSpecialist.length > 0">
-          {{ selectedSpecialist.length }} / {{ maxPerson }}
-        </span>
-      </div>
-    </div>
-
-    <transition-group name="zoom" tag="div" class="masonory">
-      <ul
-        class="
-          w-40%
-          break-avoid
-          relative
-          mb-4
-          dark:bg-dark-900
-          bg-white
-          border
-          dark:border-dark-700
-          border-gray-300 border-opacity-30
-          rounded-xl
+        v-for="specialist of specializations"
+        :key="specialist"
+        class="border rounded-xl w-full p-4 transition-all"
+        :class="
+          isSpecialistSelected(specialist)
+            ? 'border-primary-500 ring ring-primary-200 bg-light-900 dark:(ring-primary-900 bg-dark-700)'
+            : 'border border-light-900 dark:border-dark-300'
         "
-        v-for="(specialist, index) in selectedSpecialist"
-        :key="specialist + index + '_selected'"
       >
-        <li class="flex flex-col flex-wrap rounded">
-          <div
-            class="
-              flex
-              justify-between
-              mb-2
-              p-2
-              border-b-2
-              dark:border-dark-700
-              border-gray-300 border-opacity-30
-            "
-          >
-            <p>{{ t(`commons.specialist.${specialist.name}`, true) }}</p>
-            <component
-              class="specialist-plus"
-              @click="selectedSpecialist.splice(index, 1)"
-              :is="CloseIcon"
-            />
-          </div>
-          <div
-            class=""
-            v-for="(language, indexLanguage) of specialist.languages"
-            :key="specialist + index + '_selected' + indexLanguage + language"
-          >
-            <div class="ml-3">
-              <a
-                class="
-                  dark:hover:bg-primary-800
-                  flex flex-wrap
-                  items-center
-                  p-1
-                  hover:bg-primary-400
-                  rounded
-                  cursor-pointer
-                  transition
-                  duration-500
-                  ease-in-out
-                "
-                @click="language.selected = !language.selected"
-              >
-                <span>
-                  <component :is="language.selected ? MinusIcon : PlusIcon" />
-                </span>
-                <span>{{
-                  tDefault(
-                    'commons.languages.' + language.name,
-                    language.name,
-                    true,
-                  )
-                }}</span>
-              </a>
+        <div>{{ t(`commons.specialist.${specialist}`, true) }}</div>
+        <button
+          role="button"
+          class="cursor-pointer"
+          :class="
+            isSpecialistSelected(specialist)
+              ? 'text-danger-500'
+              : 'text-primary-500'
+          "
+          @click="toggleSpecialist(specialist)"
+        >
+          {{ isSpecialistSelected(specialist) ? 'удалить' : 'добавить' }}
+        </button>
+
+        <div class="text-xs opacity-50">
+          {{ t(`commons.specialistDescription.${specialist}`, true) }}
+        </div>
+
+        <transition name="fade">
+          <div v-if="isSpecialistSelected(specialist)" class="mt-6">
+            <div v-for="lang of languagesForSpecialist(specialist)" :key="lang">
+              <div class="mb-1">
+                <AtomicFormCheckbox
+                  :label="lang"
+                  :model-value="isLanguageSelected(specialist, lang)"
+                  @update:model-value="toggleLanguage(specialist, lang)"
+                />
+              </div>
             </div>
-            <transition name="tech_activate">
-              <ul
-                v-if="language.selected && language.frameworks.length > 0"
-                class="mt-0"
-              >
-                <li
-                  v-for="(technology, indexTechnology) of language.frameworks"
-                  :key="
-                    specialist +
-                    index +
-                    '_selected' +
-                    indexLanguage +
-                    language +
-                    technology +
-                    indexTechnology
-                  "
-                  class="mb-1 ml-10"
-                >
-                  <AtomicChip
-                    :text="technology.name"
-                    :type="technology.selected ? 'auto' : ''"
-                    @click="technology.selected = !technology.selected"
-                  />
-                </li>
-              </ul>
-            </transition>
           </div>
-        </li>
-      </ul>
-    </transition-group>
+        </transition>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, nextTick, onMounted, ref, watch } from 'vue'
+// import { whenever } from ''
 import { useSkills } from '../../../composes/core'
-
-import { PlusIcon, CloseIcon, MinusIcon } from '@iconicicons/vue3'
-import { useField } from 'vee-validate'
 import { useI18n } from '../../../composes/utils'
+import { set, whenever, get } from '@vueuse/core'
 
 export default defineComponent({
   name: 'SpecialistPicker',
+  emits: ['update:modelValue'],
   props: {
-    name: {
-      type: String,
-      default: 'specialists',
-    },
-    data: {
+    modelValue: {
       type: Array,
-      default: undefined,
+      default: () => [],
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const { t, tDefault } = useI18n('components.widget.specialist.picker')
     const { skills, specializations, getSkills } = useSkills()
-    getSkills()
-    const maxPerson = 10
-    const maxCountPercent = ref(0)
+    const maxPersonPerPosition = 10
+    const model = ref({})
 
-    const addSpecialist = (specialistName, specialistId = undefined) => {
-      if (selectedSpecialist.value.length === maxPerson) {
-        return
-      }
-      const specialistObject = {}
+    watch(
+      () => props.modelValue,
+      () => nextTick(() => set(model, props.modelValue)),
+      { immediate: true, deep: true },
+    )
 
-      if (specialistId !== undefined) {
-        specialistObject.id = specialistId
-      }
-      specialistObject.name = specialistName
-      specialistObject.count = 1
-      specialistObject.languages = []
+    const getSpecialistSelected = (sp) => model.value.find((s) => s.name === sp)
+    const isSpecialistSelected = (sp) => !!getSpecialistSelected(sp)
 
-      for (const language of skills.value) {
-        const foundedSpecialization = language.specializations.find(
-          (specialist) => {
-            return specialist.name === specialistName
-          },
-        )
-
-        if (foundedSpecialization === undefined) {
-          continue
-        }
-        const languageObject = {}
-
-        languageObject.name = language.name
-        languageObject.selected = false
-        languageObject.frameworks = []
-
-        for (const technology of foundedSpecialization.frameworks) {
-          languageObject.frameworks.push({
-            name: technology.name,
-            selected: false,
-          })
-        }
-
-        specialistObject.languages.push(languageObject)
-      }
-
-      selectedSpecialist.value.push(specialistObject)
+    const toggleSpecialist = (sp) => {
+      model.value = isSpecialistSelected(sp)
+        ? get(model)?.filter((s) => s.name !== sp)
+        : [...get(model), { name: sp, count: 1, languages: [] }]
+      emit('update:modelValue', model.value)
     }
 
-    const selectedSpecialist = ref([])
+    const languagesForSpecialist = (specialist) =>
+      skills.value.reduce(
+        (acc, skill) =>
+          skill.specializations.find((s) => s.name === specialist)
+            ? acc.push(skill.name) && acc
+            : acc,
+        [],
+      )
+    const getLanguageSelected = (sp, lang) =>
+      getSpecialistSelected(sp).languages.find((l) => l.name === lang)
+    const isLanguageSelected = (sp, lang) => !!getLanguageSelected(sp, lang)
+    const toggleLanguage = (sp, lang) => {
+      const specialist = getSpecialistSelected(sp)
+      const languageIndex = specialist.languages.findIndex(
+        (l) => l.name === lang,
+      )
+      if (languageIndex > -1) specialist.languages.splice(languageIndex, 1)
+      else specialist.languages.push({ name: lang, frameworks: [] })
+      emit('update:modelValue', model.value)
+    }
 
-    watch(
-      () => skills,
-      (state) => {
-        if (state.value !== undefined && props.data) {
-          //Load from exists data
-          for (const specialist of props.data) {
-            addSpecialist(specialist.name, specialist.id)
+    getSkills()
 
-            const createdSpecialist =
-              selectedSpecialist.value[selectedSpecialist.value.length - 1]
-
-            for (const language of createdSpecialist.languages) {
-              let searchedLanguage = specialist.languages.find((value) => {
-                return value.name === language.name
-              })
-
-              language.selected = searchedLanguage !== undefined
-
-              if (language.selected) {
-                for (const framework of language.frameworks) {
-                  let searcherFrameworks = searchedLanguage.frameworks.find(
-                    (value) => {
-                      return value.name === framework.name
-                    },
-                  )
-                  framework.selected = searcherFrameworks !== undefined
-                }
-              }
-            }
-          }
-        }
-      },
-      { deep: true },
-    )
-
-    const { value: inputValue, errorMessage } = useField(
-      props.name,
-      undefined,
-      {
-        initialValue: selectedSpecialist,
-      },
-    )
-
-    watch(
-      () => selectedSpecialist,
-      (state) => {
-        const result = []
-
-        for (const specialist of state.value) {
-          const specialistValue = {
-            name: specialist.name,
-            count: specialist.count,
-            languages: [],
-          }
-          if (specialist.id !== undefined) {
-            specialistValue.id = specialist.id
-          }
-
-          for (const language of specialist.languages) {
-            if (!language.selected) {
-              continue
-            }
-
-            const languageValue = {
-              name: language.name,
-              frameworks: [],
-            }
-            for (const technology of language.frameworks) {
-              if (technology.selected) {
-                languageValue.frameworks.push({
-                  name: technology.name,
-                })
-              }
-            }
-            specialistValue.languages.push(languageValue)
-          }
-          result.push(specialistValue)
-        }
-
-        inputValue.value = result
-      },
-      { deep: true },
-    )
     return {
       t,
       tDefault,
-      inputValue,
-      errorMessage,
-      maxPerson,
+      isSpecialistSelected,
+      languagesForSpecialist,
+      isLanguageSelected,
+      toggleSpecialist,
+      toggleLanguage,
+      getSpecialistSelected,
       specializations,
-      PlusIcon,
-      MinusIcon,
-      CloseIcon,
-      addSpecialist,
-      selectedSpecialist,
-      maxCountPercent,
+      skills,
+      model,
     }
   },
 })
 </script>
-
-<style scoped>
-ul {
-  padding: 0;
-}
-
-.break-avoid {
-  break-inside: avoid;
-}
-
-.masonory {
-  column-count: 4;
-}
-
-.specialist-plus {
-  transition: transform 0.2s ease-out;
-}
-
-.zoom-enter-active {
-  animation: zoomIn 0.5s;
-}
-
-.zoom-leave-active {
-  animation: zoomIn 0.5s reverse;
-}
-
-@-webkit-keyframes zoomIn {
-  0% {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-@keyframes zoomIn {
-  0% {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-.specialist-plus:hover {
-  transform: rotate(180deg);
-}
-</style>
