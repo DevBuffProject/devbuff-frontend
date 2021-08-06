@@ -41,7 +41,7 @@ specifiers:
   vite: 2.4.4
   vite-plugin-components: 0.13.2
   vite-plugin-fonts: 0.2.2
-  vite-plugin-svg-icons: 1.0.3
+  vite-plugin-svg-icons: 1.0.4
   vite-plugin-windicss: 1.2.7
   vue: 3.1.5
   vue-i18n: 9.1.7
@@ -101,7 +101,7 @@ devDependencies:
   prettier: 2.3.2
   vite: 2.4.4
   vite-plugin-fonts: 0.2.2_vite@2.4.4
-  vite-plugin-svg-icons: 1.0.3_vite@2.4.4
+  vite-plugin-svg-icons: 1.0.4_vite@2.4.4
   vue-loader: 16.4.1_@vue+compiler-sfc@3.1.5
   windicss: 3.1.6
   windicss-webpack-plugin: 1.4.1
@@ -12326,8 +12326,8 @@ packages:
       vite: 2.4.4
     dev: true
 
-  /vite-plugin-svg-icons/1.0.3_vite@2.4.4:
-    resolution: {integrity: sha512-3YLjemTDWabzrBtSJJyhA9ZIy+EeRS+cri44omS03BkrVG2xepbwbAv8WiDc7YugKqUkh0MGEEYajFixl905Wg==}
+  /vite-plugin-svg-icons/1.0.4_vite@2.4.4:
+    resolution: {integrity: sha512-sRneOwVRA6F2zfNKtmwTQl4WwtrdzFq8REO5elX9rd9vC5gNxJ5v4TNlm8cHWGCwvLuxCu5lrnhEU2rcg8izgg==}
     peerDependencies:
       vite: '>=2.0.0'
     dependencies:
