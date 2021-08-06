@@ -3,24 +3,11 @@
     <h3 class="col-span-12">
       {{ t('header') }}
     </h3>
-    <Form
-      :validation-schema="schemas"
-      @submit="onSubmit"
-      class="
-        col-span-12
-        gap-4
-        bg-white
-        border border-gray-300 border-opacity-30
-        dark:border-dark-700 dark:bg-dark-900
-        p-4
-        rounded-xl
-        relative
-      "
-    >
+    <Form @submit.prevent class="col-span-12 gap-4 p-4 rounded-xl relative">
       <div class="grid grid-cols-12">
         <div class="col-span-6">
-          <AtomicInputNew
-            :value="data.name"
+          <AtomicInput
+            v-model="data.name"
             name="name"
             type="text"
             :label="t('name.title')"
@@ -29,8 +16,8 @@
         </div>
 
         <div class="col-span-12">
-          <AtomicInputNew
-            :value="data.description"
+          <AtomicInput
+            v-model="data.description"
             name="description"
             type="textarea"
             :label="t('description.title')"
@@ -39,16 +26,16 @@
         </div>
         <div class="col-span-12">
           <AtomicEditor
-            :value="data.text"
+            v-model="data.text"
             name="text"
             :label="t('text.title')"
             :placeholder="t('text.placeholder')"
           />
         </div>
         <div class="col-span-12">
-          <WidgetSpecialistPicker :data="data.specialists" />
+          <WidgetSpecialistPicker v-model="data.specialists" />
         </div>
-        <AtomicButton class="col-start-11 col-span-2">
+        <AtomicButton class="col-start-11 col-span-2" @click="onSubmit">
           {{ t('save') }}
         </AtomicButton>
       </div>
@@ -59,11 +46,11 @@
 <script>
 import { Form } from 'vee-validate'
 import { defineComponent } from 'vue'
-import * as yup from 'yup'
 import { useIdea } from '../composes/core'
 import { useRouter } from 'vue-router'
 import { useTitle } from '@vueuse/core'
 import { useI18n } from '../composes/utils'
+import * as yup from 'yup'
 
 export default defineComponent({
   components: {
@@ -85,7 +72,9 @@ export default defineComponent({
 
     if (props.id) {
       await getIdea(props.id)
+
       useTitle('Редактирование идеи - ' + idea.value.name)
+
       isEditingMode = true
       data = {
         name: idea.value?.name,
@@ -95,24 +84,8 @@ export default defineComponent({
       }
     }
 
-    let yupObject = {
-      name: yup
-        .string()
-        .matches(/^([A-zА-яЁё.,\-\s]{3,30})$/)
-        .min(3)
-        .max(30)
-        .required(),
-      description: yup
-        .string()
-        .matches(/^([A-zА-яЁё.,;:!?\-\s]{15,300})$/)
-        .min(15)
-        .max(300)
-        .required(),
-      text: yup.string().min(150).max(15000).required(),
-      specialists: yup.array().min(1).max(10).required(),
-    }
-
-    const onSubmit = async (data) => {
+    const onSubmit = async () => {
+      console.log(data)
       if (isEditingMode) {
         updateIdea(props.id, data).then(() =>
           router.replace({
@@ -134,7 +107,23 @@ export default defineComponent({
       }
     }
 
-    const schemas = yup.object(yupObject)
+    const schemas = yup.object({
+      name: yup
+        .string()
+        .matches(/^([A-zА-яЁё.,\-\s]{3,30})$/)
+        .min(3)
+        .max(30)
+        .required(),
+      description: yup
+        .string()
+        .matches(/^([A-zА-яЁё.,;:!?\-\s]{15,300})$/)
+        .min(15)
+        .max(300)
+        .required(),
+      text: yup.string().min(150).max(15000).required(),
+      specialists: yup.array().min(1).max(10).required(),
+    })
+
     return {
       t,
       data,

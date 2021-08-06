@@ -46,6 +46,7 @@ export default [
     path: '/edit-:id',
     component: () => import('./pages/idea-creation.vue'),
     beforeEnter: createMiddleware(isOwnerOfIdea),
+    props: true,
     meta: {
       breadcrumbs: ['home', 'explore'],
     },
@@ -55,6 +56,7 @@ export default [
     path: '/view-:id',
     component: () => import('./pages/idea.vue'),
     beforeEnter: createMiddleware(isAuthenticated),
+    props: true,
     meta: {
       preview: defineAsyncComponent(() =>
         import('./pages/previews/idea-detail.vue'),
@@ -76,7 +78,7 @@ export default [
     name: 'superuser',
     path: '/su',
     component: () => import('./pages/superuser/superuser.vue'),
-    beforeEnter: createMiddleware(isAdmin),
+    // beforeEnter: createMiddleware(isAdmin),
     meta: {
       name: 'Superuser',
       breadcrumbs: ['home'],
@@ -86,7 +88,7 @@ export default [
     name: 'approve',
     path: '/su/approve',
     component: () => import('./pages/superuser/approve.vue'),
-    beforeEnter: createMiddleware(isAdmin),
+    // beforeEnter: createMiddleware(isAdmin),
     meta: {
       name: 'Approve',
       breadcrumbs: ['home', 'superuser'],

@@ -77,9 +77,6 @@
         </div>
 
         <AtomicCard>
-          <h4 class="mb-0 mt-0 text-sm font-normal opacity-30">
-            {{ t('positions.title') }} - {{ idea.specialist.length }}
-          </h4>
           <div class="dark:divide-dark-700 divide-gray-200 divide-y">
             <div
               class="-mx-4 mt-3 px-4 py-3"
@@ -170,9 +167,10 @@
           </div>
         </AtomicCard>
       </div>
-      <div class="col-span-4">
-        <WidgetCommentsFast :id="`idea-${idea.id}`" :sso="ssoData" />
-      </div>
+      <!--      await for design-->
+      <!--      <div class="col-span-4">-->
+      <!--        <WidgetCommentsFast :id="`idea-${idea.id}`" :sso="ssoData" />-->
+      <!--      </div>-->
     </div>
   </div>
 </template>
@@ -182,7 +180,7 @@ import { defineComponent } from 'vue'
 import { useIdea, useUser, useSso } from '../composes/core'
 import { useTimeAgo, useTitle } from '@vueuse/core'
 import { useI18n } from '../composes/utils'
-import { useRouter } from 'vue-router'
+import { useRouter } from '../router'
 
 export default defineComponent({
   name: 'IdeaDetail',
@@ -190,6 +188,8 @@ export default defineComponent({
     id: { type: String, required: true },
   },
   async setup(props) {
+    console.log(props)
+    const router = useRouter()
     const {
       idea,
       statusPositions,
@@ -201,7 +201,6 @@ export default defineComponent({
       joinToIdea,
       changeStatusIdea,
     } = useIdea(props.id)
-    const router = useRouter()
     const { ssoData, getSsoData } = useSso()
     const { t } = useI18n('pages.idea')
     const { getUserProfileUrl, getUser, user } = useUser()
@@ -220,18 +219,15 @@ export default defineComponent({
       return result && result.positionStatus
     }
 
-    const deleteIdeaProcess = () => {
-      deleteIdea().then(() => {
-        router.replace({
-          name: `dashboard`,
-        })
-      })
+    const deleteIdeaProcess = async () => {
+      await deleteIdea()
+      await router.replace({ name: 'dashboard' })
     }
 
     await getIdea()
     await getUser()
     await getStatusPositions(idea.value.id)
-    await getSsoData()
+    // await getSsoData()
 
     const isOwnerIdea = user.value.id === idea.value.ownerIdea.id
     const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
