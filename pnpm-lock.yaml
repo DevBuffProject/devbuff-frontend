@@ -49,7 +49,7 @@ specifiers:
   vue-nprogress: 0.2.0
   vue-router: 4.0.10
   windicss: 3.1.6
-  windicss-webpack-plugin: 1.4.1
+  windicss-webpack-plugin: 1.4.2
   yup: 0.32.9
 
 dependencies:
@@ -104,7 +104,7 @@ devDependencies:
   vite-plugin-svg-icons: 1.0.3_vite@2.4.4
   vue-loader: 16.4.1_@vue+compiler-sfc@3.1.5
   windicss: 3.1.6
-  windicss-webpack-plugin: 1.4.1
+  windicss-webpack-plugin: 1.4.2
 
 packages:
 
@@ -12693,8 +12693,8 @@ packages:
       string-width: 4.2.2
     dev: true
 
-  /windicss-webpack-plugin/1.4.1:
-    resolution: {integrity: sha512-NnJzjncbQmM3WTeF4vGqjU1vkn5XYCbT1lVrbKfBcljyKUcM9wQkTUOlouT1K8dTE3O1AUEcZracgkR8ut2hNw==}
+  /windicss-webpack-plugin/1.4.2:
+    resolution: {integrity: sha512-PInaM4H1LlQ048k8kxz0oKranI2pd7cNT6E/BOmnmS2EZTaym0xBWHr3cBy+BEe5GH8aQVlUVlNaiU1icNDbrw==}
     dependencies:
       '@windicss/plugin-utils': 1.2.5
       debug: 4.3.2
