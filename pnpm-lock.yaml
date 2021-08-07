@@ -25,7 +25,7 @@ specifiers:
   eslint-plugin-vue: 7.15.1
   fastcomments-vue-next: 2.0.1
   husky: 7.0.1
-  lint-staged: 11.1.1
+  lint-staged: 11.1.2
   lodash: ^4.17.21
   masonry-layout: 4.2.2
   mitt: 2.1.0
@@ -96,7 +96,7 @@ devDependencies:
   eslint-plugin-prettier-vue: 3.1.0_vue@3.1.5
   eslint-plugin-vue: 7.15.1_eslint@7.32.0
   husky: 7.0.1
-  lint-staged: 11.1.1
+  lint-staged: 11.1.2
   pinst: 2.1.6
   prettier: 2.3.2
   vite: 2.4.4
@@ -6778,10 +6778,6 @@ packages:
     resolution: {integrity: sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=}
     engines: {node: '>=0.10'}
 
-  /dedent/0.7.0:
-    resolution: {integrity: sha1-JJXduvbrh0q7Dhvp3yLS5aVEMmw=}
-    dev: true
-
   /deep-equal/1.1.1:
     resolution: {integrity: sha512-yd9c5AdiqVcR+JjcwUQb9DkhJc8ngNr0MahEBGvDiJw8puWab2yZlh+nkasOnZP+EGTAP6rRp2JzJhJZzvNF8g==}
     dependencies:
@@ -9379,8 +9375,8 @@ packages:
     resolution: {integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=}
     dev: true
 
-  /lint-staged/11.1.1:
-    resolution: {integrity: sha512-eTNGe6i78PSUUH2BZi1gZmGmNfb8IeN4z2OzMYxSZ1qnP1WXKn1E7D+OHwLbRDm/wQINnzIj0bsKJ6lLVSuZiQ==}
+  /lint-staged/11.1.2:
+    resolution: {integrity: sha512-6lYpNoA9wGqkL6Hew/4n1H6lRqF3qCsujVT0Oq5Z4hiSAM7S6NksPJ3gnr7A7R52xCtiZMcEUNNQ6d6X5Bvh9w==}
     hasBin: true
     dependencies:
       chalk: 4.1.1
@@ -9388,7 +9384,6 @@ packages:
       commander: 7.2.0
       cosmiconfig: 7.0.0
       debug: 4.3.2
-      dedent: 0.7.0
       enquirer: 2.3.6
       execa: 5.1.1
       listr2: 3.10.0_enquirer@2.3.6
