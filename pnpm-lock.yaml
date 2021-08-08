@@ -49,7 +49,7 @@ specifiers:
   vue-nprogress: 0.2.0
   vue-router: 4.0.10
   windicss: 3.1.6
-  windicss-webpack-plugin: 1.4.2
+  windicss-webpack-plugin: 1.4.3
   yup: 0.32.9
 
 dependencies:
@@ -104,7 +104,7 @@ devDependencies:
   vite-plugin-svg-icons: 1.0.4_vite@2.4.4
   vue-loader: 16.5.0_@vue+compiler-sfc@3.1.5
   windicss: 3.1.6
-  windicss-webpack-plugin: 1.4.2
+  windicss-webpack-plugin: 1.4.3
 
 packages:
 
@@ -5086,16 +5086,6 @@ packages:
       '@xtuc/long': 4.2.2
     dev: true
 
-  /@windicss/config/1.2.5:
-    resolution: {integrity: sha512-XzbvVQ9crDRnzHLA9t0atejAIus0X+P4l9SFPmGhUXycI63Ae0SfNzdw5q56MM5Et3Xbtju0esJ89K8bkRe+xA==}
-    dependencies:
-      debug: 4.3.2
-      jiti: 1.11.0
-      windicss: 3.1.6
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /@windicss/config/1.2.7:
     resolution: {integrity: sha512-XpH/dkXWk2LGygHzHBWWEW/yGcLqhpFFN2jo+zMeWZ1ggBzndQQzBHqHGQHcr6U6v3PoBuOz1prVWgUmQxn9eQ==}
     dependencies:
@@ -5104,21 +5094,6 @@ packages:
       windicss: 3.1.6
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /@windicss/plugin-utils/1.2.5:
-    resolution: {integrity: sha512-RUFhW5l3YYkuNwYM1u7F/RoIpibULE7qe2N7D/rtiJVDf67lL9S8hjTll1/d7pvvW5XtI+fDuc8GpmGwARg83A==}
-    dependencies:
-      '@antfu/utils': 0.2.4
-      '@windicss/config': 1.2.5
-      debug: 4.3.2
-      fast-glob: 3.2.7
-      magic-string: 0.25.7
-      micromatch: 4.0.4
-      windicss: 3.1.6
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
 
   /@windicss/plugin-utils/1.2.7:
     resolution: {integrity: sha512-aNQhd1nEjkVsCHmzq0+4VGTmovOGGfPnH2hspH4YuDxMDhQ/99VrBdyk7irngWJjedjHB3+UYCSYWpY5a+2Hbg==}
@@ -5132,7 +5107,6 @@ packages:
       windicss: 3.1.6
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /@xtuc/ieee754/1.2.0:
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
@@ -13729,24 +13703,18 @@ packages:
       string-width: 4.2.2
     dev: true
 
-  /windicss-webpack-plugin/1.4.2:
-    resolution: {integrity: sha512-PInaM4H1LlQ048k8kxz0oKranI2pd7cNT6E/BOmnmS2EZTaym0xBWHr3cBy+BEe5GH8aQVlUVlNaiU1icNDbrw==}
+  /windicss-webpack-plugin/1.4.3:
+    resolution: {integrity: sha512-TRgiKa8hZVwjDsf9HMl4GwNFq5awo/WM83joR0aTar6kuvSi0DEPGC9hS9kTIAUvVOeeOyd5nHEvwYpP8pPJQw==}
     dependencies:
-      '@windicss/plugin-utils': 1.2.5
+      '@windicss/plugin-utils': 1.2.7
       debug: 4.3.2
       loader-utils: 2.0.0
       magic-string: 0.25.7
       upath: 2.0.1
       webpack-virtual-modules: 0.4.3
-      windicss: 3.1.5
+      windicss: 3.1.6
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /windicss/3.1.5:
-    resolution: {integrity: sha512-sGi2YiN6Bp/vWJS0jlpJhMmh7O2TBQ+yTbL6oqoRXz32q1VKELOUMfF+5pdtVL5uoVnfKf4gOUQs2XKNgU30Lw==}
-    engines: {node: '>= 12'}
-    hasBin: true
     dev: true
 
   /windicss/3.1.6:
