@@ -78,7 +78,7 @@ export default [
     name: 'superuser',
     path: '/su',
     component: () => import('./pages/superuser/superuser.vue'),
-    // beforeEnter: createMiddleware(isAdmin),
+    beforeEnter: createMiddleware(isAdmin),
     meta: {
       name: 'Superuser',
       breadcrumbs: ['home'],

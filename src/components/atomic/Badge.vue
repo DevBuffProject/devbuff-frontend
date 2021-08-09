@@ -15,13 +15,12 @@
         items-center
         justify-center
         text-center text-xs text-white
-        bg-success-500
+        bg-red-500
         rounded-xl
         shadow
       "
-    >
-      {{ value }}
-    </div>
+      v-text="value"
+    />
   </div>
 </template>
 
