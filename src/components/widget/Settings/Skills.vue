@@ -277,7 +277,7 @@ export default defineComponent({
         }
       }
 
-      saveUserSkills(skillsData)
+      saveUserSkills({ skills: skillsData })
     }
 
     const onSwiper = (swiperComponent) => (swiper.value = swiperComponent)

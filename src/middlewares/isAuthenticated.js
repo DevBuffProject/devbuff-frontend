@@ -5,7 +5,5 @@ export default async (route) => {
     return true
   }
 
-  const { isLoggedIn } = useAuth()
-
-  return isLoggedIn.value !== false
+  return useAuth().isLoggedIn.value
 }

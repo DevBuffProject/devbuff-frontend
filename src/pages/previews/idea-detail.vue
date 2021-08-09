@@ -50,7 +50,7 @@ import { defineComponent } from 'vue'
 import { useIdea, useUser } from '../../composes/core'
 import { useTimeAgo, useTitle } from '@vueuse/core'
 import { useI18n } from '../../composes/utils'
-import { useDialogRoute } from '../../router'
+import { useDialogRoute } from '../../core/router'
 
 export default defineComponent({
   name: 'IdeaDetailPreview',
