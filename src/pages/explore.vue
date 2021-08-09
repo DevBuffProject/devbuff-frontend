@@ -44,7 +44,7 @@ import { useThrottleFn, useTitle, whenever } from '@vueuse/core'
 import { useIdeas, useAuth } from '../composes/core'
 import { useI18n } from '../composes/utils'
 import { useRouter } from 'vue-router'
-import { useMainRoute } from '../router'
+import { useMainRoute } from '../core/router'
 
 export default defineComponent({
   async setup() {

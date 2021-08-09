@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { createOverlayRouter } from './router'
+import { createOverlayRouter } from './core/router'
 import { createWebHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
 import { useQueryString } from './composes/utils'
@@ -13,7 +13,6 @@ import routes from './routes'
 import App from './App.vue'
 
 import { useAuth, useUser } from './composes/core'
-import { useDark } from '@vueuse/core'
 
 import 'virtual:svg-icons-register'
 import 'virtual:windi.css'
@@ -44,7 +43,10 @@ app.use(MotionPlugin)
 // see head
 // app.use(VueMasonryPlugin)
 
-const { isLoggedIn } = useAuth()
-if (isLoggedIn) useUser().getUser()
+const { isLoggedIn, getStatus } = useAuth()
+if (isLoggedIn.value) {
+  getStatus()
+  useUser().getUser()
+}
 
 app.mount('#app')

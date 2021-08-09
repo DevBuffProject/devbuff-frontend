@@ -1,34 +1,23 @@
-<template>
-  <AtomicDialog>
-    <AtomicLoadingSpinner />
-  </AtomicDialog>
-</template>
 <script>
-import { defineComponent, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { defineComponent } from 'vue'
+import { useMainRoute, useRouter } from '../core/router'
 import { useAuth } from '../composes/core'
-import { getUser } from '../middlewares'
 
 export default defineComponent({
   name: 'Callback',
-  setup() {
-    const route = useRoute()
-    const router = useRouter()
+  async setup() {
+    const route = useMainRoute()
     const { auth } = useAuth()
-    const redirect = () => router.replace({ name: 'explore' })
+    const code = route.value.query.code
+    const provider = route.value.params.provider
 
-    watch(
-      () => route.query,
-      async () => {
-        if (!route.query || !route.query.code) return await redirect()
-        await auth({
-          code: route.query.code,
-          provider: route.params.provider,
-        })
-        await getUser()
-        await redirect()
-      },
-    )
+    useRouter().replace({ name: 'explore' })
+
+    try {
+      await auth({ code, provider })
+    } catch (e) {
+      console.error(e)
+    }
   },
 })
 </script>
