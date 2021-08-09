@@ -1,100 +1,126 @@
 import { useCookies } from '@vueuse/integrations'
 import { useApi } from './useApi'
-import { computed, ref } from 'vue'
+import { computed, readonly, ref } from 'vue'
+import { useUser } from './useUser'
+import { get, not, or, set } from '@vueuse/core'
+import { computedCookie } from '../../core/reactivity'
 
-const { request } = useApi()
-
-const cookieBaseOptions = { SameSite: 'Lax', path: '/' }
-const PROVIDERS = {
+const ROLE_ADMIN = 'ROLE_ADMIN'
+const ROLE_USER = 'ROLE_USER'
+const PROVIDERS = Object.freeze({
   GitHub: 'GitHub',
   GitLab: 'GitLab',
-}
-
-const isAdmin = ref(false)
-
-const cookies = useCookies(['access_token', 'refresh_token'], {
-  autoUpdateDependencies: true,
+  get(type) {
+    if (!this[type]) throw new Error(`Incorrect grant type: ${type}`)
+    return this[type]
+  },
 })
-const tokens = computed(() => ({
-  accessToken: cookies.get('access_token'),
-  refreshToken: cookies.get('refresh_token'),
-}))
-const isLoggedIn = computed(
-  () => !!(tokens.value.accessToken || tokens.value.refreshToken),
-)
 
-const initAuth = (provider) => {
-  if (!PROVIDERS[provider]) throw Error(`Unknown auth provider "${provider}"`)
-  window.location.href = `${
-    import.meta.env.VITE_API_BASE_URL
-  }/oAuth/${provider}`
-}
-const auth = async ({ code, provider }) => {
-  if (!PROVIDERS[provider]) throw Error(`Unknown auth provider "${provider}"`)
-  const credentials = new URLSearchParams()
-  credentials.set('code', code)
-  credentials.set('grant_type', `${provider.toLowerCase()}_oauth`)
-  const response = await request({
-    url: '/oAuth',
-    method: 'post',
-    data: credentials,
-  })
-  saveTokens(response.data)
-  return response
-}
-const refresh = async () => {
-  if (!isLoggedIn.value) return false
-
-  const credentials = new URLSearchParams()
-  credentials.set('refresh_token', tokens.value.refreshToken)
-  credentials.set('grant_type', 'refresh_token')
-  const response = await request({ url: 'oAuth/update', data: credentials })
-  saveTokens(response.data)
-  return response
-}
-const saveTokens = ({ expires_in, access_token, refresh_token }) => {
+const _saveTokens = ({ expires_in, access_token, refresh_token }) => {
   if (!(access_token && refresh_token && expires_in)) return
 
   const now = new Date()
-  const tokenExpires = new Date(
-    new Date().setSeconds(now.getSeconds() + expires_in),
-  )
-  const refreshExpires = new Date(new Date().setMonth(now.getMonth() + 1))
-  cookies.set('access_token', access_token, {
-    ...cookieBaseOptions,
-    expires: tokenExpires,
+  set(refreshToken, {
+    value: refresh_token,
+    expires: new Date(new Date().setMonth(now.getMonth() + 1)),
   })
-  cookies.set('refresh_token', refresh_token, {
-    ...cookieBaseOptions,
-    expires: refreshExpires,
+  set(accessToken, {
+    value: access_token,
+    expires: new Date(new Date().setSeconds(now.getSeconds() + expires_in)),
   })
-}
-const check = async () => {
-  const credentials = new URLSearchParams()
-  credentials.set('token', tokens.value.accessToken)
-  const response = await request({
-    url: 'oAuth/check',
-    method: 'post',
-    data: credentials,
-  })
-  if (response.data?.authorities?.indexOf('ROLE_ADMIN') !== -1)
-    isAdmin.value = true
-  return response.data
-}
-const logout = () => {
-  cookies.remove('access_token', cookieBaseOptions)
-  cookies.remove('refresh_token', cookieBaseOptions)
-  isAdmin.value = false
 }
 
-export const useAuth = () => ({
-  PROVIDERS,
-  tokens,
-  isLoggedIn,
-  isAdmin,
-  initAuth,
-  auth,
-  refresh,
-  check,
-  logout,
-})
+const accessToken = computedCookie('access_token')
+const refreshToken = computedCookie('refreshToken')
+const isLoggedIn = or(accessToken, refreshToken)
+const needsRefresh = not(accessToken.value)
+const status = ref({ active: false })
+const isAdmin = computed(
+  () =>
+    get(status, 'active') && get(status, 'authorities').includes(ROLE_ADMIN),
+)
+export const useAuth = () => {
+  const { request, ...rest } = useApi()
+
+  const initAuth = (provider) => {
+    const { BASE_URL } = useApi()
+    window.location.href = `${BASE_URL}/oAuth/${PROVIDERS.get(provider)}`
+  }
+
+  const auth = async ({ code, provider }) => {
+    try {
+      const { data } = await request({
+        url: '/oAuth',
+        method: 'post',
+        data: new URLSearchParams({
+          code,
+          grant_type: `${PROVIDERS.get(provider)}_oauth`,
+        }),
+      })
+
+      _saveTokens(data)
+      await getStatus()
+      await useUser().getUser()
+
+      return data
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  const refresh = async () => {
+    if (!isLoggedIn.value) throw new Error('No tokens for refresh session')
+
+    try {
+      const { data } = await request({
+        url: 'oAuth/update',
+        data: new URLSearchParams({
+          refresh_token: get(refreshToken),
+          grant_type: 'refresh_token',
+        }),
+      })
+
+      _saveTokens(data)
+      return data
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  const getStatus = async () => {
+    try {
+      const { data } = await request({
+        url: 'oAuth/check',
+        method: 'post',
+        data: new URLSearchParams({ token: get(accessToken) }),
+      })
+
+      set(status, data)
+      return data
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  const logout = () =>
+    set(accessToken, undefined) ||
+    set(refreshToken, undefined) ||
+    set(status, { active: false })
+
+  return {
+    PROVIDERS,
+    ROLE_ADMIN,
+    ROLE_USER,
+    status: readonly(status),
+    accessToken: readonly(accessToken),
+    refreshToken: readonly(refreshToken),
+    isLoggedIn,
+    isAdmin,
+    needsRefresh,
+    initAuth,
+    auth,
+    refresh,
+    getStatus,
+    logout,
+  }
+}

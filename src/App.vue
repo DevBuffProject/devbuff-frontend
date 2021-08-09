@@ -9,10 +9,7 @@
             <template v-if="Component">
               <suspense>
                 <div class="h-full container" :key="route.name">
-                  <AtomicBreadcrumbs
-                    v-if="route?.meta.breadcrumbs"
-                    :items="breadcrumbs"
-                  />
+                  <AtomicBreadcrumbs v-if="breadcrumbs" :items="breadcrumbs" />
                   <h2
                     class="sticky top-3 z-50 inline-block"
                     v-if="route?.meta.name"
@@ -47,9 +44,7 @@
     >
       <suspense v-if="Component">
         <AtomicDialog visible @close="back">
-          <h2 v-if="route?.meta.name" class="mt-2">
-            {{ route.meta.name }}
-          </h2>
+          <h2 v-if="route?.meta.name" class="mt-2">{{ route.meta.name }}</h2>
           <component :is="route?.meta.preview || Component" />
         </AtomicDialog>
 
@@ -62,15 +57,15 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed, onErrorCaptured } from 'vue'
-import { set, useTitle } from '@vueuse/core'
-import { useDialogRoute, useMainRoute, useRouter } from './router'
-import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
+import { defineComponent, computed } from 'vue'
+import { useTitle } from '@vueuse/core'
+import { useAuth } from './composes/core'
+import { useDialogRoute, useMainRoute, useRouter } from './core/router'
 
 export default defineComponent({
   setup() {
     useTitle('DefBuff')
+
     const router = useRouter()
     const mainRoute = useMainRoute()
     const dialogRoute = useDialogRoute()
@@ -83,18 +78,16 @@ export default defineComponent({
       return [...crumbRoutes, { title: mainRoute.value.meta.name }]
     })
 
-    const error = ref(null)
-    onErrorCaptured((err) => set(error, err))
-    router.beforeEach(NProgress.start)
-    router.afterEach(() => setTimeout(NProgress.done, 100))
-
     // TODO: redirect to background route
     const back = () => router.back()
+
+    const { needsRefresh } = useAuth()
 
     return {
       breadcrumbs,
       mainRoute,
       dialogRoute,
+      needsRefresh,
       back,
     }
   },

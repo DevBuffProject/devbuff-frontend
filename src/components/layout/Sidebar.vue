@@ -110,15 +110,15 @@
 
 <script>
 import { defineComponent, ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { useAuth, useUser } from '../../composes/core'
+import { useI18n } from '../../composes/utils'
+import { useRouter } from '../../core/router'
 import {
   SearchIcon,
   DashboardIcon,
   SettingsIcon,
   ShieldIcon,
 } from '@iconicicons/vue3'
-import { useI18n } from '../../composes/utils'
 
 export default defineComponent({
   setup() {
@@ -159,8 +159,9 @@ export default defineComponent({
           to: { name: 'settings', params: { _isDialog: true } },
           exact: true,
         },
-      ].filter((i) => !!i),
+      ].filter(Boolean),
     )
+
     const goNavigate = async (event, route, next) => {
       if (route.path === route) return event.preventDefault()
       loadingRoute.value = route
@@ -176,11 +177,12 @@ export default defineComponent({
 
     return {
       t,
-      user,
-      AuthProviders,
-      isLoggedIn,
       nav,
+      user,
+      isAdmin,
+      isLoggedIn,
       loadingRoute,
+      AuthProviders,
       initAuth,
       goNavigate,
       logoutProcess,
