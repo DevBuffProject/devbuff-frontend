@@ -13,7 +13,7 @@ specifiers:
   '@vue/eslint-config-prettier': 6.0.0
   '@vueup/vue-quill': 1.0.0-beta.7
   '@vueuse/core': 5.3.0
-  '@vueuse/integrations': 5.2.0
+  '@vueuse/integrations': 5.3.0
   '@vueuse/motion': 1.5.6
   '@vueuse/router': 5.2.0
   axios: 0.21.1
@@ -56,7 +56,7 @@ dependencies:
   '@iconicicons/vue3': 1.5.0_vue@3.1.5
   '@vueup/vue-quill': 1.0.0-beta.7_vue@3.1.5
   '@vueuse/core': 5.3.0_vue@3.1.5
-  '@vueuse/integrations': 5.2.0_vue@3.1.5
+  '@vueuse/integrations': 5.3.0_vue@3.1.5
   '@vueuse/motion': 1.5.6_vue@3.1.5
   '@vueuse/router': 5.2.0_vue-router@4.0.10+vue@3.1.5
   axios: 0.21.1
@@ -3903,10 +3903,10 @@ packages:
       - vue
     dev: false
 
-  /@vueuse/integrations/5.2.0_vue@3.1.5:
-    resolution: {integrity: sha512-fWtePGnzGP9tRaWDEFfITVwkOVPe7Ayxp9dNKCmVF/e8I5mcyxfKMEJ9NOBdEhOrKZE8v72imk3kiiraBJXvQQ==}
+  /@vueuse/integrations/5.3.0_vue@3.1.5:
+    resolution: {integrity: sha512-qZg0b656O5alOOfl9p4BucRumhzHoKmKWUxYjkCwWh+3nPSP5R1+r1wFi1lg6ELPoTCww0LXTlPCZAmz9dSLjA==}
     dependencies:
-      '@vueuse/shared': 5.2.0_vue@3.1.5
+      '@vueuse/shared': 5.3.0_vue@3.1.5
       vue-demi: 0.10.1_vue@3.1.5
     optionalDependencies:
       axios: 0.21.1
@@ -4910,14 +4910,8 @@ packages:
     dev: false
     optional: true
 
-  /buffer-from/1.1.1:
-    resolution: {integrity: sha512-MQcXEUbCKtEo7bhqEs6560Hyd4XaovZlO/k9V3hjVUF/zwW7KBVdSK4gIt/bzwS9MbR5qob+F5jusZsb0YQK2A==}
-    dev: false
-    optional: true
-
   /buffer-from/1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
-    dev: true
 
   /buffer-xor/1.0.3:
     resolution: {integrity: sha1-JuYe0UIvtw3ULm42cp7VHYVf6Nk=}
@@ -10090,7 +10084,7 @@ packages:
     dependencies:
       buffer: 5.7.1
       buffer-alloc: 1.2.0
-      buffer-from: 1.1.1
+      buffer-from: 1.1.2
       dijkstrajs: 1.0.2
       isarray: 2.0.5
       pngjs: 3.4.0
