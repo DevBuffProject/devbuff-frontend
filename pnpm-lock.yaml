@@ -49,7 +49,7 @@ specifiers:
   vue-nprogress: 0.2.0
   vue-router: 4.0.11
   windicss: 3.1.7
-  windicss-webpack-plugin: 1.4.3
+  windicss-webpack-plugin: 1.4.4
   yup: 0.32.9
 
 dependencies:
@@ -104,7 +104,7 @@ devDependencies:
   vite-plugin-svg-icons: 1.0.4_vite@2.4.4
   vue-loader: 16.5.0_@vue+compiler-sfc@3.2.2
   windicss: 3.1.7
-  windicss-webpack-plugin: 1.4.3
+  windicss-webpack-plugin: 1.4.4
 
 packages:
 
@@ -4164,7 +4164,7 @@ packages:
     dependencies:
       debug: 4.3.2
       jiti: 1.11.0
-      windicss: 3.1.6
+      windicss: 3.1.7
     transitivePeerDependencies:
       - supports-color
 
@@ -4177,7 +4177,7 @@ packages:
       fast-glob: 3.2.7
       magic-string: 0.25.7
       micromatch: 4.0.4
-      windicss: 3.1.6
+      windicss: 3.1.7
     transitivePeerDependencies:
       - supports-color
 
@@ -12808,8 +12808,8 @@ packages:
       string-width: 4.2.2
     dev: true
 
-  /windicss-webpack-plugin/1.4.3:
-    resolution: {integrity: sha512-TRgiKa8hZVwjDsf9HMl4GwNFq5awo/WM83joR0aTar6kuvSi0DEPGC9hS9kTIAUvVOeeOyd5nHEvwYpP8pPJQw==}
+  /windicss-webpack-plugin/1.4.4:
+    resolution: {integrity: sha512-8jQDGpcbMEHq8eVlKkm9DJmFqWIIW34/43TkdCZyBvH8eh5SZnhw1hkO/G5DA586hZTkboM+J8wD7cztLmBQyA==}
     dependencies:
       '@windicss/plugin-utils': 1.2.7
       debug: 4.3.2
@@ -12817,7 +12817,7 @@ packages:
       magic-string: 0.25.7
       upath: 2.0.1
       webpack-virtual-modules: 0.4.3
-      windicss: 3.1.6
+      windicss: 3.1.7
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -12826,12 +12826,12 @@ packages:
     resolution: {integrity: sha512-9/ShTPRs2pg/AJo4PtbgDv9p7BUgR52WqL7Gpr8VSO6LH8z4I/oKamUAlSXqyLsWD6yKS+xtxF3FRiHVJwYcuQ==}
     engines: {node: '>= 12'}
     hasBin: true
+    dev: false
 
   /windicss/3.1.7:
     resolution: {integrity: sha512-Q/HQ9j+r2R0fdt85zAjccdo11kHWzQmpkuwIUQIO6PSypyDmBTfN14aAy4szLrpgo2woyuHM7Y+kir4IG4qnKQ==}
     engines: {node: '>= 12'}
     hasBin: true
-    dev: true
 
   /with/7.0.2:
     resolution: {integrity: sha512-RNGKj82nUPg3g5ygxkQl0R937xLyho1J24ItRCBTr/m1YnZkzJy1hUiHUJrc/VlsDQzsCnInEGSg3bci0Lmd4w==}
