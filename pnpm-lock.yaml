@@ -12,7 +12,7 @@ specifiers:
   '@vue/compiler-sfc': 3.2.3
   '@vue/eslint-config-prettier': 6.0.0
   '@vueup/vue-quill': 1.0.0-beta.7
-  '@vueuse/core': 5.3.0
+  '@vueuse/core': 6.0.0
   '@vueuse/integrations': 5.3.0
   '@vueuse/motion': 1.5.6
   '@vueuse/router': 5.3.0
@@ -55,7 +55,7 @@ specifiers:
 dependencies:
   '@iconicicons/vue3': 1.5.0_vue@3.2.3
   '@vueup/vue-quill': 1.0.0-beta.7_vue@3.2.3
-  '@vueuse/core': 5.3.0_vue@3.2.3
+  '@vueuse/core': 6.0.0_vue@3.2.3
   '@vueuse/integrations': 5.3.0_vue@3.2.3
   '@vueuse/motion': 1.5.6_vue@3.2.3
   '@vueuse/router': 5.3.0_vue-router@4.0.11+vue@3.2.3
@@ -3958,14 +3958,20 @@ packages:
       - vue
     dev: false
 
-  /@vueuse/core/5.3.0_vue@3.2.3:
-    resolution: {integrity: sha512-bBL1/JMRHFWmbgQzUZHF4WOwlqfenR1B8+elriXsbnHlogQM5foSz9++WyDBR0YPIVgCJq7fvNLqd4T7+cjc5w==}
+  /@vueuse/core/6.0.0_vue@3.2.3:
+    resolution: {integrity: sha512-PuBfNo/Zv+NkLcZaYWBA1WjqxQhTDC0DMQpoAIJdo/GFul/1SpBbONhUho2zqtOmq8vyGuK200wNFvyA4YUAMg==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.0
+      vue: ^2.6.0 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      vue:
+        optional: true
     dependencies:
-      '@vueuse/shared': 5.3.0_vue@3.2.3
+      '@vueuse/shared': 6.0.0_vue@3.2.3
+      vue: 3.2.3
       vue-demi: 0.10.1_vue@3.2.3
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - vue
     dev: false
 
   /@vueuse/integrations/5.3.0_vue@3.2.3:
@@ -4030,6 +4036,21 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
+    dev: false
+
+  /@vueuse/shared/6.0.0_vue@3.2.3:
+    resolution: {integrity: sha512-PLjjqL8bxI5q86qk/ifXy572nfQE3rJc1RMem+dKcGayaagMnC4kXHEt64V98DVielSwr2FuYaeFodi4KJrvdg==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.0
+      vue: ^2.6.0 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      vue:
+        optional: true
+    dependencies:
+      vue: 3.2.3
+      vue-demi: 0.10.1_vue@3.2.3
     dev: false
 
   /@webassemblyjs/ast/1.9.0:
