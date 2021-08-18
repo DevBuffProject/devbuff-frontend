@@ -34,7 +34,7 @@ specifiers:
   prettier: 2.3.2
   query-string: 7.0.1
   quill-image-uploader: 1.2.2
-  sass: 1.37.5
+  sass: 1.38.0
   string-to-color: 2.2.2
   swiper: 6.8.2
   vee-validate: 4.4.9
@@ -68,7 +68,7 @@ dependencies:
   nprogress: 0.2.0
   query-string: 7.0.1
   quill-image-uploader: 1.2.2
-  sass: 1.37.5
+  sass: 1.38.0
   string-to-color: 2.2.2
   swiper: 6.8.2
   vee-validate: 4.4.9_vue@3.2.3
@@ -11011,8 +11011,8 @@ packages:
       walker: 1.0.7
     dev: true
 
-  /sass/1.37.5:
-    resolution: {integrity: sha512-Cx3ewxz9QB/ErnVIiWg2cH0kiYZ0FPvheDTVC6BsiEGBTZKKZJ1Gq5Kq6jy3PKtL6+EJ8NIoaBW/RSd2R6cZOA==}
+  /sass/1.38.0:
+    resolution: {integrity: sha512-WBccZeMigAGKoI+NgD7Adh0ab1HUq+6BmyBUEaGxtErbUtWUevEbdgo5EZiJQofLUGcKtlNaO2IdN73AHEua5g==}
     engines: {node: '>=8.9.0'}
     hasBin: true
     dependencies:
