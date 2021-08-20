@@ -14,7 +14,7 @@ specifiers:
   '@vueup/vue-quill': 1.0.0-beta.7
   '@vueuse/core': 5.3.0
   '@vueuse/integrations': 6.0.0
-  '@vueuse/motion': 1.5.6
+  '@vueuse/motion': 1.6.0
   '@vueuse/router': 6.0.0
   axios: 0.21.1
   babel-loader: 8.2.2
@@ -57,7 +57,7 @@ dependencies:
   '@vueup/vue-quill': 1.0.0-beta.7_vue@3.2.4
   '@vueuse/core': 5.3.0_vue@3.2.4
   '@vueuse/integrations': 6.0.0_vue@3.2.4
-  '@vueuse/motion': 1.5.6_vue@3.2.4
+  '@vueuse/motion': 1.6.0_vue@3.2.4
   '@vueuse/router': 6.0.0_vue-router@4.0.11+vue@3.2.4
   axios: 0.21.1
   color: 4.0.1
@@ -3948,16 +3948,6 @@ packages:
       vue: 3.2.4
     dev: false
 
-  /@vueuse/core/4.11.2_vue@3.2.4:
-    resolution: {integrity: sha512-4A17XvKXpMR6829EVWvrdSKEeAjTWaiC3+xh51KEtlyCwvWQwZ0xwKDrbMj+e15ANxjHrTw/0bJVaWDfPQt/Pw==}
-    dependencies:
-      '@vueuse/shared': 4.11.2_vue@3.2.4
-      vue-demi: 0.10.1_vue@3.2.4
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - vue
-    dev: false
-
   /@vueuse/core/5.3.0_vue@3.2.4:
     resolution: {integrity: sha512-bBL1/JMRHFWmbgQzUZHF4WOwlqfenR1B8+elriXsbnHlogQM5foSz9++WyDBR0YPIVgCJq7fvNLqd4T7+cjc5w==}
     dependencies:
@@ -3966,6 +3956,22 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
+    dev: false
+
+  /@vueuse/core/6.0.0_vue@3.2.4:
+    resolution: {integrity: sha512-PuBfNo/Zv+NkLcZaYWBA1WjqxQhTDC0DMQpoAIJdo/GFul/1SpBbONhUho2zqtOmq8vyGuK200wNFvyA4YUAMg==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.0
+      vue: ^2.6.0 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      vue:
+        optional: true
+    dependencies:
+      '@vueuse/shared': 6.0.0_vue@3.2.4
+      vue: 3.2.4
+      vue-demi: 0.10.1_vue@3.2.4
     dev: false
 
   /@vueuse/integrations/6.0.0_vue@3.2.4:
@@ -3986,16 +3992,16 @@ packages:
       - vue
     dev: false
 
-  /@vueuse/motion/1.5.6_vue@3.2.4:
-    resolution: {integrity: sha512-rNFYsA9W6zo3YqCpg7MjorRT4Mhffe1NwpqhUauaNf+vKY4J6DZaxJLDiItDYxpwjaity51u/75RdpnwvjXcIA==}
+  /@vueuse/motion/1.6.0_vue@3.2.4:
+    resolution: {integrity: sha512-ue2ePBypZ0YAMoWUD/8I0Il2PTqbT84SViMGNWh5PzNRr7yaWfNbjhC2ufpYiwkTOuBH7neQwbcVV9i/+pkW5A==}
     peerDependencies:
-      '@vue/composition-api': ^1.0.0-beta.1
+      '@vue/composition-api': ^1.1.1
       vue: ^2.0.0 || >=3.0.0-rc.0
     peerDependenciesMeta:
       '@vue/composition-api':
         optional: true
     dependencies:
-      '@vueuse/core': 4.11.2_vue@3.2.4
+      '@vueuse/core': 6.0.0_vue@3.2.4
       popmotion: 9.4.0
       vue: 3.2.4
       vue-demi: 0.10.1_vue@3.2.4
@@ -4009,15 +4015,6 @@ packages:
       '@vueuse/shared': 6.0.0_vue@3.2.4
       vue-demi: 0.10.1_vue@3.2.4
       vue-router: 4.0.11_vue@3.2.4
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - vue
-    dev: false
-
-  /@vueuse/shared/4.11.2_vue@3.2.4:
-    resolution: {integrity: sha512-vTbTi6ou7ljH3CkKVoaIaCAoWB5T1ewSogpL6VnO1duMPNuiv7x8K/LunMbnTg4tVyt6QwaiCuEq/kyS6AUBRg==}
-    dependencies:
-      vue-demi: 0.10.1_vue@3.2.4
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
