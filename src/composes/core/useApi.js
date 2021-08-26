@@ -11,7 +11,6 @@ const createAxios = (config) => {
   const axiosInstance = axios.create({ baseURL, ...config })
   axiosInstance.interceptors.request.use((config) => {
     const accessToken = cookies.get('access_token')
-    console.log(accessToken)
     if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`
     return config
   })
