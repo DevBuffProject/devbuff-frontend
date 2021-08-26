@@ -42,7 +42,7 @@
             <div v-for="lang of languagesForSpecialist(specialist)" :key="lang">
               <div class="mb-1">
                 <AtomicFormCheckbox
-                  :label="lang"
+                  :label="tDefault('commons.languages.' + lang, lang, true)"
                   :model-value="isLanguageSelected(specialist, lang)"
                   @update:model-value="toggleLanguage(specialist, lang)"
                 />
