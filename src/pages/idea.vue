@@ -77,13 +77,13 @@
         </div>
 
         <AtomicCard>
-          <div class="dark:divide-dark-700 divide-gray-200 divide-y">
+          <div class="dark:divide-dark-700 divide-gray-200 divide-y -mt-6">
             <div
-              class="-mx-4 mt-3 px-4 py-3"
+              class="-mx-4 px-4 py-3"
               v-for="specialist in idea.specialist"
               :key="specialist.id"
             >
-              <h5 class="m-0 mb-4 font-normal">
+              <h5 class="m-0 !mb-4 font-normal">
                 {{ t(`commons.specialist.${specialist.name}`, true) }}
               </h5>
               <AtomicLabel

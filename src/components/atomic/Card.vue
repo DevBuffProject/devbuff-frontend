@@ -1,8 +1,9 @@
 <template>
   <div>
     <div
-      :class="styles.CardShadow"
       class="
+        shadow-lg shadow-dark-50
+        dark:shadow-black dark:shadow-3xl
         bg-white
         border border-gray-300 border-opacity-30
         dark:border-dark-700 dark:bg-dark-800 dark:bg-opacity-50
@@ -39,8 +40,11 @@
 </template>
 
 <style module>
+.CardShadow--dark {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.9) !important;
+}
 .CardShadow {
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
 }
 </style>
 
