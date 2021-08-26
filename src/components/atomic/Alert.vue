@@ -40,10 +40,6 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
-    message: {
-      type: String,
-      required: true,
-    },
     description: {
       type: String,
       default: undefined,
