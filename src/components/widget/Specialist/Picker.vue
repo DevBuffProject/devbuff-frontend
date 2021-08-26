@@ -48,7 +48,7 @@
                 />
                 <div
                   v-if="isLanguageSelected(specialist, lang)"
-                  class="mt-2 ml-2"
+                  class="mt-1 ml-2"
                 >
                   <div
                     v-for="technology of technologiesAtSpecialistAndLanguage(
