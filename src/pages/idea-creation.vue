@@ -64,15 +64,12 @@ export default defineComponent({
     const { idea, publishIdea, getIdea, updateIdea } = useIdea()
     const router = useRouter()
     let isEditingMode = false
-    let data = {
-      text: '',
-    }
+    let data = { text: '' }
 
     useTitle('Создание идеи')
 
     if (props.id) {
       await getIdea(props.id)
-
       useTitle('Редактирование идеи - ' + idea.value.name)
 
       isEditingMode = true
@@ -85,25 +82,18 @@ export default defineComponent({
     }
 
     const onSubmit = async () => {
-      console.log(data)
       if (isEditingMode) {
-        updateIdea(props.id, data).then(() =>
-          router.replace({
-            name: `idea-detail`,
-            params: {
-              id: props.id,
-            },
-          }),
-        )
+        await updateIdea(props.id, data)
+        await router.replace({
+          name: `idea-detail`,
+          params: { id: props.id },
+        })
       } else {
-        publishIdea(data).then((result) =>
-          router.replace({
-            name: `idea-detail`,
-            params: {
-              id: result.id,
-            },
-          }),
-        )
+        const { id } = await publishIdea(data)
+        await router.replace({
+          name: `idea-detail`,
+          params: { id },
+        })
       }
     }
 
@@ -126,9 +116,9 @@ export default defineComponent({
 
     return {
       t,
+      onSubmit,
       data,
       schemas,
-      onSubmit,
       isEditingMode,
     }
   },

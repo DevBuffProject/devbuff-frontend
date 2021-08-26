@@ -188,7 +188,6 @@ export default defineComponent({
     id: { type: String, required: true },
   },
   async setup(props) {
-    console.log(props)
     const router = useRouter()
     const {
       idea,
