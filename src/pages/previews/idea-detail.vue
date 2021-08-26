@@ -4,7 +4,7 @@
     <div class="mb-4 px-2">
       <div class="flex flex-wrap items-start">
         <div class="mr-6">
-          <WidgetUser :user="idea.ownerIdea" @click="navigate" />
+          <WidgetUser :user="idea.ownerIdea" />
         </div>
         <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">
           {{ publishedAgo }}
