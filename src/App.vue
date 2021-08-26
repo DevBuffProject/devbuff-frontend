@@ -61,21 +61,24 @@ import { defineComponent, computed } from 'vue'
 import { useTitle } from '@vueuse/core'
 import { useAuth } from './composes/core'
 import { useDialogRoute, useMainRoute, useRouter } from './core/router'
+import { useI18n } from './composes'
 
 export default defineComponent({
   setup() {
     useTitle('DefBuff')
-
+    const { t, tDefault } = useI18n('breadcrumbs')
     const router = useRouter()
     const mainRoute = useMainRoute()
     const dialogRoute = useDialogRoute()
-
     const breadcrumbs = computed(() => {
       const breadcrumbs = mainRoute.value?.meta.breadcrumbs || []
       const crumbRoutes = router.options.routes
         .filter((r) => breadcrumbs?.includes(r.name))
-        .map((r) => ({ title: r.meta?.name, to: r.path }))
-      return [...crumbRoutes, { title: mainRoute.value.meta.name }]
+        .map((r) => ({ title: t(r.meta?.name), to: r.path }))
+      return [
+        ...crumbRoutes,
+        { title: tDefault(mainRoute.value.meta.name, '') },
+      ]
     })
 
     // TODO: redirect to background route

@@ -13,7 +13,9 @@ export const createMiddleware = (
   if (debounce > 0) middlewareWrap = useDebounceFn(middlewareWrap, debounce)
   if (throttle > 0) middlewareWrap = useThrottleFn(middlewareWrap, throttle)
 
-  return (page) => middlewareWrap(page)
+  return (page) => {
+    return middlewareWrap(page)
+  }
 }
 
 export { default as getUser } from './getUser'

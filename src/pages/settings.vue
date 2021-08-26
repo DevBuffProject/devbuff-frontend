@@ -1,36 +1,33 @@
 <template>
   <div class="max-w-[800px]">
-    <AtomicAlert> This page under develop </AtomicAlert>
+    <AtomicAlert> This page under develop</AtomicAlert>
     <AtomicAlert
       v-if="!user.statusEmailConfirm && isVerifyEmailSent"
       style="cursor: pointer"
       type="warning"
     >
-      <strong>Your email not confirmed</strong>
-      Для того чтобы вы могли получать уведомления о ваших идеях, необходимо
-      подтвердить Email.
-      <div class="mt-4">
+      <strong>{{ t('warning.email.header') }}</strong>
+      {{ t('warning.email.message') }} ({{ user.email }})
+
+      <div class="mt-4 grid justify-items-end">
         <AtomicButton
           is-small
           type="success"
           @click="onResendEmail"
           class="mr-2"
         >
-          Отправить
+          {{ t('warning.email.resendButton') }}
         </AtomicButton>
-        еще раз письмо на адрес <u>{{ user.email }}</u>
       </div>
     </AtomicAlert>
 
     <div class="flex justify-center">
       <WidgetSettingsAvatar class="my-4" />
     </div>
-    <AtomicNotification
-      v-if="conflictMessage"
-      type="danger"
-      :message="t('error.confict')"
-      :description="conflictMessage"
-    />
+    <AtomicAlert v-if="conflictMessage" type="danger">
+      <strong>{{ t('error.conflict') }}</strong>
+      {{ conflictMessage }}
+    </AtomicAlert>
     <AtomicTabs>
       <AtomicTabsTab name="О себе">
         <AtomicForm :data="data" @submit="onSubmit" />
