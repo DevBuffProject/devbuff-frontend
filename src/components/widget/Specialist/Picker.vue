@@ -42,10 +42,32 @@
             <div v-for="lang of languagesForSpecialist(specialist)" :key="lang">
               <div class="mb-1">
                 <AtomicFormCheckbox
-                  :label="lang"
+                  :label="tDefault('commons.languages.' + lang, lang, true)"
                   :model-value="isLanguageSelected(specialist, lang)"
                   @update:model-value="toggleLanguage(specialist, lang)"
                 />
+                <div
+                  v-if="isLanguageSelected(specialist, lang)"
+                  class="mt-2 ml-2"
+                >
+                  <div
+                    v-for="technology of technologiesAtSpecialistAndLanguage(
+                      specialist,
+                      lang,
+                    )"
+                    :key="technology"
+                  >
+                    <AtomicFormCheckbox
+                      :label="technology"
+                      :model-value="
+                        isTechnologySelected(specialist, lang, technology)
+                      "
+                      @update:model-value="
+                        toggleTechnology(specialist, lang, technology)
+                      "
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -101,9 +123,36 @@ export default defineComponent({
             : acc,
         [],
       )
+
+    const technologiesAtSpecialistAndLanguage = (specialist, language) => {
+      const languageValue = skills.value.find((languageValue) => {
+        return languageValue.name === language
+      })
+      if (languageValue === undefined) {
+        return []
+      }
+      const specialistValue = languageValue.specializations.find(
+        (specialistValue) => {
+          return specialistValue.name === specialist
+        },
+      )
+      return specialistValue === undefined
+        ? []
+        : specialistValue.frameworks.map((frameworkValue) => {
+            return frameworkValue.name
+          })
+    }
     const getLanguageSelected = (sp, lang) =>
       getSpecialistSelected(sp).languages.find((l) => l.name === lang)
     const isLanguageSelected = (sp, lang) => !!getLanguageSelected(sp, lang)
+
+    const isTechnologySelected = (specialist, language, technology) => {
+      return (
+        getLanguageSelected(specialist, language).frameworks.find(
+          (frameworkValue) => frameworkValue.name === technology,
+        ) !== undefined
+      )
+    }
     const toggleLanguage = (sp, lang) => {
       const specialist = getSpecialistSelected(sp)
       const languageIndex = specialist.languages.findIndex(
@@ -114,6 +163,17 @@ export default defineComponent({
       emit('update:modelValue', model.value)
     }
 
+    const toggleTechnology = (specialist, language, technology) => {
+      const data = getLanguageSelected(specialist, language).frameworks
+      const frameworkIndex = data.findIndex((frameworkValue) => {
+        return frameworkValue.name === technology
+      })
+
+      if (frameworkIndex > -1) data.splice(frameworkIndex, 1)
+      else data.push({ name: technology })
+      emit('update:modelValue', model.value)
+    }
+
     getSkills()
 
     return {
@@ -121,6 +181,9 @@ export default defineComponent({
       tDefault,
       isSpecialistSelected,
       languagesForSpecialist,
+      isTechnologySelected,
+      toggleTechnology,
+      technologiesAtSpecialistAndLanguage,
       isLanguageSelected,
       toggleSpecialist,
       toggleLanguage,
