@@ -71,6 +71,7 @@ export default defineComponent({
 
     useTitle(`${idea.value.name} - DevBuff`)
 
+    idea.value.ownerIdea.avatar = getUserProfileUrl(idea.value.ownerIdea.id)
     return {
       idea,
       publishedAgo,
