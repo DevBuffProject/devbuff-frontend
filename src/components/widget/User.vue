@@ -1,6 +1,6 @@
 <template>
   <div class="flex grow items-center" v-bind="attrs">
-    <atomic-avatar v-if="user.avatar" :src="user.avatar" />
+    <AtomicAvatar v-if="user.avatar" :src="user.avatar" />
     <AtomicSkeleton v-else class="w-[40px] h-[40px]" />
     <div class="ml-2 flex-1">
       <div v-if="user.firstName || user.lastName" class="font-semibold">
