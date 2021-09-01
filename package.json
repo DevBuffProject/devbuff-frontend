@@ -65,7 +65,7 @@
     "lint-staged": "11.1.2",
     "pinst": "2.1.6",
     "prettier": "2.3.2",
-    "vite": "2.5.1",
+    "vite": "2.5.2",
     "vite-plugin-fonts": "0.2.2",
     "vite-plugin-svg-icons": "1.0.4",
     "vue-loader": "16.5.0",
