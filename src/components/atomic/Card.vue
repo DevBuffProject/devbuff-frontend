@@ -1,12 +1,18 @@
 <template>
   <div>
     <div
-      :class="[
-        'bg-white border border-gray-300 border-opacity-30',
-        'dark:border-dark-700 dark:bg-dark-800 dark:bg-opacity-50',
-        'grid p-4 rounded-xl relative',
-        styles.CardShadow,
-      ]"
+      class="
+        shadow-lg shadow-dark-50
+        dark:shadow-black dark:shadow-3xl
+        bg-white
+        border border-gray-300 border-opacity-30
+        dark:border-dark-700 dark:bg-dark-800 dark:bg-opacity-50
+        grid
+        p-4
+        rounded-xl
+        relative
+        overflow-hidden
+      "
       v-bind="attrs"
     >
       <template v-if="$slots.bottom || triangle" />
@@ -14,7 +20,7 @@
         <slot name="header" />
       </div>
 
-      <div>
+      <div class="break-all">
         <slot />
       </div>
 
@@ -34,8 +40,11 @@
 </template>
 
 <style module>
+.CardShadow--dark {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.9) !important;
+}
 .CardShadow {
-  box-shadow: 0px 10px 25px -5px rgb(0 0 0 / 7%);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
 }
 </style>
 
