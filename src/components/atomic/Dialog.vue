@@ -2,22 +2,52 @@
   <AtomicOverlay :visible="visible">
     <div
       ref="windowRef"
-      class="
-        max-w-[800px]
-        my-10
-        mx-auto
-        p-4
-        overflow-hidden
-        relative
-        z-50
-        bg-white
-        dark:bg-dark-900 dark:border dark:border-dark-500
-        shadow-2xl
-        rounded-2xl
-      "
+      class="max-w-[800px] my-10 mx-auto relative"
       v-bind="attrs"
     >
-      <slot />
+      <div
+        class="
+          absolute
+          right-4
+          top-4
+          cursor-pointer
+          flex flex-col
+          items-center
+          group
+        "
+        @click="close"
+      >
+        <CloseIcon
+          class="
+            w-8
+            h-8
+            p-1
+            text-dark-500
+            bg-light-900
+            dark:bg-dark-50 dark:text-dark-900 dark:bg-opacity-70
+            rounded-full
+            transition transition-opacity
+            opacity-70
+            transform
+            group-hover:opacity-100
+            group-active:scale-90
+          "
+        />
+        <span class="opacity-30 text-xs mt-1">press esc</span>
+      </div>
+      <div
+        class="
+          bg-white
+          dark:bg-dark-900 dark:border dark:border-dark-500
+          shadow-2xl
+          rounded-2xl
+          p-4
+          overflow-hidden
+          z-50
+        "
+      >
+        <slot />
+      </div>
     </div>
   </AtomicOverlay>
 </template>
