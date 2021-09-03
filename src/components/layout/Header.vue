@@ -16,7 +16,7 @@
     <div class="container flex mx-auto">
       <div class="flex items-center w-full">
         <RouterLink to="/" custom v-slot="{ href, navigate }">
-          <a :href="href" @click="navigate" v-focusable>
+          <a :href="href" @click="navigate">
             <AtomicLogo
               :src="`/images/logos/logo-${isDark ? 'light' : 'dark'}.svg`"
             />

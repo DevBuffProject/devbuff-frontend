@@ -39,6 +39,7 @@ export default [
     component: () => import('./pages/idea-creation.vue'),
     meta: {
       breadcrumbs: ['home', 'explore'],
+      isDialog: true,
     },
   },
   {
@@ -49,6 +50,7 @@ export default [
     props: true,
     meta: {
       breadcrumbs: ['home', 'explore'],
+      isDialog: true,
     },
   },
   {
@@ -100,6 +102,12 @@ export default [
     name: 'callback',
     path: '/callback/:provider?',
     component: () => import('./pages/callback.vue'),
+    props: true,
+  },
+  {
+    name: 'test',
+    path: '/test',
+    component: () => import('./pages/test.vue'),
     props: true,
   },
   {
