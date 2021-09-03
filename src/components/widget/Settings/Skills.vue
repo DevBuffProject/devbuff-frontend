@@ -119,7 +119,6 @@ import { useI18n } from '../../../composes/utils'
 export default defineComponent({
   name: 'WidgetProfileSkills',
   components: {
-    Checkbox: () => import('../../atomic/Form/Checkbox.vue'),
     Swiper,
     SwiperSlide,
   },
@@ -129,17 +128,17 @@ export default defineComponent({
     const { getSkills } = useSkills()
     const swiper = ref()
     const allSkills = await getSkills()
-
     const userSkill = user.value.skills
+
+    const findName = (array, value) =>
+      array.findIndex((data) => data.name === value)
 
     for (const language of allSkills) {
       const indexUserLanguage = findName(userSkill, language.name)
 
-      if (indexUserLanguage === -1) {
-        continue
-      }
-      language.checked = true
+      if (indexUserLanguage === -1) continue
 
+      language.checked = true
       const userSpecialization = userSkill[indexUserLanguage].specializations
 
       for (const specialization of language.specializations) {
@@ -147,11 +146,9 @@ export default defineComponent({
           userSpecialization,
           specialization.name,
         )
-        if (indexUserSpecialization === -1) {
-          continue
-        }
-        specialization.checked = true
+        if (indexUserSpecialization === -1) continue
 
+        specialization.checked = true
         const userTechnologies =
           userSpecialization[indexUserSpecialization].frameworks
 
@@ -160,26 +157,17 @@ export default defineComponent({
             userTechnologies,
             technology.name,
           )
-          if (indexUserTechnology === -1) {
-            continue
-          }
+          if (indexUserTechnology === -1) continue
           technology.checked = true
         }
       }
     }
 
-    function findName(array, value) {
-      return array.findIndex((data) => {
-        return data.name === value
-      })
-    }
-
     const specialists = ref([])
-
     const frameworks = ref([])
     const context = []
 
-    function nextSlide(rootData, currentData) {
+    const nextSlide = (rootData, currentData) => {
       context.push(rootData)
       if (specialists.value.length === 0) {
         // Current language slide
@@ -193,7 +181,7 @@ export default defineComponent({
       updateSwiper()
     }
 
-    function prevSlide() {
+    const prevSlide = () => {
       if (frameworks.value.length !== 0) {
         frameworks.value = []
         swiper.value.slidePrev()
@@ -213,21 +201,17 @@ export default defineComponent({
       })
     }
 
-    function onChangeSkill(target) {
+    const onChangeSkill = (target) => {
       if (target.checked) {
-        for (const contextItem of context) {
-          contextItem.checked = true
-        }
+        for (const contextItem of context) contextItem.checked = true
       } else if (!target.checked) {
         unCheckTargets(target)
       }
     }
 
-    function unCheckTargets(target) {
+    const unCheckTargets = (target) => {
       if (Array.isArray(target)) {
-        for (const value of target) {
-          unCheckTargets(value)
-        }
+        for (const value of target) unCheckTargets(value)
       } else {
         target.checked = false
         if (target.specializations !== undefined) {
@@ -240,15 +224,13 @@ export default defineComponent({
 
     const skills = reactive(JSON.parse(JSON.stringify(allSkills)))
 
-    function save() {
+    const save = () => {
       prevSlide()
       prevSlide()
       const skillsData = []
 
       for (const language of skills) {
-        if (!language.checked) {
-          continue
-        }
+        if (!language.checked) continue
         const languageObj = {
           name: language.name,
           levelKnowledge: 'newbie',
@@ -256,9 +238,7 @@ export default defineComponent({
         }
         skillsData.push(languageObj)
         for (const specialization of language.specializations) {
-          if (!specialization.checked) {
-            continue
-          }
+          if (!specialization.checked) continue
           const specializationObj = {
             name: specialization.name,
             frameworks: [],
@@ -266,9 +246,7 @@ export default defineComponent({
 
           languageObj.specializations.push(specializationObj)
           for (const technology of specialization.frameworks) {
-            if (!technology.checked) {
-              continue
-            }
+            if (!technology.checked) continue
             specializationObj.frameworks.push({
               name: technology.name,
               levelKnowledge: 'newbie',
@@ -287,15 +265,15 @@ export default defineComponent({
       ChevronLeftIcon,
       user,
       skills,
-      onChangeSkill,
       specialists,
       frameworks,
-      nextSlide,
-      prevSlide,
-      save,
       t,
-      tDefault,
+      save,
       onSwiper,
+      tDefault,
+      prevSlide,
+      nextSlide,
+      onChangeSkill,
     }
   },
 })
