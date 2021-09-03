@@ -18,14 +18,23 @@ const createAxios = (config) => {
 }
 
 export const useApi = (config = {}) => {
+  let _uploadCallback = () => {}
+  const onUpload = (callback) => (_uploadCallback = callback)
   const uploadProgress = ref(0)
+  const uploadTotal = ref(0)
+  const uploadLoaded = ref(0)
   const isLoading = ref(false)
   const error = shallowRef()
   const axiosInstance = createAxios(config)
 
   const permanentConfig = {
-    onUploadProgress: (event) =>
-      set(uploadProgress, (event.loaded / event.total) * 100),
+    onUploadProgress: (event) => {
+      _uploadCallback(event)
+      console.log(_uploadCallback)
+      set(uploadTotal, event.total)
+      set(uploadLoaded, event.loaded)
+      set(uploadProgress, (event.loaded / event.total) * 100)
+    },
   }
 
   const request = async (target, config) => {
@@ -45,8 +54,11 @@ export const useApi = (config = {}) => {
   return {
     BASE_URL,
     uploadProgress,
+    uploadTotal,
+    uploadLoaded,
     isLoading,
     error,
     request,
+    onUpload,
   }
 }
