@@ -5,7 +5,6 @@
     "plugin:vue/base",
     "plugin:vue/vue3-strongly-recommended",
     "plugin:prettier-vue/recommended",
-    "plugin:tailwind/recommended"
   ],
   "rules": {
     "no-unused-vars": "off",

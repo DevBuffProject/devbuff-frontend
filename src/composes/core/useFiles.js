@@ -3,7 +3,6 @@ import { useApi } from './useApi'
 export const useFiles = () => {
   const { request, ...rest } = useApi()
 
-  // TODO: move to
   const uploadUserPhoto = async (file) => {
     const data = new FormData()
     data.append('image', file, file.fileName)
