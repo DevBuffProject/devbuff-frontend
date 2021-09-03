@@ -7,45 +7,47 @@
     >
       <div
         class="
-          absolute
-          right-4
-          top-4
-          cursor-pointer
-          flex flex-col
-          items-center
-          group
-        "
-        @click="close"
-      >
-        <CloseIcon
-          class="
-            w-8
-            h-8
-            p-1
-            text-dark-500
-            bg-light-900
-            dark:bg-dark-50 dark:text-dark-900 dark:bg-opacity-70
-            rounded-full
-            transition transition-opacity
-            opacity-70
-            transform
-            group-hover:opacity-100
-            group-active:scale-90
-          "
-        />
-        <span class="opacity-30 text-xs mt-1">press esc</span>
-      </div>
-      <div
-        class="
           bg-white
           dark:bg-dark-900 dark:border dark:border-dark-500
           shadow-2xl
           rounded-2xl
           p-4
-          overflow-hidden
           z-50
         "
       >
+        <div
+          class="
+            flex
+            justify-end
+            border-b border-light-700
+            dark:border-dark-800
+            px-4
+            pb-2
+            mb-4
+            -mx-4
+            -mt-2
+          "
+        >
+          <div class="cursor-pointer flex items-center group" @click="close">
+            <span class="opacity-30 text-dark-50 text-xs mr-4">press esc</span>
+            <CloseIcon
+              class="
+                w-8
+                h-8
+                p-1
+                text-dark-50
+                bg-light-900
+                dark:bg-dark-50 dark:text-dark-900
+                rounded-full
+                transition transition-opacity
+                opacity-70
+                transform
+                group-hover:opacity-100
+                group-active:scale-90
+              "
+            />
+          </div>
+        </div>
         <slot />
       </div>
     </div>
@@ -64,7 +66,7 @@ import AtomicOverlay from './Overlay.vue'
 
 export default defineComponent({
   components: { AtomicOverlay },
-  emits: ['close'],
+  emits: ['close', 'update:visible'],
   props: {
     visible: { type: Boolean, default: false },
   },
@@ -73,7 +75,9 @@ export default defineComponent({
     const attrs = useAttrs()
     const onEscapeClose = (e) => e.key === 'Escape' && close()
     const close = () =>
-      emit('close') || window.removeEventListener('keyup', onEscapeClose)
+      emit('close') ||
+      emit('update:visible', false) ||
+      window.removeEventListener('keyup', onEscapeClose)
 
     onMounted(() => window.addEventListener('keyup', onEscapeClose))
     onUnmounted(() => window.removeEventListener('keyup', onEscapeClose))

@@ -1,80 +1,59 @@
 <template>
-  <div class="inline-block w-full" ref="containerRef">
-    <label
-      class="
-        block
-        min-w-[200px]
-        relative
-        overflow-hidden
-        group
-        z-10
-        transition-all
-        rounded-xl
-        cursor-text
-        bg-white
-        border
-        dark:bg-dark-800
-        hover:bg-gray-100
-      "
-      :class="[
-        isFocused
-          ? 'border-primary-400 ring ring-primary-200 dark:ring-primary-900'
-          : 'border-gray-300 dark:border-dark-600',
-        !!errors.length &&
-          '!border-danger-500 !ring-danger-200 dark:!ring-danger-900',
-      ]"
-    >
+  <div
+    class="inline-block w-full"
+    :class="{ 'relative z-50': isFocused }"
+    ref="containerRef"
+  >
+    <label class="flex min-w-[200px] relative group z-10 cursor-text">
       <span
         v-if="placeholder"
         ref="placeholderRef"
-        class="whitespace-nowrap absolute flex items-center transform"
+        class="
+          whitespace-nowrap
+          absolute
+          flex
+          items-center
+          transform
+          text-dark-50
+          dark:text-light-300
+        "
         :class="[
+          !shadow && 'pl-4',
           isMounted && 'transition-all',
-          isPlaceholderOverflows || type === 'textarea'
-            ? [
-                'top-0 !ml-1 opacity-70 translate-y-0 text-xs',
-                'cursor-pointer text-black dark:text-dark-500',
-              ]
-            : [
-                'top-6 -translate-y-1/2 text-gray-600',
-                isFocused || modelValue
-                  ? 'opacity-30 dark:opacity-50'
-                  : 'opacity-70',
-              ],
+          isFocused || modelValue
+            ? 'top-0 translate-y-0 opacity-50 text-xs'
+            : 'top-6 -translate-y-1/2 opacity-30 dark:opacity-20',
         ]"
-        :style="{
-          marginLeft: `${textWidth + 10}px`,
-          width: `${placeholderWidthFixed}px`,
-        }"
-      >
-        <span :class="['-mt-px ml-3']">
-          {{ placeholder }}
-        </span>
-      </span>
+        v-text="placeholder"
+      />
       <component
         :is="type === 'textarea' ? 'textarea' : 'input'"
-        v-focusable.indexOnly
-        autocomplete="off"
-        v-bind="attrs"
         :type="type === 'textarea' && type"
         :name="name"
         :value="modelValue"
         @focus="onFocus"
         @blur="onBlur"
         @input="onInput"
-        class="bg-[transparent] w-full px-4 py-3"
+        v-focusable.indexOnly
+        autocomplete="off"
+        class="bg-[transparent] w-full py-3 resize-none ring-opacity-50"
+        :class="[
+          shadow
+            ? 'border-none ring-none'
+            : 'px-4 rounded-xl bg-gray-50 border dark:bg-dark-800 dark:bg-opacity-70 hover:bg-gray-100 transition-all',
+
+          isFocused && !shadow
+            ? 'border-primary-400 ring ring-primary-300 dark:ring-primary-900'
+            : 'border-gray-300 dark:border-dark-600',
+          !!errors.length &&
+            '!border-danger-500 !ring-danger-200 dark:!ring-danger-900',
+        ]"
       />
     </label>
     <AtomicTextError
       v-show="isErrorVisible"
       ref="errorTextRef"
       :text="errorMessage"
-    />
-
-    <span
-      ref="textRef"
-      v-text="modelValue"
-      class="absolute top-[-99990px] opacity-0"
     />
   </div>
 </template>
@@ -101,6 +80,7 @@ export default defineComponent({
     type: { type: String, default: 'text' },
     rules: { type: [String, Array, Object, Function], default: null },
     placeholder: { type: String, default: '' },
+    shadow: { type: Boolean, default: false },
   },
   setup(props, { emit }) {
     const isMounted = ref(false)
@@ -109,13 +89,8 @@ export default defineComponent({
     const isFocused = ref(false)
     const errorTextRef = ref(null)
     const containerRef = ref(null)
-    const textRef = ref(null)
     const placeholderRef = ref(null)
-    const placeholderWidthFixed = ref()
 
-    const { width: placeholderWidth } = useElementBounding(placeholderRef)
-    const { width: containerWidth } = useElementBounding(containerRef)
-    const { width: textWidth } = useElementBounding(textRef)
     const attrs = useAttrs()
     const {
       handleChange,
@@ -138,12 +113,6 @@ export default defineComponent({
       },
     })
 
-    const isPlaceholderOverflows = computed(
-      () =>
-        Math.ceil(placeholderWidth.value + textWidth.value + 15) >=
-        containerWidth.value,
-    )
-
     const onFocus = () => (isFocused.value = true)
     const onBlur = (e) => (isFocused.value = false) || handleBlur(e)
     const onInput = (e) =>
@@ -160,11 +129,7 @@ export default defineComponent({
       isErrorVisible.value = false
       errorMessage.value = null
     })
-    setTimeout(() => (placeholderWidthFixed.value = placeholderWidth.value))
-    whenever(isMounted, () => {})
-    onMounted(() => {
-      setTimeout(() => (isMounted.value = true))
-    })
+    onMounted(() => setTimeout(() => (isMounted.value = true)))
 
     return {
       attrs,
@@ -176,12 +141,6 @@ export default defineComponent({
       isMounted,
       containerRef,
       placeholderRef,
-      textRef,
-      textWidth,
-      placeholderWidth,
-      containerWidth,
-      placeholderWidthFixed,
-      isPlaceholderOverflows,
       onBlur,
       onFocus,
       onInput,
