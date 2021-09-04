@@ -102,6 +102,35 @@
                 {{ ', ' }} была одобрена
               </AtomicCardNotification>
             </RouterLink>
+            <RouterLink
+              v-if="notify.type === 'IDEA_DENIED'"
+              :to="{
+                name: 'idea-detail',
+                params: { id: notify.data.ideaId, _isDialog: true },
+              }"
+              custom
+              v-slot="{ navigate }"
+            >
+              <AtomicCardNotification
+                :date="timeAgo(notify.dateCreation)"
+                type="danger"
+                class="cursor-pointer"
+                :class="{
+                  'bg-primary-100 bg-opacity dark:bg-dark-900': !notify.read,
+                }"
+                @click="navigate"
+              >
+                <template #icon>
+                  <EditIcon />
+                </template>
+
+                Ваша идея
+                <em class="text-primary-600 group-hover:underline">
+                  {{ notify.data.ideaName }}
+                </em>
+                {{ ', ' }} нуждается в доработке
+              </AtomicCardNotification>
+            </RouterLink>
             <AtomicCardNotification
               v-if="notify.type === 'CONFIRM_EMAIL'"
               :date="timeAgo(notify.dateCreation)"
