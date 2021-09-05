@@ -55,7 +55,7 @@ export default defineComponent({
       computed({
         get: () =>
           plain
-            ? route.value.query?.[name] ?? null
+            ? route.value.query?.[name] ?? 'date'
             : [route.value.query?.[name] ?? null].flat().filter(Boolean),
         set: (value) =>
           router.replace({ query: { ...route.value.query, [name]: value } }),
@@ -70,10 +70,10 @@ export default defineComponent({
       Boolean(route.value.query?.missingAuthorization),
     )
 
-    const sort = filterQueryReactive('sort', true)
+    const sortBy = filterQueryReactive('sortBy', true)
     const specialists = filterQueryReactive('specialists')
     const languages = filterQueryReactive('languages')
-    const filter = reactive({ specialists, languages, sort })
+    const filter = reactive({ specialists, languages, sortBy })
     const throttledGetIdeas = useThrottleFn(
       async () => await getIdeas(filter),
       500,
