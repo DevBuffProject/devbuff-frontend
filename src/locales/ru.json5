@@ -14,6 +14,7 @@
             PUBLISH: 'Опубликована',
             WAITING_FULL_TEAM: 'Идет набор в команду',
             WORKING: 'Набор закрыт',
+            DRAFT: 'В Черновике'
           },
         },
         more: 'Подробнее'
@@ -52,6 +53,7 @@
           PUBLISH: 'Опубликована',
           WAITING_FULL_TEAM: 'Идет набор в команду',
           WORKING: 'Набор закрыт',
+          DRAFT: 'Нуждается в доработке'
         },
         moderationStatus: {
           title: 'Верификация идеи',

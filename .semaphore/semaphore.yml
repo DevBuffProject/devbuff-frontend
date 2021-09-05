@@ -14,6 +14,7 @@ blocks:
         - name: pnpm setup
           commands:
             - echo "Reserved setup step"
+    dependencies: []
   - name: Test
     task:
       jobs:
@@ -23,12 +24,17 @@ blocks:
         - name: Test
           commands:
             - 'echo "Tests temporary unused" '
-promotions:
-  - name: Build Linux
-    pipeline_file: pipeline_2.yml
-    auto_promote:
-      when: result = 'passed'
-  - name: Build macOS
-    pipeline_file: pipeline_3.yml
-    auto_promote:
-      when: ' result = ''passed'''
+    dependencies:
+      - Setup
+  - name: 'Block #3'
+    dependencies:
+      - Setup
+    task:
+      jobs:
+        - name: Builds
+          commands:
+            - checkout
+            - sem-version node 14
+            - cache restore
+            - yarn
+            - yarn build

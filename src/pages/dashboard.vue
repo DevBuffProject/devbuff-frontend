@@ -34,7 +34,7 @@
               :href="href"
               @click="navigate"
               v-focusable
-              class="font-semibold inline-block mb-2"
+              class="font-semibold inline-block"
             >
               <h1 class="m-0">{{ inspectedIdea.name }}</h1>
             </a>
@@ -45,7 +45,10 @@
           <AtomicCard class="mb-4">
             <div class="flex">
               <AtomicButton
-                v-if="inspectedIdea.status !== 'PUBLISH'"
+                v-if="
+                  inspectedIdea.status !== 'PUBLISH' &&
+                  inspectedIdea.status !== 'DRAFT'
+                "
                 v-focusable.indexOnly
                 :type="
                   inspectedIdea.status === 'WAITING_FULL_TEAM'
