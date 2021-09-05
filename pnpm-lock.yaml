@@ -18,7 +18,7 @@ specifiers:
   '@vueuse/integrations': 6.0.0
   '@vueuse/motion': 1.6.0
   '@vueuse/router': 6.0.0
-  axios: 0.21.1
+  axios: 0.21.3
   babel-loader: 8.2.2
   color: 4.0.1
   eslint: 7.32.0
@@ -63,7 +63,7 @@ dependencies:
   '@vueuse/integrations': 6.0.0_vue@3.2.8
   '@vueuse/motion': 1.6.0_vue@3.2.8
   '@vueuse/router': 6.0.0_vue-router@4.0.11+vue@3.2.8
-  axios: 0.21.1
+  axios: 0.21.3
   color: 4.0.1
   fastcomments-vue-next: 2.0.1
   lodash: 4.17.21
@@ -5178,7 +5178,7 @@ packages:
       '@vueuse/shared': 6.0.0_vue@3.2.8
       vue-demi: 0.11.3_vue@3.2.8
     optionalDependencies:
-      axios: 0.21.1
+      axios: 0.21.3
       focus-trap: 6.6.1
       jwt-decode: 3.1.2
       nprogress: 0.2.0
@@ -5768,8 +5768,8 @@ packages:
       postcss-value-parser: 4.1.0
     dev: true
 
-  /axios/0.21.1:
-    resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
+  /axios/0.21.3:
+    resolution: {integrity: sha512-JtoZ3Ndke/+Iwt5n+BgSli/3idTvpt5OjKyoCmz4LX5+lPiY5l7C1colYezhlxThjNa/NhngCUWZSZFypIFuaA==}
     dependencies:
       follow-redirects: 1.14.1
     transitivePeerDependencies:
