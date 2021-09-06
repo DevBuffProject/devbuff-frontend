@@ -2,7 +2,7 @@
   <div>
     <AtomicSwitcher
       class="mb-8"
-      v-model:value="state.sort"
+      v-model:value="state.sortBy"
       :values="[
         {
           title: t('commons.date', true),
