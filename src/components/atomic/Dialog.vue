@@ -1,7 +1,7 @@
 <template>
   <AtomicOverlay
     :visible="visible"
-    class="transition-all duration-300"
+    class="transition-all duration-200"
     :class="{
       'opacity-100': isShow,
       'opacity-0': !isShow,
@@ -23,11 +23,11 @@
           z-50
           transform
           transition-all
-          duration-300
+          duration-200
         "
         :class="{
           'scale-100': isShow,
-          'scale-80': !isShow,
+          'scale-90': !isShow,
         }"
       >
         <div

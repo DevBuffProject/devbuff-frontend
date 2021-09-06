@@ -178,10 +178,9 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useIdea, useUser, useSso } from '../composes/core'
+import { useIdea, useUser, useSso, useI18n } from '../composes'
 import { useTimeAgo, useTitle } from '@vueuse/core'
-import { useI18n } from '../composes/utils'
-import { useRouter } from '../router'
+import { useRouter } from '../core/router'
 
 export default defineComponent({
   name: 'IdeaDetail',

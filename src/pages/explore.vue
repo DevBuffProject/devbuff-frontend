@@ -18,12 +18,8 @@
         <div v-if="ideas.length > 0">
           <WidgetIdeasCard
             v-for="(idea, index) of ideas"
-            :key="idea.id"
+            :key="idea.id + index"
             :idea="idea"
-            v-motion
-            :initial="{ scale: 0.95, opacity: 0 }"
-            :enter="{ scale: 1, opacity: 1 }"
-            :delay="50 * index"
             class="mb-6"
           />
         </div>

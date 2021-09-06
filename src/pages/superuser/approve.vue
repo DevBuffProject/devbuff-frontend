@@ -1,7 +1,7 @@
 <template>
   <div class="w-1/2">
     <div class="flex items-center mb-6">
-      <atomic-form-checkbox
+      <AtomicFormCheckbox
         :model-value="checked.length === pendingIdeas.length"
         class="mr-6 ml-px pl-3"
         @update:modelValue="toggleAll"
@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <atomic-card class="overflow-hidden">
+    <AtomicCard class="overflow-hidden">
       <div class="divide-y">
         <div
           v-for="idea of pendingIdeas"
@@ -36,13 +36,13 @@
           ]"
         >
           <div class="group flex">
-            <atomic-form-checkbox
+            <AtomicFormCheckbox
               v-model="checked"
               :value="idea.id"
               class="mr-4"
             />
             <div class="flex flex-col w-full">
-              <router-link
+              <RouterLink
                 :to="{
                   name: 'idea-detail',
                   params: { id: idea.id, _isDialog: true },
@@ -50,7 +50,7 @@
                 class="text-primary-500 hover:underline w-min whitespace-nowrap"
               >
                 {{ idea.name }}
-              </router-link>
+              </RouterLink>
 
               <div class="mt-1 text-sm text-gray-500 leading-5">
                 {{ idea.description }}
@@ -59,43 +59,37 @@
           </div>
         </div>
       </div>
-    </atomic-card>
-
-    <atomic-dialog :visible="isProgress" @onClose="() => (isProgress = false)">
-      <atomic-loading-progress :progress="progress" />
-      <div class="mt-4 opacity-50">
-        {{ `${checked.length}/${done}` }}
-      </div>
-    </atomic-dialog>
+    </AtomicCard>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, computed } from 'vue'
-import { useModeration } from '../../composes/core'
+import { defineComponent, ref } from 'vue'
+import { useModeration } from '../../composes'
+import NProgress from 'nprogress'
 
 export default defineComponent({
   async setup() {
     const { pendingIdeas, getPendingIdeas, approveIdea, deleteIdea } =
       useModeration()
     const checked = ref([])
-    const isProgress = ref(false)
     const done = ref(0)
-    const progress = computed(() => (done.value / checked.value.length) * 100)
 
     const apply = async (action) => {
       if (!checked.value.length) return false
+      NProgress.start()
 
-      isProgress.value = true
       checked.value.map(async (id) => {
         if (action === 'approve') await approveIdea(id)
         else await deleteIdea(id)
+
+        NProgress.set((done.value / checked.value.length) * 100)
         done.value++
 
         if (done.value.length === checked.value.length) {
           await getPendingIdeas()
           done.value = 0
-          isProgress.value = false
+          NProgress.done()
         }
       })
     }
@@ -111,8 +105,6 @@ export default defineComponent({
     return {
       pendingIdeas,
       checked,
-      isProgress,
-      progress,
       done,
       toggleAll,
       apply,

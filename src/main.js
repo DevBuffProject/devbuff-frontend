@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { createOverlayRouter } from './core/router'
 import { createWebHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
-import { useQueryString } from './composes/utils'
+import { useQueryString } from './composes'
 import { MotionPlugin } from '@vueuse/motion'
 // Will raised build error "undefined nextTick"
 // import { VueMasonryPlugin } from 'vue-masonry/src/masonry-vue3.plugin'

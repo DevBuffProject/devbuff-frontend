@@ -1,4 +1,4 @@
-import { inject, readonly, ref, shallowRef } from 'vue'
+import { inject, ref, shallowRef } from 'vue'
 import { createRouter as createVueRouter } from 'vue-router'
 import { set, useStorage } from '@vueuse/core'
 import { dialogRouteSymbol, mainRouteSymbol, routerSymbol } from './symbols'

@@ -59,9 +59,8 @@
 <script>
 import { defineComponent, computed } from 'vue'
 import { useTitle } from '@vueuse/core'
-import { useAuth } from './composes/core'
 import { useDialogRoute, useMainRoute, useRouter } from './core/router'
-import { useI18n } from './composes'
+import { useI18n, useAuth } from './composes'
 
 export default defineComponent({
   setup() {
