@@ -16,6 +16,7 @@
       'ring-danger-400 dark:ring-danger-600': colorType === 'danger',
     }"
     v-focusable.indexOnly
+    v-bind="attrs"
   >
     <div
       class="w-full px-10 rounded-lg transition-colors"
@@ -63,7 +64,6 @@
           v-if="slots.default"
           class="whitespace-nowrap"
           :class="loading && 'invisible relative'"
-          v-bind="attrs"
         >
           <slot />
         </span>

@@ -1,5 +1,15 @@
 <template>
-  <div className="transition-all resize-none ring-opacity-50 w-full editor">
+  <div
+    class="
+      transition-all
+      resize-none
+      ring-opacity-50
+      editor
+      prose prose-primary
+      leading-tight
+      !max-w-full
+    "
+  >
     <CKEditor
       :editor="EditorClassic"
       :config="config"
@@ -75,7 +85,7 @@ export default defineComponent({
         '|',
         'blockquote',
         '|',
-        'mediaembed',
+        // 'mediaembed',
         'uploadimage',
         '|',
         'numberedList',
@@ -109,6 +119,15 @@ export default defineComponent({
 }
 
 .editor >>> .ck-toolbar__separator {
-  @apply bg-light-900 !important;
+  @apply bg-light-900 dark:bg-dark-300 !important;
+}
+
+.editor >>> .ck-button {
+  @apply hover:bg-light-800 dark:hover:bg-dark-200 !important;
+  @apply text-dark-900 dark:text-light-900 !important;
+}
+
+.editor >>> .ck-on {
+  @apply bg-light-900 dark:bg-dark-200 !important;
 }
 </style>

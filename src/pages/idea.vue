@@ -2,11 +2,6 @@
   <div>
     <h1>{{ idea.name }}</h1>
     <div class="flex flex-wrap items-start my-5">
-      <RouterLink to="/" custom>
-        <div class="mb-4 mr-6">
-          <!--          <WidgetUser :user="user" @click="navigate" v-focusable />-->
-        </div>
-      </RouterLink>
       <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">
         {{ publishedAgo }}
       </AtomicLabel>
@@ -28,67 +23,73 @@
       </AtomicLabel>
     </div>
     <div class="grid gap-6 grid-cols-6">
-      <AtomicCard class="col-span-4 mb-3">
-        <div v-html="idea.text" class="overflow-hidden" />
-      </AtomicCard>
+      <div class="col-span-4 mb-3">
+        <AtomicCard>
+          <div class="flex justify-between items-start">
+            <WidgetUser :user="idea.ownerIdea" class="mb-8" />
+
+            <div class="flex items-center" v-if="isOwnerIdea">
+              <span class="opacity-50">вы создатель</span>
+              <AtomicActions>
+                <template #activator>
+                  <div class="flex items-center ml-2 text-primary-500">
+                    {{ t('control.title') }}
+                    <ChevronDownIcon />
+                  </div>
+                </template>
+                <div class="flex flex-col items-start -mx-4 text-xs">
+                  <AtomicAction type="danger" class="w-full">
+                    <template #icon>
+                      <StopIcon />
+                    </template>
+                    Stop company
+                  </AtomicAction>
+
+                  <AtomicAction
+                    type="danger"
+                    class="w-full"
+                    @click="deleteIdeaProcess"
+                  >
+                    <template #icon>
+                      <TrashIcon />
+                    </template>
+                    {{ t('control.delete') }}
+                  </AtomicAction>
+                  <RouterLink
+                    class="w-full"
+                    :to="{ name: 'idea-edit', params: { id: idea.id } }"
+                    v-slot="{ href, navigate }"
+                  >
+                    <AtomicAction :href="href" @click="navigate" class="w-full">
+                      <template #icon>
+                        <EditIcon />
+                      </template>
+                      {{ t('control.edit') }}
+                    </AtomicAction>
+                  </RouterLink>
+                </div>
+              </AtomicActions>
+            </div>
+          </div>
+          <WidgetTypography v-html="idea.text" />
+        </AtomicCard>
+      </div>
 
       <div class="col-span-2">
-        <div class="flex items-center mb-6" v-if="isOwnerIdea">
-          <span class="opacity-50">вы создатель</span>
-          <AtomicActions>
-            <template #activator>
-              <div class="flex items-center ml-2 text-primary-500">
-                {{ t('control.title') }}
-                <ChevronDownIcon />
-              </div>
-            </template>
-            <div class="flex flex-col items-start -mx-4 text-xs">
-              <AtomicAction type="danger" class="w-full">
-                <template #icon>
-                  <StopIcon />
-                </template>
-                Stop company
-              </AtomicAction>
-
-              <AtomicAction
-                type="danger"
-                class="w-full"
-                @click="deleteIdeaProcess"
-              >
-                <template #icon>
-                  <TrashIcon />
-                </template>
-                {{ t('control.delete') }}
-              </AtomicAction>
-              <RouterLink
-                class="w-full"
-                :to="{ name: 'idea-edit', params: { id: idea.id } }"
-                v-slot="{ href, navigate }"
-              >
-                <AtomicAction :href="href" @click="navigate" class="w-full">
-                  <template #icon>
-                    <EditIcon />
-                  </template>
-                  {{ t('control.edit') }}
-                </AtomicAction>
-              </RouterLink>
-            </div>
-          </AtomicActions>
-        </div>
-
-        <AtomicCard>
-          <div class="dark:divide-dark-700 divide-gray-200 divide-y -mt-6">
+        <AtomicCard class="pt-10">
+          <div class="divide-y divide-default -mt-6">
             <div
               class="-mx-4 px-4 py-3"
               v-for="specialist in idea.specialist"
               :key="specialist.id"
             >
-              <h5 class="m-0 !mb-4 font-normal">
+              <h5 class="!m-0 font-normal">
                 {{ t(`commons.specialist.${specialist.name}`, true) }}
               </h5>
               <AtomicLabel
-                :name="t('positions.titleLanguages')"
                 v-if="languagesForSpecialist(specialist.id).length > 0"
+                :name="t('positions.titleLanguages')"
+                class="mt-4"
               >
                 <div class="flex flex-wrap">
                   <div
@@ -104,9 +105,9 @@
                 </div>
               </AtomicLabel>
               <AtomicLabel
+                v-if="frameworksForSpecialist(specialist.id).length > 0"
                 :name="t('positions.titleTechnologies')"
                 class="mt-4"
-                v-if="frameworksForSpecialist(specialist.id).length > 0"
               >
                 <div class="flex flex-wrap">
                   <div

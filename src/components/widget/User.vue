@@ -1,6 +1,6 @@
 <template>
   <div class="flex grow items-center" v-bind="attrs">
-    <AtomicAvatar v-if="user.avatar" :src="user.avatar" />
+    <AtomicAvatar v-if="avatar" :src="avatar" />
     <AtomicSkeleton v-else class="w-[40px] h-[40px]" />
     <div class="ml-2 flex-1">
       <div v-if="user.firstName || user.lastName" class="font-semibold">
@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import { defineComponent, useAttrs } from 'vue'
+import { computed, defineComponent, ref, useAttrs } from 'vue'
+import { useUser } from '../../composes'
 
 export default defineComponent({
   name: 'WidgetUser',
@@ -29,9 +30,12 @@ export default defineComponent({
       default: null,
     },
   },
-  setup() {
+  setup(props) {
     const attrs = useAttrs()
-    return { attrs }
+    const { getUserProfileUrl } = useUser()
+    const avatar = computed(() => getUserProfileUrl(props.user.id))
+
+    return { attrs, avatar }
   },
 })
 </script>

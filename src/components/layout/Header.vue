@@ -10,6 +10,7 @@
       dark:bg-opacity-80
       backdrop-filter
       h-[62px]
+      border-b border-default
     "
     style="box-shadow: 0 5px 8px #00098000, 0 5px 16px rgb(0 9 128 / 5%)"
   >

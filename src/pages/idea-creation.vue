@@ -7,10 +7,11 @@
         -mx-4
         px-4
         bg-light-500
+        dark:bg-dark-700
         divide-y divide-light-800
+        dark:divide-dark-300
         flex flex-col
         text-xl
-        font-thin
       "
     >
       <AtomicInput
@@ -39,11 +40,10 @@
 
 <script>
 import { Form } from 'vee-validate'
-import { defineComponent } from 'vue'
-import { useIdea } from '../composes/core'
+import { defineComponent, ref, watch } from 'vue'
+import { useIdea, useI18n } from '../composes'
 import { useRouter } from 'vue-router'
-import { useTitle } from '@vueuse/core'
-import { useI18n } from '../composes/utils'
+import { set, useStorage, useTitle } from '@vueuse/core'
 import * as yup from 'yup'
 
 export default defineComponent({
@@ -55,8 +55,18 @@ export default defineComponent({
     const { t } = useI18n('pages.ideaCreation')
     const { idea, publishIdea, getIdea, updateIdea } = useIdea()
     const router = useRouter()
-    let isEditingMode = false
-    let data = { text: '' }
+    const isEditingMode = !!props.id
+
+    const initial = {
+      name: '',
+      description: '',
+      text: '',
+      specialists: [],
+    }
+
+    const data = isEditingMode
+      ? ref(initial)
+      : useStorage('editor-draft', initial)
 
     useTitle('Создание идеи')
 
@@ -64,29 +74,29 @@ export default defineComponent({
       await getIdea(props.id)
       useTitle('Редактирование идеи - ' + idea.value.name)
 
-      isEditingMode = true
-      data = {
-        name: idea.value?.name,
-        description: idea.value?.description,
-        text: idea.value?.text ? idea.value.text : '',
-        specialists: idea.value?.specialist,
-      }
+      set(data, {
+        name: idea.value?.name || '',
+        description: idea.value?.description || '',
+        text: idea.value?.text || '',
+        specialists: idea.value?.specialist || '',
+      })
     }
 
     const onSubmit = async () => {
       if (isEditingMode) {
-        await updateIdea(props.id, data)
+        await updateIdea(props.id, data.value)
         await router.push({
           name: `idea-detail`,
           params: { id: props.id },
         })
       } else {
-        const { id } = await publishIdea(data)
+        const { id } = await publishIdea(data.value)
         await router.push({
           name: `idea-detail`,
           params: { id },
         })
       }
+      set(data, initial)
     }
 
     const schemas = yup.object({

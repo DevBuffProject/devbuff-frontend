@@ -1,31 +1,34 @@
 <template>
-  <div
-    v-if="visible"
-    class="
-      fixed
-      z-50
-      top-0
-      left-0
-      w-screen
-      h-screen
-      flex
-      bg-black bg-opacity-70
-      dark:bg-opacity-90
-      items-center
-      justify-center
-    "
-  >
+  <teleport to="body">
     <div
-      class="relative z-50 w-full h-auto max-h-screen"
-      style="overflow: auto; overflow: overlay"
+      v-if="visible"
+      class="
+        fixed
+        z-50
+        top-0
+        left-0
+        w-screen
+        h-screen
+        flex
+        bg-black bg-opacity-70
+        dark:bg-opacity-90
+        items-center
+        justify-center
+      "
+      v-bind="attrs"
     >
-      <slot />
+      <div
+        class="relative z-50 w-full h-auto max-h-screen"
+        style="overflow: auto; overflow: overlay"
+      >
+        <slot />
+      </div>
     </div>
-  </div>
+  </teleport>
 </template>
 
 <script>
-import { defineComponent, onMounted, onUnmounted } from 'vue'
+import { defineComponent, onMounted, onUnmounted, useAttrs } from 'vue'
 
 export default defineComponent({
   name: 'AtomicOverlay',
@@ -33,10 +36,20 @@ export default defineComponent({
     visible: { type: Boolean, default: false },
   },
   setup() {
+    const attrs = useAttrs()
     const rooElement = window.document.documentElement
     const { overflow } = window.getComputedStyle(rooElement)
-    onMounted(() => (rooElement.style.overflow = 'hidden'))
-    onUnmounted(() => (rooElement.style.overflow = overflow))
+
+    onMounted(async () => {
+      rooElement.style.overflow = 'hidden'
+    })
+    onUnmounted(() => {
+      rooElement.style.overflow = overflow
+    })
+
+    return {
+      attrs,
+    }
   },
 })
 </script>

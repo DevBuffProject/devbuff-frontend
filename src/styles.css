@@ -84,3 +84,17 @@ h4 {
 h5 {
   @apply text-lg font-medium mb-4 mt-4 !important;
 }
+
+.border-default {
+  @apply dark:border-dark-400 border-light-700;
+}
+
+.divide-default {
+  @apply dark:divide-dark-400 divide-light-700;
+}
+.divider-x {
+  @apply block h-px w-full dark:bg-dark-300 bg-light-700;
+}
+.divider-y {
+  @apply block w-px h-full dark:bg-dark-300 bg-light-700;
+}

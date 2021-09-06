@@ -1,5 +1,5 @@
-// eslint-disable-next-line no-undef
 const colors = require('windicss/colors')
+import typography from 'windicss/plugin/typography'
 
 export default {
   attributify: {
@@ -45,4 +45,9 @@ export default {
       xl: '1280px',
     },
   },
+  plugins: [
+    typography({
+      dark: true,
+    }),
+  ],
 }
