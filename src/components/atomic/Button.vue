@@ -9,52 +9,40 @@
       p-[2px]
       focus:outline-none focus:ring-2 focus:ring-opacity-50
     "
+    :disabled="disabled || loading"
     :class="{
+      'opacity-50 cursor-disabled pointer-events-none': disabled || loading,
       'ring-primary-400 dark:ring-primary-600 ': colorType === 'primary',
       'ring-success-400 dark:ring-success-600': colorType === 'success',
       'ring-warning-400 dark:ring-warning-600': colorType === 'warning',
       'ring-danger-400 dark:ring-danger-600': colorType === 'danger',
     }"
-    v-focusable.indexOnly
+    v-bind="attrs"
   >
     <div
       class="w-full px-10 rounded-lg transition-colors"
-      :class="[
-        colorType === 'muted' && [
-          `
-          bg-light-900 bg-opacity-100
-          dark:(bg-dark-300 hover:bg-dark-400 active:bg-dark-500)
-          focus:(ring ring)
-        `,
-          isDepressed
-            ? 'bg-opacity-0 dark:bg-opacity-0'
-            : 'bg-opacity-10 dark:bg-opacity-40',
-        ],
-        {
-          'bg-primary-400 hover:bg-primary-400 active:bg-primary-500':
-            colorType === 'primary',
-          'bg-success-400 hover:bg-success-400 active:bg-success-500':
-            colorType === 'success',
-          'bg-warning-400 hover:bg-warning-400 active:bg-warning-500':
-            colorType === 'warning',
-          'bg-danger-400 hover:bg-danger-400 active:bg-danger-500':
-            colorType === 'danger',
-        },
-        isSmall ? 'py-1' : 'py-2',
-      ]"
+      :class="{
+        'bg-light-900 bg-opacity-100 dark:(bg-dark-300 hover:bg-dark-400 active:bg-dark-500) focus:(ring ring)':
+          (colorType = 'muted'),
+        'bg-primary-400 hover:bg-primary-400 active:bg-primary-500':
+          colorType === 'primary',
+        'bg-success-400 hover:bg-success-400 active:bg-success-500':
+          colorType === 'success',
+        'bg-warning-400 hover:bg-warning-400 active:bg-warning-500':
+          colorType === 'warning',
+        'bg-danger-400 hover:bg-danger-400 active:bg-danger-500':
+          colorType === 'danger',
+        'py-1': isSmall,
+        'py-2': !isSmall,
+      }"
     >
       <span
-        :class="[
-          'flex items-center justify-center font-medium',
-          isDepressed && [
-            colorType === 'primary' && 'text-primary-500',
-            colorType === 'success' && 'text-success-500',
-            colorType === 'warning' && 'text-warning',
-            colorType === 'danger' && 'text-danger-500',
-          ],
-          type === 'muted' ? 'dark:text-white' : 'text-white',
-          isSmall && 'text-sm',
-        ]"
+        class="flex items-center justify-center font-medium"
+        :class="{
+          'dark:text-white': type === 'muted',
+          'text-white': type !== 'muted',
+          'text-sm': isSmall,
+        }"
       >
         <span v-if="slots.icon" class="mr-2">
           <slot name="icon" />
@@ -62,8 +50,7 @@
         <span
           v-if="slots.default"
           class="whitespace-nowrap"
-          :class="loading && 'invisible relative'"
-          v-bind="attrs"
+          :class="{ 'invisible relative': loading }"
         >
           <slot />
         </span>
@@ -114,10 +101,6 @@ export default defineComponent({
       default: false,
     },
     isWide: {
-      type: Boolean,
-      default: false,
-    },
-    isDepressed: {
       type: Boolean,
       default: false,
     },

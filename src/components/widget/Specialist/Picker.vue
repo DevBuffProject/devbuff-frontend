@@ -80,7 +80,7 @@
 <script>
 import { defineComponent, nextTick, onMounted, ref, watch } from 'vue'
 // import { whenever } from ''
-import { useSkills } from '../../../composes/core'
+import { useSkills } from '../../../composes/services'
 import { useI18n } from '../../../composes/utils'
 import { set, whenever, get } from '@vueuse/core'
 

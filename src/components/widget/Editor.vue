@@ -3,20 +3,26 @@
     <CKEditor
       :editor="EditorClassic"
       :config="config"
-      @focus="isFocused = true"
-      @blur="isFocused = false"
+      @focus="onBlur"
+      @blur="onFocus"
+      @input="onInput"
       v-model="vModel"
       style="border: none; padding: 0; box-shadow: none; width: 100%"
     />
+    <textarea :name="name" class="hidden" v-model="text" />
+    {{ errorMessage }}
+    <AtomicTextError v-show="errorMessage" :text="errorMessage" />
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, useCssModule } from 'vue'
-import { useVModel } from '@vueuse/core'
+import { computed, defineComponent, ref, useCssModule, watch } from 'vue'
+import { syncRef, useVModel } from '@vueuse/core'
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import EditorClassic from '@ckeditor/ckeditor5-build-classic'
 import { useFiles } from '../../composes'
+import { convert as asText } from 'html-to-text'
+import { useField } from 'vee-validate'
 
 class UploadAdapter {
   constructor(loader) {
@@ -25,7 +31,7 @@ class UploadAdapter {
   }
 
   async upload() {
-    const { uploadProgress, uploadUserImage, onUpload } = this.uploader
+    const { uploadUserImage, onUpload } = this.uploader
     const file = await this.loader.file
 
     onUpload((event) => {
@@ -57,12 +63,23 @@ export default defineComponent({
   },
   props: {
     modelValue: { type: String, default: '' },
+    name: { type: String, default: '' },
+    rules: { type: [String, Array], default: () => [] },
   },
   emits: ['update:modelValue'],
   setup(props) {
     const vModel = useVModel(props)
     const isFocused = ref(false)
     const styles = useCssModule()
+    const {
+      setValidationState,
+      handleChange,
+      handleBlur,
+      errors,
+      errorMessage,
+    } = useField(props.name, props.rules, {
+      initialValue: props.modelValue,
+    })
 
     const config = {
       toolbar: [
@@ -106,13 +123,32 @@ export default defineComponent({
         ],
       },
     }
+    setValidationState({ valid: false, errors: ['ERR'] })
+    const text = computed(() => asText(vModel.value))
+    const onInput = (...e) => {
+      console.log(e)
+      // console.log(text.value)
+    }
+    const onFocus = () => (isFocused.value = true)
+    const onBlur = () => {
+      isFocused.value = false
+      handleBlur()
+    }
 
     return {
       styles,
       vModel,
+      text,
       config,
       isFocused,
+      handleChange,
+      handleBlur,
+      errors,
+      errorMessage,
       EditorClassic,
+      onFocus,
+      onBlur,
+      onInput,
     }
   },
 })
@@ -131,7 +167,7 @@ export default defineComponent({
   --ck-color-toolbar-border: transparent;
 }
 
-.editor >>> .ck-toolbar__separator {
+.editor:deep(.ck-toolbar__separator) {
   @apply bg-light-900 !important;
 }
 </style>

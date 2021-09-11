@@ -1,3 +1,3 @@
-import { useAuth } from '../composes/core'
+import { useAuth } from '../composes/services'
 
 export default async () => useAuth().isAdmin.value

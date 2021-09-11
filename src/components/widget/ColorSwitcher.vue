@@ -1,10 +1,8 @@
 <template>
   <div
     role="button"
-    class="focusable text-purple-500 dark:text-yellow-500"
+    class="text-purple-500 dark:text-yellow-500"
     @click="toggleDark"
-    @keypress.enter="toggleDark"
-    v-bind="attrs"
   >
     <SunIcon class="w-[30px] h-[30px]" v-show="isLight" />
     <MoonIcon class="w-[30px] h-[30px]" v-show="isDark" />
@@ -17,10 +15,9 @@ import { useAppearance } from '../../composes/utils'
 
 export default defineComponent({
   name: 'WidgetColorSwitcher',
-  setup(_, ctx) {
+  setup() {
     const { isDark, isLight, toggleDark } = useAppearance()
-    const { attrs } = ctx
-    return { isDark, isLight, toggleDark, attrs }
+    return { isDark, isLight, toggleDark }
   },
 })
 </script>

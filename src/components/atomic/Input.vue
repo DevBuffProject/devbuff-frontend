@@ -59,17 +59,10 @@
 </template>
 
 <script>
-import {
-  computed,
-  defineComponent,
-  ref,
-  onMounted,
-  useAttrs,
-  useSlots,
-} from 'vue'
+import { defineComponent, ref, useAttrs, onMounted } from 'vue'
 import { useField } from 'vee-validate'
 import { useMotion } from '@vueuse/motion'
-import { not, useElementBounding, whenever } from '@vueuse/core'
+import { not, whenever } from '@vueuse/core'
 
 export default defineComponent({
   name: 'AtomicInput',
@@ -129,6 +122,7 @@ export default defineComponent({
       isErrorVisible.value = false
       errorMessage.value = null
     })
+
     onMounted(() => setTimeout(() => (isMounted.value = true)))
 
     return {

@@ -1,4 +1,4 @@
-import Color from 'color'
+import Color from 'colorjs.io'
 import Stc from 'string-to-color'
 
 const isColor = (color) => {
@@ -8,12 +8,11 @@ const isColor = (color) => {
 }
 
 export const useColor = (colorString) => {
-  let color
-  if (isColor(colorString)) color = Color(colorString)
-  else color = Color(Stc(colorString))
+  const color = new Color(isColor(colorString) ? colorString : Stc(colorString))
 
   return {
     isColor,
+    Color,
     color,
   }
 }
