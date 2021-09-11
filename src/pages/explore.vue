@@ -55,7 +55,7 @@ export default defineComponent({
       computed({
         get: () =>
           plain
-            ? route.value.query?.[name] ?? 'date'
+            ? route.value.query?.[name] ?? 'lastUpdate'
             : [route.value.query?.[name] ?? null].flat().filter(Boolean),
         set: (value) =>
           router.replace({ query: { ...route.value.query, [name]: value } }),
