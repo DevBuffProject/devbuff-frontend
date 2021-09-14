@@ -51,7 +51,7 @@ specifiers:
   vue-nprogress: 0.2.0
   vue-router: 4.0.11
   windicss: 3.1.7
-  windicss-webpack-plugin: 1.4.6
+  windicss-webpack-plugin: 1.4.7
   yup: 0.32.9
 
 dependencies:
@@ -108,7 +108,7 @@ devDependencies:
   vite-plugin-svg-icons: 1.0.4_vite@2.5.7
   vue-loader: 16.5.0_@vue+compiler-sfc@3.2.11
   windicss: 3.1.7
-  windicss-webpack-plugin: 1.4.6
+  windicss-webpack-plugin: 1.4.7
 
 packages:
 
@@ -5463,6 +5463,20 @@ packages:
       - supports-color
       - ts-node
       - typescript
+    dev: false
+
+  /@windicss/config/1.4.2:
+    resolution: {integrity: sha512-wjvZH1m8Rb60zCxYQDiZmgpSsljirqBNWsKo5G7JbkHGuEgCQdC+27jtPWQoMyBJY2w76Ofa7+7jvMqgoAS+ag==}
+    dependencies:
+      debug: 4.3.2
+      jiti: 1.11.0
+      tsup: 4.14.0
+      windicss: 3.1.7
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
+      - typescript
+    dev: true
 
   /@windicss/plugin-utils/1.3.0:
     resolution: {integrity: sha512-4qOXUStYPI3WTHR6WdxGhzKWMZar7vwWY08QFVc9Zztg5eoQ3GyYsMPn83OSRwc/jA7mSkkoCtHLGzop2KjHcg==}
@@ -5478,6 +5492,23 @@ packages:
       - supports-color
       - ts-node
       - typescript
+    dev: false
+
+  /@windicss/plugin-utils/1.4.2:
+    resolution: {integrity: sha512-EVMclEc8lSp03ljQIviKGe9SjdJkxkhwL99H8fAVRKVDJXhTAlpRc8nqcnkf8agZ4eTY6BE3kEJaC9hDICLjBg==}
+    dependencies:
+      '@antfu/utils': 0.2.4
+      '@windicss/config': 1.4.2
+      debug: 4.3.2
+      fast-glob: 3.2.7
+      magic-string: 0.25.7
+      micromatch: 4.0.4
+      windicss: 3.1.7
+    transitivePeerDependencies:
+      - supports-color
+      - ts-node
+      - typescript
+    dev: true
 
   /@xtuc/ieee754/1.2.0:
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
@@ -14333,10 +14364,10 @@ packages:
       string-width: 4.2.2
     dev: true
 
-  /windicss-webpack-plugin/1.4.6:
-    resolution: {integrity: sha512-ynr1dRN+701/frxpEUnLRMF2UndNdCrKapMRB+swuMhgfZVswjgRuKjmOyfoyHvM59RZf2qgSjdRwgfBaIeXJQ==}
+  /windicss-webpack-plugin/1.4.7:
+    resolution: {integrity: sha512-1tDA6jdAlpw36QYo1mt4XV+35H8ntNlUsAvCYMnCUFWNWwOaFguuPUUW4mQvYNf+Sxk2O/hdUfc0LW/c8UOt5Q==}
     dependencies:
-      '@windicss/plugin-utils': 1.3.0
+      '@windicss/plugin-utils': 1.4.2
       debug: 4.3.2
       loader-utils: 2.0.0
       lodash: 4.17.21
