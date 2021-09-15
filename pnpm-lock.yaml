@@ -15,7 +15,7 @@ specifiers:
   '@vue/eslint-config-prettier': 6.0.0
   '@vueup/vue-quill': 1.0.0-beta.7
   '@vueuse/core': 6.3.3
-  '@vueuse/integrations': 6.3.2
+  '@vueuse/integrations': 6.3.3
   '@vueuse/motion': 1.6.0
   '@vueuse/router': 6.3.2
   axios: 0.21.4
@@ -60,7 +60,7 @@ dependencies:
   '@iconicicons/vue3': 1.5.0_vue@3.2.11
   '@vueup/vue-quill': 1.0.0-beta.7_vue@3.2.11
   '@vueuse/core': 6.3.3_vue@3.2.11
-  '@vueuse/integrations': 6.3.2_vue@3.2.11
+  '@vueuse/integrations': 6.3.3_vue@3.2.11
   '@vueuse/motion': 1.6.0_vue@3.2.11
   '@vueuse/router': 6.3.2_vue-router@4.0.11+vue@3.2.11
   axios: 0.21.4
@@ -5249,10 +5249,10 @@ packages:
       vue-demi: 0.11.3_vue@3.2.11
     dev: false
 
-  /@vueuse/integrations/6.3.2_vue@3.2.11:
-    resolution: {integrity: sha512-Ugh3zSh/DbkBfeNMNLr0PXHRuc/OsQjfqcQ+GGXw+8g/BTaZgPyPBVHcPFsIfRWvGZWeio94b6WdZESOfbTgug==}
+  /@vueuse/integrations/6.3.3_vue@3.2.11:
+    resolution: {integrity: sha512-xnTmJd0xVfxqkjyFRYjD8dmaJ15Vyq3CGu4rruyVu/YFtVj/6tjSDbeQun0+4KJHiLbqUbA2nnPEXPcidnoF3w==}
     dependencies:
-      '@vueuse/shared': 6.3.2_vue@3.2.11
+      '@vueuse/shared': 6.3.3_vue@3.2.11
       vue-demi: 0.11.3_vue@3.2.11
     optionalDependencies:
       axios: 0.21.4
