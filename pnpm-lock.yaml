@@ -33,7 +33,7 @@ specifiers:
   mitt: 2.1.0
   nprogress: 0.2.0
   pinst: 2.1.6
-  prettier: 2.4.0
+  prettier: 2.4.1
   query-string: 7.0.1
   quill-image-uploader: 1.2.2
   sass: 1.41.0
@@ -93,7 +93,7 @@ devDependencies:
   '@storybook/vue3': 6.3.8_1db611848e73bb7fafeecd36d73f3d36
   '@vitejs/plugin-vue': 1.6.2_@vue+compiler-sfc@3.2.11
   '@vue/compiler-sfc': 3.2.11
-  '@vue/eslint-config-prettier': 6.0.0_eslint@7.32.0+prettier@2.4.0
+  '@vue/eslint-config-prettier': 6.0.0_eslint@7.32.0+prettier@2.4.1
   babel-loader: 8.2.2_@babel+core@7.15.5
   eslint: 7.32.0
   eslint-config-prettier: 8.3.0_eslint@7.32.0
@@ -102,7 +102,7 @@ devDependencies:
   husky: 7.0.2
   lint-staged: 11.1.2
   pinst: 2.1.6
-  prettier: 2.4.0
+  prettier: 2.4.1
   vite: 2.5.7
   vite-plugin-fonts: 0.2.2_vite@2.5.7
   vite-plugin-svg-icons: 1.0.4_vite@2.5.7
@@ -5123,7 +5123,7 @@ packages:
     resolution: {integrity: sha512-quBx4Jjpexo6KDiNUGFr/zF/2A4srKM9S9v2uHgMXSU//hjgq1eGzqkIFql8T9gfX5ZaVOUzYBP3jIdIR3PKIA==}
     dev: false
 
-  /@vue/eslint-config-prettier/6.0.0_eslint@7.32.0+prettier@2.4.0:
+  /@vue/eslint-config-prettier/6.0.0_eslint@7.32.0+prettier@2.4.1:
     resolution: {integrity: sha512-wFQmv45c3ige5EA+ngijq40YpVcIkAy0Lihupnsnd1Dao5CBbPyfCzqtejFLZX1EwH/kCJdpz3t6s+5wd3+KxQ==}
     peerDependencies:
       eslint: '>= 5.0.0'
@@ -5132,7 +5132,7 @@ packages:
     dependencies:
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
-      prettier: 2.4.0
+      prettier: 2.4.1
     dev: true
 
   /@vue/reactivity/3.1.5:
@@ -11414,8 +11414,8 @@ packages:
     hasBin: true
     dev: true
 
-  /prettier/2.4.0:
-    resolution: {integrity: sha512-DsEPLY1dE5HF3BxCRBmD4uYZ+5DCbvatnolqTqcxEgKVZnL2kUfyu7b8pPQ5+hTBkdhU9SLUmK0/pHb07RE4WQ==}
+  /prettier/2.4.1:
+    resolution: {integrity: sha512-9fbDAXSBcc6Bs1mZrDYb3XKzDLm4EXXL9sC1LqKP5rZkT6KRr/rf9amVUcODVXgguK/isJz0d0hP72WeaKWsvA==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
