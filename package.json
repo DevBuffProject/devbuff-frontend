@@ -55,7 +55,7 @@
     "@storybook/addon-essentials": "6.3.8",
     "@storybook/addon-links": "6.3.8",
     "@storybook/vue3": "6.3.8",
-    "@vitejs/plugin-vue": "1.8.1",
+    "@vitejs/plugin-vue": "1.9.0",
     "@vue/compiler-sfc": "3.2.14",
     "@vue/eslint-config-prettier": "6.0.0",
     "babel-loader": "8.2.2",
