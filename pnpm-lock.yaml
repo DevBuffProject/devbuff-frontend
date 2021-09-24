@@ -10,7 +10,7 @@ specifiers:
   '@storybook/addon-essentials': 6.3.8
   '@storybook/addon-links': 6.3.8
   '@storybook/vue3': 6.3.8
-  '@vitejs/plugin-vue': 1.9.0
+  '@vitejs/plugin-vue': 1.9.1
   '@vue/compiler-sfc': 3.2.14
   '@vue/eslint-config-prettier': 6.0.0
   '@vueup/vue-quill': 1.0.0-beta.7
@@ -91,7 +91,7 @@ devDependencies:
   '@storybook/addon-essentials': 6.3.8_6be0f875f9297692b06d962afe7f3153
   '@storybook/addon-links': 6.3.8
   '@storybook/vue3': 6.3.8_b01c04a91c7b9b81ab8430bad6275459
-  '@vitejs/plugin-vue': 1.9.0_vite@2.5.10
+  '@vitejs/plugin-vue': 1.9.1_vite@2.5.10
   '@vue/compiler-sfc': 3.2.14
   '@vue/eslint-config-prettier': 6.0.0_eslint@7.32.0+prettier@2.4.1
   babel-loader: 8.2.2_@babel+core@7.15.5
@@ -4980,8 +4980,8 @@ packages:
       '@types/yargs-parser': 20.2.1
     dev: true
 
-  /@vitejs/plugin-vue/1.9.0_vite@2.5.10:
-    resolution: {integrity: sha512-TQB87f8baZsTZO/g7Az/dTCwV8eDxwkrP8hMl8HpwLJz/NKvmXtBqa7bYg8GKWNwqjy+pBRLdgiML+BI3HphOw==}
+  /@vitejs/plugin-vue/1.9.1_vite@2.5.10:
+    resolution: {integrity: sha512-9YuxaU2nLoSS/S1Ep4QTG/pEIh96LlauNM1g7LN/EOJ14Nj8HBeSy1OL26ydxb+MPhKn5XKGARh5wQF0UjHbLw==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       vite: ^2.5.10
