@@ -15,7 +15,7 @@ specifiers:
   '@vue/eslint-config-prettier': 6.0.0
   '@vueup/vue-quill': 1.0.0-beta.7
   '@vueuse/core': 6.4.1
-  '@vueuse/integrations': 6.3.3
+  '@vueuse/integrations': 6.4.1
   '@vueuse/motion': 1.6.0
   '@vueuse/router': 6.3.3
   axios: 0.21.4
@@ -60,7 +60,7 @@ dependencies:
   '@iconicicons/vue3': 1.5.0_vue@3.2.16
   '@vueup/vue-quill': 1.0.0-beta.7_vue@3.2.16
   '@vueuse/core': 6.4.1_vue@3.2.16
-  '@vueuse/integrations': 6.3.3_vue@3.2.16
+  '@vueuse/integrations': 6.4.1_vue@3.2.16
   '@vueuse/motion': 1.6.0_vue@3.2.16
   '@vueuse/router': 6.3.3_vue-router@4.0.11+vue@3.2.16
   axios: 0.21.4
@@ -2723,6 +2723,16 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: true
 
+  /@drauu/core/0.1.2:
+    resolution: {integrity: sha512-jMuxH5y82etwgrEZ26KzVYajEwM7aMqss+g5ZntcyS4K72iFf5T3AQnoPNER4628VE6hz2JQlhoUWGAS6xZIrg==}
+    dependencies:
+      perfect-freehand: 0.5.4
+    transitivePeerDependencies:
+      - react
+      - react-dom
+    dev: false
+    optional: true
+
   /@emotion/cache/10.0.29:
     resolution: {integrity: sha512-fU2VtSVlHiF27empSbxi1O2JFdNWZO+2NFHfwO0pxgTep6Xa3uGb+3pVKfLww2l/IBGLNEZl5Xf/++A4wAYDYQ==}
     dependencies:
@@ -4740,6 +4750,18 @@ packages:
       - webpack-command
     dev: true
 
+  /@tldraw/core/0.0.53:
+    resolution: {integrity: sha512-hxZIUR3Sm320tvGW5lWEKfw1QJhe6mJu7IrG5ka5G3slusqaY3cQY9EafFqH07yEXul2MU2RENIQus7fh+Gwcg==}
+    peerDependencies:
+      react: ^17.0.2
+      react-dom: ^17.0.2
+    dependencies:
+      deepmerge: 4.2.2
+      ismobilejs: 1.1.1
+      react-use-gesture: 9.1.3
+    dev: false
+    optional: true
+
   /@trysound/sax/0.1.1:
     resolution: {integrity: sha512-Z6DoceYb/1xSg5+e+ZlPZ9v0N16ZvZ+wYMraFue4HYrE4ttONKtsvruIRf6t9TBR0YvSOfi1hUU0fJfBLCDYow==}
     engines: {node: '>=10.13.0'}
@@ -5256,13 +5278,14 @@ packages:
       vue-demi: 0.11.3_vue@3.2.16
     dev: false
 
-  /@vueuse/integrations/6.3.3_vue@3.2.16:
-    resolution: {integrity: sha512-xnTmJd0xVfxqkjyFRYjD8dmaJ15Vyq3CGu4rruyVu/YFtVj/6tjSDbeQun0+4KJHiLbqUbA2nnPEXPcidnoF3w==}
+  /@vueuse/integrations/6.4.1_vue@3.2.16:
+    resolution: {integrity: sha512-GzOz3KZEj9Y2HeL4NZ1o+jophdWW6mvpEiRSz2VTpGDXvJXvP3BM7SBy85V1jAe3juXaRr+7+GmALRbd7SQRiQ==}
     dependencies:
-      '@vueuse/shared': 6.3.3_vue@3.2.16
+      '@vueuse/shared': 6.4.1_vue@3.2.16
       vue-demi: 0.11.3_vue@3.2.16
     optionalDependencies:
       axios: 0.21.4
+      drauu: 0.1.2
       focus-trap: 6.6.1
       jwt-decode: 3.1.2
       nprogress: 0.2.0
@@ -5271,6 +5294,8 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - debug
+      - react
+      - react-dom
       - vue
     dev: false
 
@@ -7234,7 +7259,6 @@ packages:
   /deepmerge/4.2.2:
     resolution: {integrity: sha512-FJ3UgI4gIl+PHZm53knsuSFpE+nESMr7M4v9QcgB7S63Kj/6WqMiFQJpBBYz1Pt+66bZpP3Q7Lye0Oo9MPKEdg==}
     engines: {node: '>=0.10.0'}
-    dev: true
 
   /define-properties/1.1.3:
     resolution: {integrity: sha512-3MqfYKj2lLzdMSf8ZIZE/V+Zuy+BgD6f164e8K2w7dgnpKArBDerGYpM46IYYcjnkdPNMjPk9A6VFB8+3SKlXQ==}
@@ -7486,6 +7510,17 @@ packages:
       react-is: 17.0.2
       tslib: 2.3.1
     dev: true
+
+  /drauu/0.1.2:
+    resolution: {integrity: sha512-2u+4OxP9FSgwz2033Y1sP8lg7SSF3dhPHkBdo97iNNJrD3gkYzgvsfJL1Z2x+rqksltRGtnlUByCW8/jIm7KKg==}
+    requiresBuild: true
+    dependencies:
+      '@drauu/core': 0.1.2
+    transitivePeerDependencies:
+      - react
+      - react-dom
+    dev: false
+    optional: true
 
   /duplexer/0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
@@ -9060,6 +9095,13 @@ packages:
       postcss: 8.3.6
     dev: true
 
+  /idb-keyval/5.1.5:
+    resolution: {integrity: sha512-J1utxYWQokYjy01LvDQ7WmiAtZCGUSkVi9EIBfUSyLOr/BesnMIxNGASTh9A1LzeISSjSqEPsfFdTss7EE7ofQ==}
+    dependencies:
+      safari-14-idb-fix: 1.0.6
+    dev: false
+    optional: true
+
   /ieee754/1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
@@ -9577,6 +9619,11 @@ packages:
 
   /isexe/2.0.0:
     resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=}
+
+  /ismobilejs/1.1.1:
+    resolution: {integrity: sha512-VaFW53yt8QO61k2WJui0dHf4SlL8lxBofUuUmwBo0ljPk0Drz2TiuDW4jo3wDcv41qy/SxrJ+VAzJ/qYqsmzRw==}
+    dev: false
+    optional: true
 
   /isobject/2.1.0:
     resolution: {integrity: sha1-8GVWEJaj8dou9GJy+BXIQNh+DIk=}
@@ -11080,6 +11127,17 @@ packages:
       sha.js: 2.4.11
     dev: true
 
+  /perfect-freehand/0.5.4:
+    resolution: {integrity: sha512-DmM6N/jNIl3oPHV73q0xvR0UGuKUV7wfkINuLd8m+R5aiJbs2V+E2zseHGZ4HcU5VUzb/BlqEARP28NuxBTiGQ==}
+    dependencies:
+      '@tldraw/core': 0.0.53
+      rko: 0.5.25
+    transitivePeerDependencies:
+      - react
+      - react-dom
+    dev: false
+    optional: true
+
   /picomatch/2.3.0:
     resolution: {integrity: sha512-lY1Q/PiJGC2zOv/z391WOTD+Z02bCgsFfvxoXXf6h7kv9o+WmsmzYqrAwY63sNgOxE4xEdq0WyUnXfKeBrSvYw==}
     engines: {node: '>=8.6'}
@@ -12128,6 +12186,14 @@ packages:
       - '@types/react'
     dev: true
 
+  /react-use-gesture/9.1.3:
+    resolution: {integrity: sha512-CdqA2SmS/fj3kkS2W8ZU8wjTbVBAIwDWaRprX7OKaj7HlGwBasGEFggmk5qNklknqk9zK/h8D355bEJFTpqEMg==}
+    deprecated: This package is no longer maintained. Please use @use-gesture/react instead
+    peerDependencies:
+      react: '>= 16.8.0'
+    dev: false
+    optional: true
+
   /react/16.14.0:
     resolution: {integrity: sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==}
     engines: {node: '>=0.10.0'}
@@ -12476,6 +12542,17 @@ packages:
       inherits: 2.0.4
     dev: true
 
+  /rko/0.5.25:
+    resolution: {integrity: sha512-HU6M3PxK3VEqrr6QZKAsqO98juQX24kEgJkKSdFJhw8U/DBUGAnU/fgyxNIaTw7TCI7vjIy/RzBEXf5I4sijKg==}
+    peerDependencies:
+      react: ^17.0.2
+      react-dom: ^17.0.2
+    dependencies:
+      idb-keyval: 5.1.5
+      zustand: 3.5.10
+    dev: false
+    optional: true
+
   /rollup/2.56.3:
     resolution: {integrity: sha512-Au92NuznFklgQCUcV96iXlxUbHuB1vQMaH76DHl5M11TotjOHwqk9CwcrT78+Tnv4FN9uTBxq6p4EJoYkpyekg==}
     engines: {node: '>=10.0.0'}
@@ -12505,6 +12582,11 @@ packages:
     dependencies:
       tslib: 1.14.1
     dev: true
+
+  /safari-14-idb-fix/1.0.6:
+    resolution: {integrity: sha512-oTEQOdMwRX+uCtWCKT1nx2gAeSdpr8elg/2gcaKUH00SJU2xWESfkx11nmXwTRHy7xfQoj1o4TTQvdmuBosTnA==}
+    dev: false
+    optional: true
 
   /safe-buffer/5.1.1:
     resolution: {integrity: sha512-kKvNJn6Mm93gAczWVJg7wH+wGYWNrDHdWvpUmHyEsgCtIwwo3bqPtV4tR5tuPaUhTOo/kvhVwd8XwwOllGYkbg==}
@@ -14590,6 +14672,16 @@ packages:
       property-expr: 2.0.4
       toposort: 2.0.2
     dev: false
+
+  /zustand/3.5.10:
+    resolution: {integrity: sha512-upluvSRWrlCiExu2UbkuMIPJ9AigyjRFoO7O9eUossIj7rPPq7pcJ0NKk6t2P7KF80tg/UdPX6/pNKOSbs9DEg==}
+    peerDependencies:
+      react: '>=16.8'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dev: false
+    optional: true
 
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
