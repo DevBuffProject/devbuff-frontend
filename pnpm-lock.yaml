@@ -50,7 +50,7 @@ specifiers:
   vue-loader: 16.8.1
   vue-nprogress: 0.2.0
   vue-router: 4.0.11
-  windicss: 3.1.7
+  windicss: 3.1.8
   windicss-webpack-plugin: 1.4.8
   yup: 0.32.9
 
@@ -107,7 +107,7 @@ devDependencies:
   vite-plugin-fonts: 0.2.2_vite@2.5.10
   vite-plugin-svg-icons: 1.0.4_vite@2.5.10
   vue-loader: 16.8.1
-  windicss: 3.1.7
+  windicss: 3.1.8
   windicss-webpack-plugin: 1.4.8
 
 packages:
@@ -14523,6 +14523,12 @@ packages:
     resolution: {integrity: sha512-Q/HQ9j+r2R0fdt85zAjccdo11kHWzQmpkuwIUQIO6PSypyDmBTfN14aAy4szLrpgo2woyuHM7Y+kir4IG4qnKQ==}
     engines: {node: '>= 12'}
     hasBin: true
+
+  /windicss/3.1.8:
+    resolution: {integrity: sha512-G1UfnnSZ3s4MZnqqIL8DOQbL8rBArQKlodlby8OvP333TPaRouamuIuYyCt5kSNEJzFrkx168TSRIkqhDs9bOA==}
+    engines: {node: '>= 12'}
+    hasBin: true
+    dev: true
 
   /with/7.0.2:
     resolution: {integrity: sha512-RNGKj82nUPg3g5ygxkQl0R937xLyho1J24ItRCBTr/m1YnZkzJy1hUiHUJrc/VlsDQzsCnInEGSg3bci0Lmd4w==}
