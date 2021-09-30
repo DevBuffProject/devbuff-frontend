@@ -14,7 +14,7 @@ specifiers:
   '@vue/compiler-sfc': 3.2.19
   '@vue/eslint-config-prettier': 6.0.0
   '@vueup/vue-quill': 1.0.0-beta.7
-  '@vueuse/core': 6.4.1
+  '@vueuse/core': 6.5.3
   '@vueuse/integrations': 6.4.1
   '@vueuse/motion': 1.6.0
   '@vueuse/router': 6.3.3
@@ -59,7 +59,7 @@ dependencies:
   '@ckeditor/ckeditor5-vue': 2.0.1
   '@iconicicons/vue3': 1.5.0_vue@3.2.19
   '@vueup/vue-quill': 1.0.0-beta.7_vue@3.2.19
-  '@vueuse/core': 6.4.1_vue@3.2.19
+  '@vueuse/core': 6.5.3_vue@3.2.19
   '@vueuse/integrations': 6.4.1_vue@3.2.19
   '@vueuse/motion': 1.6.0_vue@3.2.19
   '@vueuse/router': 6.3.3_vue-router@4.0.11+vue@3.2.19
@@ -5262,8 +5262,8 @@ packages:
       vue-demi: 0.11.3_vue@3.2.19
     dev: false
 
-  /@vueuse/core/6.4.1_vue@3.2.19:
-    resolution: {integrity: sha512-FRFeEPVq77gcMZP0mCloJY+lyHJaUQmUMaPp5fBds3fs/BbkAt7HTMMizFKHWDVjbmA20vBOjmC9tTnfD+DdEA==}
+  /@vueuse/core/6.5.3_vue@3.2.19:
+    resolution: {integrity: sha512-o3CTu4nEqs371sDY5qLBX0r4QOm6GVpm3ApQc2Y+p8OMI2rRGartQo8xRykpUfsyq602A+SVtm/wxIWBkD/KCQ==}
     peerDependencies:
       '@vue/composition-api': ^1.1.0
       vue: ^2.6.0 || ^3.2.0
@@ -5273,7 +5273,7 @@ packages:
       vue:
         optional: true
     dependencies:
-      '@vueuse/shared': 6.4.1_vue@3.2.19
+      '@vueuse/shared': 6.5.3_vue@3.2.19
       vue: 3.2.19
       vue-demi: 0.11.3_vue@3.2.19
     dev: false
@@ -5359,6 +5359,21 @@ packages:
 
   /@vueuse/shared/6.4.1_vue@3.2.19:
     resolution: {integrity: sha512-zsaYxxZwACQbMmGg+UBjPUVemi325sDdnnB0mn+PNizE0fVC57B+vbLgdj45NBmr6P4nw6a0Y2rMupebwDWsdw==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.0
+      vue: ^2.6.0 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      vue:
+        optional: true
+    dependencies:
+      vue: 3.2.19
+      vue-demi: 0.11.3_vue@3.2.19
+    dev: false
+
+  /@vueuse/shared/6.5.3_vue@3.2.19:
+    resolution: {integrity: sha512-ChOKu3mECyZeqGJ/gHVm0CaHoZK5/TwNZr1ZM/aqH+RaRNQvC1qkLf1/8PBugzN3yRgC3BtZ/M1kLpGe/BFylw==}
     peerDependencies:
       '@vue/composition-api': ^1.1.0
       vue: ^2.6.0 || ^3.2.0
