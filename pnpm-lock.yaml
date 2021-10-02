@@ -44,7 +44,7 @@ specifiers:
   vite-plugin-components: 0.13.3
   vite-plugin-fonts: 0.2.2
   vite-plugin-svg-icons: 1.0.5
-  vite-plugin-windicss: 1.4.8
+  vite-plugin-windicss: 1.4.9
   vue: 3.2.19
   vue-i18n: 9.1.7
   vue-loader: 16.8.1
@@ -77,7 +77,7 @@ dependencies:
   swiper: 6.8.4
   vee-validate: 4.4.11_vue@3.2.19
   vite-plugin-components: 0.13.3_vite@2.6.2
-  vite-plugin-windicss: 1.4.8_vite@2.6.2
+  vite-plugin-windicss: 1.4.9_vite@2.6.2
   vue: 3.2.19
   vue-i18n: 9.1.7_vue@3.2.19
   vue-nprogress: 0.2.0_vue@3.2.19
@@ -4521,12 +4521,12 @@ packages:
       - typescript
     dev: true
 
-  /@windicss/config/1.4.8:
-    resolution: {integrity: sha512-lZgPvK70gSSGWxSCIZzYmsxlTtJ23ZPKXh+OR9ZaAfNGczZH4G01dxfZN69iNQt4o3uXKJtVN0dZsxHEWzggqQ==}
+  /@windicss/config/1.4.9:
+    resolution: {integrity: sha512-DYgWKuY48Nrhi4xprdKVC2IpcLQ8j3jJ1FYgaoHKvHYZG7Ux4xaPZEYaAWEeEiGKLP7bv9VpBYdjRTKFqOMIsA==}
     dependencies:
       debug: 4.3.2
-      jiti: 1.12.3
-      tsup: 5.2.0
+      jiti: 1.12.5
+      tsup: 5.2.1
       windicss: 3.1.8
     transitivePeerDependencies:
       - supports-color
@@ -4550,11 +4550,11 @@ packages:
       - typescript
     dev: true
 
-  /@windicss/plugin-utils/1.4.8:
-    resolution: {integrity: sha512-9tBJZi/8xxsMb9ZaxalNxo0yv6pR8/H2e/4io00qN+Oie2zOgDc54zFrr+kozgN1ISdmV15zGUXgEMdylEDC+Q==}
+  /@windicss/plugin-utils/1.4.9:
+    resolution: {integrity: sha512-Pie0mEH5whtI3zkWKThmgS6dxSAxQL5Be01Er/abLMVQjdoecoQT7ek2qSYOoFTtXGs7gMPUtCV/NdoL2TDgWw==}
     dependencies:
       '@antfu/utils': 0.3.0
-      '@windicss/config': 1.4.8
+      '@windicss/config': 1.4.9
       debug: 4.3.2
       fast-glob: 3.2.7
       magic-string: 0.25.7
@@ -8831,8 +8831,8 @@ packages:
     hasBin: true
     dev: true
 
-  /jiti/1.12.3:
-    resolution: {integrity: sha512-p88jl9WzvZYekMS5ZOB61bJ1SPV69o7nEpAU+mFpGzXErqLEg3WvNz3jeXylAiSfLZzvqZssrAu08N3AuvaqwQ==}
+  /jiti/1.12.5:
+    resolution: {integrity: sha512-+K46njcZW6E/OPWWHImm3G1u+fYVcKU7vqc8b36oVtfi9l3moaSGtsPydaRf2gPuVxh13G1KSCVlW0DfyYUjPQ==}
     hasBin: true
     dev: false
 
@@ -11595,6 +11595,7 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.2
+    dev: true
 
   /rollup/2.57.0:
     resolution: {integrity: sha512-bKQIh1rWKofRee6mv8SrF2HdP6pea5QkwBZSMImJysFj39gQuiV8MEPBjXOCpzk3wSYp63M2v2wkWBmFC8O/rg==}
@@ -11602,7 +11603,6 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.2
-    dev: true
 
   /rsvp/4.8.5:
     resolution: {integrity: sha512-nfMOlASu9OnRJo1mbEk2cz0D56a1MBNrJ7orjRZQG10XDyuvwksKbuXNp6qa+kbn839HwjwhBzhFmdsaEAfauA==}
@@ -12705,8 +12705,8 @@ packages:
       - ts-node
     dev: true
 
-  /tsup/5.2.0:
-    resolution: {integrity: sha512-Im6TcLyjP3wfid1OdIRJw+7E4E5WAKvXi1GSz4V0qxBDblG14dPlnoxZGNuvfk/6X3DlhxgTbWbnyR+JRruYPA==}
+  /tsup/5.2.1:
+    resolution: {integrity: sha512-eQmRfKoHIiTFg38Dh2MARCx3J0+P+wbwB5iSHcXTwsnVR9csGLpln5qqBjdgyAGV1VTbOmyU37veCi2eA+wuqA==}
     hasBin: true
     peerDependencies:
       typescript: ^4.2.3
@@ -12724,7 +12724,7 @@ packages:
       joycon: 3.0.1
       postcss-load-config: 3.1.0
       resolve-from: 5.0.0
-      rollup: 2.56.3
+      rollup: 2.57.0
       sucrase: 3.20.1
       tree-kill: 1.2.2
     transitivePeerDependencies:
@@ -13185,12 +13185,12 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-windicss/1.4.8_vite@2.6.2:
-    resolution: {integrity: sha512-X5lL0Cll+HAUDTaeN0pVEvzs3jZ3gY26vaZCPW/+whMsaErXY7cSV3hNzc8TrFi3GMCeWgqfRAedI2spMM1wHg==}
+  /vite-plugin-windicss/1.4.9_vite@2.6.2:
+    resolution: {integrity: sha512-4DxBnsQ8dvhhtR5aUgpTApxN7Auh11/9xOIW7Qdu+OuTY6tyU1NqZntVQpwArf4gNsJssgUBBCfFx1zei+rYnQ==}
     peerDependencies:
       vite: ^2.0.1
     dependencies:
-      '@windicss/plugin-utils': 1.4.8
+      '@windicss/plugin-utils': 1.4.9
       chalk: 4.1.2
       debug: 4.3.2
       vite: 2.6.2_sass@1.41.1
