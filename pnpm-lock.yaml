@@ -36,7 +36,7 @@ specifiers:
   prettier: 2.4.1
   query-string: 7.0.1
   quill-image-uploader: 1.2.2
-  sass: 1.41.1
+  sass: 1.42.1
   string-to-color: 2.2.2
   swiper: 6.8.4
   vee-validate: 4.4.11
@@ -72,7 +72,7 @@ dependencies:
   nprogress: 0.2.0
   query-string: 7.0.1
   quill-image-uploader: 1.2.2
-  sass: 1.41.1
+  sass: 1.42.1
   string-to-color: 2.2.2
   swiper: 6.8.4
   vee-validate: 4.4.11_vue@3.2.19
@@ -103,7 +103,7 @@ devDependencies:
   lint-staged: 11.1.2
   pinst: 2.1.6
   prettier: 2.4.1
-  vite: 2.6.2_sass@1.41.1
+  vite: 2.6.2_sass@1.42.1
   vite-plugin-fonts: 0.2.2_vite@2.6.2
   vite-plugin-svg-icons: 1.0.5_vite@2.6.2
   vue-loader: 16.8.1
@@ -2095,7 +2095,7 @@ packages:
       '@rollup/pluginutils': 4.1.0
       debug: 4.3.2
       fast-glob: 3.2.7
-      vite: 2.6.2_sass@1.41.1
+      vite: 2.6.2_sass@1.42.1
       vue-i18n: 9.1.7_vue@3.2.19
     transitivePeerDependencies:
       - eslint
@@ -4080,7 +4080,7 @@ packages:
     peerDependencies:
       vite: ^2.5.10
     dependencies:
-      vite: 2.6.2_sass@1.41.1
+      vite: 2.6.2_sass@1.42.1
     dev: true
 
   /@vue/compiler-core/3.1.5:
@@ -11672,8 +11672,8 @@ packages:
       walker: 1.0.7
     dev: true
 
-  /sass/1.41.1:
-    resolution: {integrity: sha512-vIjX7izRxw3Wsiez7SX7D+j76v7tenfO18P59nonjr/nzCkZuoHuF7I/Fo0ZRZPKr88v29ivIdE9BqGDgQD/Nw==}
+  /sass/1.42.1:
+    resolution: {integrity: sha512-/zvGoN8B7dspKc5mC6HlaygyCBRvnyzzgD5khiaCfglWztY99cYoiTUksVx11NlnemrcfH5CEaCpsUKoW0cQqg==}
     engines: {node: '>=8.9.0'}
     hasBin: true
     dependencies:
@@ -13161,7 +13161,7 @@ packages:
       fast-glob: 3.2.7
       magic-string: 0.25.7
       minimatch: 3.0.4
-      vite: 2.6.2_sass@1.41.1
+      vite: 2.6.2_sass@1.42.1
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -13171,7 +13171,7 @@ packages:
     peerDependencies:
       vite: ^2.0.0
     dependencies:
-      vite: 2.6.2_sass@1.41.1
+      vite: 2.6.2_sass@1.42.1
     dev: true
 
   /vite-plugin-svg-icons/1.0.5_vite@2.6.2:
@@ -13186,7 +13186,7 @@ packages:
       fs-extra: 10.0.0
       svg-baker: 1.7.0
       svgo: 2.7.0
-      vite: 2.6.2_sass@1.41.1
+      vite: 2.6.2_sass@1.42.1
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -13199,7 +13199,7 @@ packages:
       '@windicss/plugin-utils': 1.4.9
       chalk: 4.1.2
       debug: 4.3.2
-      vite: 2.6.2_sass@1.41.1
+      vite: 2.6.2_sass@1.42.1
       windicss: 3.1.8
     transitivePeerDependencies:
       - supports-color
@@ -13207,7 +13207,7 @@ packages:
       - typescript
     dev: false
 
-  /vite/2.6.2_sass@1.41.1:
+  /vite/2.6.2_sass@1.42.1:
     resolution: {integrity: sha512-HSIg9U15LOnbD3CUxX364Pdrm7DUjftuBljowGxvkFHgDZU/SKPqApg9t86MX/Qq1VCO7wS+mGJHlfuTF7c0Sg==}
     engines: {node: '>=12.2.0'}
     hasBin: true
@@ -13227,7 +13227,7 @@ packages:
       postcss: 8.3.8
       resolve: 1.20.0
       rollup: 2.57.0
-      sass: 1.41.1
+      sass: 1.42.1
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
