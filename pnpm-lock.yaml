@@ -27,7 +27,7 @@ specifiers:
   eslint-plugin-vue: 7.19.1
   fastcomments-vue-next: 2.0.1
   husky: 7.0.2
-  lint-staged: 11.2.2
+  lint-staged: 11.2.3
   lodash: 4.17.21
   masonry-layout: 4.2.2
   mitt: 2.1.0
@@ -100,7 +100,7 @@ devDependencies:
   eslint-plugin-prettier-vue: 3.1.0_vue@3.2.20
   eslint-plugin-vue: 7.19.1_eslint@7.32.0
   husky: 7.0.2
-  lint-staged: 11.2.2
+  lint-staged: 11.2.3
   pinst: 2.1.6
   prettier: 2.4.1
   vite: 2.6.5_sass@1.42.1
@@ -9215,8 +9215,8 @@ packages:
     resolution: {integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=}
     dev: true
 
-  /lint-staged/11.2.2:
-    resolution: {integrity: sha512-rbtLCRTyndPJvtjpLwVjjb6K91jQrJ06oNArA4igPTGYlDCrJMIFbNDUAQGa4GRd8AjUBHkAAmq+K38tcmMaAQ==}
+  /lint-staged/11.2.3:
+    resolution: {integrity: sha512-Tfmhk8O2XFMD25EswHPv+OYhUjsijy5D7liTdxeXvhG2rsadmOLFtyj8lmlfoFFXY8oXWAIOKpoI+lJe1DB1mw==}
     hasBin: true
     dependencies:
       cli-truncate: 2.1.0
