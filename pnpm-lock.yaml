@@ -52,7 +52,7 @@ specifiers:
   vue-router: 4.0.11
   windicss: 3.1.9
   windicss-webpack-plugin: 1.4.8
-  yup: 0.32.9
+  yup: 0.32.10
 
 dependencies:
   '@ckeditor/ckeditor5-build-classic': 29.2.0
@@ -82,7 +82,7 @@ dependencies:
   vue-i18n: 9.1.9_vue@3.2.20
   vue-nprogress: 0.2.0_vue@3.2.20
   vue-router: 4.0.11_vue@3.2.20
-  yup: 0.32.9
+  yup: 0.32.10
 
 devDependencies:
   '@babel/core': 7.15.8
@@ -1501,19 +1501,11 @@ packages:
       source-map-support: 0.5.19
     dev: true
 
-  /@babel/runtime/7.14.6:
-    resolution: {integrity: sha512-/PCB2uJ7oM44tz8YhC4Z/6PeOKXp4K588f+5M3clr1M4zbqztlo0XEfJ2LEzj/FgwfgGcIdl8n7YYjTCI0BYwg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      regenerator-runtime: 0.13.7
-    dev: false
-
   /@babel/runtime/7.15.4:
     resolution: {integrity: sha512-99catp6bHCaxr4sJ/DbTGgHS4+Rs2RVd2g7iOap6SLGPDknRK9ztKNsE/Fg6QhSeh1FGE5f6gHGQmvvn3I3xhw==}
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.9
-    dev: true
 
   /@babel/template/7.15.4:
     resolution: {integrity: sha512-UgBAfEa1oGuYgDIPM2G+aHa4Nlo9Lh6mGD2bDBGMTbYnc38vulXPuC1MGjYILIEmlwl6Rd+BPR9ee3gm20CBtg==}
@@ -3991,8 +3983,8 @@ packages:
     resolution: {integrity: sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ==}
     dev: true
 
-  /@types/lodash/4.14.171:
-    resolution: {integrity: sha512-7eQ2xYLLI/LsicL2nejW9Wyko3lcpN6O/z0ZLHrEQsg280zIdCv1t/0m6UtBjUHokCGBQ3gYTbHzDkZ1xOBwwg==}
+  /@types/lodash/4.14.175:
+    resolution: {integrity: sha512-XmdEOrKQ8a1Y/yxQFOMbC47G/V2VDO1GvMRnl4O75M4GW/abC5tnfzadQYkqEveqRM1dEJGFFegfPNA2vvx2iw==}
     dev: false
 
   /@types/markdown-to-jsx/6.11.3:
@@ -11515,13 +11507,8 @@ packages:
     resolution: {integrity: sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==}
     dev: true
 
-  /regenerator-runtime/0.13.7:
-    resolution: {integrity: sha512-a54FxoJDIr27pgf7IgeQGxmqUNYrcV338lf/6gH456HZ/PhX+5BcwHXG9ajESmwe6WRO0tAzRUrRmNONWgkrew==}
-    dev: false
-
   /regenerator-runtime/0.13.9:
     resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==}
-    dev: true
 
   /regenerator-transform/0.14.5:
     resolution: {integrity: sha512-eOf6vka5IO151Jfsw2NO9WpGX58W6wWmefK3I1zEGr0lOD0u8rwPaNqQL1aRxUaxLeKO3ArNh3VYg1KbaD+FFw==}
@@ -13869,12 +13856,12 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /yup/0.32.9:
-    resolution: {integrity: sha512-Ci1qN+i2H0XpY7syDQ0k5zKQ/DoxO0LzPg8PAR/X4Mpj6DqaeCoIYEEjDJwhArh3Fa7GWbQQVDZKeXYlSH4JMg==}
+  /yup/0.32.10:
+    resolution: {integrity: sha512-xRZnd0EEXz+zNQ3mIN5p5r9FbSeK811oKXT3SKU+yml0NiqEd5qj+Roy37kkMYVaOM6TTQs/D/sfWHS/JxXeTg==}
     engines: {node: '>=10'}
     dependencies:
-      '@babel/runtime': 7.14.6
-      '@types/lodash': 4.14.171
+      '@babel/runtime': 7.15.4
+      '@types/lodash': 4.14.175
       lodash: 4.17.21
       lodash-es: 4.17.21
       nanoclone: 0.2.1
