@@ -49,7 +49,7 @@ specifiers:
   vue-i18n: 9.1.9
   vue-loader: 16.8.1
   vue-nprogress: 0.2.0
-  vue-router: 4.0.11
+  vue-router: 4.0.12
   windicss: 3.1.9
   windicss-webpack-plugin: 1.4.9
   yup: 0.32.10
@@ -62,7 +62,7 @@ dependencies:
   '@vueuse/core': 6.5.3_vue@3.2.20
   '@vueuse/integrations': 6.5.3_vue@3.2.20
   '@vueuse/motion': 1.6.0_vue@3.2.20
-  '@vueuse/router': 6.5.3_vue-router@4.0.11+vue@3.2.20
+  '@vueuse/router': 6.5.3_vue-router@4.0.12+vue@3.2.20
   axios: 0.22.0
   color: 4.0.1
   fastcomments-vue-next: 2.0.1
@@ -81,7 +81,7 @@ dependencies:
   vue: 3.2.20
   vue-i18n: 9.1.9_vue@3.2.20
   vue-nprogress: 0.2.0_vue@3.2.20
-  vue-router: 4.0.11_vue@3.2.20
+  vue-router: 4.0.12_vue@3.2.20
   yup: 0.32.10
 
 devDependencies:
@@ -4221,6 +4221,10 @@ packages:
     resolution: {integrity: sha512-quBx4Jjpexo6KDiNUGFr/zF/2A4srKM9S9v2uHgMXSU//hjgq1eGzqkIFql8T9gfX5ZaVOUzYBP3jIdIR3PKIA==}
     dev: false
 
+  /@vue/devtools-api/6.0.0-beta.19:
+    resolution: {integrity: sha512-ObzQhgkoVeoyKv+e8+tB/jQBL2smtk/NmC9OmFK8UqdDpoOdv/Kf9pyDWL+IFyM7qLD2C75rszJujvGSPSpGlw==}
+    dev: false
+
   /@vue/eslint-config-prettier/6.0.0_eslint@7.32.0+prettier@2.4.1:
     resolution: {integrity: sha512-wFQmv45c3ige5EA+ngijq40YpVcIkAy0Lihupnsnd1Dao5CBbPyfCzqtejFLZX1EwH/kCJdpz3t6s+5wd3+KxQ==}
     peerDependencies:
@@ -4376,14 +4380,14 @@ packages:
       vue-demi: 0.11.3_vue@3.2.20
     dev: false
 
-  /@vueuse/router/6.5.3_vue-router@4.0.11+vue@3.2.20:
+  /@vueuse/router/6.5.3_vue-router@4.0.12+vue@3.2.20:
     resolution: {integrity: sha512-QGMCQvpBEkgMsy/NuCmuonNa100ow7KlPK8tyb6+T2zyNFDGMs58B9DmUNNFb5+aRNmsc1uwvPCvCffPhFiIqQ==}
     peerDependencies:
       vue-router: '>=4.0.0-rc.1'
     dependencies:
       '@vueuse/shared': 6.5.3_vue@3.2.20
       vue-demi: 0.11.3_vue@3.2.20
-      vue-router: 4.0.11_vue@3.2.20
+      vue-router: 4.0.12_vue@3.2.20
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -13247,12 +13251,12 @@ packages:
       vue: 3.2.20
     dev: false
 
-  /vue-router/4.0.11_vue@3.2.20:
-    resolution: {integrity: sha512-sha6I8fx9HWtvTrFZfxZkiQQBpqSeT+UCwauYjkdOQYRvwsGwimlQQE2ayqUwuuXGzquFpCPoXzYKWlzL4OuXg==}
+  /vue-router/4.0.12_vue@3.2.20:
+    resolution: {integrity: sha512-CPXvfqe+mZLB1kBWssssTiWg4EQERyqJZes7USiqfW9B5N2x+nHlnsM1D3b5CaJ6qgCvMmYJnz+G0iWjNCvXrg==}
     peerDependencies:
       vue: ^3.0.0
     dependencies:
-      '@vue/devtools-api': 6.0.0-beta.15
+      '@vue/devtools-api': 6.0.0-beta.19
       vue: 3.2.20
     dev: false
 
