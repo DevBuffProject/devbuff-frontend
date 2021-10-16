@@ -52,7 +52,7 @@ specifiers:
   vue-router: 4.0.12
   windicss: 3.1.9
   windicss-webpack-plugin: 1.4.9
-  yup: 0.32.10
+  yup: 0.32.11
 
 dependencies:
   '@ckeditor/ckeditor5-build-classic': 29.2.0
@@ -82,7 +82,7 @@ dependencies:
   vue-i18n: 9.1.9_vue@3.2.20
   vue-nprogress: 0.2.0_vue@3.2.20
   vue-router: 4.0.12_vue@3.2.20
-  yup: 0.32.10
+  yup: 0.32.11
 
 devDependencies:
   '@babel/core': 7.15.8
@@ -13608,8 +13608,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /yup/0.32.10:
-    resolution: {integrity: sha512-xRZnd0EEXz+zNQ3mIN5p5r9FbSeK811oKXT3SKU+yml0NiqEd5qj+Roy37kkMYVaOM6TTQs/D/sfWHS/JxXeTg==}
+  /yup/0.32.11:
+    resolution: {integrity: sha512-Z2Fe1bn+eLstG8DRR6FTavGD+MeAwyfmouhHsIUgaADz8jvFKbO/fXc2trJKZg+5EBjh4gGm3iU/t3onKlXHIg==}
     engines: {node: '>=10'}
     dependencies:
       '@babel/runtime': 7.15.4
