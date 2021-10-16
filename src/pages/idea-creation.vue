@@ -2,6 +2,7 @@
   <div>
     <h3 class="!mt-0">{{ t('header') }}</h3>
     <Form
+      @submit="onSubmit"
       :validation-schema="schema"
       ref="form"
       class="
@@ -32,18 +33,22 @@
         shadow
       />
       <WidgetEditor name="text" v-model="data.text" />
+      <ErrorMessage name="specialists" />
+      <Field name="specialists" type="hidden" v-model="data.specialists" />
+      <WidgetSpecialistPicker
+        name="specialists"
+        v-model="data.specialists"
+        class="my-6"
+      />
+      <AtomicButton :loading="false">
+        {{ t('save') }}
+      </AtomicButton>
     </Form>
-
-    <WidgetSpecialistPicker v-model="data.specialists" class="my-6" />
-
-    <AtomicButton :loading="true" @click="onSubmit">
-      {{ t('save') }}
-    </AtomicButton>
   </div>
 </template>
 
 <script>
-import { Form } from 'vee-validate'
+import { Form, Field, ErrorMessage } from 'vee-validate'
 import { defineComponent, ref, watch } from 'vue'
 import { useIdea, useI18n } from '../composes'
 import { useRouter } from 'vue-router'
@@ -51,7 +56,7 @@ import { set, useStorage, useTitle } from '@vueuse/core'
 import * as yup from 'yup'
 
 export default defineComponent({
-  components: { Form },
+  components: { Form, Field, ErrorMessage },
   props: {
     id: { type: String, default: undefined },
   },
@@ -86,6 +91,7 @@ export default defineComponent({
     }
 
     const onSubmit = async () => {
+      console.log('Test!')
       if (isEditingMode) {
         await updateIdea(props.id, data.value)
         await router.push({
@@ -116,6 +122,7 @@ export default defineComponent({
         .max(300)
         .required(),
       text: yup.string().min(150).max(15000).required(),
+      specialists: yup.array().min(1).max(10).required(),
     })
 
     return {

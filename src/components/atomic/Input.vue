@@ -20,7 +20,7 @@
         :class="[
           !shadow && 'pl-4',
           isMounted && 'transition-all',
-          isFocused || modelValue
+          isFocused || value
             ? 'top-0 translate-y-0 opacity-50 text-xs'
             : 'top-6 -translate-y-1/2 opacity-30 dark:opacity-20',
         ]"
@@ -30,7 +30,7 @@
         :is="type === 'textarea' ? 'textarea' : 'input'"
         :type="type === 'textarea' && type"
         :name="name"
-        :value="modelValue"
+        :value="value"
         @focus="onFocus"
         @blur="onBlur"
         @input="onInput"
@@ -86,6 +86,7 @@ export default defineComponent({
 
     const attrs = useAttrs()
     const {
+      value,
       handleChange,
       handleBlur,
       errors,
@@ -138,6 +139,7 @@ export default defineComponent({
       onBlur,
       onFocus,
       onInput,
+      value,
     }
   },
 })

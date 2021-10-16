@@ -23,7 +23,7 @@
       class="w-full px-10 rounded-lg transition-colors"
       :class="{
         'bg-light-900 bg-opacity-100 dark:(bg-dark-300 hover:bg-dark-400 active:bg-dark-500) focus:(ring ring)':
-          (colorType = 'muted'),
+          colorType === 'muted',
         'bg-primary-400 hover:bg-primary-400 active:bg-primary-500':
           colorType === 'primary',
         'bg-success-400 hover:bg-success-400 active:bg-success-500':

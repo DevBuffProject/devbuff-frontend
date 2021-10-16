@@ -6,18 +6,17 @@
       @focus="onBlur"
       @blur="onFocus"
       @input="onInput"
-      v-model="vModel"
+      v-model="value"
       style="border: none; padding: 0; box-shadow: none; width: 100%"
     />
     <textarea :name="name" class="hidden" v-model="text" />
-    {{ errorMessage }}
     <AtomicTextError v-show="errorMessage" :text="errorMessage" />
   </div>
 </template>
 
 <script>
 import { computed, defineComponent, ref, useCssModule, watch } from 'vue'
-import { syncRef, useVModel } from '@vueuse/core'
+import { useVModel } from '@vueuse/core'
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import EditorClassic from '@ckeditor/ckeditor5-build-classic'
 import { useFiles } from '../../composes'
@@ -67,19 +66,17 @@ export default defineComponent({
     rules: { type: [String, Array], default: () => [] },
   },
   emits: ['update:modelValue'],
-  setup(props) {
+  setup(props, { emit }) {
     const vModel = useVModel(props)
     const isFocused = ref(false)
     const styles = useCssModule()
-    const {
-      setValidationState,
-      handleChange,
-      handleBlur,
-      errors,
-      errorMessage,
-    } = useField(props.name, props.rules, {
-      initialValue: props.modelValue,
-    })
+    const { handleChange, handleBlur, errors, errorMessage, value } = useField(
+      props.name,
+      props.rules,
+      {
+        initialValue: vModel.value,
+      },
+    )
 
     const config = {
       toolbar: [
@@ -123,10 +120,12 @@ export default defineComponent({
         ],
       },
     }
-    setValidationState({ valid: false, errors: ['ERR'] })
     const text = computed(() => asText(vModel.value))
     const onInput = (...e) => {
       console.log(e)
+      emit('update:modelValue', value)
+
+      //TODO ?
       // console.log(text.value)
     }
     const onFocus = () => (isFocused.value = true)
@@ -136,6 +135,7 @@ export default defineComponent({
     }
 
     return {
+      value,
       styles,
       vModel,
       text,
