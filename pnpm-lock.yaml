@@ -18,7 +18,7 @@ specifiers:
   '@vueuse/integrations': 6.5.3
   '@vueuse/motion': 1.6.0
   '@vueuse/router': 6.5.3
-  axios: 0.22.0
+  axios: 0.23.0
   babel-loader: 8.2.2
   color: 4.0.1
   eslint: 7.32.0
@@ -63,7 +63,7 @@ dependencies:
   '@vueuse/integrations': 6.5.3_vue@3.2.20
   '@vueuse/motion': 1.6.0_vue@3.2.20
   '@vueuse/router': 6.5.3_vue-router@4.0.12+vue@3.2.20
-  axios: 0.22.0
+  axios: 0.23.0
   color: 4.0.1
   fastcomments-vue-next: 2.0.1
   lodash: 4.17.21
@@ -4961,8 +4961,8 @@ packages:
     dev: false
     optional: true
 
-  /axios/0.22.0:
-    resolution: {integrity: sha512-Z0U3uhqQeg1oNcihswf4ZD57O3NrR1+ZXhxaROaWpDmsDTx7T2HNBV2ulBtie2hwJptu8UvgnJoK+BIqdzh/1w==}
+  /axios/0.23.0:
+    resolution: {integrity: sha512-NmvAE4i0YAv5cKq8zlDoPd1VLKAqX5oLuZKs8xkJa4qi6RGn0uhCYFjWtHHC9EM/MwOwYWOs53W+V0aqEXq1sg==}
     dependencies:
       follow-redirects: 1.14.4
     transitivePeerDependencies:
