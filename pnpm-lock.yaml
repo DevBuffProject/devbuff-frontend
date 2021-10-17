@@ -15,7 +15,7 @@ specifiers:
   '@vue/eslint-config-prettier': 6.0.0
   '@vueup/vue-quill': 1.0.0-beta.7
   '@vueuse/core': 6.6.1
-  '@vueuse/integrations': 6.5.3
+  '@vueuse/integrations': 6.6.1
   '@vueuse/motion': 1.6.0
   '@vueuse/router': 6.5.3
   axios: 0.23.0
@@ -60,7 +60,7 @@ dependencies:
   '@iconicicons/vue3': 1.5.0_vue@3.2.20
   '@vueup/vue-quill': 1.0.0-beta.7_vue@3.2.20
   '@vueuse/core': 6.6.1_vue@3.2.20
-  '@vueuse/integrations': 6.5.3_vue@3.2.20
+  '@vueuse/integrations': 6.6.1_vue@3.2.20
   '@vueuse/motion': 1.6.0_vue@3.2.20
   '@vueuse/router': 6.5.3_vue-router@4.0.12+vue@3.2.20
   axios: 0.23.0
@@ -1822,8 +1822,8 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: true
 
-  /@drauu/core/0.2.0:
-    resolution: {integrity: sha512-RkEqVsz/hQ7mLMTcCuxs4CKEJmzwN3xEcTZhtEuUzGJTXAJYU2zNpErEvrbEDBJD4roNXX031e0zfXeMDCv9Vw==}
+  /@drauu/core/0.2.1:
+    resolution: {integrity: sha512-5CVvRnGNWjk9KVEhVRpLntEEMw3rgcph+lTx2Z+/X0Dli+PIVyPUEnxiOqtOlf5RYcckXZJujVtco1J6RDbecA==}
     dependencies:
       perfect-freehand: 1.0.13
     dev: false
@@ -4314,22 +4314,6 @@ packages:
       vue: 3.2.20
     dev: false
 
-  /@vueuse/core/6.5.3_vue@3.2.20:
-    resolution: {integrity: sha512-o3CTu4nEqs371sDY5qLBX0r4QOm6GVpm3ApQc2Y+p8OMI2rRGartQo8xRykpUfsyq602A+SVtm/wxIWBkD/KCQ==}
-    peerDependencies:
-      '@vue/composition-api': ^1.1.0
-      vue: ^2.6.0 || ^3.2.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-      vue:
-        optional: true
-    dependencies:
-      '@vueuse/shared': 6.5.3_vue@3.2.20
-      vue: 3.2.20
-      vue-demi: 0.11.3_vue@3.2.20
-    dev: false
-
   /@vueuse/core/6.6.1_vue@3.2.20:
     resolution: {integrity: sha512-55RYUoZ/n20rgrs/rMAgtlnOAhp8w5ps4W/AxeNKPwpLqHx98FObOY3VfBvXabu8mZ1DeimP3zTCf2LVPdJTPA==}
     peerDependencies:
@@ -4346,15 +4330,16 @@ packages:
       vue-demi: 0.11.3_vue@3.2.20
     dev: false
 
-  /@vueuse/integrations/6.5.3_vue@3.2.20:
-    resolution: {integrity: sha512-xT8FqZ8WS0xO64K3gIRHgHyH4gXpVzlx/TxlBVGKvC/965tP4jwJbfQhrEYxlmmdH8YNhiycUUV1P9Bs2NWgHA==}
+  /@vueuse/integrations/6.6.1_vue@3.2.20:
+    resolution: {integrity: sha512-Iq7JRHyoNVAabRGCJNy4H/KP08AB0pKvEgkmAdDYGnG+ijK+H4a8ClsPOFnMX1dVNeFEsHjYtOQS7UDHXbKF8w==}
     dependencies:
-      '@vueuse/core': 6.5.3_vue@3.2.20
+      '@vueuse/core': 6.6.1_vue@3.2.20
       vue-demi: 0.11.3_vue@3.2.20
     optionalDependencies:
-      axios: 0.21.4
-      drauu: 0.2.0
+      axios: 0.23.0
+      drauu: 0.2.1
       focus-trap: 6.7.1
+      fuse.js: 6.4.6
       jwt-decode: 3.1.2
       nprogress: 0.2.0
       qrcode: 1.4.4
@@ -4950,16 +4935,6 @@ packages:
       postcss: 7.0.36
       postcss-value-parser: 4.1.0
     dev: true
-
-  /axios/0.21.4:
-    resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
-    requiresBuild: true
-    dependencies:
-      follow-redirects: 1.14.1
-    transitivePeerDependencies:
-      - debug
-    dev: false
-    optional: true
 
   /axios/0.23.0:
     resolution: {integrity: sha512-NmvAE4i0YAv5cKq8zlDoPd1VLKAqX5oLuZKs8xkJa4qi6RGn0uhCYFjWtHHC9EM/MwOwYWOs53W+V0aqEXq1sg==}
@@ -6521,11 +6496,11 @@ packages:
       tslib: 2.3.1
     dev: true
 
-  /drauu/0.2.0:
-    resolution: {integrity: sha512-ukUQxrpEff1A4Tbi8vak3Ai9Hzycmz/JnaKbCfGqNu0UX1OABvnBp7jc9LhfatW4/DAKunnsvpUKnIFlIst62Q==}
+  /drauu/0.2.1:
+    resolution: {integrity: sha512-bGp/yplU9fXKB4S4utn63vQSCW6QAtN3mPTIpGvcaWhSwvFuBb34A33NkyT4bFGwTWdN9iu491507ObOXmd1ug==}
     requiresBuild: true
     dependencies:
-      '@drauu/core': 0.2.0
+      '@drauu/core': 0.2.1
     dev: false
     optional: true
 
@@ -7467,17 +7442,6 @@ packages:
     dev: false
     optional: true
 
-  /follow-redirects/1.14.1:
-    resolution: {integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
-    dev: false
-    optional: true
-
   /follow-redirects/1.14.4:
     resolution: {integrity: sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==}
     engines: {node: '>=4.0'}
@@ -7670,6 +7634,13 @@ packages:
     resolution: {integrity: sha512-hT9yh/tiinkmirKrlv4KWOjztdoZo1mx9Qh4KvWqC7isoXwdUY3PNWUxceF4/qO9R6riA2C29jdTOeQOIROjgw==}
     engines: {node: '>=6'}
     dev: true
+
+  /fuse.js/6.4.6:
+    resolution: {integrity: sha512-/gYxR/0VpXmWSfZOIPS3rWwU8SHgsRTwWuXhyb2O6s7aRuVtHtxCkR33bNYu3wyLyNx/Wpv0vU7FZy8Vj53VNw==}
+    engines: {node: '>=10'}
+    requiresBuild: true
+    dev: false
+    optional: true
 
   /gauge/2.7.4:
     resolution: {integrity: sha1-LANAXHU4w51+s3sxcCLjJfsBi/c=}
