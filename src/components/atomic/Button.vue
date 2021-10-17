@@ -19,29 +19,19 @@
   >
     <div
       class="w-full px-10 rounded-lg transition-colors"
-      :class="[
-        colorType === 'muted' && [
-          `
-          bg-light-900 bg-opacity-100
-          dark:(bg-dark-300 hover:bg-dark-400 active:bg-dark-500)
-          focus:(ring ring)
-        `,
-          isDepressed
-            ? 'bg-opacity-0 dark:bg-opacity-0'
-            : 'bg-opacity-10 dark:bg-opacity-40',
-        ],
-        {
-          'bg-primary-400 hover:bg-primary-400 active:bg-primary-500':
-            colorType === 'primary',
-          'bg-success-400 hover:bg-success-400 active:bg-success-500':
-            colorType === 'success',
-          'bg-warning-400 hover:bg-warning-400 active:bg-warning-500':
-            colorType === 'warning',
-          'bg-danger-400 hover:bg-danger-400 active:bg-danger-500':
-            colorType === 'danger',
-        },
-        isSmall ? 'py-1' : 'py-2',
-      ]"
+      :class="{
+        'bg-light-900 bg-opacity-100 focus:(ring ring)': (colorType = 'muted'),
+        'bg-primary-400 hover:bg-primary-400 active:bg-primary-500':
+          colorType === 'primary',
+        'bg-success-400 hover:bg-success-400 active:bg-success-500':
+          colorType === 'success',
+        'bg-warning-400 hover:bg-warning-400 active:bg-warning-500':
+          colorType === 'warning',
+        'bg-danger-400 hover:bg-danger-400 active:bg-danger-500':
+          colorType === 'danger',
+        'py-1': isSmall,
+        'py-2': !isSmall,
+      }"
     >
       <span
         :class="[

@@ -2,11 +2,6 @@
   <div>
     <h1>{{ idea.name }}</h1>
     <div class="flex flex-wrap items-start my-5">
-      <RouterLink to="/" custom>
-        <div class="mb-4 mr-6">
-          <!--          <WidgetUser :user="user" @click="navigate" v-focusable />-->
-        </div>
-      </RouterLink>
       <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">
         {{ publishedAgo }}
       </AtomicLabel>
@@ -104,9 +99,9 @@
                 </div>
               </AtomicLabel>
               <AtomicLabel
+                v-if="frameworksForSpecialist(specialist.id).length > 0"
                 :name="t('positions.titleTechnologies')"
                 class="mt-4"
-                v-if="frameworksForSpecialist(specialist.id).length > 0"
               >
                 <div class="flex flex-wrap">
                   <div
@@ -177,7 +172,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useIdea, useUser, useSso } from '../composes/core'
+import { useIdea, useUser, useSso } from '../composes/services'
 import { useTimeAgo, useTitle } from '@vueuse/core'
 import { useI18n } from '../composes/utils'
 import { useRouter } from '../router'
@@ -225,6 +220,8 @@ export default defineComponent({
 
     await getIdea()
     await getUser()
+    idea.value.ownerIdea.avatar = getUserProfileUrl(idea.value.ownerIdea.id)
+
     await getStatusPositions(idea.value.id)
     // await getSsoData()
 

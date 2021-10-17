@@ -138,7 +138,7 @@
 <script>
 import { defineComponent, ref, watch } from 'vue'
 import { useTitle } from '@vueuse/core'
-import { useIdeas, useIdea } from '../composes/core'
+import { useIdeas, useIdea } from '../composes/services'
 import { useI18n } from '../composes/utils'
 import { useRoute } from 'vue-router'
 

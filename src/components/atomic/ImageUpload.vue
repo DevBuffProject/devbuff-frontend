@@ -7,7 +7,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useApi } from '../../composes/core'
+import { useApi } from '../../composes/services'
 
 export default defineComponent({
   name: 'AtomicImageUpload',
