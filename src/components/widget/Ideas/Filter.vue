@@ -2,7 +2,7 @@
   <div>
     <AtomicSwitcher
       class="mb-8"
-      v-model:value="state.sort"
+      v-model:value="state.sortBy"
       :values="[
         {
           title: t('commons.date', true),
@@ -143,7 +143,7 @@
 <script>
 import { computed, defineComponent, watch } from 'vue'
 import { not, useVModel, whenever } from '@vueuse/core'
-import { useSkills } from '../../../composes/core'
+import { useSkills } from '../../../composes/services'
 import { useI18n } from '../../../composes/utils'
 
 const initialFilter = {

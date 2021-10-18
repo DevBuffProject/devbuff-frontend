@@ -49,7 +49,7 @@
 
 <script>
 import { computed, defineComponent } from 'vue'
-import { useFiles, useUser } from '../../../composes/core'
+import { useFiles, useUser } from '../../../composes/services'
 
 export default defineComponent({
   name: 'WidgetSettingsAvatar',

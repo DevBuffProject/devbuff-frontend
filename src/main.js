@@ -12,7 +12,7 @@ import focusable from './app/directives/focusable'
 import routes from './routes'
 import App from './App.vue'
 
-import { useAuth, useUser } from './composes/core'
+import { useAuth, useUser } from './composes/services'
 
 import 'virtual:svg-icons-register'
 import 'virtual:windi.css'

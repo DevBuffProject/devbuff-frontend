@@ -110,7 +110,7 @@
 
 <script>
 import { defineComponent, ref, reactive, nextTick } from 'vue'
-import { useSkills, useUser } from '../../../composes/core'
+import { useSkills, useUser } from '../../../composes/services'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { ChevronRightIcon, ChevronLeftIcon } from '@iconicicons/vue3'
 import 'swiper/swiper.scss'

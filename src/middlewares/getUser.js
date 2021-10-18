@@ -1,4 +1,4 @@
-import { useAuth, useUser } from '../composes/core'
+import { useAuth, useUser } from '../composes/services'
 import { useGlobalState } from '../store'
 
 const state = useGlobalState()

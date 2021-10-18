@@ -34,7 +34,6 @@
         @focus="onFocus"
         @blur="onBlur"
         @input="onInput"
-        v-focusable.indexOnly
         autocomplete="off"
         class="bg-[transparent] w-full py-3 resize-none ring-opacity-50"
         :class="[

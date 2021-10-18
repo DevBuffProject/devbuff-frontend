@@ -42,7 +42,7 @@
 
 <script>
 import { defineComponent, ref, computed } from 'vue'
-import { useUser } from '../composes/core'
+import { useUser } from '../composes/services'
 import { useI18n } from '../composes/utils'
 import * as yup from 'yup'
 

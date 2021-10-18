@@ -184,7 +184,7 @@
 
 <script>
 import { defineComponent, ref, onBeforeUnmount } from 'vue'
-import { useNotifications } from '../../../composes/core'
+import { useNotifications } from '../../../composes/services'
 import { useTimeAgo } from '@vueuse/core'
 
 export default defineComponent({
