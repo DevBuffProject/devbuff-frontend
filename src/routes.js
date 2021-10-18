@@ -105,12 +105,6 @@ export default [
     props: true,
   },
   {
-    name: 'test',
-    path: '/test',
-    component: () => import('./pages/test.vue'),
-    props: true,
-  },
-  {
     name: 'email',
     path: '/email/:confirm?',
     component: () => import('./pages/email.vue'),

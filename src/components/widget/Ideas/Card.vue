@@ -84,7 +84,7 @@
 <script>
 import { defineComponent } from 'vue'
 import { useI18n } from '../../../composes/utils'
-import { useUser } from '../../../composes/core'
+import { useUser } from '../../../composes/services'
 
 export default defineComponent({
   name: 'WidgetIdeasCard',

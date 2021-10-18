@@ -2,20 +2,17 @@
   <div>
     <LayoutHeader class="fixed w-full top-0 left-0 z-50" />
     <div class="my-26">
-      <div class="grid grid-cols-10 gap-8 container mx-auto">
-        <LayoutSidebar class="col-span-2 h-min sticky top-26" />
+      <div class="lg:(grid grid-cols-10 gap-8) container mx-auto">
+        <LayoutSidebar
+          class="h-min col-span-2 hidden lg:(block sticky top-26)"
+        />
         <div class="col-span-8">
           <router-view :route="mainRoute" v-slot="{ Component, route }">
             <template v-if="Component">
               <suspense>
-                <div class="h-full container" :key="route.name">
+                <div class="h-full" :key="route.name">
                   <AtomicBreadcrumbs v-if="breadcrumbs" :items="breadcrumbs" />
-                  <h2
-                    class="sticky top-3 z-50 inline-block"
-                    v-if="route?.meta.name"
-                  >
-                    {{ route.meta.name }}
-                  </h2>
+                  <h2 v-if="route?.meta.name">{{ route.meta.name }}</h2>
                   <component :is="Component" />
                 </div>
                 <template #fallback>
@@ -36,6 +33,8 @@
         </div>
       </div>
     </div>
+
+    <LayoutBottomNav class="lg:hidden" />
 
     <router-view
       v-if="dialogRoute"
@@ -59,7 +58,6 @@
 <script>
 import { defineComponent, computed } from 'vue'
 import { useTitle } from '@vueuse/core'
-import { useAuth } from './composes/core'
 import { useDialogRoute, useMainRoute, useRouter } from './core/router'
 import { useI18n } from './composes'
 
@@ -70,6 +68,7 @@ export default defineComponent({
     const router = useRouter()
     const mainRoute = useMainRoute()
     const dialogRoute = useDialogRoute()
+
     const breadcrumbs = computed(() => {
       const breadcrumbs = mainRoute.value?.meta.breadcrumbs || []
       const crumbRoutes = router.options.routes
@@ -81,16 +80,12 @@ export default defineComponent({
       ]
     })
 
-    // TODO: redirect to background route
     const back = () => router.back()
-
-    const { needsRefresh } = useAuth()
 
     return {
       breadcrumbs,
       mainRoute,
       dialogRoute,
-      needsRefresh,
       back,
     }
   },

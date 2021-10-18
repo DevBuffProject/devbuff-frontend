@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
-import ViteComponents from 'vite-plugin-components'
+import ViteComponents from 'unplugin-vue-components/vite'
 import viteI18n from '@intlify/vite-plugin-vue-i18n'
 import ViteWindiCSS from 'vite-plugin-windicss'
 import ViteSvgIcons from 'vite-plugin-svg-icons'
@@ -11,8 +11,7 @@ export default defineConfig({
   plugins: [
     Vue(),
     ViteWindiCSS({
-      // eslint-disable-next-line no-undef
-      config: 'tailwind.config.js',
+      config: 'windi.config.js',
     }),
     ViteSvgIcons({
       iconDirs: [path.resolve('src/assets/svg')],
@@ -20,12 +19,13 @@ export default defineConfig({
     }),
     ViteComponents({
       directoryAsNamespace: true,
-      customComponentResolvers: [
-        (name) =>
-          name.endsWith('Icon') && {
-            importName: name,
-            path: '@iconicicons/vue3',
-          },
+      resolvers: [
+        (name) => {
+          if (name.endsWith('Icon'))
+            return { importName: name, path: '@iconicicons/vue3' }
+          if (name.startsWith('Use'))
+            return { importName: name, path: '@vueuse/components' }
+        },
       ],
     }),
     viteI18n({

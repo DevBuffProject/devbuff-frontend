@@ -72,7 +72,7 @@
 
 <script>
 import { defineComponent, ref, computed } from 'vue'
-import { useModeration } from '../../composes/core'
+import { useModeration } from '../../composes/services'
 
 export default defineComponent({
   async setup() {

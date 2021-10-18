@@ -1,7 +1,7 @@
 <script>
 import { defineComponent } from 'vue'
 import { useMainRoute, useRouter } from '../core/router'
-import { useAuth } from '../composes/core'
+import { useAuth } from '../composes/services'
 
 export default defineComponent({
   name: 'Callback',
