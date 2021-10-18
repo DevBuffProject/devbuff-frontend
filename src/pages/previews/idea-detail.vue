@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <h1>{{ idea.name }}</h1>
-    <div class="mb-4 px-2">
+  <div class="-mx-4">
+    <h1 class="mx-4">{{ idea.name }}</h1>
+    <div class="mb-4 px-4">
       <div class="flex flex-wrap items-start">
-        <div class="mr-6">
-          <WidgetUser :user="idea.ownerIdea" />
-        </div>
+        <WidgetUser :user="idea.ownerIdea" class="mr-6" />
         <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">
           {{ publishedAgo }}
         </AtomicLabel>
@@ -14,40 +12,49 @@
         </AtomicLabel>
       </div>
     </div>
-    <div class="">
-      <AtomicCard class="">
-        <div v-html="idea.text" class="overflow-hidden" />
-      </AtomicCard>
 
-      <RouterLink
-        :to="{ name: 'idea-detail', params: { id: idea.id } }"
-        custom
-        v-slot="{ href, navigate }"
+    <div
+      v-html="idea.text"
+      class="
+        pt-6
+        px-6
+        !max-w-full
+        dark:from-dark-800
+        border-t border-default
+        rounded-3xl
+        prose-sm prose-primary-500
+      "
+    />
+
+    <RouterLink
+      :to="{ name: 'idea-detail', params: { id: idea.id } }"
+      v-slot="{ href, navigate }"
+      custom
+    >
+      <a
+        :href="href"
+        @click="navigate"
+        class="
+          flex
+          items-center
+          justify-end
+          -mb-4
+          py-6
+          px-4
+          text-primary-500
+          hover:underline
+        "
       >
-        <a
-          :href="href"
-          @click="navigate"
-          class="
-            flex
-            items-center
-            justify-end
-            -mb-8
-            py-6
-            text-primary-500
-            hover:underline
-          "
-        >
-          <span class="mr-2">{{ t(`more`) }}</span>
-          <ArrowRightIcon />
-        </a>
-      </RouterLink>
-    </div>
+        <span class="mr-2">{{ t(`more`) }}</span>
+        <ArrowRightIcon />
+      </a>
+    </RouterLink>
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
-import { useIdea, useUser } from '../../composes/core'
+import { useIdea, useUser } from '../../composes/services'
 import { useTimeAgo, useTitle } from '@vueuse/core'
 import { useI18n } from '../../composes/utils'
 import { useDialogRoute } from '../../core/router'
@@ -65,6 +72,7 @@ export default defineComponent({
       languagesForSpecialist,
       frameworksForSpecialist,
     } = useIdea(route.value.params.id)
+
     await getIdea()
 
     const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
@@ -72,6 +80,7 @@ export default defineComponent({
     useTitle(`${idea.value.name} - DevBuff`)
 
     idea.value.ownerIdea.avatar = getUserProfileUrl(idea.value.ownerIdea.id)
+
     return {
       idea,
       publishedAgo,

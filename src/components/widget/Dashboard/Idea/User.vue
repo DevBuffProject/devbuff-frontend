@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { useUser, useIdea } from '../../../../composes/core'
+import { useUser, useIdea } from '../../../../composes/services'
 import { computed, ref } from 'vue'
 import { useI18n } from '../../../../composes/utils'
 

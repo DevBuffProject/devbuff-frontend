@@ -110,7 +110,7 @@
 
 <script>
 import { defineComponent, ref, computed } from 'vue'
-import { useAuth, useUser } from '../../composes/core'
+import { useAuth, useUser } from '../../composes/services'
 import { useI18n } from '../../composes/utils'
 import { useRouter } from '../../core/router'
 import {

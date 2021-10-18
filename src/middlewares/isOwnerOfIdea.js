@@ -1,4 +1,4 @@
-import { useAuth, useUser, useIdea } from '../composes/core'
+import { useAuth, useUser, useIdea } from '../composes/services'
 
 export default async (route) => {
   const { isLoggedIn } = useAuth()

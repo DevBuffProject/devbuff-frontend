@@ -1,13 +1,7 @@
 <template>
   <div>
     <h5>{{ t('title') }}</h5>
-    <div class="flex">
-      <!--      <pre>{{ model }}</pre>-->
-      <!--      <pre>{{ skills }}</pre>-->
-      <!--      <pre>-->
-      <!--        {{ languagesForSpecialist('back-end') }}-->
-      <!--      </pre>-->
-    </div>
+    <AtomicTextError v-show="errorMessage" :text="errorMessage" />
     <div class="grid grid-cols-3 gap-4">
       <div
         v-for="specialist of specializations"
@@ -21,7 +15,6 @@
       >
         <div>{{ t(`commons.specialist.${specialist}`, true) }}</div>
         <button
-          role="button"
           class="cursor-pointer"
           :class="
             isSpecialistSelected(specialist)
@@ -79,33 +72,45 @@
 
 <script>
 import { defineComponent, nextTick, onMounted, ref, watch } from 'vue'
-// import { whenever } from ''
-import { useSkills } from '../../../composes/core'
+import { useSkills } from '../../../composes/services'
 import { useI18n } from '../../../composes/utils'
 import { set, whenever, get } from '@vueuse/core'
+import { useField } from 'vee-validate'
 
 export default defineComponent({
   name: 'SpecialistPicker',
   emits: ['update:modelValue'],
   props: {
-    modelValue: {
-      type: Array,
-      default: () => [],
-    },
+    modelValue: { type: Array, default: () => [] },
   },
-  setup(props, { emit }) {
+  async setup(props, { emit }) {
     const { t, tDefault } = useI18n('components.widget.specialist.picker')
     const { skills, specializations, getSkills } = useSkills()
-    const maxPersonPerPosition = 10
+    const { setValidationState, errors, errorMessage } = useField('skills')
     const model = ref({})
+
+    const validate = () => {
+      if (props.modelValue.length > 0) {
+        setValidationState({ errors: [], valid: true })
+      } else {
+        setValidationState({
+          errors: ['Нужно выбрать минимум одну специальность'],
+          valid: false,
+        })
+      }
+    }
 
     watch(
       () => props.modelValue,
-      () => nextTick(() => set(model, props.modelValue)),
+      async () => {
+        set(model, props.modelValue)
+        setTimeout(validate)
+      },
       { immediate: true, deep: true },
     )
 
     const getSpecialistSelected = (sp) => model.value.find((s) => s.name === sp)
+
     const isSpecialistSelected = (sp) => !!getSpecialistSelected(sp)
 
     const toggleSpecialist = (sp) => {
@@ -125,34 +130,29 @@ export default defineComponent({
       )
 
     const technologiesAtSpecialistAndLanguage = (specialist, language) => {
-      const languageValue = skills.value.find((languageValue) => {
-        return languageValue.name === language
-      })
-      if (languageValue === undefined) {
-        return []
-      }
+      const languageValue = skills.value.find(
+        (languageValue) => languageValue.name === language,
+      )
+      if (languageValue === undefined) return []
       const specialistValue = languageValue.specializations.find(
-        (specialistValue) => {
-          return specialistValue.name === specialist
-        },
+        (specialistValue) => specialistValue.name === specialist,
       )
       return specialistValue === undefined
         ? []
-        : specialistValue.frameworks.map((frameworkValue) => {
-            return frameworkValue.name
-          })
+        : specialistValue.frameworks.map(
+            (frameworkValue) => frameworkValue.name,
+          )
     }
     const getLanguageSelected = (sp, lang) =>
       getSpecialistSelected(sp).languages.find((l) => l.name === lang)
+
     const isLanguageSelected = (sp, lang) => !!getLanguageSelected(sp, lang)
 
-    const isTechnologySelected = (specialist, language, technology) => {
-      return (
-        getLanguageSelected(specialist, language).frameworks.find(
-          (frameworkValue) => frameworkValue.name === technology,
-        ) !== undefined
-      )
-    }
+    const isTechnologySelected = (specialist, language, technology) =>
+      getLanguageSelected(specialist, language).frameworks.find(
+        (frameworkValue) => frameworkValue.name === technology,
+      ) !== undefined
+
     const toggleLanguage = (sp, lang) => {
       const specialist = getSpecialistSelected(sp)
       const languageIndex = specialist.languages.findIndex(
@@ -165,16 +165,16 @@ export default defineComponent({
 
     const toggleTechnology = (specialist, language, technology) => {
       const data = getLanguageSelected(specialist, language).frameworks
-      const frameworkIndex = data.findIndex((frameworkValue) => {
-        return frameworkValue.name === technology
-      })
+      const frameworkIndex = data.findIndex(
+        (frameworkValue) => frameworkValue.name === technology,
+      )
 
       if (frameworkIndex > -1) data.splice(frameworkIndex, 1)
       else data.push({ name: technology })
       emit('update:modelValue', model.value)
     }
 
-    getSkills()
+    await getSkills()
 
     return {
       t,
@@ -191,6 +191,8 @@ export default defineComponent({
       specializations,
       skills,
       model,
+      errors,
+      errorMessage,
     }
   },
 })
