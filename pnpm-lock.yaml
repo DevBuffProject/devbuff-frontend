@@ -15,7 +15,7 @@ specifiers:
   '@vue/eslint-config-prettier': 6.0.0
   '@vueup/vue-quill': 1.0.0-beta.7
   '@vueuse/core': 6.6.2
-  '@vueuse/integrations': 6.6.1
+  '@vueuse/integrations': 6.6.2
   '@vueuse/motion': 1.6.0
   '@vueuse/router': 6.6.1
   axios: 0.23.0
@@ -60,7 +60,7 @@ dependencies:
   '@iconicicons/vue3': 1.5.0_vue@3.2.20
   '@vueup/vue-quill': 1.0.0-beta.7_vue@3.2.20
   '@vueuse/core': 6.6.2_vue@3.2.20
-  '@vueuse/integrations': 6.6.1_vue@3.2.20
+  '@vueuse/integrations': 6.6.2_vue@3.2.20
   '@vueuse/motion': 1.6.0_vue@3.2.20
   '@vueuse/router': 6.6.1_vue-router@4.0.12+vue@3.2.20
   axios: 0.23.0
@@ -4308,22 +4308,6 @@ packages:
       vue: 3.2.20
     dev: false
 
-  /@vueuse/core/6.6.1_vue@3.2.20:
-    resolution: {integrity: sha512-55RYUoZ/n20rgrs/rMAgtlnOAhp8w5ps4W/AxeNKPwpLqHx98FObOY3VfBvXabu8mZ1DeimP3zTCf2LVPdJTPA==}
-    peerDependencies:
-      '@vue/composition-api': ^1.1.0
-      vue: ^2.6.0 || ^3.2.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-      vue:
-        optional: true
-    dependencies:
-      '@vueuse/shared': 6.6.1_vue@3.2.20
-      vue: 3.2.20
-      vue-demi: 0.11.3_vue@3.2.20
-    dev: false
-
   /@vueuse/core/6.6.2_vue@3.2.20:
     resolution: {integrity: sha512-AUB7WVYFwMPeNtC99m1j3PWf+45EyNWJ78VDaB9F/6LCYeKlcG/6aACL9xWSPslZUz9OsYTO9ZfPhNgv2YqxVw==}
     peerDependencies:
@@ -4340,10 +4324,10 @@ packages:
       vue-demi: 0.11.3_vue@3.2.20
     dev: false
 
-  /@vueuse/integrations/6.6.1_vue@3.2.20:
-    resolution: {integrity: sha512-Iq7JRHyoNVAabRGCJNy4H/KP08AB0pKvEgkmAdDYGnG+ijK+H4a8ClsPOFnMX1dVNeFEsHjYtOQS7UDHXbKF8w==}
+  /@vueuse/integrations/6.6.2_vue@3.2.20:
+    resolution: {integrity: sha512-fujhJrhjyqUsJPmRGCHo3wYql4ZyCHhErYqq+Xf2ldhjv+cLyyv2X63iuVhkddEvYbB4rQELPFqmO1bWOrVThw==}
     dependencies:
-      '@vueuse/core': 6.6.1_vue@3.2.20
+      '@vueuse/core': 6.6.2_vue@3.2.20
       vue-demi: 0.11.3_vue@3.2.20
     optionalDependencies:
       axios: 0.23.0
