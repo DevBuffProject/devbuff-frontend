@@ -26,7 +26,7 @@ specifiers:
   eslint-plugin-prettier-vue: 3.1.0
   eslint-plugin-vue: 7.19.1
   fastcomments-vue-next: 2.0.1
-  husky: 7.0.2
+  husky: 7.0.4
   lint-staged: 11.2.3
   lodash: 4.17.21
   masonry-layout: 4.2.2
@@ -99,7 +99,7 @@ devDependencies:
   eslint-config-prettier: 8.3.0_eslint@8.0.1
   eslint-plugin-prettier-vue: 3.1.0_vue@3.2.20
   eslint-plugin-vue: 7.19.1_eslint@8.0.1
-  husky: 7.0.2
+  husky: 7.0.4
   lint-staged: 11.2.3
   pinst: 2.1.6
   prettier: 2.4.1
@@ -8206,8 +8206,8 @@ packages:
     engines: {node: '>=10.17.0'}
     dev: true
 
-  /husky/7.0.2:
-    resolution: {integrity: sha512-8yKEWNX4z2YsofXAMT7KvA1g8p+GxtB1ffV8XtpAEGuXNAbCV5wdNKH+qTpw8SM9fh4aMPDR+yQuKfgnreyZlg==}
+  /husky/7.0.4:
+    resolution: {integrity: sha512-vbaCKN2QLtP/vD4yvs6iz6hBEo6wkSzs8HpRah1Z6aGmF2KW5PdYuAd7uX5a+OyBZHBhd+TFLqgjUgytQr4RvQ==}
     engines: {node: '>=12'}
     hasBin: true
     dev: true
