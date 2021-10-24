@@ -1,7 +1,11 @@
 <template>
   <div>
     <h5>{{ t('title') }}</h5>
-    <AtomicTextError v-show="errorMessage" :text="errorMessage" />
+    <AtomicTextError
+      :key="errorMessage"
+      v-show="errorMessage"
+      :text="errorMessage"
+    />
     <div class="grid grid-cols-3 gap-4">
       <div
         v-for="specialist of specializations"
@@ -71,53 +75,36 @@
 </template>
 
 <script>
-import { defineComponent, nextTick, onMounted, ref, watch } from 'vue'
-import { useSkills } from '../../../composes/services'
-import { useI18n } from '../../../composes/utils'
-import { set, whenever, get } from '@vueuse/core'
+import { computed, defineComponent, watch } from 'vue'
+import { useSkills, useI18n } from '../../../composes'
+import { get, useVModel } from '@vueuse/core'
 import { useField } from 'vee-validate'
 
 export default defineComponent({
   name: 'SpecialistPicker',
   emits: ['update:modelValue'],
   props: {
+    name: { type: String, default: 'skills' },
     modelValue: { type: Array, default: () => [] },
   },
+
   async setup(props, { emit }) {
     const { t, tDefault } = useI18n('components.widget.specialist.picker')
     const { skills, specializations, getSkills } = useSkills()
-    const { setValidationState, errors, errorMessage } = useField('skills')
-    const model = ref({})
+    const vModel = useVModel(props, 'modelValue', emit)
+    const { errors, errorMessage, setValue } = useField(props.name)
 
-    const validate = () => {
-      if (props.modelValue.length > 0) {
-        setValidationState({ errors: [], valid: true })
-      } else {
-        setValidationState({
-          errors: ['Нужно выбрать минимум одну специальность'],
-          valid: false,
-        })
-      }
-    }
+    watch(vModel, (skills) => setValue(skills))
 
-    watch(
-      () => props.modelValue,
-      async () => {
-        set(model, props.modelValue)
-        setTimeout(validate)
-      },
-      { immediate: true, deep: true },
-    )
-
-    const getSpecialistSelected = (sp) => model.value.find((s) => s.name === sp)
+    const getSpecialistSelected = (sp) =>
+      vModel.value.find((s) => s.name === sp)
 
     const isSpecialistSelected = (sp) => !!getSpecialistSelected(sp)
 
     const toggleSpecialist = (sp) => {
-      model.value = isSpecialistSelected(sp)
-        ? get(model)?.filter((s) => s.name !== sp)
-        : [...get(model), { name: sp, count: 1, languages: [] }]
-      emit('update:modelValue', model.value)
+      vModel.value = isSpecialistSelected(sp)
+        ? get(vModel)?.filter((s) => s.name !== sp)
+        : [...get(vModel), { name: sp, count: 1, languages: [] }]
     }
 
     const languagesForSpecialist = (specialist) =>
@@ -133,7 +120,7 @@ export default defineComponent({
       const languageValue = skills.value.find(
         (languageValue) => languageValue.name === language,
       )
-      if (languageValue === undefined) return []
+      if (!languageValue) return []
       const specialistValue = languageValue.specializations.find(
         (specialistValue) => specialistValue.name === specialist,
       )
@@ -160,7 +147,6 @@ export default defineComponent({
       )
       if (languageIndex > -1) specialist.languages.splice(languageIndex, 1)
       else specialist.languages.push({ name: lang, frameworks: [] })
-      emit('update:modelValue', model.value)
     }
 
     const toggleTechnology = (specialist, language, technology) => {
@@ -171,7 +157,6 @@ export default defineComponent({
 
       if (frameworkIndex > -1) data.splice(frameworkIndex, 1)
       else data.push({ name: technology })
-      emit('update:modelValue', model.value)
     }
 
     await getSkills()
@@ -190,7 +175,6 @@ export default defineComponent({
       getSpecialistSelected,
       specializations,
       skills,
-      model,
       errors,
       errorMessage,
     }

@@ -10,17 +10,20 @@
       focus:outline-none focus:ring-2 focus:ring-opacity-50
     "
     :class="{
+      'appearance-none': disabled,
+      'active:transform active:scale-95': !disabled,
       'ring-primary-400 dark:ring-primary-600 ': colorType === 'primary',
       'ring-success-400 dark:ring-success-600': colorType === 'success',
       'ring-warning-400 dark:ring-warning-600': colorType === 'warning',
       'ring-danger-400 dark:ring-danger-600': colorType === 'danger',
     }"
-    v-focusable.indexOnly
+    :disabled="disabled"
   >
     <div
       class="w-full px-10 rounded-lg transition-colors"
       :class="{
-        'bg-light-900 bg-opacity-100 focus:(ring ring)': (colorType = 'muted'),
+        '!bg-light-900 dark:!bg-dark-500 !text-dark-900': disabled,
+        'bg-light-900 bg-opacity-100 focus:ring': colorType === 'muted',
         'bg-primary-400 hover:bg-primary-400 active:bg-primary-500':
           colorType === 'primary',
         'bg-success-400 hover:bg-success-400 active:bg-success-500':
@@ -34,27 +37,18 @@
       }"
     >
       <span
-        :class="[
-          'flex items-center justify-center font-medium',
-          isDepressed && [
-            colorType === 'primary' && 'text-primary-500',
-            colorType === 'success' && 'text-success-500',
-            colorType === 'warning' && 'text-warning',
-            colorType === 'danger' && 'text-danger-500',
-          ],
-          type === 'muted' ? 'dark:text-white' : 'text-white',
-          isSmall && 'text-sm',
-        ]"
+        class="flex items-center justify-center font-medium"
+        :class="{
+          'text-sm': isSmall,
+          'text-dark-900': disabled,
+          'invisible relative': loading,
+        }"
       >
         <span v-if="slots.icon" class="mr-2">
           <slot name="icon" />
         </span>
-        <span
-          v-if="slots.default"
-          class="whitespace-nowrap"
-          :class="loading && 'invisible relative'"
-          v-bind="attrs"
-        >
+
+        <span v-if="slots.default" class="whitespace-nowrap" v-bind="attrs">
           <slot />
         </span>
       </span>
@@ -113,7 +107,7 @@ export default defineComponent({
     },
     loading: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     disabled: {
       type: Boolean,

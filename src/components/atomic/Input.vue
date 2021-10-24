@@ -77,7 +77,7 @@ export default defineComponent({
     modelValue: { type: [String, Number], default: '' },
     name: { type: String, required: true },
     type: { type: String, default: 'text' },
-    rules: { type: [String, Array, Object, Function], default: null },
+    rules: { type: [Array, Object, Function], default: null },
     placeholder: { type: String, default: '' },
     shadow: { type: Boolean, default: false },
   },
