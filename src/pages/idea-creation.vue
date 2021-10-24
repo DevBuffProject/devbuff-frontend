@@ -4,39 +4,46 @@
     <Form
       :validation-schema="schema"
       ref="form"
-      class="
-        -mx-4
-        px-4
-        bg-light-500
-        dark:bg-dark-700
-        divide-y divide-light-800
-        dark:divide-dark-300
-        flex flex-col
-      "
-      @submit="() => false"
+      @submit="onSubmit"
       v-slot="{ meta }"
     >
-      <AtomicInput
-        v-model="data.name"
-        name="name"
-        type="text"
-        :label="t('name.title')"
-        :placeholder="t('name.placeholder')"
-        shadow
-      />
-      <AtomicInput
-        v-model="data.description"
-        name="description"
-        type="textarea"
-        :label="t('description.title')"
-        :placeholder="t('description.placeholder')"
-        shadow
+      <div
+        class="
+          -mx-4
+          px-4
+          bg-light-500
+          dark:bg-dark-700
+          divide-y divide-light-800
+          dark:divide-dark-300
+          flex flex-col
+        "
+      >
+        <AtomicInput
+          v-model="data.name"
+          name="name"
+          type="text"
+          :label="t('name.title')"
+          :placeholder="t('name.placeholder')"
+          shadow
+        />
+        <AtomicInput
+          v-model="data.description"
+          name="description"
+          type="textarea"
+          :label="t('description.title')"
+          :placeholder="t('description.placeholder')"
+          shadow
+        />
+        <WidgetEditor name="text" v-model="data.text" />
+      </div>
+
+      <WidgetSpecialistPicker
+        name="skills"
+        v-model="data.specialists"
+        class="my-6"
       />
 
-      <WidgetEditor name="text" v-model="data.text" />
-      <WidgetSpecialistPicker v-model="data.specialists" class="my-6" />
-
-      <AtomicButton :disabled="!meta.valid" @click="onSubmit">
+      <AtomicButton :disabled="!meta.valid">
         {{ t('save') }}
       </AtomicButton>
     </Form>
@@ -50,6 +57,7 @@ import { useIdea, useI18n } from '../composes'
 import { useRouter } from 'vue-router'
 import { set, useStorage, useTitle } from '@vueuse/core'
 import * as yup from 'yup'
+import { htmlToText } from 'html-to-text'
 
 export default defineComponent({
   components: { Form },
@@ -87,6 +95,7 @@ export default defineComponent({
     }
 
     const onSubmit = async () => {
+      console.log(data)
       if (isEditingMode) {
         await updateIdea(props.id, data.value)
         await router.push({
@@ -116,6 +125,8 @@ export default defineComponent({
         .min(15)
         .max(300)
         .required(),
+      skills: yup.array().min(1).max(10).required(),
+      text: yup.string().min(100).max(5000).required(),
     })
 
     return {

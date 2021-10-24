@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { createOverlayRouter } from './core/router'
 import { createWebHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
-import { useQueryString } from './composes/utils'
+import { useQueryString, useAuth, useUser } from './composes'
 import { MotionPlugin } from '@vueuse/motion'
 // Will raised build error "undefined nextTick"
 // import { VueMasonryPlugin } from 'vue-masonry/src/masonry-vue3.plugin'
@@ -11,8 +11,6 @@ import messages from '@intlify/vite-plugin-vue-i18n/messages'
 import focusable from './app/directives/focusable'
 import routes from './routes'
 import App from './App.vue'
-
-import { useAuth, useUser } from './composes/services'
 
 import 'virtual:svg-icons-register'
 import 'virtual:windi.css'
@@ -36,10 +34,7 @@ const i18n = createI18n({
 
 const app = createApp(App)
 app.config.globalProperties.emitter = emitter
-app.directive(focusable.name, focusable)
-app.use(router)
-app.use(i18n)
-app.use(MotionPlugin)
+app.directive(focusable.name, focusable).use(router).use(i18n).use(MotionPlugin)
 // see head
 // app.use(VueMasonryPlugin)
 

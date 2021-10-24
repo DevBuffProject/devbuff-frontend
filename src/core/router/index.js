@@ -8,16 +8,17 @@ import 'nprogress/nprogress.css'
 const mainRoute = shallowRef({ matched: [] })
 const dialogRoute = shallowRef({ matched: [] })
 const isDialog = ref(false)
+
 const setupHooks = (router) => {
   // await https://github.com/vuejs/vue-router-next/issues/1048
   const resolveRoute = async (route) => {
-    const resolved = router.resolve(route)
-    let component = resolved.matched[0].components.default
+    const resolved = shallowRef(router.resolve(route))
+    let component = resolved.value.matched[0].components.default
     if (component instanceof Function) {
       component = await component()
-      resolved.matched[0].components.default = component.default
+      resolved.value.matched[0].components.default = component.default
     }
-    return resolved
+    return resolved.value
   }
 
   let visited = false
