@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.15.8",
-    "@intlify/vite-plugin-vue-i18n": "2.4.0",
+    "@intlify/vite-plugin-vue-i18n": "2.5.0",
     "@storybook/addon-actions": "6.3.12",
     "@storybook/addon-essentials": "6.3.12",
     "@storybook/addon-links": "6.3.12",
