@@ -27,7 +27,7 @@ specifiers:
   eslint-plugin-vue: 7.19.1
   fastcomments-vue-next: 2.0.1
   husky: 7.0.4
-  lint-staged: 11.2.4
+  lint-staged: 11.2.6
   lodash: 4.17.21
   masonry-layout: 4.2.2
   mitt: 3.0.0
@@ -100,7 +100,7 @@ devDependencies:
   eslint-plugin-prettier-vue: 3.1.0_vue@3.2.20
   eslint-plugin-vue: 7.19.1_eslint@8.1.0
   husky: 7.0.4
-  lint-staged: 11.2.4
+  lint-staged: 11.2.6
   pinst: 2.1.6
   prettier: 2.4.1
   vite: 2.6.11_sass@1.43.3
@@ -8965,27 +8965,21 @@ packages:
       type-check: 0.4.0
     dev: true
 
-  /lilconfig/2.0.3:
-    resolution: {integrity: sha512-EHKqr/+ZvdKCifpNrJCKxBTgk5XupZA3y/aCPY9mxfgBzmgh93Mt/WqjjQ38oMxXuvDokaKiM3lAgvSH2sjtHg==}
-    engines: {node: '>=10'}
-    dev: true
-
   /lines-and-columns/1.1.6:
     resolution: {integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=}
     dev: true
 
-  /lint-staged/11.2.4:
-    resolution: {integrity: sha512-aTUqcPDSV05EyKlMT4N5h7tmnevKfAxI3xZkRb+DHfmcFaoCxfxVvpqlLMCVGy3EYle9JYER2nA5zc4eNTkZVQ==}
+  /lint-staged/11.2.6:
+    resolution: {integrity: sha512-Vti55pUnpvPE0J9936lKl0ngVeTdSZpEdTNhASbkaWX7J5R9OEifo1INBGQuGW4zmy6OG+TcWPJ3m5yuy5Q8Tg==}
     hasBin: true
     dependencies:
       cli-truncate: 2.1.0
       colorette: 1.4.0
       commander: 8.2.0
+      cosmiconfig: 7.0.1
       debug: 4.3.2_supports-color@8.1.1
       enquirer: 2.3.6
       execa: 5.1.1
-      js-yaml: 4.1.0
-      lilconfig: 2.0.3
       listr2: 3.12.2_enquirer@2.3.6
       micromatch: 4.0.4
       normalize-path: 3.0.0
