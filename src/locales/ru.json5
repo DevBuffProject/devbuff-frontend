@@ -120,6 +120,7 @@
     }
   },
   components: {
+    'have idea': "Есть идея",
     layout: {
       header: {
         newIdea: 'Рассказать об идеи'

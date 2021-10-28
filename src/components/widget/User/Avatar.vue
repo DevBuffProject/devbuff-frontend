@@ -37,7 +37,7 @@
 
 <script>
 import { computed, defineComponent } from 'vue'
-import { useAuth, useFiles } from '../../../composes'
+import { useFiles, useUser } from '../../../composes'
 import BaseButton from '../../base/Button.vue'
 
 export default defineComponent({
@@ -46,7 +46,7 @@ export default defineComponent({
 
   setup() {
     const { uploadUserPhoto, uploadProgress } = useFiles()
-    const { user } = useAuth()
+    const { user } = useUser()
     const avatar = computed(() => user.value.avatar)
 
     const upload = async (files) => {

@@ -3,6 +3,7 @@ import Vue from '@vitejs/plugin-vue'
 import ViteComponents from 'unplugin-vue-components/vite'
 import viteI18n from '@intlify/vite-plugin-vue-i18n'
 import ViteWindiCSS from 'vite-plugin-windicss'
+import ViteFonts from 'vite-plugin-fonts'
 import ViteSvgIcons from 'vite-plugin-svg-icons'
 import path from 'path'
 
@@ -10,13 +11,18 @@ import path from 'path'
 export default defineConfig({
   plugins: [
     Vue(),
-    ViteWindiCSS({
-      config: 'windi.config.js',
-    }),
+
     ViteSvgIcons({
       iconDirs: [path.resolve('src/assets/svg')],
       symbolId: 'icon-[name]',
     }),
+
+    ViteFonts({
+      google: {
+        families: [{ name: 'Roboto', styles: ['100', '200', '300', '400'] }],
+      },
+    }),
+
     ViteComponents({
       directoryAsNamespace: true,
       resolvers: [
@@ -28,8 +34,13 @@ export default defineConfig({
         },
       ],
     }),
+
     viteI18n({
       include: './src/locales/**',
+    }),
+
+    ViteWindiCSS({
+      config: 'windi.config.js',
     }),
   ],
 })

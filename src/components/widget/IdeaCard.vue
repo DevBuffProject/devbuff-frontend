@@ -83,8 +83,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useI18n } from '../../../composes/utils'
-import { useUser } from '../../../composes/services'
+import { useUser, useI18n } from '../../composes'
 
 export default defineComponent({
   name: 'WidgetIdeasCard',
@@ -99,18 +98,23 @@ export default defineComponent({
     const { slots } = context
     const { getUserProfileUrl } = useUser()
 
-    const languages = props.idea.specialists
-      .flatMap((specialist) =>
-        specialist.languages.map((language) => language.name),
-      )
-      .filter((item, index, array) => array.indexOf(item) === index)
-    const technologies = props.idea.specialists
-      .flatMap((specialist) =>
-        specialist.languages.flatMap((languages) =>
-          languages.technologies.map((technology) => technology.name),
-        ),
-      )
-      .filter((item, index, array) => array.indexOf(item) === index)
+    const languages = !props.idea.specialists
+      ? []
+      : props.idea.specialists
+          .flatMap((specialist) =>
+            specialist.languages.map((language) => language.name),
+          )
+          .filter((item, index, array) => array.indexOf(item) === index) || []
+
+    const technologies = !props.idea.specialists
+      ? []
+      : props.idea.specialists
+          .flatMap((specialist) =>
+            specialist.languages.flatMap((languages) =>
+              languages.technologies.map((technology) => technology.name),
+            ),
+          )
+          .filter((item, index, array) => array.indexOf(item) === index)
 
     return {
       t,

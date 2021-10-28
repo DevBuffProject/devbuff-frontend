@@ -1,12 +1,11 @@
 <template>
-  <div class="relative rounded-full overflow-hidden">
+  <AtomicSquircle :width="size" :height="size" :roundness="1">
     <div
       class="
         bg-cover
         flex
         items-center
         justify-center
-        rounded-full
         bg-white
         h-full
         w-full,
@@ -15,29 +14,18 @@
       "
       :style="{
         backgroundImage: `url(${src})`,
-        width: size,
-        height: size,
+        width: `${size}px`,
+        height: `${size}px`,
         flex: `0 0 ${size}`,
       }"
     />
-  </div>
+  </AtomicSquircle>
 </template>
 
-<script>
-import { defineComponent, computed } from 'vue'
-
-export default defineComponent({
-  name: 'AtomicAvatar',
-  props: {
-    src: {
-      type: String,
-      default: null,
-    },
-    size: {
-      type: String,
-      default: '40px',
-    },
-  },
-  setup() {},
+<script setup>
+import { defineProps } from 'vue'
+const props = defineProps({
+  src: { type: String, default: null },
+  size: { type: Number, default: 40 },
 })
 </script>

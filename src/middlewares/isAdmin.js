@@ -1,3 +1,7 @@
-import { useAuth } from '../composes/services'
+import { useAuth } from '../composes'
 
-export default async () => useAuth().isAdmin.value
+export default async () => {
+  const { getStatus, isAdmin } = useAuth()
+  await getStatus()
+  return isAdmin.value
+}

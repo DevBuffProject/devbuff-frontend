@@ -1,128 +1,50 @@
 <template>
-  <button
+  <BaseButton
     class="
-      overflow-hidden
-      rounded-lg
-      relative
-      text-center
+      font-semibold
+      text-sm text-white
+      whitespace-nowrap
+      active:shadow-none
+      shadow-sm
+      uppercase
       transition-all
-      p-[2px]
-      focus:outline-none focus:ring-2 focus:ring-opacity-50
+      duration-500
+      tracking-wider
+      leading-none
+      px-6
+      h-12
+      squircle
     "
     :class="{
-      'appearance-none': disabled,
-      'active:transform active:scale-95': !disabled,
-      'ring-primary-400 dark:ring-primary-600 ': colorType === 'primary',
-      'ring-success-400 dark:ring-success-600': colorType === 'success',
-      'ring-warning-400 dark:ring-warning-600': colorType === 'warning',
-      'ring-danger-400 dark:ring-danger-600': colorType === 'danger',
+      'bg-primary-400 hover:bg-primary-400 ring-primary-900': props.primary,
+      'bg-red-400 hover:bg-red-400 ring-red-900': props.red,
+      'bg-green-400 hover:bg-green-400 ring-green-900': props.green,
+      'bg-yellow-400 ring-yellow-900': props.yellow,
     }"
-    :disabled="disabled"
+    v-ripple="'rgba(255, 255, 255, .35)'"
+    :disabled="props.disabled"
+    v-bind="attrs"
   >
-    <div
-      class="w-full px-10 rounded-lg transition-colors"
-      :class="{
-        '!bg-light-900 dark:!bg-dark-500 !text-dark-900': disabled,
-        'bg-light-900 bg-opacity-100 focus:ring': colorType === 'muted',
-        'bg-primary-400 hover:bg-primary-400 active:bg-primary-500':
-          colorType === 'primary',
-        'bg-success-400 hover:bg-success-400 active:bg-success-500':
-          colorType === 'success',
-        'bg-warning-400 hover:bg-warning-400 active:bg-warning-500':
-          colorType === 'warning',
-        'bg-danger-400 hover:bg-danger-400 active:bg-danger-500':
-          colorType === 'danger',
-        'py-1': isSmall,
-        'py-2': !isSmall,
-      }"
-    >
-      <span
-        class="flex items-center justify-center font-medium"
-        :class="{
-          'text-sm': isSmall,
-          'text-dark-900': disabled,
-          'invisible relative': loading,
-        }"
-      >
-        <span v-if="slots.icon" class="mr-2">
-          <slot name="icon" />
-        </span>
-
-        <span v-if="slots.default" class="whitespace-nowrap" v-bind="attrs">
-          <slot />
-        </span>
-      </span>
-      <span
-        v-if="loading"
-        class="
-          absolute
-          w-full
-          h-full
-          top-0
-          left-0
-          flex
-          items-center
-          justify-center
-        "
-      >
-        <atomic-loading-spinner
-          :class="
-            type === 'muted' ? 'text-black dark:text-white' : 'text-white'
-          "
-        />
-      </span>
-    </div>
-  </button>
+    <slot />
+  </BaseButton>
 </template>
 
-<script>
-import { defineComponent, computed, useAttrs, useSlots } from 'vue'
+<style scoped>
+.squircle {
+  -webkit-mask-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" height="100%25" width="100%25"><mask id="squircle"><rect fill="white" width="100%25" height="100%25"/><svg x="-.01%25" style="overflow: visible"><path fill="black" width="20" height="20" d="M20 0H0v20C0 4 4 0 20 0z"/></svg><svg x="100.01%25" style="overflow: visible"><path fill="black" d="M20 20V0H0c16 0 20 4 20 20z" transform="translate(-20,0)"/></svg><svg x="100.01%25" y="100.01%25" style="overflow: visible"><path fill="black" d="M0 20h20V0c0 16-4 20-20 20z" transform="translate(-20,-20)"/></svg><svg x="-.01%25" y="100.01%25" style="overflow: visible"><path fill="black" d="M0 0v20h20C4 20 0 16 0 0z" transform="translate(0,-20)"/></svg></mask><rect fill="white" width="100%25" height="100%25" mask="url(%23squircle)"/></svg>');
+  mask-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" height="100%25" width="100%25"><mask id="squircle"><rect fill="white" width="100%25" height="100%25"/><svg x="-.01%25" style="overflow: visible"><path fill="black" width="20" height="20" d="M20 0H0v20C0 4 4 0 20 0z"/></svg><svg x="100.01%25" style="overflow: visible"><path fill="black" d="M20 20V0H0c16 0 20 4 20 20z" transform="translate(-20,0)"/></svg><svg x="100.01%25" y="100.01%25" style="overflow: visible"><path fill="black" d="M0 20h20V0c0 16-4 20-20 20z" transform="translate(-20,-20)"/></svg><svg x="-.01%25" y="100.01%25" style="overflow: visible"><path fill="black" d="M0 0v20h20C4 20 0 16 0 0z" transform="translate(0,-20)"/></svg></mask><rect fill="white" width="100%25" height="100%25" mask="url(%23squircle)"/></svg>');
+}
+</style>
 
-const types = ['muted', 'primary', 'success', 'warning', 'danger']
-const defaultType = 'muted'
+<script setup>
+import { defineProps, useAttrs } from 'vue'
 
-export default defineComponent({
-  name: 'AtomicButton',
-  props: {
-    type: {
-      type: String,
-      default: 'primary',
-      validate: (v) => types.includes(v),
-    },
-    isOutline: {
-      type: Boolean,
-      default: false,
-    },
-    isSmall: {
-      type: Boolean,
-      default: false,
-    },
-    isWide: {
-      type: Boolean,
-      default: false,
-    },
-    isDepressed: {
-      type: Boolean,
-      default: false,
-    },
-    loading: {
-      type: Boolean,
-      default: true,
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  setup(props) {
-    const attrs = useAttrs()
-    const slots = useSlots()
-    const isTypeSupports = computed(() => types.includes(props.type))
-    const colorType = computed(() =>
-      isTypeSupports.value ? props.type : defaultType,
-    )
-
-    return { attrs, slots, isTypeSupports, colorType }
-  },
+const attrs = useAttrs()
+const props = defineProps({
+  primary: { type: Boolean, default: true },
+  red: { type: Boolean, default: false },
+  green: { type: Boolean, default: false },
+  yellow: { type: Boolean, default: false },
+  disabled: Boolean,
 })
 </script>

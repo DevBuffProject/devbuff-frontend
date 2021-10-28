@@ -1,19 +1,31 @@
 import axios from 'axios'
 import { useCookies } from '@vueuse/integrations'
-import { set } from '@vueuse/core'
 import { ref, shallowRef } from 'vue'
+import { progress } from '../../core/ui/LoadingIndicator'
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL
 const cookies = useCookies()
 
+const loadingQueue = []
 const createAxios = (config) => {
   const baseURL = `${BASE_URL}`
   const axiosInstance = axios.create({ baseURL, ...config })
+
   axiosInstance.interceptors.request.use((config) => {
+    loadingQueue.push(config.url)
+    if (config.indicator !== false) progress.start()
+
     const accessToken = cookies.get('access_token')
     if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`
     return config
   })
+
+  axiosInstance.interceptors.response.use((config) => {
+    loadingQueue.splice(loadingQueue.findIndex((url) => config.url === url))
+    if (config.indicator !== false) progress.done()
+    return config
+  })
+
   return axiosInstance
 }
 
@@ -30,24 +42,23 @@ export const useApi = (config = {}) => {
   const permanentConfig = {
     onUploadProgress: (event) => {
       _uploadCallback(event)
-      console.log(_uploadCallback)
-      set(uploadTotal, event.total)
-      set(uploadLoaded, event.loaded)
-      set(uploadProgress, (event.loaded / event.total) * 100)
+      uploadTotal.value = event.total
+      uploadLoaded.value = event.loaded
+      uploadProgress.value = (event.loaded / event.total) * 100
     },
   }
 
   const request = async (target, config) => {
-    set(isLoading, true)
+    isLoading.value = true
     return await axiosInstance(target, { ...config, ...permanentConfig })
       .then((response) => {
-        set(error, false)
+        error.value = false
         return response
       })
-      .catch((err) => set(error, err))
+      .catch((err) => (error.value = err))
       .finally(() => {
-        set(isLoading, false)
-        set(uploadProgress, 0)
+        isLoading.value = false
+        uploadProgress.value = 0
       })
   }
 

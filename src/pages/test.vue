@@ -1,24 +1,15 @@
 <template>
-  <h3 class="!mt-0">Create idea</h3>
-  <div
-    class="
-      -mx-4
-      px-4
-      bg-light-500
-      divide-y divide-light-800
-      flex flex-col
-      text-xl
-      font-thin
-    "
-  >
-    <AtomicInput placeholder="заголовок идеи" shadow />
-    <AtomicInput placeholder="краткое описание идеи, проекта" shadow />
-    <WidgetEditor v-model="m" />
-  </div>
+  <AtomicButton @click="visible = true">Big large btn</AtomicButton>
+
+  <AtomicSquircle :width="50" :height="50" :roundness="2"> 0.1 </AtomicSquircle>
+
+  <AtomicDialog v-model:visible="visible">
+    <h1>test</h1>
+  </AtomicDialog>
 </template>
 <script setup>
 import { ref } from 'vue'
 
-const visible = ref(true)
+const visible = ref(false)
 const m = ref('')
 </script>

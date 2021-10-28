@@ -1,6 +1,5 @@
 <template>
   <div class="max-w-[800px]">
-    <AtomicAlert> This page under develop</AtomicAlert>
     <AtomicAlert
       v-if="!user.statusEmailConfirm && isVerifyEmailSent"
       style="cursor: pointer"
@@ -42,14 +41,13 @@
 
 <script>
 import { defineComponent, ref, computed } from 'vue'
-import { useUser } from '../composes/services'
-import { useI18n } from '../composes/utils'
+import { useAuth, useI18n } from '../composes'
 import * as yup from 'yup'
 
 export default defineComponent({
   async setup() {
     const { t } = useI18n('pages.settings')
-    const { user, getUser, saveUserData, resendEmail } = useUser()
+    const { user, getUser, saveUserData, resendEmail } = useAuth()
 
     await getUser()
 

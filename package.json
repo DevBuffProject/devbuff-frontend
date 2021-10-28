@@ -23,7 +23,7 @@
     "@ckeditor/ckeditor5-vue": "2.0.1",
     "@iconicicons/vue3": "1.5.0",
     "@vueup/vue-quill": "1.0.0-beta.7",
-    "@vueuse/components": "^6.6.1",
+    "@vueuse/components": "^6.7.3",
     "@vueuse/core": "6.6.1",
     "@vueuse/integrations": "6.6.1",
     "@vueuse/motion": "1.6.0",
@@ -43,23 +43,22 @@
     "swiper": "6.8.4",
     "unplugin-vue-components": "^0.15.6",
     "vee-validate": "4.5.3",
-    "vite-plugin-windicss": "1.4.11",
     "vue": "3.2.20",
     "vue-i18n": "9.1.9",
+    "vue-masonry": "^0.13.0",
     "vue-nprogress": "0.2.0",
+    "vue-ripple-directive": "^2.0.1",
     "vue-router": "4.0.12",
     "yup": "0.32.11"
   },
   "devDependencies": {
     "@babel/core": "7.15.8",
     "@intlify/vite-plugin-vue-i18n": "2.4.0",
-    "@storybook/addon-actions": "6.3.12",
-    "@storybook/addon-essentials": "6.3.12",
-    "@storybook/addon-links": "6.3.12",
-    "@storybook/vue3": "6.3.12",
     "@vitejs/plugin-vue": "1.9.3",
     "@vue/compiler-sfc": "3.2.20",
     "@vue/eslint-config-prettier": "6.0.0",
+    "@vueuse/gesture": "^1.0.0",
+    "@windicss/plugin-heropatterns": "^0.0.8",
     "babel-loader": "8.2.2",
     "eslint": "8.0.1",
     "eslint-config-prettier": "8.3.0",
@@ -72,8 +71,8 @@
     "vite": "2.6.7",
     "vite-plugin-fonts": "0.2.2",
     "vite-plugin-svg-icons": "1.0.5",
+    "vite-plugin-windicss": "^1.4.12",
     "vue-loader": "16.8.1",
-    "windicss": "3.1.9",
-    "windicss-webpack-plugin": "1.4.9"
+    "windicss": "^3.1.9"
   }
 }
