@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="visible"
+    v-if="props.visible"
     class="
       fixed
       z-50
@@ -9,10 +9,10 @@
       w-screen
       h-screen
       flex
-      bg-black bg-opacity-70
-      dark:bg-opacity-90
       items-center
       justify-center
+      bg-black bg-opacity-40
+      dark:bg-opacity-90
     "
   >
     <div
@@ -24,19 +24,15 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, onMounted, onUnmounted } from 'vue'
+<script setup>
+import { defineProps, onMounted, onUnmounted } from 'vue'
 
-export default defineComponent({
-  name: 'AtomicOverlay',
-  props: {
-    visible: { type: Boolean, default: false },
-  },
-  setup() {
-    const rooElement = window.document.documentElement
-    const { overflow } = window.getComputedStyle(rooElement)
-    onMounted(() => (rooElement.style.overflow = 'hidden'))
-    onUnmounted(() => (rooElement.style.overflow = overflow))
-  },
+const props = defineProps({
+  visible: { type: Boolean, default: false },
 })
+
+const rooElement = window.document.documentElement
+const { overflow } = window.getComputedStyle(rooElement)
+onMounted(() => (rooElement.style.overflow = 'hidden'))
+onUnmounted(() => (rooElement.style.overflow = overflow))
 </script>

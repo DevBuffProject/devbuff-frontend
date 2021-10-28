@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>{{ idea.name }}</h1>
+
     <div class="flex flex-wrap items-start my-5">
       <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">
         {{ publishedAgo }}
@@ -39,9 +40,7 @@
             </template>
             <div class="flex flex-col items-start -mx-4 text-xs">
               <AtomicAction type="danger" class="w-full">
-                <template #icon>
-                  <StopIcon />
-                </template>
+                <StopIcon />
                 Stop company
               </AtomicAction>
 
@@ -50,9 +49,7 @@
                 class="w-full"
                 @click="deleteIdeaProcess"
               >
-                <template #icon>
-                  <TrashIcon />
-                </template>
+                <TrashIcon />
                 {{ t('control.delete') }}
               </AtomicAction>
               <RouterLink
@@ -61,9 +58,7 @@
                 v-slot="{ href, navigate }"
               >
                 <AtomicAction :href="href" @click="navigate" class="w-full">
-                  <template #icon>
-                    <EditIcon />
-                  </template>
+                  <EditIcon />
                   {{ t('control.edit') }}
                 </AtomicAction>
               </RouterLink>
@@ -123,14 +118,16 @@
                 class="mt-4"
               >
                 <div class="flex flex-wrap">
-                  <span
-                    class="text-xs"
+                  <AppLink
+                    :to="{ name: 'user', params: { UUID: acceptedUser.id } }"
+                    modal
                     v-for="(acceptedUser, key) of specialist.acceptedUsers"
-                    :key="`acceptedUser` + key"
+                    :key="`acceptedUser${key}`"
+                    class="text-xs"
                   >
                     {{ acceptedUser.firstName }}
                     {{ acceptedUser.lastName }} (@{{ acceptedUser.userName }})
-                  </span>
+                  </AppLink>
                 </div>
               </AtomicLabel>
 
@@ -172,10 +169,9 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useIdea, useUser, useSso } from '../composes/services'
+import { useIdea, useUser, useSso, useI18n } from '../composes'
 import { useTimeAgo, useTitle } from '@vueuse/core'
-import { useI18n } from '../composes/utils'
-import { useRouter } from '../router'
+import { useRouter } from '../core/router'
 
 export default defineComponent({
   name: 'IdeaDetail',

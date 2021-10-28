@@ -1,4 +1,3 @@
-import { useCookies } from '@vueuse/integrations'
 import { useApi } from './useApi'
 import { computed, readonly, ref } from 'vue'
 import { useUser } from './useUser'
@@ -39,18 +38,17 @@ const isAdmin = computed(
   () =>
     get(status, 'active') && get(status, 'authorities').includes(ROLE_ADMIN),
 )
-export const useAuth = () => {
-  const { request, ...rest } = useApi()
+const { user, getUser } = useUser()
 
+export const useAuth = () => {
+  const { request, BASE_URL } = useApi()
   const initAuth = (provider) => {
-    const { BASE_URL } = useApi()
     window.location.href = `${BASE_URL}/oAuth/${PROVIDERS.get(provider)}`
   }
 
   const auth = async ({ code, provider }) => {
     try {
-      const { data } = await request({
-        url: '/oAuth',
+      const { data } = await request('/oAuth', {
         method: 'post',
         data: new URLSearchParams({
           code,
@@ -60,7 +58,7 @@ export const useAuth = () => {
 
       _saveTokens(data)
       await getStatus()
-      await useUser().getUser()
+      await getUser()
 
       return data
     } catch (e) {
@@ -72,8 +70,7 @@ export const useAuth = () => {
     if (!isLoggedIn.value) throw new Error('No tokens for refresh session')
 
     try {
-      const { data } = await request({
-        url: 'oAuth/update',
+      const { data } = await request('oAuth/update', {
         data: new URLSearchParams({
           refresh_token: get(refreshToken),
           grant_type: 'refresh_token',
@@ -89,23 +86,41 @@ export const useAuth = () => {
 
   const getStatus = async () => {
     try {
-      const { data } = await request({
-        url: 'oAuth/check',
+      const { data } = await request('oAuth/check', {
         method: 'post',
         data: new URLSearchParams({ token: get(accessToken) }),
       })
 
-      set(status, data)
+      status.value = data
       return data
     } catch (e) {
       console.error(e)
     }
   }
 
-  const logout = () =>
-    set(accessToken, undefined) ||
-    set(refreshToken, undefined) ||
-    set(status, { active: false })
+  const logout = () => {
+    accessToken.value = undefined
+    refreshToken.value = undefined
+    status.value = { active: false }
+  }
+
+  const saveUserSkills = async (data) => {
+    const response = await request('/profile', { method: 'patch', data })
+    user.value.skills = data
+    return response
+  }
+
+  const saveUserData = async (data) => {
+    const response = await request('/profile', { method: 'patch', data })
+    // If data stored on server are conflicted with sent
+    // TODO: check for error triggered on code less than 300
+    if (error.value?.response?.status === 409)
+      throw new Error(error.value.response.data)
+    return response
+  }
+
+  const resendEmail = async () =>
+    await request('/profile/resendEmail', { method: 'post' })
 
   return {
     PROVIDERS,
@@ -117,6 +132,11 @@ export const useAuth = () => {
     isLoggedIn,
     isAdmin,
     needsRefresh,
+    user,
+    resendEmail,
+    saveUserData,
+    saveUserSkills,
+    getUser,
     initAuth,
     auth,
     refresh,

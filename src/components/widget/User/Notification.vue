@@ -43,7 +43,7 @@
           <AtomicLoadingSpinner class="text-primary-500" />
         </div>
 
-        <AtomicList v-if="notifications">
+        <div v-if="notifications" class="divide-y divide-default">
           <div v-for="(notify, index) of notifications" :key="index">
             <RouterLink
               v-if="notify.type === 'USER_PENDING'"
@@ -162,7 +162,7 @@
             <span class="text-2xl mr-2">🤷</span>
             <span class="opacity-50"> Это пока все </span>
           </div>
-        </AtomicList>
+        </div>
 
         <div
           v-else
@@ -184,7 +184,7 @@
 
 <script>
 import { defineComponent, ref, onBeforeUnmount } from 'vue'
-import { useNotifications } from '../../../composes/services'
+import { useNotifications } from '../../../composes'
 import { useTimeAgo } from '@vueuse/core'
 
 export default defineComponent({

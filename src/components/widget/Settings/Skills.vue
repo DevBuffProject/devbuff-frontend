@@ -110,11 +110,10 @@
 
 <script>
 import { defineComponent, ref, reactive, nextTick } from 'vue'
-import { useSkills, useUser } from '../../../composes/services'
+import { useAuth, useSkills, useI18n } from '../../../composes'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { ChevronRightIcon, ChevronLeftIcon } from '@iconicicons/vue3'
 import 'swiper/swiper.scss'
-import { useI18n } from '../../../composes/utils'
 
 export default defineComponent({
   name: 'WidgetProfileSkills',
@@ -124,7 +123,7 @@ export default defineComponent({
   },
   async setup() {
     const { t, tDefault } = useI18n('components.widget.profile.skills')
-    const { user, saveUserSkills } = useUser()
+    const { user, saveUserSkills } = useAuth()
     const { getSkills } = useSkills()
     const swiper = ref()
     const allSkills = await getSkills()

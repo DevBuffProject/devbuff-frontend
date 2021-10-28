@@ -1,11 +1,9 @@
-// TODO: rename as useProfile
-
 import { useApi } from './useApi'
-import { ref } from 'vue'
-
-const user = ref({})
+import { isReactive, isRef, ref, shallowRef, toRef, unref } from 'vue'
+import { get } from '@vueuse/core'
 
 export const useUser = () => {
+  const user = ref({})
   const { request, BASE_URL, error, ...rest } = useApi()
 
   const getUser = async (uuid = '') => {
@@ -15,36 +13,14 @@ export const useUser = () => {
       avatar: getUserProfileUrl(response?.data.id),
       ...response?.data,
     }
-    return response
+    return rest
   }
 
   const getUserProfileUrl = (uuid) => `${BASE_URL}/photo/profile/${uuid}`
-
-  const saveUserSkills = async (data) => {
-    const response = await request('/profile', { method: 'patch', data })
-    user.value.skills = data
-    return response
-  }
-
-  const saveUserData = async (data) => {
-    const response = await request('/profile', { method: 'patch', data })
-    // If data stored on server are conflicted with sent
-    // TODO: check for error triggered on code less than 300
-    if (error.value?.response?.status === 409)
-      throw new Error(error.value.response.data)
-    return response
-  }
-
-  const resendEmail = async () =>
-    await request('/profile/resendEmail', { method: 'post' })
 
   return {
     user,
     getUser,
     getUserProfileUrl,
-    saveUserSkills,
-    saveUserData,
-    resendEmail,
-    ...rest,
   }
 }

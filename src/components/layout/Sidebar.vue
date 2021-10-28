@@ -1,23 +1,20 @@
 <template>
   <aside>
     <nav>
-      <router-link v-if="isLoggedIn" to="/" custom v-slot="{ navigate }">
-        <div class="mb-8">
-          <WidgetUser
-            :user="user"
-            @click="navigate"
-            class="block"
-            v-focusable
-          />
-        </div>
-      </router-link>
+      <AppLink
+        v-if="isLoggedIn && user.id"
+        :to="{ name: 'user', params: { UUID: user.id } }"
+        class="mb-8 block p-1 rounded"
+        v-slot="{ navigate }"
+        v-ripple
+      >
+        <WidgetUser :user="user" @click="navigate" class="block" />
+      </AppLink>
       <div
         v-if="!isLoggedIn"
         class="p-5 mb-5 bg-primary-500 bg-opacity-10 rounded-xl"
       >
-        <h4 class="mt-0">
-          {{ t('loginVia') }}
-        </h4>
+        <h4 class="mt-0">{{ t('loginVia') }}</h4>
 
         <AtomicButton
           class="w-full flex items-center justify-center"
@@ -42,151 +39,140 @@
             </div>
           </AtomicButton>
         </div>
-        <div class="mt-0">
-          {{ t('loginReason') }}
-        </div>
+
+        <div class="mt-0">{{ t('loginReason') }}</div>
       </div>
 
       <template v-for="link in nav" :key="link.title">
-        <router-link :to="link.to" custom v-slot="{ href, navigate, isActive }">
-          <a
-            :href="href"
-            :class="[
-              'flex items-center mb-2 cursor-pointer',
-              'transition-all group',
-            ]"
-            @click="goNavigate($event, link.to, navigate)"
-            v-focusable.indexOnly
+        <AppLink
+          :to="link.to"
+          v-slot="{ isActive, isLoading }"
+          class="flex items-center mb-2 cursor-pointer transition-all group"
+          :class="{ 'opacity-50': isActive }"
+        >
+          <div
+            class="
+              flex
+              items-center
+              pr-4
+              pl-3
+              py-1.5
+              rounded-full
+              transition-colors
+            "
           >
-            <div
-              class="
-                flex
-                items-center
-                pr-4
-                pl-3
-                py-1.5
-                rounded-full
-                transition-colors
-                group-focus:bg-primary-400
-                group-focus:text-primary-500
-                group-focus:bg-opacity-10
-                group-hover:bg-primary-400
-                group-hover:text-primary-500
-                group-hover:bg-opacity-10
-                group-active:bg-opacity-20
-              "
-              :class="{
-                'text-primary-500': link.activeState !== false && isActive,
-              }"
+            <AtomicSquircle
+              :width="35"
+              :height="35"
+              :color="link.color"
+              :roundness="1"
+              background
+              class="mr-4 transition-opacity group-hover:opacity-100"
+              :class="{ 'opacity-100': isActive, 'opacity-50': !isActive }"
+              :style="{ color: link.textColor }"
             >
-              <div class="mr-4 w-6 h-6 flex items-center justify-center">
-                <AtomicLoadingSpinner
-                  v-if="link.to === loadingRoute"
-                  class="text-primary-500"
-                />
-                <component v-else :is="link.icon" />
-              </div>
-              <span class="text-md font-medium"> {{ link.title }} </span>
-            </div>
-          </a>
-        </router-link>
+              <AtomicLoadingSpinner v-if="isLoading" />
+              <component v-else :is="link.icon" />
+            </AtomicSquircle>
+            <span class="text-md font-medium">{{ link.title }}</span>
+          </div>
+        </AppLink>
       </template>
+
       <template v-if="isLoggedIn">
-        <div
-          :class="[
-            'flex items-center rounded-full px-4 py-1 mt-8 cursor-pointer transition-all',
-            'hover:bg-danger-500 text-danger-500 hover:bg-opacity-10 focus:bg-danger-500 focus:bg-opacity-10',
-          ]"
-          v-focusable.indexOnly
+        <div class="divider-x my-6 ml-12" />
+        <BaseButton
+          v-ripple
+          class="
+            flex
+            items-center
+            rounded-full
+            px-4
+            py-1
+            w-full
+            !justify-start
+            cursor-pointer
+            transition-all
+            text-danger-500
+          "
           @click="logoutProcess"
         >
           <LogOutIcon class="mr-3" />
           <span class="text-md font-medium"> {{ t('links.logout') }} </span>
-        </div>
+        </BaseButton>
       </template>
     </nav>
   </aside>
 </template>
 
-<script>
-import { defineComponent, ref, computed } from 'vue'
-import { useAuth, useUser } from '../../composes/services'
-import { useI18n } from '../../composes/utils'
+<script setup>
+import { ref, computed } from 'vue'
+import { useAuth, useI18n } from '../../composes'
 import { useRouter } from '../../core/router'
 import {
   SearchIcon,
   DashboardIcon,
   SettingsIcon,
   ShieldIcon,
+  UserIcon,
+  HashtagIcon,
 } from '@iconicicons/vue3'
 
-export default defineComponent({
-  setup() {
-    const { t } = useI18n('components.layout.sidebar')
-    const {
-      initAuth,
-      logout,
-      PROVIDERS: AuthProviders,
-      isLoggedIn,
-      isAdmin,
-    } = useAuth()
-    const { user } = useUser()
-    const loadingRoute = ref({})
-    const router = useRouter()
-    const nav = computed(() =>
-      [
-        {
-          title: t('links.explore'),
-          icon: SearchIcon,
-          to: '/explore',
-          exact: true,
-        },
-        isLoggedIn.value && {
-          title: t('links.dashboard'),
-          icon: DashboardIcon,
-          to: '/dashboard',
-          exact: true,
-        },
-        isAdmin.value && {
-          title: t('links.superuser'),
-          icon: ShieldIcon,
-          to: '/su',
-          exact: true,
-        },
-        isLoggedIn.value && {
-          title: t('links.settings'),
-          icon: SettingsIcon,
-          to: { name: 'settings', params: { _isDialog: true } },
-          exact: true,
-        },
-      ].filter(Boolean),
-    )
+const { t } = useI18n('components.layout.sidebar')
+const {
+  initAuth,
+  logout,
+  PROVIDERS: AuthProviders,
+  isLoggedIn,
+  isAdmin,
+} = useAuth()
+const { user } = useAuth()
+const loadingRoute = ref({})
+const router = useRouter()
+const nav = computed(() =>
+  [
+    {
+      title: t('links.explore'),
+      icon: HashtagIcon,
+      to: '/explore',
+      exact: true,
+      color: '#b6e0fe',
+      textColor: '#003e6b',
+    },
 
-    const goNavigate = async (event, route, next) => {
-      if (route.path === route) return event.preventDefault()
-      loadingRoute.value = route
-      await next(event)
-    }
+    isLoggedIn.value && {
+      title: t('links.dashboard'),
+      icon: UserIcon,
+      to: '/dashboard',
+      exact: true,
+      color: '#c1f2c7',
+      textColor: '#014807',
+    },
 
-    const logoutProcess = () => {
-      router.replace({ name: 'explore' })
-      logout()
-    }
+    isLoggedIn.value && {
+      title: t('links.settings'),
+      icon: SettingsIcon,
+      to: { name: 'settings' },
+      exact: true,
+      color: '#ffb8d2',
+      textColor: '#620042',
+    },
 
-    router.afterEach(() => (loadingRoute.value = ''))
+    isAdmin.value && {
+      title: t('links.superuser'),
+      icon: ShieldIcon,
+      to: '/su',
+      exact: true,
+      color: '#ffb8d2',
+      textColor: '#620042',
+    },
+  ].filter(Boolean),
+)
 
-    return {
-      t,
-      nav,
-      user,
-      isAdmin,
-      isLoggedIn,
-      loadingRoute,
-      AuthProviders,
-      initAuth,
-      goNavigate,
-      logoutProcess,
-    }
-  },
-})
+const logoutProcess = () => {
+  router.replace({ name: 'explore' })
+  logout()
+}
+
+router.afterEach(() => (loadingRoute.value = ''))
 </script>

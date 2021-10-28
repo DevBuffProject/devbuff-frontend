@@ -1,25 +1,6 @@
 <template>
-  <div>
-    <UseOnline v-slot="{ isOnline }">
-      <div
-        v-if="!isOnline"
-        class="
-          bg-red-500
-          text-white text-sm
-          font-semibold
-          transition-all
-          flex
-          justify-center
-          items-center
-          h-6
-        "
-        :class="!isOnline ? 'mt-0' : '-mt-6'"
-      >
-        <AtomicLoadingSpinner />
-        <span class="mt-px ml-4">связь с интернетом пропала</span>
-      </div>
-    </UseOnline>
-    <header
+  <header>
+    <div
       class="
         backdrop-blur-[10px]
         flex flex-col
@@ -30,50 +11,47 @@
         dark:bg-opacity-80
         backdrop-filter
         h-[62px]
-        border-b border-default
       "
       style="box-shadow: 0 5px 8px #00098000, 0 5px 16px rgb(0 9 128 / 5%)"
     >
       <div class="container flex mx-auto">
         <div class="flex items-center w-full">
-          <RouterLink to="/" custom v-slot="{ href, navigate }">
-            <a :href="href" @click="navigate">
-              <AtomicLogo
-                :src="`/images/logos/logo-${isDark ? 'light' : 'dark'}.svg`"
-              />
-            </a>
-          </RouterLink>
+          <AppLink to="/">
+            <AtomicLogo
+              :src="`/images/logos/logo-${isDark ? 'light' : 'dark'}.svg`"
+              class="p-1 rounded"
+              v-ripple
+            />
+          </AppLink>
         </div>
         <div class="flex items-center">
           <WidgetUserNotification v-if="isLoggedIn" />
           <WidgetColorSwitcher class="ml-4" />
 
           <nav class="hidden lg:block ml-6" v-if="isLoggedIn">
-            <RouterLink v-slot="{ isActive }" to="/create">
-              <AtomicButton :disabled="isActive">
-                <template #icon>
-                  <EditIcon />
-                </template>
+            <AppLink v-slot="{ isActive, isLoading }" to="/create">
+              <AtomicButton :disabled="isActive || isLoading">
+                <div class="mr-4">
+                  <AtomicLoadingSpinner v-if="isLoading" />
+                  <AnnouncementIcon v-else />
+                </div>
+
                 {{ t('newIdea') }}
               </AtomicButton>
-            </RouterLink>
+            </AppLink>
           </nav>
         </div>
       </div>
-    </header>
-  </div>
+    </div>
+
+    <div id="header-nprogress-container" class="h-[2px] overflow-hidden" />
+  </header>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
 import { useAuth, useAppearance, useI18n } from '../../composes'
 
-export default defineComponent({
-  setup() {
-    const { t } = useI18n('components.layout.header')
-    const { isDark, isLight } = useAppearance()
-    const { isLoggedIn } = useAuth()
-    return { t, isDark, isLight, isLoggedIn }
-  },
-})
+const { t } = useI18n('components.layout.header')
+const { isDark, isLight } = useAppearance()
+const { isLoggedIn } = useAuth()
 </script>

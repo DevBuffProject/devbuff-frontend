@@ -138,7 +138,7 @@
 <script>
 import { defineComponent, ref, watch } from 'vue'
 import { useTitle } from '@vueuse/core'
-import { useIdeas, useIdea } from '../composes/services'
+import { useIdeas, useIdea, useUser } from '../composes/services'
 import { useI18n } from '../composes/utils'
 import { useRoute } from 'vue-router'
 
@@ -147,6 +147,7 @@ export default defineComponent({
     useTitle(`DevBuff Dashboard`)
     const { t } = useI18n('pages.dashboard')
     const { userIdeas, getUserIdeas } = useIdeas()
+    const { getUser } = useUser()
     const isLoading = ref(false)
     const {
       idea: inspectedIdea,

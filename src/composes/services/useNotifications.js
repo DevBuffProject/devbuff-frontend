@@ -8,13 +8,15 @@ export const useNotifications = () => {
   const { request, error, ...rest } = useApi()
 
   const getCountUnreadNotifications = async () => {
-    const response = await request(`/notification/unread`)
+    const response = await request(`/notification/unread`, { indicator: false })
     countUnreadNotifications.value = response.data.count
     return countUnreadNotifications.value
   }
 
   const getNotifications = async (page) => {
-    const response = await request(`/notification?page=${page}`)
+    const response = await request(`/notification?page=${page}`, {
+      indicator: false,
+    })
     notifications.value = notifications.value.concat(
       response.data.notifications,
     )

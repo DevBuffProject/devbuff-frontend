@@ -1,10 +1,8 @@
-// eslint-disable-next-line no-undef
-const colors = require('windicss/colors')
+import { defineConfig } from 'windicss/helpers'
+import colors from 'windicss/colors'
+import heropatterns from '@windicss/plugin-heropatterns'
 
-export default {
-  attributify: {
-    prefix: 'w:',
-  },
+export default defineConfig({
   extract: {
     include: ['index.html', 'src/**/*.{vue,html,jsx,tsx}'],
     exclude: ['node_modules/**/*', '.git/**/*'],
@@ -12,7 +10,7 @@ export default {
   darkMode: 'class',
   theme: {
     fontFamily: {
-      sans: ['Rubik', 'sans-serif'],
+      sans: ['Roboto', 'sans-serif'],
       serif: ['Merriweather', 'serif'],
     },
     colors: {
@@ -21,7 +19,7 @@ export default {
         ...colors.dark,
       },
       primary: {
-        ...colors.lightBlue,
+        ...colors.sky,
       },
       secondary: {
         ...colors.violet,
@@ -45,4 +43,10 @@ export default {
       xl: '1280px',
     },
   },
-}
+  plugins: [
+    heropatterns({
+      patterns: ['bubbles', 'signal', 'circuit-board'],
+      includeThemeColors: true,
+    }),
+  ],
+})

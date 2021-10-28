@@ -4,6 +4,7 @@ import { useApi } from './useApi'
 export const useSkills = () => {
   const { request, ...rest } = useApi()
   const skills = ref([])
+
   const languages = computed(
     () => skills.value.map((skill) => skill.name) || [],
   )

@@ -15,6 +15,14 @@ export default [
     meta: { name: 'Main' },
   },
   {
+    name: '404',
+    path: '/:pathMatch(.*)*',
+    component: () => import('./pages/404.vue'),
+    meta: {
+      isDialog: true,
+    },
+  },
+  {
     name: 'explore',
     path: '/explore',
     component: () => import('./pages/explore.vue'),
@@ -31,6 +39,17 @@ export default [
     meta: {
       name: 'Dashboard',
       breadcrumbs: ['home', 'explore'],
+    },
+  },
+  {
+    name: 'user',
+    path: '/user-:UUID',
+    component: () => import('./pages/user.vue'),
+    beforeEnter: createMiddleware(isAuthenticated),
+    props: true,
+    meta: {
+      name: 'User',
+      breadcrumbs: ['home'],
     },
   },
   {
@@ -74,6 +93,15 @@ export default [
       name: 'Settings',
       breadcrumbs: ['home'],
       isDialog: true,
+    },
+  },
+  {
+    name: 'test',
+    path: '/test',
+    component: () => import('./pages/test.vue'),
+    meta: {
+      name: 'Settings',
+      breadcrumbs: ['home'],
     },
   },
   {
