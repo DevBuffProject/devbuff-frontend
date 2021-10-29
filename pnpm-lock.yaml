@@ -47,7 +47,7 @@ specifiers:
   vite-plugin-windicss: 1.4.12
   vue: 3.2.20
   vue-i18n: 9.1.9
-  vue-loader: 16.8.1
+  vue-loader: 16.8.2
   vue-nprogress: 0.2.0
   vue-router: 4.0.12
   windicss: 3.1.9
@@ -106,7 +106,7 @@ devDependencies:
   vite: 2.6.13_sass@1.43.3
   vite-plugin-fonts: 0.2.2_vite@2.6.13
   vite-plugin-svg-icons: 1.0.5_vite@2.6.13
-  vue-loader: 16.8.1
+  vue-loader: 16.8.2
   windicss: 3.1.9
   windicss-webpack-plugin: 1.4.10
 
@@ -3801,7 +3801,7 @@ packages:
       vue: 3.2.20
       vue-docgen-api: 4.41.1
       vue-docgen-loader: 1.5.0_d4773981d01bd8094cc9323b2d1cd5aa
-      vue-loader: 16.8.1_webpack@4.46.0
+      vue-loader: 16.8.2_webpack@4.46.0
       webpack: 4.46.0
     transitivePeerDependencies:
       - '@storybook/builder-webpack5'
@@ -13082,8 +13082,8 @@ packages:
       camelcase: 5.3.1
     dev: true
 
-  /vue-loader/16.8.1:
-    resolution: {integrity: sha512-V53TJbHmzjBhCG5OYI2JWy/aYDspz4oVHKxS43Iy212GjGIG1T3EsB3+GWXFm/1z5VwjdjLmdZUFYM70y77vtQ==}
+  /vue-loader/16.8.2:
+    resolution: {integrity: sha512-Nkq+z9mAsMEK+qkXgK+9Ia7D8w9uu9j4ut0IMT5coMfux3rCgIp1QBB1CYwY0M34A1nRMSONEaWXxAAw6xSl/Q==}
     peerDependencies:
       webpack: ^4.1.0 || ^5.0.0-0
     dependencies:
@@ -13092,8 +13092,8 @@ packages:
       loader-utils: 2.0.0
     dev: true
 
-  /vue-loader/16.8.1_webpack@4.46.0:
-    resolution: {integrity: sha512-V53TJbHmzjBhCG5OYI2JWy/aYDspz4oVHKxS43Iy212GjGIG1T3EsB3+GWXFm/1z5VwjdjLmdZUFYM70y77vtQ==}
+  /vue-loader/16.8.2_webpack@4.46.0:
+    resolution: {integrity: sha512-Nkq+z9mAsMEK+qkXgK+9Ia7D8w9uu9j4ut0IMT5coMfux3rCgIp1QBB1CYwY0M34A1nRMSONEaWXxAAw6xSl/Q==}
     peerDependencies:
       webpack: ^4.1.0 || ^5.0.0-0
     dependencies:
