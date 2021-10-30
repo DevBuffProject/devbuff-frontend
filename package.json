@@ -62,7 +62,7 @@
     "eslint": "8.1.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier-vue": "3.1.0",
-    "eslint-plugin-vue": "7.19.1",
+    "eslint-plugin-vue": "7.20.0",
     "husky": "7.0.4",
     "lint-staged": "11.2.6",
     "pinst": "2.1.6",
