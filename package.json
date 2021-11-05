@@ -70,7 +70,7 @@
     "vite": "2.6.13",
     "vite-plugin-fonts": "0.2.2",
     "vite-plugin-svg-icons": "1.0.5",
-    "vue-loader": "16.8.2",
+    "vue-loader": "16.8.3",
     "windicss": "3.2.1",
     "windicss-webpack-plugin": "1.5.5"
   }
