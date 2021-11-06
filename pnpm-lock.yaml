@@ -14,7 +14,7 @@ specifiers:
   '@vue/compiler-sfc': 3.2.21
   '@vue/eslint-config-prettier': 6.0.0
   '@vueup/vue-quill': 1.0.0-beta.7
-  '@vueuse/core': 6.7.5
+  '@vueuse/core': 6.7.6
   '@vueuse/integrations': 6.7.5
   '@vueuse/motion': 1.6.0
   '@vueuse/router': 6.7.5
@@ -59,7 +59,7 @@ dependencies:
   '@ckeditor/ckeditor5-vue': 2.0.1
   '@iconicicons/vue3': 1.5.0_vue@3.2.21
   '@vueup/vue-quill': 1.0.0-beta.7_vue@3.2.21
-  '@vueuse/core': 6.7.5_vue@3.2.21
+  '@vueuse/core': 6.7.6_vue@3.2.21
   '@vueuse/integrations': 6.7.5_vue@3.2.21
   '@vueuse/motion': 1.6.0_vue@3.2.21
   '@vueuse/router': 6.7.5_vue-router@4.0.12+vue@3.2.21
@@ -4156,6 +4156,22 @@ packages:
       vue-demi: 0.11.3_vue@3.2.21
     dev: false
 
+  /@vueuse/core/6.7.6_vue@3.2.21:
+    resolution: {integrity: sha512-oVyqARXnTvhf4m6xf/sHw+SNJWcRYJn8+L4TZTFBU9POf9GIzBN7iHD2Oc4K4rTWXGQzXfoFHgbrXyeMFCRoqA==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.0
+      vue: ^2.6.0 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      vue:
+        optional: true
+    dependencies:
+      '@vueuse/shared': 6.7.6_vue@3.2.21
+      vue: 3.2.21
+      vue-demi: 0.11.3_vue@3.2.21
+    dev: false
+
   /@vueuse/integrations/6.7.5_vue@3.2.21:
     resolution: {integrity: sha512-81yHIoYTJ62yIkg/C7Bewnql7OdyoNfU4Zgodwgo64FuCQJw4urWk9AIS8+Kzr1FseeAK9s65gDnncCNJRfXkw==}
     dependencies:
@@ -4186,7 +4202,7 @@ packages:
       '@vue/composition-api':
         optional: true
     dependencies:
-      '@vueuse/core': 6.7.5_vue@3.2.21
+      '@vueuse/core': 6.7.6_vue@3.2.21
       popmotion: 9.4.0
       vue: 3.2.21
       vue-demi: 0.11.3_vue@3.2.21
@@ -4207,6 +4223,21 @@ packages:
 
   /@vueuse/shared/6.7.5_vue@3.2.21:
     resolution: {integrity: sha512-wUDMPTGUSTYsbiftKq7dYLKD2i3n0m8utbHBCyoxdyeKsmtQGIM2/XeeXjtALB7UXD6rqPsVgCMepNrPPt8zvw==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.0
+      vue: ^2.6.0 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      vue:
+        optional: true
+    dependencies:
+      vue: 3.2.21
+      vue-demi: 0.11.3_vue@3.2.21
+    dev: false
+
+  /@vueuse/shared/6.7.6_vue@3.2.21:
+    resolution: {integrity: sha512-MfzTKkFK63PcjDdTpJRuJqylpyUdXpic9ueTRcgpPizqFpoYIuI6DkdYjub2Ch5+OYYhVnCqe8ynW6WzYo7DGQ==}
     peerDependencies:
       '@vue/composition-api': ^1.1.0
       vue: ^2.6.0 || ^3.2.0
