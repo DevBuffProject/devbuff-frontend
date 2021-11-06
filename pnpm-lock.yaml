@@ -15,7 +15,7 @@ specifiers:
   '@vue/eslint-config-prettier': 6.0.0
   '@vueup/vue-quill': 1.0.0-beta.7
   '@vueuse/core': 6.8.0
-  '@vueuse/integrations': 6.7.5
+  '@vueuse/integrations': 6.8.0
   '@vueuse/motion': 1.6.0
   '@vueuse/router': 6.7.5
   axios: 0.23.0
@@ -60,7 +60,7 @@ dependencies:
   '@iconicicons/vue3': 1.5.0_vue@3.2.21
   '@vueup/vue-quill': 1.0.0-beta.7_vue@3.2.21
   '@vueuse/core': 6.8.0_vue@3.2.21
-  '@vueuse/integrations': 6.7.5_vue@3.2.21
+  '@vueuse/integrations': 6.8.0_vue@3.2.21
   '@vueuse/motion': 1.6.0_vue@3.2.21
   '@vueuse/router': 6.7.5_vue-router@4.0.12+vue@3.2.21
   axios: 0.23.0
@@ -4140,22 +4140,6 @@ packages:
       vue: 3.2.21
     dev: false
 
-  /@vueuse/core/6.7.5_vue@3.2.21:
-    resolution: {integrity: sha512-zgWai0i38TbfWGMVs1ybyEEdwwhjjMloQflRTMU0+pTmp3kEtQTDiVZiOrr758s+yRdr2OQiMQ323dyiKgKMFQ==}
-    peerDependencies:
-      '@vue/composition-api': ^1.1.0
-      vue: ^2.6.0 || ^3.2.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-      vue:
-        optional: true
-    dependencies:
-      '@vueuse/shared': 6.7.5_vue@3.2.21
-      vue: 3.2.21
-      vue-demi: 0.11.3_vue@3.2.21
-    dev: false
-
   /@vueuse/core/6.8.0_vue@3.2.21:
     resolution: {integrity: sha512-C6KMBus29L/mVtA5eK26WAqj6tyPlugrKaPLi2uLtbV//BHjbxe1uo3gVXCc5SwouDEdc7zswlGPw/l0/++NRg==}
     peerDependencies:
@@ -4172,11 +4156,11 @@ packages:
       vue-demi: 0.11.3_vue@3.2.21
     dev: false
 
-  /@vueuse/integrations/6.7.5_vue@3.2.21:
-    resolution: {integrity: sha512-81yHIoYTJ62yIkg/C7Bewnql7OdyoNfU4Zgodwgo64FuCQJw4urWk9AIS8+Kzr1FseeAK9s65gDnncCNJRfXkw==}
+  /@vueuse/integrations/6.8.0_vue@3.2.21:
+    resolution: {integrity: sha512-05r3sDkccQFFZBi1A1x65TFm1j6eN4YptqFEHbcqk8SZxcPbe2LiWvZpkyY4YeqVJiQy3Mwq3Vod+Teb1SJ7Uw==}
     dependencies:
-      '@vueuse/core': 6.7.5_vue@3.2.21
-      '@vueuse/shared': 6.7.5_vue@3.2.21
+      '@vueuse/core': 6.8.0_vue@3.2.21
+      '@vueuse/shared': 6.8.0_vue@3.2.21
       vue-demi: 0.11.3_vue@3.2.21
     optionalDependencies:
       axios: 0.23.0
