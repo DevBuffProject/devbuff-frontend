@@ -51,7 +51,7 @@ specifiers:
   vue-nprogress: 0.2.0
   vue-router: 4.0.12
   windicss: 3.2.1
-  windicss-webpack-plugin: 1.5.5
+  windicss-webpack-plugin: 1.5.6
   yup: 0.32.11
 
 dependencies:
@@ -108,7 +108,7 @@ devDependencies:
   vite-plugin-svg-icons: 1.0.5_vite@2.6.13
   vue-loader: 16.8.3
   windicss: 3.2.1
-  windicss-webpack-plugin: 1.5.5
+  windicss-webpack-plugin: 1.5.6
 
 packages:
 
@@ -4355,6 +4355,17 @@ packages:
       windicss: 3.2.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@windicss/config/1.5.1:
+    resolution: {integrity: sha512-nWNgvvJj9RcYhLcqwju/Z8FfaHRjyWHDYS3IgY7lWUM+vWTLFuKqhavKfC1589kdYjiO9JeX07Vg+YzfcxP0Yw==}
+    dependencies:
+      debug: 4.3.2
+      jiti: 1.12.9
+      windicss: 3.2.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   /@windicss/plugin-utils/1.4.12:
     resolution: {integrity: sha512-ixYflwELxEjHyh0B9HqTwDp1d3v5IWtUucVY84o41ZU53BkuRw1lKbNlLMqbrtbk8p8rAQxjuwWZkWxFYi77tQ==}
@@ -4368,6 +4379,21 @@ packages:
       windicss: 3.2.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@windicss/plugin-utils/1.5.1:
+    resolution: {integrity: sha512-gxJiTCMKv1p1x4W2BLG2yfNe+DfIVPc8+aKvfCUCtOpdg5GB5yzhuAC4ROsKiXHxu4QXoojrh7jXH6ELlrELpQ==}
+    dependencies:
+      '@antfu/utils': 0.3.0
+      '@windicss/config': 1.5.1
+      debug: 4.3.2
+      fast-glob: 3.2.7
+      magic-string: 0.25.7
+      micromatch: 4.0.4
+      windicss: 3.2.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   /@xtuc/ieee754/1.2.0:
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
@@ -13106,10 +13132,10 @@ packages:
       string-width: 4.2.2
     dev: true
 
-  /windicss-webpack-plugin/1.5.5:
-    resolution: {integrity: sha512-ZAVZSmxtfeAYVBQR+QnhfGh44s4WGNcexNjPBX1PaObzR562JlGnbuT6z7r12kO2bDqz37qSnH50o73UjMNFFw==}
+  /windicss-webpack-plugin/1.5.6:
+    resolution: {integrity: sha512-Wap3bvaNlIFKkJugaeVMqV1ICMDfSmwernYkYrRftK/ZJXP7/pkVvdXu5DDvFIlRVXjhlJlltIlFb1UNJn84sA==}
     dependencies:
-      '@windicss/plugin-utils': 1.4.12
+      '@windicss/plugin-utils': 1.5.1
       debug: 4.3.2
       loader-utils: 2.0.0
       lodash: 4.17.21
