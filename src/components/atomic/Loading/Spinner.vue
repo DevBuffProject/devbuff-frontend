@@ -20,10 +20,11 @@
 
 <style scoped>
 .loading {
-  width: 20px;
-  height: 20px;
-  min-width: 15px;
-  min-height: 15px;
+  width: 18px;
+  height: 18px;
+  min-width: 10px;
+  min-height: 10px;
+  line-height: 0;
 }
 .loading__icon {
   animation: spin 1s linear infinite;

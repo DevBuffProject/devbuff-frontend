@@ -18,10 +18,9 @@
           h-10
           w-10
           z-50
-          border border-default
-          hover:border-primary-500
           bg-white
           dark:bg-dark-300
+          focus:bg-light-900
           text-primary-500
         "
       >
@@ -30,7 +29,7 @@
       </BaseButton>
     </template>
     <template #preview>
-      <AtomicAvatar aria-label="Фото профиля" :src="avatar" size="150px" />
+      <AtomicAvatar aria-label="Фото профиля" :src="avatar" :size="150" />
     </template>
   </AtomicFormFiles>
 </template>

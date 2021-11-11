@@ -1,17 +1,7 @@
 <template>
   <AtomicSquircle :width="size" :height="size" :roundness="1">
     <div
-      class="
-        bg-cover
-        flex
-        items-center
-        justify-center
-        bg-white
-        h-full
-        w-full,
-        relative
-        z-10
-      "
+      :class="'bg-cover flex items-center justify-center bg-white h-full w-full relative z-10'"
       :style="{
         backgroundImage: `url(${src})`,
         width: `${size}px`,
@@ -23,9 +13,11 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, toRefs } from 'vue'
+
 const props = defineProps({
   src: { type: String, default: null },
   size: { type: Number, default: 40 },
 })
+const { src, size } = toRefs(props)
 </script>

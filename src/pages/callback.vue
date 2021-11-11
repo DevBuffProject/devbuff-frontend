@@ -1,23 +1,16 @@
-<script>
+<template></template>
+
+<script setup>
 import { defineComponent } from 'vue'
 import { useMainRoute, useRouter } from '../core/router'
-import { useAuth } from '../composes/services'
+import { useAuth } from '../composes'
 
-export default defineComponent({
-  name: 'Callback',
-  async setup() {
-    const route = useMainRoute()
-    const { auth } = useAuth()
-    const code = route.value.query.code
-    const provider = route.value.params.provider
+const { mainRoute, ...router } = useRouter()
 
-    useRouter().replace({ name: 'explore' })
+const { auth } = useAuth()
+const code = mainRoute.value.query.code
+const provider = mainRoute.value.params.provider
 
-    try {
-      await auth({ code, provider })
-    } catch (e) {
-      console.error(e)
-    }
-  },
-})
+useRouter().replace({ name: 'explore' })
+auth({ code, provider })
 </script>

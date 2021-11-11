@@ -3,6 +3,9 @@ import colors from 'windicss/colors'
 import heropatterns from '@windicss/plugin-heropatterns'
 
 export default defineConfig({
+  attributify: {
+    prefix: 'w',
+  },
   extract: {
     include: ['index.html', 'src/**/*.{vue,html,jsx,tsx}'],
     exclude: ['node_modules/**/*', '.git/**/*'],

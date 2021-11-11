@@ -13,15 +13,15 @@
       leading-none
       px-6
       h-12
-      squircle
+      rounded-xl
     "
     :class="{
-      'bg-primary-400 hover:bg-primary-400 ring-primary-900': props.primary,
+      'bg-primary-400 ring-primary-900': props.primary,
       'bg-red-400 hover:bg-red-400 ring-red-900': props.red,
       'bg-green-400 hover:bg-green-400 ring-green-900': props.green,
       'bg-yellow-400 ring-yellow-900': props.yellow,
+      'bg-light-900 text-light-50 dark:bg-dark-400 text-black': disabled,
     }"
-    v-ripple="'rgba(255, 255, 255, .35)'"
     :disabled="props.disabled"
     v-bind="attrs"
   >

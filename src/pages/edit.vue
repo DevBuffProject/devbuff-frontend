@@ -23,6 +23,7 @@
     <div class="flex justify-center">
       <WidgetSettingsAvatar class="my-4" />
     </div>
+
     <AtomicAlert v-if="conflictMessage" type="danger">
       <strong>{{ t('error.conflict') }}</strong>
       {{ conflictMessage }}

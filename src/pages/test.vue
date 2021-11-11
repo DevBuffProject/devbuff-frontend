@@ -1,15 +1,16 @@
 <template>
-  <AtomicButton @click="visible = true">Big large btn</AtomicButton>
-
-  <AtomicSquircle :width="50" :height="50" :roundness="2"> 0.1 </AtomicSquircle>
-
-  <AtomicDialog v-model:visible="visible">
-    <h1>test</h1>
-  </AtomicDialog>
+  <AtomicButton @click="m = !m">toggle</AtomicButton>
+  <AtomicSnackbar :value="true">
+    <AtomicLoadingSpinner class="mr-2" />
+    <span class="mt-0.5">Обновление</span>
+  </AtomicSnackbar>
+  <pre>
+    {{ m }}
+  </pre>
 </template>
 <script setup>
 import { ref } from 'vue'
 
 const visible = ref(false)
-const m = ref('')
+const m = ref(false)
 </script>

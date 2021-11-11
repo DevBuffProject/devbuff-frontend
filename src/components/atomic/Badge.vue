@@ -5,7 +5,7 @@
     <div
       v-if="value"
       class="
-        px-1
+        px-2
         absolute
         -top-3
         -right-3
@@ -14,7 +14,9 @@
         flex
         items-center
         justify-center
-        text-center text-xs text-white
+        text-center text-sm text-white
+        leading-4
+        font-semibold
         bg-red-500
         rounded-xl
         shadow
@@ -24,20 +26,13 @@
   </div>
 </template>
 
-<script>
-import { useAttrs } from 'vue'
+<script setup>
+import { useAttrs, defineProps, toRefs } from 'vue'
 
-export default {
-  name: 'AtomicBadge',
-  props: {
-    value: { type: [String, Number], default: null },
-  },
-  setup() {
-    const attrs = useAttrs()
+const props = defineProps({
+  value: { type: Number, default: null },
+})
+const { value } = toRefs(props)
 
-    return {
-      attrs,
-    }
-  },
-}
+const attrs = useAttrs()
 </script>

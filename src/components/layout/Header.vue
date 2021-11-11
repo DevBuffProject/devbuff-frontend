@@ -2,15 +2,14 @@
   <header>
     <div
       class="
-        backdrop-blur-[10px]
+        border-b
+        dark:border-dark-400
         flex flex-col
         justify-center
         items-center
-        dark:bg-dark-700
-        bg-white bg-opacity-80
-        dark:bg-opacity-80
-        backdrop-filter
-        h-[62px]
+        dark:bg-dark-800
+        bg-white
+        h-[60px]
       "
       style="box-shadow: 0 5px 8px #00098000, 0 5px 16px rgb(0 9 128 / 5%)"
     >
@@ -30,7 +29,7 @@
 
           <nav class="hidden lg:block ml-6" v-if="isLoggedIn">
             <AppLink v-slot="{ isActive, isLoading }" to="/create">
-              <AtomicButton :disabled="isActive || isLoading">
+              <AtomicButton :disabled="Boolean(isActive || isLoading)">
                 <div class="mr-4">
                   <AtomicLoadingSpinner v-if="isLoading" />
                   <AnnouncementIcon v-else />

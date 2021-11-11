@@ -2,7 +2,7 @@
   <div
     class="
       shadow-lg shadow-dark-50
-      dark:shadow-black dark:shadow-3xl
+      dark:shadow-black dark:shadow-xl
       bg-white
       dark:bg-dark-800
       p-4

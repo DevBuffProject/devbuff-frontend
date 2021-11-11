@@ -18,7 +18,7 @@
         <h3 class="!mt-0">{{ user.firstName }} {{ user.lastName }}</h3>
       </div>
 
-      <AppLink :to="{ name: 'settings' }">
+      <AppLink :to="{ name: 'user-edit' }">
         <BaseButton class="text-primary-500">
           <EditIcon class="mr-2" />
           Редактировать

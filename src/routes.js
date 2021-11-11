@@ -86,14 +86,10 @@ export default [
     },
   },
   {
-    name: 'settings',
-    path: '/settings',
-    component: () => import('./pages/settings.vue'),
-    meta: {
-      name: 'Settings',
-      breadcrumbs: ['home'],
-      isDialog: true,
-    },
+    name: 'user-edit',
+    path: '/edit',
+    component: () => import('./pages/edit.vue'),
+    meta: { isDialog: true },
   },
   {
     name: 'test',

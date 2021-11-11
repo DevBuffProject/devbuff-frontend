@@ -1,15 +1,26 @@
 <template>
   <aside>
     <nav>
-      <AppLink
-        v-if="isLoggedIn && user.id"
-        :to="{ name: 'user', params: { UUID: user.id } }"
-        class="mb-8 block p-1 rounded"
-        v-slot="{ navigate }"
-        v-ripple
-      >
-        <WidgetUser :user="user" @click="navigate" class="block" />
-      </AppLink>
+      <div class="mb-8 block relative group">
+        <AppLink
+          v-if="isLoggedIn && user.id"
+          :to="{ name: 'user', params: { UUID: user.id } }"
+          class="block p-1"
+          v-slot="{ navigate }"
+          v-ripple
+        >
+          <WidgetUser :user="user" @click="navigate" class="block" />
+        </AppLink>
+        <AppLink
+          :to="{ name: 'user-edit' }"
+          :class="'p-1 absolute -left-10 top-3 text-xs rounded-full transition-opacity opacity-30 group-hover:opacity-100'"
+        >
+          <BaseButton>
+            <EditIcon />
+          </BaseButton>
+        </AppLink>
+      </div>
+
       <div
         v-if="!isLoggedIn"
         class="p-5 mb-5 bg-primary-500 bg-opacity-10 rounded-xl"
@@ -43,51 +54,49 @@
         <div class="mt-0">{{ t('loginReason') }}</div>
       </div>
 
-      <template v-for="link in nav" :key="link.title">
-        <AppLink
-          :to="link.to"
-          v-slot="{ isActive, isLoading }"
-          class="flex items-center mb-2 cursor-pointer transition-all group"
-          :class="{ 'opacity-50': isActive }"
+      <AppLink
+        v-for="link in nav"
+        :key="link.title"
+        :to="link.to"
+        v-slot="{ isActive, isLoading }"
+        class="flex items-center mb-2 cursor-pointer transition-all group"
+      >
+        <div
+          class="
+            flex
+            items-center
+            pr-4
+            pl-3
+            py-1.5
+            rounded-full
+            transition-colors
+          "
         >
-          <div
-            class="
-              flex
-              items-center
-              pr-4
-              pl-3
-              py-1.5
-              rounded-full
-              transition-colors
-            "
+          <AtomicSquircle
+            :width="35"
+            :height="35"
+            :color="link.color"
+            :roundness="1"
+            background
+            class="mr-4 transition-opacity group-hover:opacity-100"
+            :class="{ 'opacity-100': isActive, 'opacity-50': !isActive }"
+            :style="{ color: link.textColor }"
           >
-            <AtomicSquircle
-              :width="35"
-              :height="35"
-              :color="link.color"
-              :roundness="1"
-              background
-              class="mr-4 transition-opacity group-hover:opacity-100"
-              :class="{ 'opacity-100': isActive, 'opacity-50': !isActive }"
-              :style="{ color: link.textColor }"
-            >
-              <AtomicLoadingSpinner v-if="isLoading" />
-              <component v-else :is="link.icon" />
-            </AtomicSquircle>
-            <span class="text-md font-medium">{{ link.title }}</span>
-          </div>
-        </AppLink>
-      </template>
+            <AtomicLoadingSpinner v-if="isLoading" />
+            <component v-else :is="link.icon" />
+          </AtomicSquircle>
+          <span class="text-md font-medium">{{ link.title }}</span>
+        </div>
+      </AppLink>
 
       <template v-if="isLoggedIn">
         <div class="divider-x my-6 ml-12" />
         <BaseButton
-          v-ripple
           class="
             flex
             items-center
             rounded-full
-            px-4
+            pl-16
             py-1
             w-full
             !justify-start
@@ -97,7 +106,6 @@
           "
           @click="logoutProcess"
         >
-          <LogOutIcon class="mr-3" />
           <span class="text-md font-medium"> {{ t('links.logout') }} </span>
         </BaseButton>
       </template>

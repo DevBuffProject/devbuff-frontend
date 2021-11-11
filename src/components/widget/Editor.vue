@@ -7,12 +7,13 @@
       v-model="vModel"
       style="border: none; padding: 0; box-shadow: none; width: 100%"
     />
-    <AtomicTextError v-if="errorMessage" :text="errorMessage" />
+
+    <div v-if="errorMessage" class="text-red-500 mb-4">{{ errorMessage }}</div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, onMounted, ref, watch } from 'vue'
 import { useVModel } from '@vueuse/core'
 import { useFiles } from '../../composes'
 import { useField } from 'vee-validate'
@@ -113,14 +114,9 @@ export default defineComponent({
     const isFocused = ref(false)
     const vModel = useVModel(props, 'modelValue', emit)
     const textValue = ref('')
-    const { setValue, errors, errorMessage } = useField(
-      props.name,
-      props.rules,
-      {
-        initialValue: textValue.value,
-      },
-    )
+    const { setValue, errors, errorMessage } = useField(props.name, props.rules)
 
+    onMounted(() => setValue(htmlToText(vModel.value)))
     watch(vModel, (markup) => setValue((textValue.value = htmlToText(markup))))
 
     return {

@@ -2,11 +2,15 @@ import './styles.css'
 
 export const Ripple = {
   beforeMount: (el, { value }) => {
+    let prevPosition = ''
+    let ripples = 0
     const computedStyles = window.getComputedStyle(el)
     const duration = 800
 
     const rippleStart = (e) => {
       if (el.hasAttribute('disabled')) return
+
+      ripples++
 
       const width = el.offsetWidth
       const height = el.offsetHeight
@@ -14,7 +18,10 @@ export const Ripple = {
       rippleContainer.className = 'v-ripple'
       rippleContainer.style.height = `${height}px`
       rippleContainer.style.width = `${width}px`
-      rippleContainer.style.borderRadius = computedStyles.borderRadius
+      rippleContainer.style.borderRadius =
+        parseInt(computedStyles.borderRadius) > 0
+          ? computedStyles.borderRadius
+          : '4px'
 
       const ripple = document.createElement('div')
       const rect = el.getBoundingClientRect()
@@ -28,7 +35,14 @@ export const Ripple = {
       const radius = Math.sqrt(maxX * maxX + maxY * maxY)
       const rippleReset = () => {
         setTimeout(() => (ripple.style.opacity = 0), duration / 4)
-        setTimeout(() => rippleContainer.remove(), duration)
+        setTimeout(() => {
+          rippleContainer.remove()
+          if (ripples === 1 && prevPosition) {
+            el.style.position = prevPosition
+            prevPosition = ''
+          }
+          ripples--
+        }, duration)
       }
 
       el.addEventListener('mouseover', rippleReset)
@@ -48,7 +62,10 @@ export const Ripple = {
       el.appendChild(rippleContainer)
 
       setTimeout(() => {
-        el.style.position = 'relative'
+        if (computedStyles && computedStyles.position === 'static') {
+          el.style.position = 'relative'
+          prevPosition = 'static'
+        }
         ripple.style.opacity = '1'
         ripple.style.width = `${radius * 2}px`
         ripple.style.height = `${radius * 2}px`

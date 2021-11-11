@@ -4,16 +4,10 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, useCssModule } from 'vue'
+<script setup>
+import { useCssModule } from 'vue'
 
-export default defineComponent({
-  name: 'AtomicLoadingBar',
-  setup() {
-    const styles = useCssModule()
-    return { styles }
-  },
-})
+const styles = useCssModule()
 </script>
 
 <style module>

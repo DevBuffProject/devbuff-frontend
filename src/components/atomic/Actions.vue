@@ -14,7 +14,7 @@
           z-50
           p-2
           -m-2
-          rounded-lg
+          rounded-xl
           overflow-hidden
           bg-white
           dark:bg-dark-800

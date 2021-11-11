@@ -13,8 +13,12 @@ html {
   user-select: none;
 }
 
+body {
+  @apply text-dark-900 dark:text-white bg-light-50 dark:bg-dark-900 h-screen w-screen;
+}
+
 #nprogress .bar {
-  @apply relative bg-primary-500 rounded-full !important
+  @apply relative bg-primary-500 rounded-full !important;
 }
 
 svg {

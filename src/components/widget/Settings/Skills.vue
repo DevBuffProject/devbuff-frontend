@@ -14,7 +14,7 @@
             :key="skill.name"
             class="flex justify-between items-center group cursor-pointer"
           >
-            <AtomicFormCheckbox
+            <AtomicCheckbox
               :id="'language' + skill.name"
               :label="
                 tDefault(`commons.languages.${skill.name}`, skill.name, true)
@@ -54,7 +54,7 @@
             :key="specialist.name"
             :class="['flex justify-between items-center group cursor-pointer']"
           >
-            <AtomicFormCheckbox
+            <AtomicCheckbox
               :id="'specialist' + specialist.name + Math.random() * 1000"
               :label="t(`commons.specialist.${specialist.name}`, true)"
               v-model="specialist.checked"
@@ -92,7 +92,7 @@
             :key="framework.name"
             :class="['flex justify-between items-center group cursor-pointer']"
           >
-            <AtomicFormCheckbox
+            <AtomicCheckbox
               :id="'framework' + framework.name"
               :label="framework.name"
               v-model="framework.checked"

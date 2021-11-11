@@ -1,15 +1,17 @@
 <template>
   <span
-    class="text-xs px-4 py-1 font-medium uppercase rounded-full"
     :class="{
-      'bg-gray-200 dark:bg-dark-500 text-dark-50 dark:text-dark-50':
+      'text-xs px-4 py-1 font-medium uppercase rounded-full': true,
+      'bg-gray-200 dark:bg-dark-300 text-dark-50 dark:text-warmGray-300':
         type !== 'auto',
     }"
     :style="
-      type === 'auto' && {
-        backgroundColor: colors.bg,
-        color: colors.text,
-      }
+      type !== 'auto'
+        ? {}
+        : {
+            backgroundColor: colors.bg,
+            color: colors.text,
+          }
     "
   >
     {{ text }}

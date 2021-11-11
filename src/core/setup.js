@@ -4,8 +4,7 @@ export default {
   install() {
     const { isLoggedIn, getStatus, getUser } = useAuth()
     if (isLoggedIn.value) {
-      getStatus()
-      getUser()
+      getStatus().then(() => getUser())
     }
   },
 }

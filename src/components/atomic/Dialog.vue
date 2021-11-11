@@ -1,20 +1,7 @@
 <template>
   <div
     v-if="visible"
-    ref="overlayRef"
-    class="
-      fixed
-      z-50
-      top-0
-      left-0
-      right-0
-      bottom-0
-      flex
-      items-center
-      justify-center
-      bg-black bg-opacity-40
-      dark:bg-opacity-70
-    "
+    :class="'fixed z-50 top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-40 dark:bg-opacity-70'"
     v-motion="'overlayTransition'"
     :initial="{ opacity: 0 }"
     :leave="{ opacity: 0 }"
@@ -30,43 +17,46 @@
         v-bind="attrs"
       >
         <div
-          ref="windowRef"
-          class="
-            bg-white
-            dark:bg-dark-900
-            border border-default
-            shadow-xl
-            rounded-2xl
-            p-4
-            z-50
-          "
+          :class="'bg-white dark:bg-dark-900 shadow-xl rounded-2xl overflow-hidden p-4 z-50'"
           v-motion="'windowTransition'"
-          :initial="{ scale: 1.5, opacity: 0 }"
-          :leave="{ scale: 0, opacity: 0 }"
+          :initial="{
+            scale: 0.9,
+            opacity: 0,
+          }"
+          :leave="{
+            scale: 0.5,
+            opacity: 0,
+            transition: {
+              type: 'Spring',
+              opacity: { duration: 200 },
+              scale: { duration: 300 },
+            },
+          }"
           :enter="{
             scale: 1,
             opacity: 1,
             transition: {
               type: 'spring',
               duration: 300,
+              delay: 50,
             },
           }"
         >
-          <div class="flex justify-end px-4 pb-2 mb-4 -mx-4 -mt-2">
-            <BaseButton
-              class="
-                p-1
-                text-dark-50
-                bg-light-900
-                dark:bg-dark-50 dark:text-dark-900
-                rounded-full
-              "
-              v-ripple
-              @click="close"
-            >
-              <CloseIcon />
-            </BaseButton>
-          </div>
+          <BaseButton
+            class="
+              text-dark-50
+              bg-light-900
+              dark:bg-dark-50 dark:text-dark-900
+              rounded-full
+              absolute
+              right-4
+              top-4
+              p-1
+            "
+            @click="close"
+          >
+            <CloseIcon />
+          </BaseButton>
 
           <slot />
         </div>

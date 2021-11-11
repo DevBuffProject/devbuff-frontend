@@ -1,28 +1,29 @@
 <template>
   <div>
     <h1>{{ idea.name }}</h1>
-
-    <div class="flex flex-wrap items-start my-5">
-      <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">
-        {{ publishedAgo }}
-      </AtomicLabel>
-
-      <AtomicLabel :name="t('info.status.title')" class="mb-4 mt-0 mx-4">
-        {{ t(`info.status.${idea.status}`) }}
-      </AtomicLabel>
-
-      <AtomicLabel
-        v-if="isOwnerIdea"
-        :name="t('info.moderationStatus.title')"
-        class="mb-4 mt-0 mx-4"
-      >
-        {{
-          idea.waitingValidation
-            ? t('info.moderationStatus.waiting')
-            : t('info.moderationStatus.approved')
-        }}
-      </AtomicLabel>
+    <div class="">
+      <div class="flex flex-wrap items-start py-4 my-4">
+        <WidgetUser :user="idea.ownerIdea" class="block" />
+        <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">
+          {{ publishedAgo }}
+        </AtomicLabel>
+        <AtomicLabel :name="t('info.status.title')" class="mb-4 mt-0 mx-4">
+          {{ t(`info.status.${idea.status}`) }}
+        </AtomicLabel>
+        <AtomicLabel
+          v-if="isOwnerIdea"
+          :name="t('info.moderationStatus.title')"
+          class="mb-4 mt-0 mx-4"
+        >
+          {{
+            idea.waitingValidation
+              ? t('info.moderationStatus.waiting')
+              : t('info.moderationStatus.approved')
+          }}
+        </AtomicLabel>
+      </div>
     </div>
+
     <div class="grid gap-6 grid-cols-6">
       <AtomicCard class="col-span-4 mb-3">
         <div v-html="idea.text" class="overflow-hidden" />
@@ -31,6 +32,7 @@
       <div class="col-span-2">
         <div class="flex items-center mb-6" v-if="isOwnerIdea">
           <span class="opacity-50">вы создатель</span>
+
           <AtomicActions>
             <template #activator>
               <div class="flex items-center ml-2 text-primary-500">
@@ -38,29 +40,29 @@
                 <ChevronDownIcon />
               </div>
             </template>
+
             <div class="flex flex-col items-start -mx-4 text-xs">
-              <AtomicAction type="danger" class="w-full">
+              <BaseButton type="danger" class="w-full pt-2 px-4">
                 <StopIcon />
                 Stop company
-              </AtomicAction>
+              </BaseButton>
 
-              <AtomicAction
+              <BaseButton
                 type="danger"
-                class="w-full"
+                class="w-full pt-2 px-4"
                 @click="deleteIdeaProcess"
               >
-                <TrashIcon />
+                <TrashIcon w:text="danger-500" />
                 {{ t('control.delete') }}
-              </AtomicAction>
+              </BaseButton>
               <RouterLink
                 class="w-full"
                 :to="{ name: 'idea-edit', params: { id: idea.id } }"
-                v-slot="{ href, navigate }"
               >
-                <AtomicAction :href="href" @click="navigate" class="w-full">
+                <BaseButton class="w-full pt-2 px-4">
                   <EditIcon />
                   {{ t('control.edit') }}
-                </AtomicAction>
+                </BaseButton>
               </RouterLink>
             </div>
           </AtomicActions>
@@ -73,12 +75,13 @@
               v-for="specialist in idea.specialist"
               :key="specialist.id"
             >
-              <h5 class="m-0 !mb-4 font-normal">
+              <h5 class="m-0 font-normal">
                 {{ t(`commons.specialist.${specialist.name}`, true) }}
               </h5>
               <AtomicLabel
-                :name="t('positions.titleLanguages')"
                 v-if="languagesForSpecialist(specialist.id).length > 0"
+                :name="t('positions.titleLanguages')"
+                class="mt-4"
               >
                 <div class="flex flex-wrap">
                   <div

@@ -1,30 +1,28 @@
 <template>
   <div>
     <h5>{{ t('title') }}</h5>
-    <AtomicTextError
-      :key="errorMessage"
-      v-show="errorMessage"
-      :text="errorMessage"
-    />
+
+    <div class="text-red-500 mb-4">{{ errorMessage }}</div>
+
     <div class="grid grid-cols-3 gap-4">
       <div
         v-for="specialist of specializations"
         :key="specialist"
-        class="border rounded-xl w-full p-4 transition-all"
-        :class="
-          isSpecialistSelected(specialist)
-            ? 'border-primary-500 ring ring-primary-200 bg-light-900 dark:(ring-primary-900 bg-dark-700)'
-            : 'border border-light-900 dark:border-dark-300'
-        "
+        :class="{
+          'border rounded-xl w-full p-4 transition-all': true,
+          'border-primary-500 ring ring-primary-200 bg-light-900 dark:(ring-primary-900 bg-dark-700)':
+            isSpecialistSelected(specialist),
+          'border border-light-900 dark:border-dark-300':
+            isSpecialistSelected(specialist),
+        }"
       >
         <div>{{ t(`commons.specialist.${specialist}`, true) }}</div>
         <button
-          class="cursor-pointer"
-          :class="
-            isSpecialistSelected(specialist)
-              ? 'text-danger-500'
-              : 'text-primary-500'
-          "
+          :class="{
+            'cursor-pointer': true,
+            'text-danger-500': isSpecialistSelected(specialist),
+            'text-primary-500': !isSpecialistSelected(specialist),
+          }"
           @click="toggleSpecialist(specialist)"
         >
           {{ isSpecialistSelected(specialist) ? 'удалить' : 'добавить' }}
@@ -38,7 +36,7 @@
           <div v-if="isSpecialistSelected(specialist)" class="mt-6">
             <div v-for="lang of languagesForSpecialist(specialist)" :key="lang">
               <div class="mb-1">
-                <AtomicFormCheckbox
+                <AtomicCheckbox
                   :label="tDefault('commons.languages.' + lang, lang, true)"
                   :model-value="isLanguageSelected(specialist, lang)"
                   @update:model-value="toggleLanguage(specialist, lang)"
@@ -54,7 +52,7 @@
                     )"
                     :key="technology"
                   >
-                    <AtomicFormCheckbox
+                    <AtomicCheckbox
                       :label="technology"
                       :model-value="
                         isTechnologySelected(specialist, lang, technology)
@@ -75,7 +73,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, watch } from 'vue'
+import { computed, defineComponent, onMounted, watch } from 'vue'
 import { useSkills, useI18n } from '../../../composes'
 import { get, useVModel } from '@vueuse/core'
 import { useField } from 'vee-validate'
@@ -94,6 +92,7 @@ export default defineComponent({
     const vModel = useVModel(props, 'modelValue', emit)
     const { errors, errorMessage, setValue } = useField(props.name)
 
+    onMounted(() => setValue(vModel.value))
     watch(vModel, (skills) => setValue(skills))
 
     const getSpecialistSelected = (sp) =>
