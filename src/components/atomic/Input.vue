@@ -55,6 +55,7 @@
 .placeholder::placeholder {
   @apply transition-all duration-350 opacity-0 transform translate-y-4;
 }
+
 .placeholder-visible::placeholder {
   @apply opacity-100 transform translate-y-0;
 }
