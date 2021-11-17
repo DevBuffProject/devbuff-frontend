@@ -33,6 +33,7 @@
         :rules="rules"
         :as="type === 'textarea' ? 'textarea' : 'input'"
         :type="type !== 'textarea' && type"
+        style="color: inherit"
         :class="{
           'rounded-xl py-3 px-6 w-full placeholder bg-[transparent]': true,
           'placeholder-visible': isFocused,
@@ -54,6 +55,7 @@
 .placeholder::placeholder {
   @apply transition-all duration-350 opacity-0 transform translate-y-4;
 }
+
 .placeholder-visible::placeholder {
   @apply opacity-100 transform translate-y-0;
 }

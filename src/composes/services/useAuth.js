@@ -41,7 +41,7 @@ const isAdmin = computed(
 const { user, getUser } = useUser()
 
 export const useAuth = () => {
-  const { request, BASE_URL } = useApi()
+  const { request, BASE_URL, error } = useApi()
   const initAuth = (provider) => {
     window.location.href = `${BASE_URL}/oAuth/${PROVIDERS.get(provider)}`
   }
