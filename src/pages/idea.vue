@@ -163,9 +163,9 @@
         </AtomicCard>
       </div>
       <!--      await for design-->
-      <!--      <div class="col-span-4">-->
-      <!--        <WidgetCommentsFast :id="`idea-${idea.id}`" :sso="ssoData" />-->
-      <!--      </div>-->
+      <div class="col-span-4">
+        <WidgetCommentsFast :id="`idea-${idea.id}`" :sso="ssoData" />
+      </div>
     </div>
   </div>
 </template>
@@ -222,7 +222,7 @@ export default defineComponent({
     idea.value.ownerIdea.avatar = getUserProfileUrl(idea.value.ownerIdea.id)
 
     await getStatusPositions(idea.value.id)
-    // await getSsoData()
+    await getSsoData()
 
     const isOwnerIdea = user.value.id === idea.value.ownerIdea.id
     const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
