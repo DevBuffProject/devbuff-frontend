@@ -120,7 +120,16 @@ export default [
       breadcrumbs: ['home', 'superuser'],
     },
   },
-
+  {
+    name: 'skillManager',
+    path: '/su/skillManager',
+    component: () => import('./pages/superuser/skill-manager.vue'),
+    // beforeEnter: createMiddleware(isAdmin),
+    meta: {
+      name: 'Skill manager',
+      breadcrumbs: ['home', 'superuser'],
+    },
+  },
   /* Emergency service routes */
   {
     name: 'callback',
