@@ -12,7 +12,7 @@
       </AtomicCard>
     </RouterLink>
     <RouterLink to="/su/skillManager" custom v-slot="{ navigate }">
-      <AtomicCard @click="navigate">
+      <AtomicCard @click="navigate" class="ml-4">
         <div class="flex items-center">
           <ShieldIcon
             class="text-gradient-laguna text-2xl"
