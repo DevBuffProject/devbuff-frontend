@@ -58,7 +58,7 @@
         </RouterLink>
 
         <RouterLink
-          :to="{ name: 'settings' }"
+          :to="{ name: 'user-edit' }"
           :class="styles['btn']"
           :active-class="styles['btn--active']"
         >

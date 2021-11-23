@@ -30,7 +30,13 @@
     </AtomicAlert>
     <AtomicTabs>
       <AtomicTabsTab name="О себе">
-        <AtomicForm :data="data" @submit="onSubmit" />
+        <AtomicForm :data="data" @submit="onSubmit">
+          <template #externalForms>
+            <div>
+              <AtomicButton :disabled="saveProcessing">Сохранить</AtomicButton>
+            </div>
+          </template>
+        </AtomicForm>
       </AtomicTabsTab>
 
       <AtomicTabsTab name="Скиллы">
@@ -55,7 +61,7 @@ export default defineComponent({
     const data = [
       {
         schema: yup.string().min(4).max(10),
-        label: 'User name',
+        label: 'Имя пользователя',
         name: 'userName',
         placeholder: t('fields.userName'),
         value: user.value.userName,
@@ -75,7 +81,7 @@ export default defineComponent({
           .min(3)
           .max(30)
           .required(),
-        label: 'First name',
+        label: 'Имя',
         name: 'firstName',
         placeholder: t('fields.firstName'),
         value: user.value.firstName,
@@ -87,21 +93,21 @@ export default defineComponent({
           .min(3)
           .max(30)
           .required(),
-        label: 'Last name',
+        label: 'Фамилия',
         name: 'lastName',
         placeholder: t('fields.lastName'),
         value: user.value.lastName,
       },
       {
         schema: yup.date().default(() => new Date()),
-        label: 'Birthday',
+        label: 'День рождение',
         name: 'birthday',
         placeholder: t('fields.birthday'),
         value: user.value.birthday,
       },
       {
         schema: yup.string().min(0).max(300),
-        label: 'Bio',
+        label: 'О вас',
         name: 'bio',
         placeholder: t('fields.bio'),
         value: user.value.bio,
@@ -155,7 +161,7 @@ export default defineComponent({
     ]
     const isVerifyEmailSent = ref(true)
     const conflictFields = ref([])
-
+    const saveProcessing = ref(false)
     const onSubmit = async (data) => {
       // TODO: !reduce
       for (const indexValue of Object.keys(data)) {
@@ -167,11 +173,14 @@ export default defineComponent({
         }
       }
       try {
+        saveProcessing.value = true
         conflictFields.value = []
         await saveUserData(data)
         isVerifyEmailSent.value = false
       } catch (err) {
         conflictFields.value = err.message.split(',')
+      } finally {
+        saveProcessing.value = false
       }
     }
 
@@ -197,6 +206,7 @@ export default defineComponent({
       user,
       onSubmit,
       onResendEmail,
+      saveProcessing,
     }
   },
 })
