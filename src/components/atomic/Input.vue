@@ -33,7 +33,7 @@
         :rules="rules"
         :as="type === 'textarea' ? 'textarea' : 'input'"
         :type="type !== 'textarea' && type"
-        style="color: inherit"
+        style="color: inherit; font-size: 100%; resize: vertical"
         :class="{
           'rounded-xl py-3 px-6 w-full placeholder bg-[transparent]': true,
           'placeholder-visible': isFocused,

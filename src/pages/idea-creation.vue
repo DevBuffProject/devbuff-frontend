@@ -1,6 +1,18 @@
 <template>
   <div>
-    <h3 class="!mt-0">{{ t('header') }}</h3>
+    <h3 class="!mt-0">{{ t("header") }}</h3>
+    <div v-for="(value, errorType) in errorAlert" :key="errorType">
+      <AtomicAlert
+        v-if="value"
+        style="cursor: pointer"
+        type="danger"
+      >
+        <strong>{{ t(`errors.${errorType}.title`) }}</strong>
+        <br>
+        {{ t(`errors.${errorType}.text`) }}
+
+      </AtomicAlert>
+    </div>
     <Form
       :validation-schema="schema"
       ref="form"
@@ -36,7 +48,7 @@
       />
 
       <AtomicButton :disabled="!meta.valid">
-        {{ t('save') }}
+        {{ t("save") }}
       </AtomicButton>
     </Form>
 
@@ -52,69 +64,80 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { Form } from 'vee-validate'
-import { useIdea, useI18n } from '../composes'
-import { useRouter } from 'vue-router'
-import { useStorage, useTitle } from '@vueuse/core'
-import * as yup from 'yup'
+import { ref } from "vue";
+import { Form } from "vee-validate";
+import { useIdea, useI18n } from "../composes";
+import { useRouter } from "vue-router";
+import { useStorage, useTitle } from "@vueuse/core";
+import * as yup from "yup";
 
 const props = defineProps({
-  id: { type: String, default: undefined },
-})
-const { t } = useI18n('pages.ideaCreation')
-const { idea, publishIdea, getIdea, updateIdea, isLoading } = useIdea()
-const router = useRouter()
-const isEditingMode = !!props.id
+  id: { type: String, default: undefined }
+});
+const { t } = useI18n("pages.ideaCreation");
+const { idea, publishIdea, getIdea, updateIdea, isLoading } = useIdea();
+const router = useRouter();
+const isEditingMode = !!props.id;
 
 const initial = {
-  name: '',
-  description: '',
-  text: '',
-  specialists: [],
-}
+  name: "",
+  description: "",
+  text: "",
+  specialists: []
+};
 
-const data = isEditingMode ? ref(initial) : useStorage('editor-draft', initial)
+const data = isEditingMode ? ref(initial) : useStorage("editor-draft", initial);
 
-useTitle('Создание идеи')
+useTitle("Создание идеи");
 
 if (props.id) {
-  await getIdea(props.id)
-  useTitle(`Редактирование идеи - ${idea.value.name}`)
+  await getIdea(props.id);
+  useTitle(`Редактирование идеи - ${idea.value.name}`);
   data.value = {
-    name: idea.value.name || '',
-    description: idea.value?.description || '',
-    text: idea.value.text || '',
-    specialists: idea.value.specialist || '',
-  }
+    name: idea.value.name || "",
+    description: idea.value?.description || "",
+    text: idea.value.text || "",
+    specialists: idea.value.specialist || ""
+  };
 }
 
-const isUpdating = ref(false)
-const isPublishing = ref(false)
-const error = ref(null)
+const errorAlert = ref({
+  tooManyIdeas: false
+});
+const isUpdating = ref(false);
+const isPublishing = ref(false);
+const error = ref(null);
 const onSubmit = async () => {
   if (isEditingMode) {
     try {
-      isUpdating.value = true
-      await updateIdea(props.id, data.value)
-      await router.push({ name: `idea-detail`, params: { id: props.id } })
+      isUpdating.value = true;
+      await updateIdea(props.id, data.value);
+      await router.push({ name: `idea-detail`, params: { id: props.id } });
     } catch (e) {
-      error.value = e
+      handleException(e);
     } finally {
-      isUpdating.value = false
+      isUpdating.value = false;
     }
   } else {
     try {
-      const { id } = await publishIdea(data.value)
-      await router.push({ name: `idea-detail`, params: { id } })
+      const { id } = await publishIdea(data.value);
+      await router.push({ name: `idea-detail`, params: { id } });
     } catch (e) {
-      error.value = e
+      handleException(e);
     } finally {
-      isPublishing.value = false
+      isPublishing.value = false;
     }
   }
-  data.value = initial
-}
+  data.value = initial;
+};
+
+const handleException = (e) => {
+  error.value = e;
+  if (e === undefined){
+    return
+  }
+  errorAlert.value[error.value.message] = true;
+};
 
 const schema = yup.object({
   name: yup
@@ -130,6 +153,6 @@ const schema = yup.object({
     .max(300)
     .required(),
   skills: yup.array().min(1).max(10).required(),
-  text: yup.string().min(100).max(5000).required(),
-})
+  text: yup.string().min(100).max(5000).required()
+});
 </script>

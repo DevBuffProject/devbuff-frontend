@@ -116,6 +116,9 @@ export default defineComponent({
     const textValue = ref('')
     const { setValue, errors, errorMessage } = useField(props.name, props.rules)
 
+    const onBlur = () => {
+      isFocused.value = false
+    }
     onMounted(() => setValue(htmlToText(vModel.value)))
     watch(vModel, (markup) => setValue((textValue.value = htmlToText(markup))))
 
@@ -127,6 +130,7 @@ export default defineComponent({
       isFocused,
       config,
       EditorClassic,
+      onBlur,
     }
   },
 })
