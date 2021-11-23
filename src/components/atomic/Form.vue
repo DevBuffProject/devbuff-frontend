@@ -28,7 +28,6 @@
       />
     </div>
     <slot name="externalForms" />
-    <div><AtomicButton class=""> Save </AtomicButton></div>
   </Form>
 </template>
 
