@@ -160,7 +160,7 @@ const nav = computed(() =>
     isLoggedIn.value && {
       title: t('links.settings'),
       icon: SettingsIcon,
-      to: { name: 'settings' },
+      to: { name: 'user-edit' },
       exact: true,
       color: '#ffb8d2',
       textColor: '#620042',
