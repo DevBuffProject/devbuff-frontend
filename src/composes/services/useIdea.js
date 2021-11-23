@@ -8,7 +8,7 @@ const mapValuesFromArrayObjects = (object, key) => {
 }
 
 export const useIdea = (id) => {
-  const { request, ...rest } = useApi('ideas')
+  const { request, error, ...rest } = useApi('ideas')
 
   const idea = ref({})
   const publishedAgo = useTimeAgo(new Date(idea.value.lastUpdateDate))
@@ -76,13 +76,14 @@ export const useIdea = (id) => {
         typeof data[key] === 'object' ? JSON.stringify(data[key]) : data[key],
       )
     }
+    const response = await request(`/idea/`, {
+      method: 'POST',
+      data: formData,
+    })
 
-    return (
-      await request(`/idea/`, {
-        method: 'POST',
-        data: formData,
-      })
-    ).data
+    if (error.value?.response?.status === 429) throw new Error('tooManyIdeas')
+
+    return response.data
   }
 
   const updateIdea = async (uuid, data) => {
