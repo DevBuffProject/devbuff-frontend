@@ -104,7 +104,9 @@
         </AtomicList>
       </swiper-slide>
     </swiper>
-    <AtomicButton @click="save"> Save </AtomicButton>
+    <AtomicButton @click="save" :disbled="saveProcessing" class="mt-2"
+      >Сохранить
+    </AtomicButton>
   </div>
 </template>
 
@@ -128,6 +130,7 @@ export default defineComponent({
     const swiper = ref()
     const allSkills = await getSkills()
     const userSkill = user.value.skills
+    const saveProcessing = ref(false)
 
     const findName = (array, value) =>
       array.findIndex((data) => data.name === value)
@@ -253,8 +256,12 @@ export default defineComponent({
           }
         }
       }
-
-      saveUserSkills({ skills: skillsData })
+      try {
+        saveProcessing.value = false
+        saveUserSkills({ skills: skillsData })
+      } finally {
+        saveProcessing.value = false
+      }
     }
 
     const onSwiper = (swiperComponent) => (swiper.value = swiperComponent)
@@ -273,6 +280,7 @@ export default defineComponent({
       prevSlide,
       nextSlide,
       onChangeSkill,
+      saveProcessing,
     }
   },
 })
