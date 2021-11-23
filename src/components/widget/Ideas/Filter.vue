@@ -123,7 +123,7 @@
               rounded-md
             "
             :class="{
-              'hover:bg-light-700': !isChecked,
+              'hover:bg-light-700 dark:hover:bg-dark-500': !isChecked,
               'bg-primary-500 text-white': isChecked,
             }"
           >
