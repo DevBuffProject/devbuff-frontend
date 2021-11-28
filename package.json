@@ -28,7 +28,7 @@
     "@vueuse/motion": "1.6.0",
     "@vueuse/router": "6.9.2",
     "axios": "0.24.0",
-    "color": "4.0.1",
+    "color": "4.0.2",
     "fastcomments-vue-next": "2.1.0",
     "lodash": "4.17.21",
     "masonry-layout": "4.2.2",
