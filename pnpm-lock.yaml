@@ -33,7 +33,7 @@ specifiers:
   mitt: 3.0.0
   nprogress: 0.2.0
   pinst: 2.1.6
-  prettier: 2.5.0
+  prettier: 2.5.1
   query-string: 7.0.1
   quill-image-uploader: 1.2.2
   sass: 1.44.0
@@ -93,7 +93,7 @@ devDependencies:
   '@storybook/vue3': 6.4.7_02f0b7f6b741b4ae9c04b47aa8e57868
   '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
   '@vue/compiler-sfc': 3.2.23
-  '@vue/eslint-config-prettier': 6.0.0_eslint@8.3.0+prettier@2.5.0
+  '@vue/eslint-config-prettier': 6.0.0_eslint@8.3.0+prettier@2.5.1
   babel-loader: 8.2.3_@babel+core@7.16.0
   eslint: 8.3.0
   eslint-config-prettier: 8.3.0_eslint@8.3.0
@@ -102,7 +102,7 @@ devDependencies:
   husky: 7.0.4
   lint-staged: 11.2.6
   pinst: 2.1.6
-  prettier: 2.5.0
+  prettier: 2.5.1
   vite: 2.6.14_sass@1.44.0
   vite-plugin-fonts: 0.2.2_vite@2.6.14
   vite-plugin-svg-icons: 1.0.5_vite@2.6.14
@@ -2404,7 +2404,7 @@ packages:
       lodash: 4.17.21
       nanoid: 3.1.25
       p-limit: 3.1.0
-      prettier: 2.5.0
+      prettier: 2.5.1
       prop-types: 15.7.2
       react-element-to-jsx-string: 14.3.4
       regenerator-runtime: 0.13.9
@@ -3494,7 +3494,7 @@ packages:
       global: 4.4.0
       js-string-escape: 1.0.1
       lodash: 4.17.21
-      prettier: 2.5.0
+      prettier: 2.5.1
       regenerator-runtime: 0.13.9
       ts-dedent: 2.2.0
     transitivePeerDependencies:
@@ -3744,7 +3744,7 @@ packages:
       global: 4.4.0
       loader-utils: 2.0.0
       lodash: 4.17.21
-      prettier: 2.5.0
+      prettier: 2.5.1
       regenerator-runtime: 0.13.9
     dev: true
 
@@ -4217,7 +4217,7 @@ packages:
     resolution: {integrity: sha512-ObzQhgkoVeoyKv+e8+tB/jQBL2smtk/NmC9OmFK8UqdDpoOdv/Kf9pyDWL+IFyM7qLD2C75rszJujvGSPSpGlw==}
     dev: false
 
-  /@vue/eslint-config-prettier/6.0.0_eslint@8.3.0+prettier@2.5.0:
+  /@vue/eslint-config-prettier/6.0.0_eslint@8.3.0+prettier@2.5.1:
     resolution: {integrity: sha512-wFQmv45c3ige5EA+ngijq40YpVcIkAy0Lihupnsnd1Dao5CBbPyfCzqtejFLZX1EwH/kCJdpz3t6s+5wd3+KxQ==}
     peerDependencies:
       eslint: '>= 5.0.0'
@@ -4226,7 +4226,7 @@ packages:
     dependencies:
       eslint: 8.3.0
       eslint-config-prettier: 6.15.0_eslint@8.3.0
-      prettier: 2.5.0
+      prettier: 2.5.1
     dev: true
 
   /@vue/reactivity/3.2.23:
@@ -6849,7 +6849,7 @@ packages:
     dependencies:
       '@vue/compiler-sfc': 3.2.23
       chalk: 4.1.1
-      prettier: 2.5.0
+      prettier: 2.5.1
       prettier-linter-helpers: 1.0.0
     dev: true
 
@@ -10346,8 +10346,8 @@ packages:
       fast-diff: 1.2.0
     dev: true
 
-  /prettier/2.5.0:
-    resolution: {integrity: sha512-FM/zAKgWTxj40rH03VxzIPdXmj39SwSjwG0heUcNFwI+EMZJnY93yAiKXM3dObIKAM5TA88werc8T/EwhB45eg==}
+  /prettier/2.5.1:
+    resolution: {integrity: sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
