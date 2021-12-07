@@ -17,7 +17,7 @@ specifiers:
   '@vueuse/core': 6.9.2
   '@vueuse/integrations': 6.9.2
   '@vueuse/motion': 1.6.0
-  '@vueuse/router': 6.9.2
+  '@vueuse/router': 7.1.2
   axios: 0.24.0
   babel-loader: 8.2.3
   color: 4.1.0
@@ -62,7 +62,7 @@ dependencies:
   '@vueuse/core': 6.9.2_vue@3.2.23
   '@vueuse/integrations': 6.9.2_vue@3.2.23
   '@vueuse/motion': 1.6.0_vue@3.2.23
-  '@vueuse/router': 6.9.2_vue-router@4.0.12+vue@3.2.23
+  '@vueuse/router': 7.1.2_vue-router@4.0.12+vue@3.2.23
   axios: 0.24.0
   color: 4.1.0
   fastcomments-vue-next: 2.1.0
@@ -4334,12 +4334,12 @@ packages:
       vue-demi: 0.11.3_vue@3.2.23
     dev: false
 
-  /@vueuse/router/6.9.2_vue-router@4.0.12+vue@3.2.23:
-    resolution: {integrity: sha512-vqgPLfMFLi6UujQf2+L/v4zdd+LHb0JmBkAG0ABzfCIVB+1M0VM5QmoirWVtA3LZE7ocyFP9KTGbDVdh97+Pxw==}
+  /@vueuse/router/7.1.2_vue-router@4.0.12+vue@3.2.23:
+    resolution: {integrity: sha512-g0N7faJBl9tzGlXO44HwxznPO1ZDBmOrD5zaI+o6uUj0tpdx3aQUjDGFhEKgRVVwPYlar+LRLxCKbJivCIkKMw==}
     peerDependencies:
       vue-router: '>=4.0.0-rc.1'
     dependencies:
-      '@vueuse/shared': 6.9.2_vue@3.2.23
+      '@vueuse/shared': 7.1.2_vue@3.2.23
       vue-demi: 0.11.3_vue@3.2.23
       vue-router: 4.0.12_vue@3.2.23
     transitivePeerDependencies:
@@ -4349,6 +4349,21 @@ packages:
 
   /@vueuse/shared/6.9.2_vue@3.2.23:
     resolution: {integrity: sha512-lAiMh6XROs0kSKVd0Yb/6GKoQMxC1fYrFDi6opvQWISPtcqRNluRrQxLUZ3WTI78ovtoKRLktjhkFAtydcfFDg==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.0
+      vue: ^2.6.0 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      vue:
+        optional: true
+    dependencies:
+      vue: 3.2.23
+      vue-demi: 0.11.3_vue@3.2.23
+    dev: false
+
+  /@vueuse/shared/7.1.2_vue@3.2.23:
+    resolution: {integrity: sha512-AjYh4y9S5FMOoHDsysqcXY/1mpqNTrnWUD50yaaiyf+5kGWQVIpAkkjKZlYSC/NHKxxCRn0cLR4nWMzceUWewQ==}
     peerDependencies:
       '@vue/composition-api': ^1.1.0
       vue: ^2.6.0 || ^3.2.0
