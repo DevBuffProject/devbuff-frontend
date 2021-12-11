@@ -24,7 +24,7 @@
     "@iconicicons/vue3": "1.5.0",
     "@vueup/vue-quill": "1.0.0-beta.7",
     "@vueuse/core": "6.9.2",
-    "@vueuse/integrations": "6.9.2",
+    "@vueuse/integrations": "7.2.2",
     "@vueuse/motion": "1.6.0",
     "@vueuse/router": "6.9.2",
     "axios": "0.24.0",
