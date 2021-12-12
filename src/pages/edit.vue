@@ -60,7 +60,7 @@ export default defineComponent({
 
     const data = [
       {
-        schema: yup.string().min(4).max(10),
+        schema: yup.string().min(3).max(39),
         label: 'Имя пользователя',
         name: 'userName',
         placeholder: t('fields.userName'),
