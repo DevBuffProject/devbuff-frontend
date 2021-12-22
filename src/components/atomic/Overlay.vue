@@ -1,38 +1,68 @@
 <template>
-  <div
-    v-if="props.visible"
-    class="
-      fixed
-      z-50
-      top-0
-      left-0
-      w-screen
-      h-screen
-      flex
-      items-center
-      justify-center
-      bg-black bg-opacity-40
-      dark:bg-opacity-90
-    "
-  >
-    <div
-      class="relative z-50 w-full h-auto max-h-screen"
-      style="overflow: auto; overflow: overlay"
-    >
-      <slot />
-    </div>
+  <slot name="activator" />
+  <div @click="active = true">
+    {{ active }}
   </div>
+  <teleport to="body">
+    <div>
+      <transition name="fade" appear>
+        <div
+          v-if="active"
+          class="
+            fixed
+            z-50
+            top-0
+            left-0
+            bottom-0
+            right-0
+            flex
+            items-center
+            justify-center
+            bg-black bg-opacity-60
+            dark:bg-opacity-90
+          "
+          ref="container"
+        />
+      </transition>
+
+      <div
+        v-show="active"
+        class="
+          fixed
+          z-50
+          top-0
+          left-0
+          bottom-0
+          right-0
+          flex
+          items-center
+          justify-center
+        "
+        @click="hide"
+      >
+        <slot />
+      </div>
+    </div>
+  </teleport>
 </template>
 
 <script setup>
-import { defineProps, onMounted, onUnmounted } from 'vue'
+import { defineProps, ref, useSlots, toRefs } from 'vue'
+import { useVModel, useScroll, syncRef, biSyncRef } from '@vueuse/core'
+import addSlotEventListeners from '../../core/ui/composables/addSlotEventListeners'
 
-const props = defineProps({
-  visible: { type: Boolean, default: false },
-})
+const props = defineProps({ visible: { type: Boolean, default: false } })
+const active = useVModel(props, 'visible')
 
-const rooElement = window.document.documentElement
-const { overflow } = window.getComputedStyle(rooElement)
-onMounted(() => (rooElement.style.overflow = 'hidden'))
-onUnmounted(() => (rooElement.style.overflow = overflow))
+const container = ref(null)
+const scroll = useScroll(container)
+syncRef(active, scroll)
+
+addSlotEventListeners(
+  useSlots().activator,
+  'click',
+  () => (active.value = true),
+)
+
+const hide = () => (active.value = false)
 </script>

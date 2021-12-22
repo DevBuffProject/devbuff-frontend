@@ -4,10 +4,9 @@
     "eslint:recommended",
     "plugin:vue/base",
     "plugin:vue/vue3-strongly-recommended",
-    "plugin:prettier-vue/recommended",
+    "plugin:prettier-vue/recommended"
   ],
-  "rules": {
-    "no-unused-vars": "off",
-    "vue/valid-v-slot": "off"
+  "env": {
+    "vue/setup-compiler-macros": true
   }
 }

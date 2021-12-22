@@ -1,50 +1,59 @@
 <template>
-  <BaseButton
+  <button
+    v-ripple
     class="
       font-semibold
       text-sm text-white
       whitespace-nowrap
-      active:shadow-none
-      shadow-sm
       uppercase
-      transition-all
-      duration-500
+      transition-all transition-rounded
+      duration-200
       tracking-wider
       leading-none
       px-6
-      h-12
-      rounded-xl
+      flex
+      items-center
+      shadow-sm
+      hover:shadow-lg
+      active:shadow-sm
     "
     :class="{
-      'bg-primary-400 ring-primary-900': props.primary,
-      'bg-red-400 hover:bg-red-400 ring-red-900': props.red,
-      'bg-green-400 hover:bg-green-400 ring-green-900': props.green,
-      'bg-yellow-400 ring-yellow-900': props.yellow,
+      'h-12': !(dense && narrow),
+      'h-10': dense,
+      'h-8': narrow,
+
+      'rounded-full': rounded,
+      'rounded-xl': !rounded || tile,
+      'opacity-0': invisible,
+
+      'bg-primary-400 active:bg-primary-500': primary,
+      'bg-red-400 active:bg-red-500': red,
+      'bg-green-400 active:bg-green-500': green,
+      'bg-yellow-400 active:bg-yellow-500': yellow,
       'bg-light-900 text-light-50 dark:bg-dark-400 text-black': disabled,
     }"
-    :disabled="props.disabled"
+    :disabled="disabled"
     v-bind="attrs"
   >
     <slot />
-  </BaseButton>
+  </button>
 </template>
 
-<style scoped>
-.squircle {
-  -webkit-mask-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" height="100%25" width="100%25"><mask id="squircle"><rect fill="white" width="100%25" height="100%25"/><svg x="-.01%25" style="overflow: visible"><path fill="black" width="20" height="20" d="M20 0H0v20C0 4 4 0 20 0z"/></svg><svg x="100.01%25" style="overflow: visible"><path fill="black" d="M20 20V0H0c16 0 20 4 20 20z" transform="translate(-20,0)"/></svg><svg x="100.01%25" y="100.01%25" style="overflow: visible"><path fill="black" d="M0 20h20V0c0 16-4 20-20 20z" transform="translate(-20,-20)"/></svg><svg x="-.01%25" y="100.01%25" style="overflow: visible"><path fill="black" d="M0 0v20h20C4 20 0 16 0 0z" transform="translate(0,-20)"/></svg></mask><rect fill="white" width="100%25" height="100%25" mask="url(%23squircle)"/></svg>');
-  mask-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" height="100%25" width="100%25"><mask id="squircle"><rect fill="white" width="100%25" height="100%25"/><svg x="-.01%25" style="overflow: visible"><path fill="black" width="20" height="20" d="M20 0H0v20C0 4 4 0 20 0z"/></svg><svg x="100.01%25" style="overflow: visible"><path fill="black" d="M20 20V0H0c16 0 20 4 20 20z" transform="translate(-20,0)"/></svg><svg x="100.01%25" y="100.01%25" style="overflow: visible"><path fill="black" d="M0 20h20V0c0 16-4 20-20 20z" transform="translate(-20,-20)"/></svg><svg x="-.01%25" y="100.01%25" style="overflow: visible"><path fill="black" d="M0 0v20h20C4 20 0 16 0 0z" transform="translate(0,-20)"/></svg></mask><rect fill="white" width="100%25" height="100%25" mask="url(%23squircle)"/></svg>');
-}
-</style>
-
 <script setup>
-import { defineProps, useAttrs } from 'vue'
+import { useAttrs } from 'vue'
 
 const attrs = useAttrs()
-const props = defineProps({
+
+defineProps({
   primary: { type: Boolean, default: true },
   red: { type: Boolean, default: false },
   green: { type: Boolean, default: false },
   yellow: { type: Boolean, default: false },
-  disabled: Boolean,
+  dense: { type: Boolean, default: false },
+  narrow: { type: Boolean, default: false },
+  rounded: { type: Boolean, default: true },
+  tile: { type: Boolean, default: false },
+  invisible: { type: Boolean, default: false },
+  disabled: { type: Boolean, default: false },
 })
 </script>

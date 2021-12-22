@@ -16,7 +16,7 @@
             <div
               :class="[
                 'px-4 py-2 cursor-pointer flex items-center',
-                'transition-colors hover:bg-gray-100',
+                'animation-colors hover:bg-gray-100',
               ]"
               @mousedown="$emit('change', '')"
             >
@@ -28,7 +28,7 @@
               :key="index"
               :class="[
                 'px-4 py-2 cursor-pointer flex items-center',
-                'transition-colors hover:bg-gray-100',
+                'animation-colors hover:bg-gray-100',
               ]"
               @mousedown="selectOption(option) || hideDropdown()"
             >

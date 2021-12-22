@@ -27,7 +27,7 @@
             <div
               v-if="skill.specializations.length"
               :class="[
-                'px-4 py-1 transition-colors rounded',
+                'px-4 py-1 animation-colors rounded',
                 'group-hover:bg-primary-500 group-hover:bg-opacity-10 active:text-primary-500',
               ]"
               @click="nextSlide(skill, skill.specializations)"
@@ -42,7 +42,7 @@
         <AtomicList class="divide-y divide-gray-200">
           <div
             :class="[
-              'px-4 py-1 transition-colors rounded',
+              'px-4 py-1 animation-colors rounded',
               'group-hover:bg-primary-500 group-hover:bg-opacity-10 active:text-primary-500',
             ]"
             @click="prevSlide()"
@@ -65,7 +65,7 @@
             <div
               v-if="specialist.frameworks.length"
               :class="[
-                'px-4 py-1 transition-colors rounded',
+                'px-4 py-1 animation-colors rounded',
                 'group-hover:bg-primary-500 group-hover:bg-opacity-10 active:text-primary-500',
               ]"
               @click="nextSlide(specialist, specialist.frameworks)"
@@ -80,7 +80,7 @@
         <AtomicList class="divide-y divide-gray-200">
           <div
             :class="[
-              'px-4 py-1 transition-colors rounded',
+              'px-4 py-1 animation-colors rounded',
               'group-hover:bg-primary-500 group-hover:bg-opacity-10 active:text-primary-500',
             ]"
             @click="prevSlide()"
@@ -115,7 +115,8 @@ import { defineComponent, ref, reactive, nextTick } from 'vue'
 import { useAuth, useSkills, useI18n } from '../../../composes'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { ChevronRightIcon, ChevronLeftIcon } from '@iconicicons/vue3'
-import 'swiper/swiper.scss'
+
+import 'swiper/css'
 
 export default defineComponent({
   name: 'WidgetProfileSkills',

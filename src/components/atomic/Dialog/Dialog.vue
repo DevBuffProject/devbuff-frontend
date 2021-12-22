@@ -6,22 +6,22 @@
       <div
         v-if="internalActive"
         class="fixed z-50 top-0 left-0 bottom-0 right-0 flex items-center justify-center bg-black bg-opacity-60 dark:bg-opacity-90"
-      />
+      ></div>
     </transition>
 
     <transition :css="false" v-on="dialogTransitionHandlers">
       <div
         v-if="internalActive"
-        class="fixed z-50 w-full top-0 bottom-0 overflow-y-auto flex optimize-transition"
+        class="fixed z-50 w-full top-0 bottom-0 overflow-y-auto flex"
         @click="hide"
       >
         <div
-          class="min-h-screen mx-auto flex flex-col w-full"
+          class="min-h-screen mx-auto flex flex-col"
           :style="{ maxWidth: maxWidth }"
         >
           <div class="min-h-10 h-full w-full" />
 
-          <div class="relative z-50" ref="dialogRef" @click.stop>
+          <div class="window relative z-50" ref="dialogRef" @click.stop>
             <slot v-bind="slotBindings" />
           </div>
 
@@ -32,28 +32,19 @@
   </teleport>
 </template>
 
-<style>
-.optimize-transition {
-  will-change: transform;
-  transform: translateZ(0);
-}
-</style>
-
 <script setup>
 import { computed, defineProps, reactive, ref } from 'vue'
 import { useVModel, syncRef, biSyncRef, useScrollLock } from '@vueuse/core'
 import {
   acceleratedEasing,
   deceleratedEasing,
-} from '../../core/ui/animation/easing'
-import { nullifyTransforms } from '../../core/ui/animation/utils'
+} from '../../../core/ui/animation/easing'
+import { nullifyTransforms } from '../../../core/ui/animation/utils'
 
 const props = defineProps({
   visible: { type: Boolean, default: false },
   maxWidth: { type: String, default: '500px' },
 })
-const emit = defineEmits(['close'])
-
 const active = useVModel(props, 'visible')
 const internalActive = ref(false)
 biSyncRef(active, internalActive)
@@ -68,10 +59,7 @@ const slotBindings = computed(() => ({
   isVisible: internalActive.value,
 }))
 
-const hide = () => {
-  internalActive.value = false
-  emit('close')
-}
+const hide = () => (internalActive.value = false)
 const show = (e) => {
   internalActive.value = true
   recalculateTransformOrigin(e.target)
@@ -104,7 +92,7 @@ const dialogTransitionHandlers = {
         { transform: `translate(${x}px, ${y}px) scale(0.1)`, opacity: 0 },
         { transform: '' },
       ],
-      { duration: 300, easing: 'cubic-bezier(.08,.82,.17,1)' },
+      { duration: 500, easing: acceleratedEasing },
     )
     animation.finished.then(done)
   },
@@ -116,7 +104,7 @@ const dialogTransitionHandlers = {
         { transform: '' },
         { transform: `translate(${x}px, ${y}px) scale(0.1)`, opacity: 0 },
       ],
-      { duration: 250, easing: 'cubic-bezier(.78,.14,.15,.86)' },
+      { duration: 250, easing: deceleratedEasing },
     )
     animation.finished.then(done)
   },

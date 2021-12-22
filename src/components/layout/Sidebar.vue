@@ -13,7 +13,7 @@
         </AppLink>
         <AppLink
           :to="{ name: 'user-edit' }"
-          :class="'p-1 absolute -left-10 top-3 text-xs rounded-full transition-opacity opacity-30 group-hover:opacity-100'"
+          :class="'p-1 absolute -left-10 top-3 text-xs rounded-full animation-opacity opacity-30 group-hover:opacity-100'"
         >
           <BaseButton>
             <EditIcon />

@@ -11,7 +11,7 @@
       >
         <div v-show="isChecked" class="w-full h-full">
           <div
-            :class="'transition-none w-[6px] h-[16px] border-r-2 border-b-2 border-white transform rotate-45 absolute top-[-2px] left-[5px]'"
+            :class="'animation-none w-[6px] h-[16px] border-r-2 border-b-2 border-white transform rotate-45 absolute top-[-2px] left-[5px]'"
           />
         </div>
       </div>

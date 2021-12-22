@@ -9,7 +9,7 @@
 
       <div
         :class="[
-          'flex items-center transition-opacity mr-4 text-xs',
+          'flex items-center animation-opacity mr-4 text-xs',
           checked.length < 1 && 'opacity-20',
         ]"
       >

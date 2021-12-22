@@ -5,7 +5,7 @@ export const Ripple = {
     let prevPosition = ''
     let ripples = 0
     const computedStyles = window.getComputedStyle(el)
-    const duration = 800
+    const duration = 300
 
     const rippleStart = (e) => {
       if (el.hasAttribute('disabled')) return

@@ -1,6 +1,5 @@
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import { onMounted } from 'vue'
 
 let loadingCount = 0
 export const progress = {
