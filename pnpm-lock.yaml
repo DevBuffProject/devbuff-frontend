@@ -50,7 +50,7 @@ specifiers:
   vue-loader: 16.8.3
   vue-nprogress: 0.2.0
   vue-router: 4.0.12
-  windicss: 3.4.1
+  windicss: 3.4.2
   windicss-webpack-plugin: 1.6.2
   yup: 0.32.11
 
@@ -107,7 +107,7 @@ devDependencies:
   vite-plugin-fonts: 0.2.2_vite@2.7.9
   vite-plugin-svg-icons: 1.0.5_vite@2.7.9
   vue-loader: 16.8.3
-  windicss: 3.4.1
+  windicss: 3.4.2
   windicss-webpack-plugin: 1.6.2
 
 packages:
@@ -4507,7 +4507,7 @@ packages:
     dependencies:
       debug: 4.3.3
       jiti: 1.12.9
-      windicss: 3.4.1
+      windicss: 3.4.2
     transitivePeerDependencies:
       - supports-color
 
@@ -4520,7 +4520,7 @@ packages:
       fast-glob: 3.2.7
       magic-string: 0.25.7
       micromatch: 4.0.4
-      windicss: 3.4.1
+      windicss: 3.4.2
     transitivePeerDependencies:
       - supports-color
 
@@ -12891,7 +12891,7 @@ packages:
       debug: 4.3.3
       kolorist: 1.5.1
       vite: 2.7.9_sass@1.45.1
-      windicss: 3.4.1
+      windicss: 3.4.2
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -13254,13 +13254,13 @@ packages:
       magic-string: 0.25.7
       upath: 2.0.1
       webpack-virtual-modules: 0.4.3
-      windicss: 3.4.1
+      windicss: 3.4.2
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /windicss/3.4.1:
-    resolution: {integrity: sha512-g6mX0q8divtPT+TSWqvI35lc77pOhGwMrwCdcX48dFA16wUlSDn1kOv5z1msZy3SlWLx3Bjbe7FA6uNTvdVH8A==}
+  /windicss/3.4.2:
+    resolution: {integrity: sha512-YieqWaXiwPu0JJoB7z03RXdjZjQQJtMZAeXUXu/j3JXSMhIgV/2rUXu4Q7QrworRlbaASZlFhxjnL/78aAty+Q==}
     engines: {node: '>= 12'}
     hasBin: true
 
