@@ -36,11 +36,7 @@
           ]"
         >
           <div class="group flex">
-            <atomic-form-checkbox
-              v-model="checked"
-              :value="idea.id"
-              class="mr-4"
-            />
+            <AtomicCheckbox v-model="checked" :value="idea.id" class="mr-4" />
             <div class="flex flex-col w-full">
               <router-link
                 :to="{
