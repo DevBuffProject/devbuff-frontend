@@ -17,7 +17,7 @@
         }"
       >
         <div>{{ t(`commons.specialist.${specialist}`, true) }}</div>
-        <button
+        <div
           :class="{
             'cursor-pointer': true,
             'text-danger-500': isSpecialistSelected(specialist),
@@ -26,7 +26,7 @@
           @click="toggleSpecialist(specialist)"
         >
           {{ isSpecialistSelected(specialist) ? 'удалить' : 'добавить' }}
-        </button>
+        </div>
 
         <div class="text-xs opacity-50">
           {{ t(`commons.specialistDescription.${specialist}`, true) }}
