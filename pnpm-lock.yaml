@@ -20,7 +20,7 @@ specifiers:
   '@vueuse/router': 6.9.2
   axios: 0.24.0
   babel-loader: 8.2.3
-  color: 4.1.0
+  color: 4.2.0
   eslint: 8.6.0
   eslint-config-prettier: 8.3.0
   eslint-plugin-prettier-vue: 3.1.0
@@ -64,7 +64,7 @@ dependencies:
   '@vueuse/motion': 1.6.0_vue@3.2.26
   '@vueuse/router': 6.9.2_vue-router@4.0.12+vue@3.2.26
   axios: 0.24.0
-  color: 4.1.0
+  color: 4.2.0
   fastcomments-vue-next: 2.1.0
   lodash: 4.17.21
   masonry-layout: 4.2.2
@@ -5771,8 +5771,8 @@ packages:
     hasBin: true
     dev: true
 
-  /color/4.1.0:
-    resolution: {integrity: sha512-o2rkkxyLGgYoeUy1OodXpbPAQNmlNBrirQ8ODO8QutzDiDMNdezSOZLNnusQ6pUpCQJUsaJIo9DZJKqa2HgH7A==}
+  /color/4.2.0:
+    resolution: {integrity: sha512-hHTcrbvEnGjC7WBMk6ibQWFVDgEFTVmjrz2Q5HlU6ltwxv0JJN2Z8I7uRbWeQLF04dikxs8zgyZkazRJvSMtyQ==}
     dependencies:
       color-convert: 2.0.1
       color-string: 1.9.0
