@@ -27,7 +27,7 @@
     "@vueuse/integrations": "7.5.3",
     "@vueuse/motion": "1.6.0",
     "@vueuse/router": "6.9.2",
-    "axios": "0.24.0",
+    "axios": "0.25.0",
     "color": "4.2.0",
     "fastcomments-vue-next": "2.1.0",
     "lodash": "4.17.21",
