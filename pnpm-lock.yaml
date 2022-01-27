@@ -15,7 +15,7 @@ specifiers:
   '@vue/eslint-config-prettier': 6.0.0
   '@vueup/vue-quill': 1.0.0-beta.7
   '@vueuse/core': 6.9.2
-  '@vueuse/integrations': 7.5.4
+  '@vueuse/integrations': 7.5.5
   '@vueuse/motion': 1.6.0
   '@vueuse/router': 6.9.2
   axios: 0.25.0
@@ -60,7 +60,7 @@ dependencies:
   '@iconicicons/vue3': 1.5.0_vue@3.2.29
   '@vueup/vue-quill': 1.0.0-beta.7_vue@3.2.29
   '@vueuse/core': 6.9.2_vue@3.2.29
-  '@vueuse/integrations': 7.5.4_vue@3.2.29
+  '@vueuse/integrations': 7.5.5_vue@3.2.29
   '@vueuse/motion': 1.6.0_vue@3.2.29
   '@vueuse/router': 6.9.2_vue-router@4.0.12+vue@3.2.29
   axios: 0.25.0
@@ -4305,8 +4305,8 @@ packages:
       vue-demi: 0.11.3_vue@3.2.29
     dev: false
 
-  /@vueuse/core/7.5.4_vue@3.2.29:
-    resolution: {integrity: sha512-PKmyHN2lZuttGgKmsoMMqiSojSYYKraszilP0gpQIGcLt2YoLABaG3VFjdPs2tY6DM+HG3o70HuzOMEQCY8fqQ==}
+  /@vueuse/core/7.5.5_vue@3.2.29:
+    resolution: {integrity: sha512-RBDqmIoGfak4h3xdXa/Av+ibkb8NY044wEy6+PG2FAWNaID8/FkqmSFjbxogrbmpSX1yZ1PBHrM8DUp/FrIpbg==}
     peerDependencies:
       '@vue/composition-api': ^1.1.0
       vue: ^2.6.0 || ^3.2.0
@@ -4316,16 +4316,16 @@ packages:
       vue:
         optional: true
     dependencies:
-      '@vueuse/shared': 7.5.4_vue@3.2.29
+      '@vueuse/shared': 7.5.5_vue@3.2.29
       vue: 3.2.29
       vue-demi: 0.11.3_vue@3.2.29
     dev: false
 
-  /@vueuse/integrations/7.5.4_vue@3.2.29:
-    resolution: {integrity: sha512-gvv2XJsD5z5P1ros4vxMM2ERVf7PfNGjVEn2D3GVpVoFoGPTbQNl0UCXMFL/BNlE4iiH9S+MD6oMyZji4ywQhg==}
+  /@vueuse/integrations/7.5.5_vue@3.2.29:
+    resolution: {integrity: sha512-x8ZJxEa5d3Am57XyT1AsGbadDnRBA8u+lczwKTrahhos+/fbDr0QDi/KdtUQAmdjy4nUrDzqeBsiaYLEof/rAw==}
     dependencies:
-      '@vueuse/core': 7.5.4_vue@3.2.29
-      '@vueuse/shared': 7.5.4_vue@3.2.29
+      '@vueuse/core': 7.5.5_vue@3.2.29
+      '@vueuse/shared': 7.5.5_vue@3.2.29
       vue-demi: 0.11.3_vue@3.2.29
     optionalDependencies:
       axios: 0.24.0
@@ -4385,8 +4385,8 @@ packages:
       vue-demi: 0.11.3_vue@3.2.29
     dev: false
 
-  /@vueuse/shared/7.5.4_vue@3.2.29:
-    resolution: {integrity: sha512-750RnGUEgg1+K4jGVkv7M5UOStAa/IjAInV6BugyBOvRYL2l1lcIDUi4V/qIKTlhd2oUAByCEnlqIpFD2a3tfw==}
+  /@vueuse/shared/7.5.5_vue@3.2.29:
+    resolution: {integrity: sha512-mzzTsotHQRPnPAChy8iCv6ek/90CKYhAFyMRgNsMxpT0afZJkbMO/X0OaOu/1NuGbgb8UVjlsWKmCUgKTOF5hA==}
     peerDependencies:
       '@vue/composition-api': ^1.1.0
       vue: ^2.6.0 || ^3.2.0
