@@ -42,11 +42,6 @@
             </template>
 
             <div class="flex flex-col items-start -mx-4 text-xs">
-              <BaseButton type="danger" class="w-full pt-2 px-4">
-                <StopIcon />
-                Stop company
-              </BaseButton>
-
               <BaseButton
                 type="danger"
                 class="w-full pt-2 px-4"

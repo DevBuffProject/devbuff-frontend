@@ -24,6 +24,7 @@
         rounded-3xl
         prose-sm prose-primary-500
       "
+      style="word-break: break-all"
     />
 
     <RouterLink
