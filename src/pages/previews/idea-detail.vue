@@ -56,8 +56,8 @@
 <script>
 import { defineComponent } from 'vue'
 import { useIdea, useUser } from '../../composes/services'
-import { useTimeAgo, useTitle } from '@vueuse/core'
-import { useI18n } from '../../composes/utils'
+import { useTitle } from '@vueuse/core'
+import { useI18n, useTimeAgoUtils } from '../../composes/utils'
 import { useDialogRoute } from '../../core/router'
 
 export default defineComponent({
@@ -76,7 +76,7 @@ export default defineComponent({
 
     await getIdea()
 
-    const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
+    const publishedAgo = useTimeAgoUtils(idea.value.lastUpdateDate)
 
     useTitle(`${idea.value.name} - DevBuff`)
 
