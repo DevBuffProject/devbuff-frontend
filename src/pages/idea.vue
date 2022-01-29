@@ -84,12 +84,24 @@
                     :key="`language-${language}-${specialist.id}`"
                   >
                     <AtomicChip
-                      :text="language"
+                      :text="
+                        tDefault(
+                          `commons.languages.${language}`,
+                          language,
+                          true,
+                        )
+                      "
                       class="mb-2 mr-1"
                       type="auto"
                     />
                   </div>
                 </div>
+              </AtomicLabel>
+              <AtomicLabel
+                v-if="languagesForSpecialist(specialist.id).length === 0"
+                class="mt-4"
+                :name="t('positions.informationNotProvided')"
+              >
               </AtomicLabel>
               <AtomicLabel
                 v-if="frameworksForSpecialist(specialist.id).length > 0"
@@ -190,7 +202,7 @@ export default defineComponent({
       changeStatusIdea,
     } = useIdea(props.id)
     const { ssoData, getSsoData } = useSso()
-    const { t } = useI18n('pages.idea')
+    const { t, tDefault } = useI18n('pages.idea')
     const { getUserProfileUrl, getUser, user } = useUser()
 
     const send = (specialistId) => {
@@ -230,6 +242,7 @@ export default defineComponent({
       isOwnerIdea,
       publishedAgo,
       t,
+      tDefault,
       send,
       deleteIdeaProcess,
       changeStatusIdea,
