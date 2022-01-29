@@ -23,7 +23,7 @@ export const useTimeAgoUtils = (date) => {
     messages: {
       justNow: 'Только что',
       past: (n) => (n.match(/\d/) ? `${n} назад` : n),
-      future: (n) => `Unsupported`,
+      future: () => `Unsupported`,
       month: (n) => {
         if (n === 1) {
           return 'В прошлом месяце'
