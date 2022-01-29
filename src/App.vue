@@ -45,7 +45,7 @@
         <router-view :route="mainRoute" v-slot="{ Component, route }">
           <template v-if="Component">
             <suspense>
-              <div :key="route.fullPath">
+              <div :key="route.path">
                 <h1 class="text-h1 mt-0" v-if="route?.meta.name">
                   {{ route.meta.name }}
                 </h1>

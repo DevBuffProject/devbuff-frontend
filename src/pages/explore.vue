@@ -34,8 +34,8 @@
 <script>
 import { computed, defineComponent, reactive, watch, ref } from 'vue'
 import { useThrottleFn, useTitle } from '@vueuse/core'
-import { useIdeas, useAuth } from '../composes/services'
-import { useI18n } from '../composes/utils'
+import { useIdeas, useAuth } from '../composes'
+import { useI18n } from '../composes'
 import { useRouter } from 'vue-router'
 import { useMainRoute } from '../core/router'
 
@@ -51,14 +51,13 @@ export default defineComponent({
             ? route.value.query?.[name] ?? 'lastUpdate'
             : [route.value.query?.[name] ?? null].flat().filter(Boolean),
         set: (value) =>
-          router.replace({ query: { ...route.value.query, [name]: value } }),
+          router.push({ query: { ...route.value.query, [name]: value } }),
       })
 
     const route = useMainRoute()
     const { isLoading, ideas, getIdeas } = useIdeas()
     const { t } = useI18n('pages.explore')
     const { isLoggedIn } = useAuth()
-
     const missingAuthorization = ref(
       Boolean(route.value.query?.missingAuthorization),
     )
