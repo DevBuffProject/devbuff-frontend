@@ -2,23 +2,24 @@
   <aside>
     <nav>
       <div class="mb-8 block relative group">
-        <AppLink
-          v-if="isLoggedIn && user.id"
-          :to="{ name: 'user', params: { UUID: user.id } }"
-          class="block p-1"
-          v-slot="{ navigate }"
-          v-ripple
-        >
-          <WidgetUser :user="user" @click="navigate" class="block" />
-        </AppLink>
-        <AppLink
-          :to="{ name: 'user-edit' }"
-          :class="'p-1 absolute -left-10 top-3 text-xs rounded-full transition-opacity opacity-30 group-hover:opacity-100'"
-        >
-          <BaseButton>
-            <EditIcon />
-          </BaseButton>
-        </AppLink>
+        <template v-if="isLoggedIn && user.id">
+          <AppLink
+            :to="{ name: 'user', params: { UUID: user.id } }"
+            class="block p-1"
+            v-slot="{ navigate }"
+            v-ripple
+          >
+            <WidgetUser :user="user" @click="navigate" class="block" />
+          </AppLink>
+          <AppLink
+            :to="{ name: 'user-edit' }"
+            :class="'p-1 absolute -left-10 top-3 text-xs rounded-full transition-opacity opacity-30 group-hover:opacity-100'"
+          >
+            <BaseButton>
+              <EditIcon />
+            </BaseButton>
+          </AppLink>
+        </template>
       </div>
 
       <div
@@ -29,7 +30,6 @@
 
         <AtomicButton
           class="w-full flex items-center justify-center"
-          v-focusable.indexOnly
           @click="initAuth(AuthProviders.GitHub)"
         >
           <div class="text-white dark:text-dark-50 flex items-center">
