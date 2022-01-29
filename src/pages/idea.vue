@@ -42,11 +42,6 @@
             </template>
 
             <div class="flex flex-col items-start -mx-4 text-xs">
-              <BaseButton type="danger" class="w-full pt-2 px-4">
-                <StopIcon />
-                Stop company
-              </BaseButton>
-
               <BaseButton
                 type="danger"
                 class="w-full pt-2 px-4"
@@ -172,8 +167,8 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useIdea, useUser, useSso, useI18n } from '../composes'
-import { useTimeAgo, useTitle } from '@vueuse/core'
+import { useIdea, useUser, useSso, useI18n, useTimeAgoUtils } from '../composes'
+import { useTitle } from '@vueuse/core'
 import { useRouter } from '../core/router'
 
 export default defineComponent({
@@ -225,7 +220,7 @@ export default defineComponent({
     await getSsoData()
 
     const isOwnerIdea = user.value.id === idea.value.ownerIdea.id
-    const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
+    const publishedAgo = useTimeAgoUtils(idea.value.lastUpdateDate)
 
     useTitle(`${idea.value.name} - DevBuff`)
 

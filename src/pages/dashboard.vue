@@ -89,10 +89,13 @@
               </AtomicButton>
               <i class="bg-gray-200 dark:bg-dark-600 mx-2 w-px h-10" />
               <AtomicButton type="primary">
-                <div class="flex flex-col items-center justify-center">
+                <RouterLink
+                  class="flex flex-col items-center justify-center"
+                  :to="{ name: 'idea-edit', params: { id: inspectedIdea.id } }"
+                >
                   <EditIcon />
                   <span>{{ t('controls.edit') }}</span>
-                </div>
+                </RouterLink>
               </AtomicButton>
             </div>
           </AtomicCard>
