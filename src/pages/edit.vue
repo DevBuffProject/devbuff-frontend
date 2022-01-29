@@ -100,7 +100,7 @@ export default defineComponent({
       },
       {
         schema: yup.date().default(() => new Date()),
-        label: 'День рождение',
+        label: 'День рождения',
         name: 'birthday',
         placeholder: t('fields.birthday'),
         value: user.value.birthday,
