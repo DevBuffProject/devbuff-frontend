@@ -69,7 +69,7 @@
     "prettier": "2.5.1",
     "vite": "2.7.13",
     "vite-plugin-fonts": "0.2.2",
-    "vite-plugin-svg-icons": "1.1.0",
+    "vite-plugin-svg-icons": "2.0.1",
     "vue-loader": "16.8.3",
     "windicss": "3.4.3",
     "windicss-webpack-plugin": "1.6.2"
