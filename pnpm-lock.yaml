@@ -38,7 +38,7 @@ specifiers:
   quill-image-uploader: 1.2.2
   sass: 1.49.7
   string-to-color: 2.2.2
-  swiper: 6.8.4
+  swiper: 8.0.2
   vee-validate: 4.5.8
   vite: 2.7.13
   vite-plugin-components: 0.13.3
@@ -74,7 +74,7 @@ dependencies:
   quill-image-uploader: 1.2.2
   sass: 1.49.7
   string-to-color: 2.2.2
-  swiper: 6.8.4
+  swiper: 8.0.2
   vee-validate: 4.5.8_vue@3.2.29
   vite-plugin-components: 0.13.3_vite@2.7.13
   vite-plugin-windicss: 1.6.3_vite@2.7.13
@@ -6321,10 +6321,10 @@ packages:
     resolution: {integrity: sha512-6QvTW9mrGeIegrFXdtQi9pk7O/nSK6lSdXW2eqUspN5LWD7UTji2Fqw5V2YLjBpHEoU9Xl/eUWNpDeZvoyOv2w==}
     dev: true
 
-  /dom7/3.0.0:
-    resolution: {integrity: sha512-oNlcUdHsC4zb7Msx7JN3K0Nro1dzJ48knvBOnDPKJ2GV9wl1i5vydJZUSyOfrkKFDZEud/jBsTk92S/VGSAe/g==}
+  /dom7/4.0.4:
+    resolution: {integrity: sha512-DSSgBzQ4rJWQp1u6o+3FVwMNnT5bzQbMb+o31TjYYeRi05uAcpF8koxdfzeoe5ElzPmua7W7N28YJhF7iEKqIw==}
     dependencies:
-      ssr-window: 3.0.0
+      ssr-window: 4.0.2
     dev: false
 
   /domain-browser/1.2.0:
@@ -11672,8 +11672,8 @@ packages:
     resolution: {integrity: sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=}
     dev: true
 
-  /ssr-window/3.0.0:
-    resolution: {integrity: sha512-q+8UfWDg9Itrg0yWK7oe5p/XRCJpJF9OBtXfOPgSJl+u3Xd5KI328RUEvUqSMVM9CiQUEf1QdBzJMkYGErj9QA==}
+  /ssr-window/4.0.2:
+    resolution: {integrity: sha512-ISv/Ch+ig7SOtw7G2+qkwfVASzazUnvlDTwypdLoPoySv+6MqlOV10VwPSE6EWkGjhW50lUmghPmpYZXMu/+AQ==}
     dev: false
 
   /ssri/6.0.2:
@@ -11991,13 +11991,13 @@ packages:
       stable: 0.1.8
     dev: true
 
-  /swiper/6.8.4:
-    resolution: {integrity: sha512-O+buF9Q+sMA0H7luMS8R59hCaJKlpo8PXhQ6ZYu6Rn2v9OsFd4d1jmrv14QvxtQpKAvL/ZiovEeANI/uDGet7g==}
+  /swiper/8.0.2:
+    resolution: {integrity: sha512-X8TRwHzLX9H66/12vDDrnzBkeNwFxbGZz80hP3Ai3trs9kjUqRRIKQJpLTnjxms/MxcBMu/wduWdbIPeKAdhkA==}
     engines: {node: '>= 4.7.0'}
     requiresBuild: true
     dependencies:
-      dom7: 3.0.0
-      ssr-window: 3.0.0
+      dom7: 4.0.4
+      ssr-window: 4.0.2
     dev: false
 
   /symbol.prototype.description/1.0.5:
