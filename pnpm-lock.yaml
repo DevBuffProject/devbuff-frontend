@@ -34,7 +34,7 @@ specifiers:
   nprogress: 0.2.0
   pinst: 2.1.6
   prettier: 2.5.1
-  query-string: 7.1.0
+  query-string: 7.1.1
   quill-image-uploader: 1.2.2
   sass: 1.49.7
   string-to-color: 2.2.2
@@ -70,7 +70,7 @@ dependencies:
   masonry-layout: 4.2.2
   mitt: 3.0.0
   nprogress: 0.2.0
-  query-string: 7.1.0
+  query-string: 7.1.1
   quill-image-uploader: 1.2.2
   sass: 1.49.7
   string-to-color: 2.2.2
@@ -10582,8 +10582,8 @@ packages:
       strict-uri-encode: 1.1.0
     dev: true
 
-  /query-string/7.1.0:
-    resolution: {integrity: sha512-wnJ8covk+S9isYR5JIXPt93kFUmI2fQ4R/8130fuq+qwLiGVTurg7Klodgfw4NSz/oe7xnyi09y3lSrogUeM3g==}
+  /query-string/7.1.1:
+    resolution: {integrity: sha512-MplouLRDHBZSG9z7fpuAAcI7aAYjDLhtsiVZsevsfaHWDS2IDdORKbSd1kWUA+V4zyva/HZoSfpwnYMMQDhb0w==}
     engines: {node: '>=6'}
     dependencies:
       decode-uri-component: 0.2.0
