@@ -44,7 +44,7 @@ specifiers:
   vite-plugin-components: 0.13.3
   vite-plugin-fonts: 0.2.2
   vite-plugin-svg-icons: 1.1.0
-  vite-plugin-windicss: 1.6.3
+  vite-plugin-windicss: 1.7.0
   vue: 3.2.29
   vue-i18n: 9.1.9
   vue-loader: 16.8.3
@@ -77,7 +77,7 @@ dependencies:
   swiper: 6.8.4
   vee-validate: 4.5.8_vue@3.2.29
   vite-plugin-components: 0.13.3_vite@2.7.13
-  vite-plugin-windicss: 1.6.3_vite@2.7.13
+  vite-plugin-windicss: 1.7.0_vite@2.7.13
   vue: 3.2.29
   vue-i18n: 9.1.9_vue@3.2.29
   vue-nprogress: 0.2.0_vue@3.2.29
@@ -4564,6 +4564,17 @@ packages:
       windicss: 3.4.3
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@windicss/config/1.7.0:
+    resolution: {integrity: sha512-jP+SYEUMTcvEQexYAeaIGKWq3sE+yv0myyOCph7Glm/YZE2ZCK1GukI1oDG6fcVer121EQzCY4Rx11trb3oSZg==}
+    dependencies:
+      debug: 4.3.3
+      jiti: 1.12.9
+      windicss: 3.4.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /@windicss/plugin-utils/1.6.3:
     resolution: {integrity: sha512-tY20pAdV8YOlCj/5Teh078n/YbekbE5qOmlNgcl+S10KqitUGB9+Qss/xE0HULACmCXBO9XeLUcAPGao79lAnA==}
@@ -4577,6 +4588,21 @@ packages:
       windicss: 3.4.3
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@windicss/plugin-utils/1.7.0:
+    resolution: {integrity: sha512-4zxTIhpGaia4FTxL/c20GQU2bK3bqToerdErvDzwLqWQECVGt7vTGFQd3e4XMpfR6Ujgk4/p7fCHv/F15R/pkA==}
+    dependencies:
+      '@antfu/utils': 0.4.0
+      '@windicss/config': 1.7.0
+      debug: 4.3.3
+      fast-glob: 3.2.11
+      magic-string: 0.25.7
+      micromatch: 4.0.4
+      windicss: 3.4.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /@xtuc/ieee754/1.2.0:
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
@@ -12759,12 +12785,12 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-windicss/1.6.3_vite@2.7.13:
-    resolution: {integrity: sha512-D4fEUcAPoLRLdDZMee8NrHZHmn0Qj7AjSg1xNGBnZsMTwRPj93NKZk0fIIUoiKTEh1KrdQejW8g6cg0SgGKTww==}
+  /vite-plugin-windicss/1.7.0_vite@2.7.13:
+    resolution: {integrity: sha512-1ps7hk6Pr9TqsW9Y+QXmJ9PMowVLjM0h32c+jh9vdQr5Jzyim3hHivR0rXSkDV9znIB9RkjRQD1znRbAMX0OcQ==}
     peerDependencies:
       vite: ^2.0.1
     dependencies:
-      '@windicss/plugin-utils': 1.6.3
+      '@windicss/plugin-utils': 1.7.0
       debug: 4.3.3
       kolorist: 1.5.1
       vite: 2.7.13_sass@1.49.7
