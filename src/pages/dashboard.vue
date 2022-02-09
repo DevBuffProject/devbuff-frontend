@@ -89,10 +89,13 @@
               </AtomicButton>
               <i class="bg-gray-200 dark:bg-dark-600 mx-2 w-px h-10" />
               <AtomicButton type="primary">
-                <div class="flex flex-col items-center justify-center">
+                <RouterLink
+                  class="flex flex-col items-center justify-center"
+                  :to="{ name: 'idea-edit', params: { id: inspectedIdea.id } }"
+                >
                   <EditIcon />
                   <span>{{ t('controls.edit') }}</span>
-                </div>
+                </RouterLink>
               </AtomicButton>
             </div>
           </AtomicCard>
@@ -138,7 +141,7 @@
 <script>
 import { defineComponent, ref, watch } from 'vue'
 import { useTitle } from '@vueuse/core'
-import { useIdeas, useIdea } from '../composes/core'
+import { useIdeas, useIdea, useUser } from '../composes/services'
 import { useI18n } from '../composes/utils'
 import { useRoute } from 'vue-router'
 
@@ -147,6 +150,7 @@ export default defineComponent({
     useTitle(`DevBuff Dashboard`)
     const { t } = useI18n('pages.dashboard')
     const { userIdeas, getUserIdeas } = useIdeas()
+    const { getUser } = useUser()
     const isLoading = ref(false)
     const {
       idea: inspectedIdea,

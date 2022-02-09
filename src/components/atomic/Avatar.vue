@@ -1,43 +1,23 @@
 <template>
-  <div class="relative rounded-full overflow-hidden">
+  <AtomicSquircle :width="size" :height="size" :roundness="1">
     <div
-      class="
-        bg-cover
-        flex
-        items-center
-        justify-center
-        rounded-full
-        bg-white
-        h-full
-        w-full,
-        relative
-        z-10
-      "
+      :class="'bg-cover flex items-center justify-center bg-white h-full w-full relative z-10'"
       :style="{
         backgroundImage: `url(${src})`,
-        width: size,
-        height: size,
+        width: `${size}px`,
+        height: `${size}px`,
         flex: `0 0 ${size}`,
       }"
     />
-  </div>
+  </AtomicSquircle>
 </template>
 
-<script>
-import { defineComponent, computed } from 'vue'
+<script setup>
+import { defineProps, toRefs } from 'vue'
 
-export default defineComponent({
-  name: 'AtomicAvatar',
-  props: {
-    src: {
-      type: String,
-      default: null,
-    },
-    size: {
-      type: String,
-      default: '40px',
-    },
-  },
-  setup() {},
+const props = defineProps({
+  src: { type: String, default: null },
+  size: { type: Number, default: 40 },
 })
+const { src, size } = toRefs(props)
 </script>

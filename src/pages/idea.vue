@@ -1,32 +1,29 @@
 <template>
   <div>
     <h1>{{ idea.name }}</h1>
-    <div class="flex flex-wrap items-start my-5">
-      <RouterLink to="/" custom>
-        <div class="mb-4 mr-6">
-          <!--          <WidgetUser :user="user" @click="navigate" v-focusable />-->
-        </div>
-      </RouterLink>
-      <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">
-        {{ publishedAgo }}
-      </AtomicLabel>
-
-      <AtomicLabel :name="t('info.status.title')" class="mb-4 mt-0 mx-4">
-        {{ t(`info.status.${idea.status}`) }}
-      </AtomicLabel>
-
-      <AtomicLabel
-        v-if="isOwnerIdea"
-        :name="t('info.moderationStatus.title')"
-        class="mb-4 mt-0 mx-4"
-      >
-        {{
-          idea.waitingValidation
-            ? t('info.moderationStatus.waiting')
-            : t('info.moderationStatus.approved')
-        }}
-      </AtomicLabel>
+    <div class="">
+      <div class="flex flex-wrap items-start py-4 my-4">
+        <WidgetUser :user="idea.ownerIdea" class="block" />
+        <AtomicLabel :name="t('info.date')" class="mb-4 mt-0 mx-4">
+          {{ publishedAgo }}
+        </AtomicLabel>
+        <AtomicLabel :name="t('info.status.title')" class="mb-4 mt-0 mx-4">
+          {{ t(`info.status.${idea.status}`) }}
+        </AtomicLabel>
+        <AtomicLabel
+          v-if="isOwnerIdea"
+          :name="t('info.moderationStatus.title')"
+          class="mb-4 mt-0 mx-4"
+        >
+          {{
+            idea.waitingValidation
+              ? t('info.moderationStatus.waiting')
+              : t('info.moderationStatus.approved')
+          }}
+        </AtomicLabel>
+      </div>
     </div>
+
     <div class="grid gap-6 grid-cols-6">
       <AtomicCard class="col-span-4 mb-3">
         <div v-html="idea.text" class="overflow-hidden" />
@@ -35,6 +32,7 @@
       <div class="col-span-2">
         <div class="flex items-center mb-6" v-if="isOwnerIdea">
           <span class="opacity-50">вы создатель</span>
+
           <AtomicActions>
             <template #activator>
               <div class="flex items-center ml-2 text-primary-500">
@@ -42,35 +40,24 @@
                 <ChevronDownIcon />
               </div>
             </template>
-            <div class="flex flex-col items-start -mx-4 text-xs">
-              <AtomicAction type="danger" class="w-full">
-                <template #icon>
-                  <StopIcon />
-                </template>
-                Stop company
-              </AtomicAction>
 
-              <AtomicAction
+            <div class="flex flex-col items-start -mx-4 text-xs">
+              <BaseButton
                 type="danger"
-                class="w-full"
+                class="w-full pt-2 px-4"
                 @click="deleteIdeaProcess"
               >
-                <template #icon>
-                  <TrashIcon />
-                </template>
+                <TrashIcon w:text="danger-500" />
                 {{ t('control.delete') }}
-              </AtomicAction>
+              </BaseButton>
               <RouterLink
                 class="w-full"
                 :to="{ name: 'idea-edit', params: { id: idea.id } }"
-                v-slot="{ href, navigate }"
               >
-                <AtomicAction :href="href" @click="navigate" class="w-full">
-                  <template #icon>
-                    <EditIcon />
-                  </template>
+                <BaseButton class="w-full pt-2 px-4">
+                  <EditIcon />
                   {{ t('control.edit') }}
-                </AtomicAction>
+                </BaseButton>
               </RouterLink>
             </div>
           </AtomicActions>
@@ -83,12 +70,13 @@
               v-for="specialist in idea.specialist"
               :key="specialist.id"
             >
-              <h5 class="m-0 !mb-4 font-normal">
+              <h5 class="m-0 font-normal">
                 {{ t(`commons.specialist.${specialist.name}`, true) }}
               </h5>
               <AtomicLabel
-                :name="t('positions.titleLanguages')"
                 v-if="languagesForSpecialist(specialist.id).length > 0"
+                :name="t('positions.titleLanguages')"
+                class="mt-4"
               >
                 <div class="flex flex-wrap">
                   <div
@@ -96,7 +84,13 @@
                     :key="`language-${language}-${specialist.id}`"
                   >
                     <AtomicChip
-                      :text="language"
+                      :text="
+                        tDefault(
+                          `commons.languages.${language}`,
+                          language,
+                          true,
+                        )
+                      "
                       class="mb-2 mr-1"
                       type="auto"
                     />
@@ -104,9 +98,15 @@
                 </div>
               </AtomicLabel>
               <AtomicLabel
+                v-if="languagesForSpecialist(specialist.id).length === 0"
+                class="mt-4"
+                :name="t('positions.informationNotProvided')"
+              >
+              </AtomicLabel>
+              <AtomicLabel
+                v-if="frameworksForSpecialist(specialist.id).length > 0"
                 :name="t('positions.titleTechnologies')"
                 class="mt-4"
-                v-if="frameworksForSpecialist(specialist.id).length > 0"
               >
                 <div class="flex flex-wrap">
                   <div
@@ -128,14 +128,16 @@
                 class="mt-4"
               >
                 <div class="flex flex-wrap">
-                  <span
-                    class="text-xs"
+                  <AppLink
+                    :to="{ name: 'user', params: { UUID: acceptedUser.id } }"
+                    modal
                     v-for="(acceptedUser, key) of specialist.acceptedUsers"
-                    :key="`acceptedUser` + key"
+                    :key="`acceptedUser${key}`"
+                    class="text-xs"
                   >
                     {{ acceptedUser.firstName }}
                     {{ acceptedUser.lastName }} (@{{ acceptedUser.userName }})
-                  </span>
+                  </AppLink>
                 </div>
               </AtomicLabel>
 
@@ -168,19 +170,18 @@
         </AtomicCard>
       </div>
       <!--      await for design-->
-      <!--      <div class="col-span-4">-->
-      <!--        <WidgetCommentsFast :id="`idea-${idea.id}`" :sso="ssoData" />-->
-      <!--      </div>-->
+      <div class="col-span-4">
+        <WidgetCommentsFast :id="`idea-${idea.id}`" :sso="ssoData" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
-import { useIdea, useUser, useSso } from '../composes/core'
-import { useTimeAgo, useTitle } from '@vueuse/core'
-import { useI18n } from '../composes/utils'
-import { useRouter } from '../router'
+import { useIdea, useUser, useSso, useI18n, useTimeAgoUtils } from '../composes'
+import { useTitle } from '@vueuse/core'
+import { useRouter } from '../core/router'
 
 export default defineComponent({
   name: 'IdeaDetail',
@@ -201,7 +202,7 @@ export default defineComponent({
       changeStatusIdea,
     } = useIdea(props.id)
     const { ssoData, getSsoData } = useSso()
-    const { t } = useI18n('pages.idea')
+    const { t, tDefault } = useI18n('pages.idea')
     const { getUserProfileUrl, getUser, user } = useUser()
 
     const send = (specialistId) => {
@@ -225,11 +226,13 @@ export default defineComponent({
 
     await getIdea()
     await getUser()
+    idea.value.ownerIdea.avatar = getUserProfileUrl(idea.value.ownerIdea.id)
+
     await getStatusPositions(idea.value.id)
-    // await getSsoData()
+    await getSsoData()
 
     const isOwnerIdea = user.value.id === idea.value.ownerIdea.id
-    const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
+    const publishedAgo = useTimeAgoUtils(idea.value.lastUpdateDate)
 
     useTitle(`${idea.value.name} - DevBuff`)
 
@@ -239,6 +242,7 @@ export default defineComponent({
       isOwnerIdea,
       publishedAgo,
       t,
+      tDefault,
       send,
       deleteIdeaProcess,
       changeStatusIdea,

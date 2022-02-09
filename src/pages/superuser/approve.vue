@@ -36,11 +36,7 @@
           ]"
         >
           <div class="group flex">
-            <atomic-form-checkbox
-              v-model="checked"
-              :value="idea.id"
-              class="mr-4"
-            />
+            <AtomicCheckbox v-model="checked" :value="idea.id" class="mr-4" />
             <div class="flex flex-col w-full">
               <router-link
                 :to="{
@@ -72,7 +68,7 @@
 
 <script>
 import { defineComponent, ref, computed } from 'vue'
-import { useModeration } from '../../composes/core'
+import { useModeration } from '../../composes/services'
 
 export default defineComponent({
   async setup() {

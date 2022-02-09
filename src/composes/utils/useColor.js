@@ -7,6 +7,7 @@ const isColor = (color) => {
   return color === opt.color
 }
 
+// TODO: Use constructor color instead useColor constructor
 export const useColor = (colorString) => {
   let color
   if (isColor(colorString)) color = Color(colorString)

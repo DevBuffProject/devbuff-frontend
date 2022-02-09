@@ -1,33 +1,39 @@
 <template>
   <div class="relative" ref="container">
-    <div @click="isVisible ? hide() : show()">
+    <div @click="isVisible ? hide() : show()" class="cursor-pointer">
       <slot name="activator" />
     </div>
 
-    <div
-      v-show="isVisible"
-      class="
-        absolute
-        top-0
-        right-0
-        z-50
-        p-2
-        -m-2
-        rounded-lg
-        overflow-hidden
-        bg-white
-        dark:bg-dark-800
-      "
-      style="box-shadow: 0 3px 25px -2px rgba(0, 0, 0, 0.2)"
-    >
-      <div class="p-2 -m-2 mb-2 bg-gray-200 bg-opacity-50 dark:bg-dark-900">
-        <slot name="activator" />
-      </div>
+    <transition name="fade" :duration="isVisible ? 100 : 500">
+      <div
+        v-show="isVisible"
+        class="
+          absolute
+          top-0
+          right-0
+          z-50
+          p-2
+          -m-2
+          rounded-xl
+          overflow-hidden
+          bg-white
+          dark:bg-dark-800
+          border border-light-900
+          dark:border-dark-300
+        "
+        style="box-shadow: 0 3px 25px -2px rgba(0, 0, 0, 0.2)"
+      >
+        <div class="p-2 -m-2 mb-2 bg-gray-200 bg-opacity-50 dark:bg-dark-900">
+          <div class="-m-px">
+            <slot name="activator" />
+          </div>
+        </div>
 
-      <div ref="dropdown">
-        <slot />
+        <div ref="dropdown" class="cursor-pointer">
+          <slot />
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 

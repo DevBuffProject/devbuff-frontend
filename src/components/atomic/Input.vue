@@ -1,150 +1,92 @@
 <template>
-  <div
-    class="inline-block w-full"
-    :class="{ 'relative z-50': isFocused }"
-    ref="containerRef"
-  >
-    <label class="flex min-w-[200px] relative group z-10 cursor-text">
-      <span
-        v-if="placeholder"
-        ref="placeholderRef"
-        class="
-          whitespace-nowrap
-          absolute
-          flex
-          items-center
-          transform
-          text-dark-50
-          dark:text-light-300
-        "
-        :class="[
-          !shadow && 'pl-4',
-          isMounted && 'transition-all',
-          isFocused || modelValue
-            ? 'top-0 translate-y-0 opacity-50 text-xs'
-            : 'top-6 -translate-y-1/2 opacity-30 dark:opacity-20',
-        ]"
-        v-text="placeholder"
+  <label @mousedown.prevent="focus" @click="focus" class="mt-1">
+    <fieldset
+      :class="{
+        'border-2 rounded-xl bg-light-200 dark:bg-dark-900 flex relative cursor-text transition-all': true,
+        'border-red-500': error,
+        'border-light-900 dark:border-dark-200': !isFocused,
+        'border-primary-500': isFocused,
+      }"
+    >
+      <legend
+        class="transition-all duration-200 ease-out ml-4 box-content"
+        :style="{
+          width: `${minimizeLabel ? placeholderWidth : 0}px`,
+        }"
       />
-      <component
-        :is="type === 'textarea' ? 'textarea' : 'input'"
-        :type="type === 'textarea' && type"
+      <div
+        ref="placeholderRef"
+        :class="{
+          'block absolute transition-all duration-300 leading-0 ml-4': true,
+          'top-6 dark:text-dark-50 text-dark-50': !minimizeLabel,
+          'top-0 text-sm': minimizeLabel,
+          'text-primary-600': isFocused,
+          'text-red-500': error,
+        }"
+      >
+        <span class="px-2">{{ label }}</span>
+      </div>
+
+      <Field
+        ref="inputRef"
         :name="name"
-        :value="modelValue"
+        :rules="rules"
+        :as="type === 'textarea' ? 'textarea' : 'input'"
+        :type="type !== 'textarea' && type"
+        style="color: inherit; font-size: 100%; resize: vertical"
+        :class="{
+          'rounded-xl py-3 px-6 w-full placeholder bg-[transparent]': true,
+          'placeholder-visible': isFocused,
+        }"
+        :placeholder="placeholder"
         @focus="onFocus"
         @blur="onBlur"
-        @input="onInput"
-        v-focusable.indexOnly
-        autocomplete="off"
-        class="bg-[transparent] w-full py-3 resize-none ring-opacity-50"
-        :class="[
-          shadow
-            ? 'border-none ring-none'
-            : 'px-4 rounded-xl bg-gray-50 border dark:bg-dark-800 dark:bg-opacity-70 hover:bg-gray-100 transition-all',
-
-          isFocused && !shadow
-            ? 'border-primary-400 ring ring-primary-300 dark:ring-primary-900'
-            : 'border-gray-300 dark:border-dark-600',
-          !!errors.length &&
-            '!border-danger-500 !ring-danger-200 dark:!ring-danger-900',
-        ]"
+        v-model="VModel"
       />
-    </label>
-    <AtomicTextError
-      v-show="isErrorVisible"
-      ref="errorTextRef"
-      :text="errorMessage"
-    />
-  </div>
+    </fieldset>
+
+    <div class="h-6 px-4 text-xs">
+      <span v-if="error" class="text-red-500" v-text="error" />
+    </div>
+  </label>
 </template>
 
-<script>
-import {
-  computed,
-  defineComponent,
-  ref,
-  onMounted,
-  useAttrs,
-  useSlots,
-} from 'vue'
-import { useField } from 'vee-validate'
-import { useMotion } from '@vueuse/motion'
-import { not, useElementBounding, whenever } from '@vueuse/core'
+<style scoped>
+.placeholder::placeholder {
+  @apply transition-all duration-350 opacity-0 transform translate-y-4;
+}
 
-export default defineComponent({
-  name: 'AtomicInput',
-  emits: ['update:modelValue'],
-  props: {
-    modelValue: { type: [String, Number], default: '' },
-    name: { type: String, required: true },
-    type: { type: String, default: 'text' },
-    rules: { type: [String, Array, Object, Function], default: null },
-    placeholder: { type: String, default: '' },
-    shadow: { type: Boolean, default: false },
-  },
-  setup(props, { emit }) {
-    const isMounted = ref(false)
-    const errorMessage = ref(null)
-    const isErrorVisible = ref(false)
-    const isFocused = ref(false)
-    const errorTextRef = ref(null)
-    const containerRef = ref(null)
-    const placeholderRef = ref(null)
+.placeholder-visible::placeholder {
+  @apply opacity-100 transform translate-y-0;
+}
+</style>
 
-    const attrs = useAttrs()
-    const {
-      handleChange,
-      handleBlur,
-      errors,
-      errorMessage: err,
-    } = useField(props.name, props.rules, {
-      initialValue: props.modelValue,
-    })
-    const motion = useMotion(errorTextRef, {
-      initial: {
-        marginTop: -24,
-        opacity: 0,
-        transition: { duration: 500 },
-      },
-      show: {
-        marginTop: 0,
-        opacity: 1,
-        transition: { duration: 100 },
-      },
-    })
+<script setup>
+import { computed, defineProps, ref, toRefs } from 'vue'
+import { useElementSize, useVModel } from '@vueuse/core'
+import { Field, useFieldError, useIsFieldValid } from 'vee-validate'
 
-    const onFocus = () => (isFocused.value = true)
-    const onBlur = (e) => (isFocused.value = false) || handleBlur(e)
-    const onInput = (e) =>
-      emit('update:modelValue', e.target.value) || handleChange(e)
-
-    whenever(err, async () => {
-      isErrorVisible.value = true
-      errorMessage.value = err.value
-      await motion.apply('show')
-    })
-    whenever(not(err), async () => {
-      // We're meant to be together
-      await motion.apply('initial')
-      isErrorVisible.value = false
-      errorMessage.value = null
-    })
-    onMounted(() => setTimeout(() => (isMounted.value = true)))
-
-    return {
-      attrs,
-      errors,
-      isFocused,
-      errorMessage,
-      errorTextRef,
-      isErrorVisible,
-      isMounted,
-      containerRef,
-      placeholderRef,
-      onBlur,
-      onFocus,
-      onInput,
-    }
-  },
+const props = defineProps({
+  modelValue: { type: String, default: '' },
+  type: { type: String, default: 'text' },
+  placeholder: { type: String, default: null },
+  label: { type: String, default: null },
+  name: { type: String, default: null },
+  rules: { type: [String, Array, Function], default: null },
 })
+const { modelValue, placeholder, value, type, rules, name } = toRefs(props)
+
+const VModel = useVModel(props, 'modelValue')
+
+const isFocused = ref(false)
+const inputRef = ref(null)
+const placeholderRef = ref(null)
+const { width: placeholderWidth } = useElementSize(placeholderRef)
+const minimizeLabel = computed(() => VModel.value.length > 0 || isFocused.value)
+
+const isFieldValid = useIsFieldValid(name)
+const error = useFieldError(name)
+const focus = () => inputRef.value.$el.focus()
+const onFocus = (e) => (isFocused.value = true)
+const onBlur = (e) => (isFocused.value = false)
 </script>

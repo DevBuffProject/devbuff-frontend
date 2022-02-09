@@ -1,71 +1,56 @@
 <template>
-  <header
-    class="
-      backdrop-blur-[10px]
-      flex flex-col
-      justify-center
-      items-center
-      dark:bg-dark-800
-      bg-white bg-opacity-80
-      dark:bg-opacity-80
-      backdrop-filter
-      h-[62px]
-    "
-    style="box-shadow: 0 5px 8px #00098000, 0 5px 16px rgb(0 9 128 / 5%)"
-  >
-    <div class="container flex mx-auto">
-      <div class="flex items-center w-full">
-        <RouterLink to="/" custom v-slot="{ href, navigate }">
-          <a :href="href" @click="navigate">
+  <header>
+    <div
+      class="
+        border-b
+        dark:border-dark-400
+        flex flex-col
+        justify-center
+        items-center
+        dark:bg-dark-800
+        bg-white
+        h-[60px]
+      "
+      style="box-shadow: 0 5px 8px #00098000, 0 5px 16px rgb(0 9 128 / 5%)"
+    >
+      <div class="container flex mx-auto">
+        <div class="flex items-center w-full">
+          <AppLink to="/">
             <AtomicLogo
               :src="`/images/logos/logo-${isDark ? 'light' : 'dark'}.svg`"
+              class="p-1 rounded"
+              v-ripple
             />
-          </a>
-        </RouterLink>
-      </div>
-      <div class="flex items-center">
-        <div v-if="isLoggedIn">
-          <WidgetUserNotification />
+          </AppLink>
         </div>
-        <div class="flex items-center ml-6 pr-6">
-          <WidgetColorSwitcher v-focusable />
+        <div class="flex items-center">
+          <WidgetUserNotification v-if="isLoggedIn" />
+          <WidgetColorSwitcher class="ml-4" />
+
+          <nav class="hidden lg:block ml-6" v-if="isLoggedIn">
+            <AppLink v-slot="{ isActive, isLoading }" to="/create">
+              <AtomicButton :disabled="Boolean(isActive || isLoading)">
+                <div class="mr-4">
+                  <AtomicLoadingSpinner v-if="isLoading" />
+                  <AnnouncementIcon v-else />
+                </div>
+
+                {{ t('newIdea') }}
+              </AtomicButton>
+            </AppLink>
+          </nav>
         </div>
-        <nav
-          :class="[
-            'flex items-center pl-6',
-            'border-l border-gray-200 dark:border-dark-600',
-          ]"
-          v-if="isLoggedIn"
-        >
-          <RouterLink v-slot="{ isActive }" to="/create">
-            <AtomicButton
-              :disabled="isActive"
-              v-focusable.indexOnly="{ indexOnly: true }"
-            >
-              <template #icon>
-                <EditIcon />
-              </template>
-              {{ t('newIdea') }}
-            </AtomicButton>
-          </RouterLink>
-        </nav>
       </div>
     </div>
+
+    <div id="header-nprogress-container" class="h-[2px] overflow-hidden" />
   </header>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
-import { useAppearance, useI18n } from '../../composes/utils'
-import { useAuth } from '../../composes/core'
-import { useGlobalState } from '../../composes/core/useGlobalState'
+<script setup>
+import { useAuth, useAppearance, useI18n } from '../../composes'
 
-export default defineComponent({
-  setup() {
-    const { t } = useI18n('components.layout.header')
-    const { isDark, isLight } = useAppearance()
-    const { isLoggedIn } = useAuth()
-    return { t, isDark, isLight, isLoggedIn }
-  },
-})
+const { t } = useI18n('components.layout.header')
+const { isDark, isLight } = useAppearance()
+const { isLoggedIn } = useAuth()
 </script>
