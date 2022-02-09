@@ -1,28 +1,33 @@
 <template>
-  <template v-if="!slots.default">
-    <div v-if="!slots.default">
-      <span> {{ label }} </span>
+  <div class="group cursor-pointer" v-bind="attrs" @click="update">
+    <div v-if="!slots.default" class="flex items-center">
+      <div
+        :class="{
+          'w-[20px] h-[20px] transition-all rounded relative border-2': true,
+          'bg-primary-500 border-primary-500': isChecked,
+          'bg-opacity-50 border-gray-300 group-hover:border-gray-400 group-active:bg-light-700 dark:border-dark-200 dark:group-hover:border-dark-100 dark:group-active:bg-dark-500':
+            !isChecked,
+        }"
+      >
+        <div v-show="isChecked" class="w-full h-full">
+          <div
+            :class="'transition-none w-[6px] h-[16px] border-r-2 border-b-2 border-white transform rotate-45 absolute top-[-2px] left-[5px]'"
+          />
+        </div>
+      </div>
+      <span class="mt-px ml-2"> {{ label }} </span>
     </div>
-  </template>
-  <template v-else>
-    <div @click="onChange" @keypress.enter="onChange">
-      <slot v-bind="{ isChecked, isIntermedia }" />
-    </div>
-  </template>
+    <slot v-bind="{ isChecked }" />
+  </div>
 </template>
 
 <script>
-import { computed, defineComponent } from 'vue'
-import { isBoolean } from '@vueuse/core'
+import { computed, defineComponent, useAttrs, useSlots } from 'vue'
 
 export default defineComponent({
-  name: 'AtomicFormCheckbox',
+  name: 'AtomicCheckbox',
   emits: ['update:modelValue'],
   props: {
-    modelValue: {
-      type: [Boolean, Array, String],
-      default: false,
-    },
     isIntermedia: {
       type: Boolean,
       default: false,
@@ -31,36 +36,58 @@ export default defineComponent({
       type: String,
       default: null,
     },
-    value: {
+    modelValue: {
       type: [Boolean, String, Number, Array],
+      default: false,
+    },
+    trueValue: {
+      type: [Boolean, Number, String],
+      default: true,
+    },
+    falseValue: {
+      type: [Boolean, Number, String],
+      default: false,
+    },
+    value: {
+      type: [Boolean, String, Number],
       default: null,
     },
   },
-  setup(props, ctx) {
-    const { attrs, slots } = ctx
+  setup(props, { emit }) {
+    const attrs = useAttrs()
+    const slots = useSlots()
     const isChecked = computed(() =>
       Array.isArray(props.modelValue)
         ? props.modelValue.includes(props.value)
-        : props.modelValue === true,
+        : props.modelValue === props.trueValue,
     )
-    const onChange = () => {
-      let newModelValue
-      if (Array.isArray(props.modelValue)) {
-        newModelValue = [...props.modelValue]
-        if (isChecked.value)
-          newModelValue.splice(props.modelValue.indexOf(props.value), 1)
-        else newModelValue.push(props.value)
-      }
-      if (isBoolean(props.modelValue)) newModelValue = !props.modelValue
 
-      ctx.emit('update:modelValue', newModelValue)
+    const update = () => {
+      if (Array.isArray(props.modelValue) || props.value) {
+        const newValue = props.modelValue?.length ? [...props.modelValue] : []
+        const includes = props.modelValue?.length
+          ? props.modelValue?.includes(props.value)
+          : false
+
+        if (!includes) newValue.push(props.value)
+        else newValue.splice(newValue.indexOf(props.value), 1)
+
+        emit('update:modelValue', newValue)
+      } else {
+        emit(
+          'update:modelValue',
+          props.modelValue === props.trueValue
+            ? props.falseValue
+            : props.trueValue,
+        )
+      }
     }
 
     return {
-      onChange,
       isChecked,
       attrs,
       slots,
+      update,
     }
   },
 })

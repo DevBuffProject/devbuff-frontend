@@ -1,92 +1,93 @@
 <template>
-  <AtomicOverlay :visible="visible">
+  <div
+    v-if="visible"
+    :class="'fixed z-50 top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-40 dark:bg-opacity-70'"
+    v-motion="'overlayTransition'"
+    :initial="{ opacity: 0 }"
+    :leave="{ opacity: 0 }"
+    :enter="{ opacity: 1 }"
+  >
     <div
-      ref="windowRef"
-      class="max-w-[800px] my-10 mx-auto relative"
-      v-bind="attrs"
+      class="relative z-50 w-full max-h-screen"
+      style="overflow: auto; overflow: overlay"
     >
       <div
-        class="
-          bg-white
-          dark:bg-dark-900 dark:border dark:border-dark-500
-          shadow-2xl
-          rounded-2xl
-          p-4
-          z-50
-        "
+        class="w-full py-10 mx-auto relative"
+        :style="{ 'max-width': maxWidth }"
+        v-bind="attrs"
       >
         <div
-          class="
-            flex
-            justify-end
-            border-b border-light-700
-            dark:border-dark-800
-            px-4
-            pb-2
-            mb-4
-            -mx-4
-            -mt-2
-          "
+          :class="'bg-white dark:bg-dark-900 shadow-xl rounded-2xl overflow-hidden p-4 z-50'"
+          v-motion="'windowTransition'"
+          :initial="{
+            scale: 0.9,
+            opacity: 0,
+          }"
+          :leave="{
+            scale: 0.5,
+            opacity: 0,
+            transition: {
+              type: 'Spring',
+              opacity: { duration: 200 },
+              scale: { duration: 300 },
+            },
+          }"
+          :enter="{
+            scale: 1,
+            opacity: 1,
+            transition: {
+              type: 'spring',
+              duration: 300,
+              delay: 50,
+            },
+          }"
         >
-          <div class="cursor-pointer flex items-center group" @click="close">
-            <span class="opacity-30 text-dark-50 text-xs mr-4">press esc</span>
-            <CloseIcon
-              class="
-                w-8
-                h-8
-                p-1
-                text-dark-50
-                bg-light-900
-                dark:bg-dark-50 dark:text-dark-900
-                rounded-full
-                transition transition-opacity
-                opacity-70
-                transform
-                group-hover:opacity-100
-                group-active:scale-90
-              "
-            />
-          </div>
+          <BaseButton
+            class="
+              text-dark-50
+              bg-light-900
+              dark:bg-dark-50 dark:text-dark-900
+              rounded-full
+              absolute
+              right-4
+              top-4
+              p-1
+            "
+            @click="close"
+          >
+            <CloseIcon />
+          </BaseButton>
+
+          <slot />
         </div>
-        <slot />
       </div>
     </div>
-  </AtomicOverlay>
+  </div>
 </template>
 
-<script>
-import {
-  defineComponent,
-  useAttrs,
-  useSlots,
-  onMounted,
-  onUnmounted,
-} from 'vue'
-import AtomicOverlay from './Overlay.vue'
+<script setup>
+import { useAttrs, defineProps, defineEmits, toRefs } from 'vue'
+import { useMotions } from '@vueuse/motion'
 
-export default defineComponent({
-  components: { AtomicOverlay },
-  emits: ['close', 'update:visible'],
-  props: {
-    visible: { type: Boolean, default: false },
-  },
-  setup(props, { emit }) {
-    const slots = useSlots()
-    const attrs = useAttrs()
-    const onEscapeClose = (e) => e.key === 'Escape' && close()
-    const close = () =>
-      emit('close') ||
-      emit('update:visible', false) ||
-      window.removeEventListener('keyup', onEscapeClose)
-
-    onMounted(() => window.addEventListener('keyup', onEscapeClose))
-    onUnmounted(() => window.removeEventListener('keyup', onEscapeClose))
-
-    return {
-      slots,
-      attrs,
-      close,
-    }
-  },
+const attrs = useAttrs()
+const emit = defineEmits(['close', 'update:visible'])
+const props = defineProps({
+  visible: { type: Boolean, default: false },
+  maxWidth: { type: String, default: '800px' },
 })
+const { visible, maxWidth } = toRefs(props)
+
+const close = async () => {
+  await leaveTransition()
+  emit('close')
+  emit('update:visible', false)
+}
+
+const leaveTransition = async () => {
+  const { windowTransition, overlayTransition } = useMotions()
+  await Promise.all([
+    overlayTransition.apply('leave'),
+    windowTransition.apply('leave'),
+  ])
+}
 </script>

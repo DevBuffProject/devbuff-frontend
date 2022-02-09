@@ -1,47 +1,63 @@
-import { inject, readonly, ref, shallowRef } from 'vue'
+import { inject, ref, shallowRef } from 'vue'
 import { createRouter as createVueRouter } from 'vue-router'
-import { set, useStorage } from '@vueuse/core'
+import { useStorage } from '@vueuse/core'
 import { dialogRouteSymbol, mainRouteSymbol, routerSymbol } from './symbols'
-import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
+import { progress } from '../ui/LoadingIndicator'
 
 const mainRoute = shallowRef({ matched: [] })
 const dialogRoute = shallowRef({ matched: [] })
 const isDialog = ref(false)
+const isMainRouteLoading = ref(false)
+const isDialogRouteLoading = ref(false)
+const lastRoute = useStorage('last-route', 'explore')
+
+const startLoaders = () => {
+  if (isDialog.value) isDialogRouteLoading.value = true
+  else isMainRouteLoading.value = true
+  progress.start()
+}
+
+const stopLoaders = () => {
+  isDialogRouteLoading.value = false
+  isMainRouteLoading.value = false
+  progress.done()
+}
+
 const setupHooks = (router) => {
   // await https://github.com/vuejs/vue-router-next/issues/1048
   const resolveRoute = async (route) => {
-    const resolved = router.resolve(route)
-    let component = resolved.matched[0].components.default
+    const resolved = shallowRef(router.resolve(route))
+    let component = resolved.value.matched[0]?.components.default
     if (component instanceof Function) {
       component = await component()
-      resolved.matched[0].components.default = component.default
+      resolved.value.matched[0].components.default = component.default
     }
-    return resolved
+
+    return resolved.value
   }
 
-  let visited = false
-  const lastRoute = useStorage('last-route', 'explore')
-  router.afterEach((to, from) => {
-    setTimeout(NProgress.done, 100)
-    if (visited) set(lastRoute, to.name)
-    visited = true
+  router.beforeEach((to) => {
+    isDialog.value = !!(to.meta.isDialog || to.params._isDialog)
+    startLoaders()
   })
 
+  router.afterEach(() => {
+    lastRoute.value = mainRoute.value.fullPath
+    stopLoaders()
+  })
+
+  router.afterEach(stopLoaders)
+
   router.beforeResolve(async (to, from, next) => {
-    set(isDialog, !!(to.meta.isDialog || to.params._isDialog))
     if (isDialog.value) {
-      const fallbackRoute = await resolveRoute({ name: 'explore' })
-
-      set(dialogRoute, to)
-      if (!mainRoute.value.matched.length) set(mainRoute, fallbackRoute)
+      dialogRoute.value = to
+      const fallbackRoute = await resolveRoute(
+        lastRoute.value || { name: 'explore' },
+      )
+      if (!mainRoute.value.matched.length) mainRoute.value = fallbackRoute
     } else {
-      set(dialogRoute, undefined)
-
-      if (mainRoute.value?.fullPath !== to.fullPath) {
-        NProgress.start()
-        set(mainRoute, to)
-      }
+      dialogRoute.value = undefined
+      if (mainRoute.value?.fullPath !== to.fullPath) mainRoute.value = to
     }
 
     next()
@@ -50,13 +66,23 @@ const setupHooks = (router) => {
 
 export const createOverlayRouter = (options) => {
   const vueRouter = createVueRouter(options)
+  const backToMainRoute = async () =>
+    await vueRouter.push(mainRoute.value.fullPath)
+
   setupHooks(vueRouter)
 
   return {
-    ...vueRouter,
     install(app) {
       vueRouter.install(app)
-      app.provide(routerSymbol, vueRouter)
+      app.provide(routerSymbol, {
+        ...vueRouter,
+        mainRoute,
+        dialogRoute,
+        isDialog,
+        isDialogRouteLoading,
+        isMainRouteLoading,
+        backToMainRoute,
+      })
       app.provide(mainRouteSymbol, mainRoute)
       app.provide(dialogRouteSymbol, dialogRoute)
     },

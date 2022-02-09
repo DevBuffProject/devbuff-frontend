@@ -1,22 +1,25 @@
 <template>
-  <div className="transition-all resize-none ring-opacity-50 w-full editor">
+  <div class="transition-all resize-none ring-opacity-50 w-full editor">
     <CKEditor
       :editor="EditorClassic"
       :config="config"
-      @focus="isFocused = true"
-      @blur="isFocused = false"
+      @blur="onBlur"
       v-model="vModel"
       style="border: none; padding: 0; box-shadow: none; width: 100%"
     />
+
+    <div v-if="errorMessage" class="text-red-500 mb-4">{{ errorMessage }}</div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, useCssModule } from 'vue'
+import { defineComponent, onMounted, ref, watch } from 'vue'
 import { useVModel } from '@vueuse/core'
+import { useFiles } from '../../composes'
+import { useField } from 'vee-validate'
+import { htmlToText } from 'html-to-text'
 import CKEditor from '@ckeditor/ckeditor5-vue'
 import EditorClassic from '@ckeditor/ckeditor5-build-classic'
-import { useFiles } from '../../composes'
 
 class UploadAdapter {
   constructor(loader) {
@@ -51,45 +54,83 @@ class UploadAdapterPlugin {
   }
 }
 
+const config = {
+  toolbar: [
+    'heading',
+    '|',
+    'undo',
+    'redo',
+    '|',
+    'bold',
+    'italic',
+    'link',
+    '|',
+    'blockquote',
+    '|',
+    'mediaembed',
+    'uploadimage',
+    '|',
+    'numberedList',
+    'bulletedList',
+  ],
+  extraPlugins: [UploadAdapterPlugin],
+  heading: {
+    options: [
+      {
+        model: 'heading1',
+        view: 'h1',
+        title: 'Heading 1',
+        class: 'ck-heading_heading1',
+      },
+      {
+        model: 'heading2',
+        view: 'h2',
+        title: 'Heading 2',
+        class: 'ck-heading_heading2',
+      },
+      {
+        model: 'paragraph',
+        title: 'Paragraph',
+        class: 'ck-heading_paragraph',
+      },
+    ],
+  },
+}
+
 export default defineComponent({
   components: {
     CKEditor: CKEditor.component,
   },
   props: {
+    name: { type: String, default: 'Editor' },
+    rules: { type: [Array, Function], default: () => [] },
+    minTextLength: { type: Number, default: 100 },
+    maxTextLength: { type: Number, default: 1000 },
     modelValue: { type: String, default: '' },
   },
-  emits: ['update:modelValue'],
-  setup(props) {
-    const vModel = useVModel(props)
-    const isFocused = ref(false)
-    const styles = useCssModule()
+  emits: ['update:modelValue', 'update:text'],
 
-    const config = {
-      toolbar: [
-        'undo',
-        'redo',
-        '|',
-        'bold',
-        'italic',
-        'link',
-        '|',
-        'blockquote',
-        '|',
-        'mediaembed',
-        'uploadimage',
-        '|',
-        'numberedList',
-        'bulletedList',
-      ],
-      extraPlugins: [UploadAdapterPlugin],
+  setup(props, { emit }) {
+    const isFocused = ref(false)
+    const vModel = useVModel(props, 'modelValue', emit)
+    const textValue = ref('')
+    const { setValue, errors, errorMessage } = useField(props.name, props.rules)
+
+    const onBlur = () => {
+      isFocused.value = false
     }
+    onMounted(() => setValue(htmlToText(vModel.value)))
+    watch(vModel, (markup) => setValue((textValue.value = htmlToText(markup))))
 
     return {
-      styles,
+      errors,
+      errorMessage,
       vModel,
-      config,
+      textValue,
       isFocused,
+      config,
       EditorClassic,
+      onBlur,
     }
   },
 })

@@ -18,20 +18,11 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, useAttrs } from 'vue'
-
-export default defineComponent({
-  name: 'WidgetUser',
-  props: {
-    user: {
-      type: Object,
-      default: null,
-    },
-  },
-  setup() {
-    const attrs = useAttrs()
-    return { attrs }
-  },
+<script setup>
+import { defineProps, toRefs, useAttrs } from 'vue'
+const props = defineProps({
+  user: { type: Object, default: null },
 })
+const { user } = toRefs(props)
+const attrs = useAttrs()
 </script>

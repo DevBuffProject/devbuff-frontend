@@ -13,7 +13,7 @@
 <script>
 import { defineComponent, watch, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useNotifications, useUser } from '../composes/core'
+import { useNotifications, useUser } from '../composes/services'
 import { useI18n } from '../composes/utils'
 import { whenever } from '@vueuse/core'
 

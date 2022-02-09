@@ -34,7 +34,7 @@
 import { defineComponent, computed, useCssModule, ref } from 'vue'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
-import { useUser } from '../../composes/core'
+import { useUser } from '../../composes/services'
 import ImageUploader from 'quill-image-uploader'
 import { useField } from 'vee-validate'
 

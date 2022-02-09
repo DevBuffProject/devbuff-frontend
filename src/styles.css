@@ -1,14 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
-
 * {
   outline: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  @apply overflow-x-hidden tracking-wide;
+  touch-action: pan-y;
+  text-rendering: optimizeLegibility;
+  font-smoothing: subpixel-antialiased;
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-size: 15px;
+  user-select: none;
 }
 
 body {
-  @apply text-dark-900 dark:text-white bg-light-50 dark:bg-dark-900 bg-opacity-90;
-  font-family: Rubik, sans-serif;
-  user-select: none;
-  font-size: 14px;
+  @apply text-dark-900 dark:text-white bg-light-50 dark:bg-dark-900 h-screen w-screen;
+}
+
+#nprogress .bar {
+  @apply relative bg-primary-500 rounded-full !important;
 }
 
 svg {
@@ -61,6 +71,22 @@ svg {
   }
 }
 
+h1 {
+  @apply tracking-wider text-4xl font-semibold mb-8 mt-4 !important;
+}
+h2 {
+  @apply tracking-wider text-3xl font-semibold mb-6 mt-4 !important;
+}
+h3 {
+  @apply tracking-wider text-2xl font-semibold mb-4 mt-4 !important;
+}
+h4 {
+  @apply tracking-wider text-xl font-semibold mb-4 mt-4 !important;
+}
+h5 {
+  @apply tracking-wider text-lg font-medium mb-4 mt-4 !important;
+}
+
 .scrollbar::-webkit-scrollbar {
   @apply w-2 h-2;
   @apply transition-all;
@@ -69,18 +95,22 @@ svg {
   @apply bg-gray-300 dark:bg-white dark:bg-opacity-10 rounded-full opacity-0;
 }
 
-h1 {
-  @apply text-4xl font-semibold mb-8 mt-4 !important;
+.container {
+  @apply mx-auto;
+  @apply max-w-full px-2 sm:px-6 lg:max-w-[1280px] !important;
 }
-h2 {
-  @apply text-3xl font-semibold mb-6 mt-4 !important;
+
+.border-default {
+  @apply dark:border-dark-400 border-light-700;
 }
-h3 {
-  @apply text-2xl font-semibold mb-4 mt-4 !important;
+
+.divide-default {
+  @apply dark:divide-dark-400 divide-light-700;
 }
-h4 {
-  @apply text-xl font-semibold mb-4 mt-4 !important;
+.divider-x {
+  @apply block border-b dark:border-dark-300 border-light-700;
 }
-h5 {
-  @apply text-lg font-medium mb-4 mt-4 !important;
+.divider-y {
+  @apply block h-full border-b dark:border-dark-300 border-light-700;
 }
+

@@ -65,6 +65,7 @@
         title: "Позиции",
         titleLanguages: "Стэк языков",
         titleTechnologies: "Стэк технологий",
+        informationNotProvided: "Создатель идеи не указал список технологий",
         titleAcceptedUsers: 'Уже в команде',
         status: {
           NONE: "Откликнуться",
@@ -91,6 +92,12 @@
       text: {
         title: 'Текст',
         placeholder: 'Опишите вашу идею'
+      },
+      errors: {
+        tooManyIdeas: {
+          title: 'У вас слишком много идей!',
+          text: 'Многие из ваших идей не прошли модерацию, для того чтобы создать еще парочку, необходимо дождаться валидации или же удалить.'
+        }
       },
       save: 'Сохранить'
     },
@@ -120,9 +127,13 @@
     }
   },
   components: {
+    'have idea': "Есть идея",
     layout: {
       header: {
         newIdea: 'Рассказать об идеи'
+      },
+      bottomNav: {
+        loginVia: "Войти с помощью"
       },
       sidebar: {
         loginVia: "Войти с помощью",

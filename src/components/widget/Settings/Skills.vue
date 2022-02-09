@@ -14,7 +14,7 @@
             :key="skill.name"
             class="flex justify-between items-center group cursor-pointer"
           >
-            <AtomicFormCheckbox
+            <AtomicCheckbox
               :id="'language' + skill.name"
               :label="
                 tDefault(`commons.languages.${skill.name}`, skill.name, true)
@@ -54,7 +54,7 @@
             :key="specialist.name"
             :class="['flex justify-between items-center group cursor-pointer']"
           >
-            <AtomicFormCheckbox
+            <AtomicCheckbox
               :id="'specialist' + specialist.name + Math.random() * 1000"
               :label="t(`commons.specialist.${specialist.name}`, true)"
               v-model="specialist.checked"
@@ -92,7 +92,7 @@
             :key="framework.name"
             :class="['flex justify-between items-center group cursor-pointer']"
           >
-            <AtomicFormCheckbox
+            <AtomicCheckbox
               :id="'framework' + framework.name"
               :label="framework.name"
               v-model="framework.checked"
@@ -104,17 +104,18 @@
         </AtomicList>
       </swiper-slide>
     </swiper>
-    <AtomicButton @click="save"> Save </AtomicButton>
+    <AtomicButton @click="save" :disbled="saveProcessing" class="mt-2"
+      >Сохранить
+    </AtomicButton>
   </div>
 </template>
 
 <script>
 import { defineComponent, ref, reactive, nextTick } from 'vue'
-import { useSkills, useUser } from '../../../composes/core'
+import { useAuth, useSkills, useI18n } from '../../../composes'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { ChevronRightIcon, ChevronLeftIcon } from '@iconicicons/vue3'
 import 'swiper/swiper.scss'
-import { useI18n } from '../../../composes/utils'
 
 export default defineComponent({
   name: 'WidgetProfileSkills',
@@ -124,11 +125,12 @@ export default defineComponent({
   },
   async setup() {
     const { t, tDefault } = useI18n('components.widget.profile.skills')
-    const { user, saveUserSkills } = useUser()
+    const { user, saveUserSkills } = useAuth()
     const { getSkills } = useSkills()
     const swiper = ref()
     const allSkills = await getSkills()
     const userSkill = user.value.skills
+    const saveProcessing = ref(false)
 
     const findName = (array, value) =>
       array.findIndex((data) => data.name === value)
@@ -254,8 +256,12 @@ export default defineComponent({
           }
         }
       }
-
-      saveUserSkills({ skills: skillsData })
+      try {
+        saveProcessing.value = false
+        saveUserSkills({ skills: skillsData })
+      } finally {
+        saveProcessing.value = false
+      }
     }
 
     const onSwiper = (swiperComponent) => (swiper.value = swiperComponent)
@@ -274,6 +280,7 @@ export default defineComponent({
       prevSlide,
       nextSlide,
       onChangeSkill,
+      saveProcessing,
     }
   },
 })

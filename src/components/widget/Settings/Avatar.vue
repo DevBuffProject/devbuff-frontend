@@ -1,61 +1,51 @@
 <template>
   <AtomicFormFiles
     @update:modelValue="upload"
-    class="relative rounded-full overflow-hidden inline-block"
+    class="relative rounded-full inline-block"
   >
     <template #default="{ pickFiles }">
-      <span
+      <BaseButton
+        @click="pickFiles"
+        aria-label="Загрузить фото"
         class="
-          group
-          cursor-pointer
           absolute
-          z-20
-          top-0
-          left-0
-          h-full
-          w-full
+          bottom-0
+          right-0
+          rounded-full
           flex
           items-center
           justify-center
-          bg-black bg-opacity-50
+          h-10
+          w-10
+          z-50
+          bg-white
+          dark:bg-dark-300
+          focus:bg-light-900
+          text-primary-500
         "
-        @click="pickFiles"
       >
-        <AtomicProgressCircle
-          class="stroke-primary-500 absolute top-0 left-0"
-          :size="200"
-          :percent="uploadProgress"
-        />
-        <UploadIcon
-          class="
-            p-2
-            text-3xl text-white
-            transition-all
-            opacity-100
-            scale-90
-            transform
-            bg-black bg-opacity-50
-            group-hover:bg-opacity-100 group-hover:scale-110
-            rounded-full
-          "
-        />
-      </span>
+        <UploadIcon v-if="!uploadProgress" />
+        <AtomicLoadingSpinner v-else />
+      </BaseButton>
     </template>
     <template #preview>
-      <AtomicAvatar :src="avatar" size="200px" />
+      <AtomicAvatar aria-label="Фото профиля" :src="avatar" :size="150" />
     </template>
   </AtomicFormFiles>
 </template>
 
 <script>
 import { computed, defineComponent } from 'vue'
-import { useFiles, useUser } from '../../../composes/core'
+import { useAuth, useFiles } from '../../../composes'
+import BaseButton from '../../base/Button.vue'
 
 export default defineComponent({
   name: 'WidgetSettingsAvatar',
+  components: { BaseButton },
+
   setup() {
     const { uploadUserPhoto, uploadProgress } = useFiles()
-    const { user } = useUser()
+    const { user } = useAuth()
     const avatar = computed(() => user.value.avatar)
 
     const upload = async (files) => {

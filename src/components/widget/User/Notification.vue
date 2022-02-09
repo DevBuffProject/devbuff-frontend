@@ -43,21 +43,18 @@
           <AtomicLoadingSpinner class="text-primary-500" />
         </div>
 
-        <AtomicList v-if="notifications">
+        <div v-if="notifications" class="divide-y divide-default">
           <div v-for="(notify, index) of notifications" :key="index">
-            <RouterLink
+            <AppLink
               v-if="notify.type === 'USER_PENDING'"
               :to="{
                 name: 'dashboard',
                 query: { ideaId: notify.data.ideaId },
               }"
-              custom
-              v-slot="{ navigate }"
             >
               <AtomicCardNotification
                 :date="timeAgo(notify.dateCreation)"
                 type="primary"
-                @click="navigate"
                 class="cursor-pointer"
                 :class="{
                   'bg-primary-100 bg-opacity dark:bg-dark-900': !notify.read,
@@ -72,7 +69,7 @@
                   {{ notify.data.ideaName }}
                 </em>
               </AtomicCardNotification>
-            </RouterLink>
+            </AppLink>
             <RouterLink
               v-if="notify.type === 'IDEA_APPROVED'"
               :to="{
@@ -162,7 +159,7 @@
             <span class="text-2xl mr-2">🤷</span>
             <span class="opacity-50"> Это пока все </span>
           </div>
-        </AtomicList>
+        </div>
 
         <div
           v-else
@@ -184,7 +181,7 @@
 
 <script>
 import { defineComponent, ref, onBeforeUnmount } from 'vue'
-import { useNotifications } from '../../../composes/core'
+import { useNotifications } from '../../../composes'
 import { useTimeAgo } from '@vueuse/core'
 
 export default defineComponent({
