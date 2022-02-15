@@ -13,7 +13,7 @@ export const useIdeas = () => {
 
   const ideas = ref([])
   const getIdeas = async (params) => {
-    const finalParams = { page: 1, sortBy: 'date', ...params }
+    const finalParams = { page: params.page, sortBy: 'date', ...params }
     const query = new URLSearchParams()
     Object.keys(finalParams).forEach((param) =>
       query.append(param, finalParams[param]),
