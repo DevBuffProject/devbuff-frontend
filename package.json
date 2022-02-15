@@ -23,7 +23,7 @@
     "@ckeditor/ckeditor5-vue": "2.0.1",
     "@iconicicons/vue3": "1.5.0",
     "@vueup/vue-quill": "1.0.0-beta.7",
-    "@vueuse/components": "^6.7.3",
+    "@vueuse/components": "^6.9.2",
     "@vueuse/core": "6.6.1",
     "@vueuse/integrations": "6.6.1",
     "@vueuse/motion": "1.6.0",
@@ -31,7 +31,7 @@
     "axios": "0.23.0",
     "color": "4.0.1",
     "fastcomments-vue-next": "2.0.1",
-    "html-to-text": "^8.0.0",
+    "html-to-text": "^8.1.0",
     "lodash": "4.17.21",
     "masonry-layout": "4.2.2",
     "mitt": "3.0.0",
@@ -71,8 +71,8 @@
     "vite": "2.6.7",
     "vite-plugin-fonts": "0.2.2",
     "vite-plugin-svg-icons": "1.0.5",
-    "vite-plugin-windicss": "^1.4.12",
+    "vite-plugin-windicss": "^1.7.0",
     "vue-loader": "16.8.1",
-    "windicss": "^3.1.9"
+    "windicss": "^3.4.3"
   }
 }
