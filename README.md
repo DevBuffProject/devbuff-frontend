@@ -1,2 +1,3 @@
-# devbuff-frontend
-Devbuff web client
+# DevBuff
+
+Web Application client
