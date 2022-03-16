@@ -73,11 +73,19 @@ export default defineComponent({
     const specialists = filterQueryReactive('specialists')
     const languages = filterQueryReactive('languages')
     const filter = reactive({ page, specialists, languages, sortBy })
-    const throttledGetIdeas = useThrottleFn(
-      async () => await getIdeas(filter),
-      500,
-    )
+    const throttledGetIdeas = useThrottleFn(async () => {
+      await getIdeas(filter)
+    }, 500)
 
+    watch(
+      () => filter.page,
+      (newPage, oldPage) => {
+        if (oldPage === newPage) {
+          filter.page = 1
+        }
+      },
+      { deep: true },
+    )
     // TODO: reactify function
     watch(filter, throttledGetIdeas)
 
