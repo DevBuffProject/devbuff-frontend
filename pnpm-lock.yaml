@@ -3,7 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@babel/core': 7.15.8
   '@ckeditor/ckeditor5-build-classic': 30.0.0
-  '@ckeditor/ckeditor5-vue': 2.0.1
+  '@ckeditor/ckeditor5-vue': 3.0.0
   '@iconicicons/vue3': 1.5.0
   '@intlify/vite-plugin-vue-i18n': 2.4.0
   '@vitejs/plugin-vue': 1.9.3
@@ -57,7 +57,7 @@ specifiers:
 
 dependencies:
   '@ckeditor/ckeditor5-build-classic': 30.0.0
-  '@ckeditor/ckeditor5-vue': 2.0.1
+  '@ckeditor/ckeditor5-vue': 3.0.0
   '@iconicicons/vue3': 1.5.0_vue@3.2.20
   '@vueup/vue-quill': 1.0.0-beta.7_vue@3.2.20
   '@vueuse/components': 6.7.3_vue@3.2.20
@@ -589,9 +589,9 @@ packages:
       lodash-es: 4.17.21
     dev: false
 
-  /@ckeditor/ckeditor5-vue/2.0.1:
-    resolution: {integrity: sha512-EriE1OQVNj1uhn3UL3myYY3JTfcUWHO46Yqga8U+/61V5vU3tIV6Z7/9q/MYe8UcFk0AM1sZcYXaKvWW57vnwg==}
-    engines: {node: '>=8.0.0', npm: '>=5.7.1'}
+  /@ckeditor/ckeditor5-vue/3.0.0:
+    resolution: {integrity: sha512-Ydfp3rj9jWmS10KUmWml+V8hq21SCEveHhnvLK4oWwYpIyZfa8S5AqRyoR/RwaJDSZ8js1SH489k2d8GjiveeQ==}
+    engines: {node: '>=14.0.0', npm: '>=5.7.1'}
     dev: false
 
   /@ckeditor/ckeditor5-widget/30.0.0:
