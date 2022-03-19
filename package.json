@@ -66,7 +66,7 @@
     "eslint-plugin-vue": "7.19.1",
     "husky": "7.0.2",
     "lint-staged": "11.2.3",
-    "pinst": "2.1.6",
+    "pinst": "3.0.0",
     "prettier": "2.4.1",
     "vite": "2.6.7",
     "vite-plugin-fonts": "0.2.2",
