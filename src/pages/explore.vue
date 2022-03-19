@@ -47,7 +47,7 @@ import { useMainRoute } from '../core/router'
 
 export default defineComponent({
   async setup() {
-    useTitle('Explore ideas - Devbuff')
+    useTitle('Explore ideas - DevBuff')
 
     const router = useRouter()
     const filterQueryReactive = (name, defaultValue) =>
@@ -80,7 +80,7 @@ export default defineComponent({
     watch(
       () => filter.page,
       (newPage, oldPage) => {
-        if (oldPage === newPage) {
+        if (oldPage === newPage && oldPage !== 1) {
           filter.page = 1
         }
       },
