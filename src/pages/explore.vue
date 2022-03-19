@@ -16,11 +16,17 @@
       </AtomicAlert>
       <div class="col-span-10" id="ideas">
         <WidgetIdeasCard
-          v-for="idea of ideas"
+          v-for="idea of ideas.ideas"
           :key="idea.id"
           :idea="idea"
           class="mb-4"
         />
+        <AtomicPagination
+          v-model="filter.page"
+          :per-page="ideas.perPage"
+          :elements="ideas.ideas.length"
+          class="mb-10"
+        ></AtomicPagination>
       </div>
 
       <WidgetIdeasFilter
@@ -44,11 +50,11 @@ export default defineComponent({
     useTitle('Explore ideas - Devbuff')
 
     const router = useRouter()
-    const filterQueryReactive = (name, plain) =>
+    const filterQueryReactive = (name, defaultValue) =>
       computed({
         get: () =>
-          plain
-            ? route.value.query?.[name] ?? 'lastUpdate'
+          defaultValue
+            ? route.value.query?.[name] ?? defaultValue
             : [route.value.query?.[name] ?? null].flat().filter(Boolean),
         set: (value) =>
           router.push({ query: { ...route.value.query, [name]: value } }),
@@ -62,15 +68,24 @@ export default defineComponent({
       Boolean(route.value.query?.missingAuthorization),
     )
 
-    const sortBy = filterQueryReactive('sortBy', true)
+    const page = filterQueryReactive('page', 1)
+    const sortBy = filterQueryReactive('sortBy', 'lastUpdate')
     const specialists = filterQueryReactive('specialists')
     const languages = filterQueryReactive('languages')
-    const filter = reactive({ specialists, languages, sortBy })
-    const throttledGetIdeas = useThrottleFn(
-      async () => await getIdeas(filter),
-      500,
-    )
+    const filter = reactive({ page, specialists, languages, sortBy })
+    const throttledGetIdeas = useThrottleFn(async () => {
+      await getIdeas(filter)
+    }, 500)
 
+    watch(
+      () => filter.page,
+      (newPage, oldPage) => {
+        if (oldPage === newPage) {
+          filter.page = 1
+        }
+      },
+      { deep: true },
+    )
     // TODO: reactify function
     watch(filter, throttledGetIdeas)
 

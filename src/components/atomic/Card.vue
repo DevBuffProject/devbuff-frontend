@@ -1,7 +1,7 @@
 <template>
   <div
     class="
-      shadow-lg shadow-dark-50
+      shadow-lg
       dark:shadow-black dark:shadow-xl
       bg-white
       dark:bg-dark-800
