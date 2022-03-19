@@ -43,7 +43,9 @@ const { user, getUser } = useUser()
 export const useAuth = () => {
   const { request, BASE_URL, error } = useApi()
   const initAuth = (provider) => {
-    window.location.href = `${BASE_URL}/oAuth/${PROVIDERS.get(provider)}`
+    window.location.href = `${BASE_URL}/oAuth/external/init/${PROVIDERS.get(
+      provider,
+    )}/client/web` //TODO ClientTypeToENV
   }
 
   const auth = async ({ code, provider }) => {
@@ -53,6 +55,7 @@ export const useAuth = () => {
         data: new URLSearchParams({
           code,
           grant_type: `${PROVIDERS.get(provider)}_oauth`,
+          clientType: 'web',
         }),
       })
 
