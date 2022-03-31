@@ -34,7 +34,7 @@
 
 <script setup>
 import { computed, defineProps, reactive, ref } from 'vue'
-import { useVModel, syncRef, biSyncRef, useScrollLock } from '@vueuse/core'
+import { useVModel, syncRef, biSyncRef } from '@vueuse/core'
 import {
   acceleratedEasing,
   deceleratedEasing,
@@ -49,7 +49,7 @@ const active = useVModel(props, 'visible')
 const internalActive = ref(false)
 biSyncRef(active, internalActive)
 
-const scroll = useScrollLock(document.documentElement)
+const scroll = ref()
 syncRef(active, scroll)
 
 // states

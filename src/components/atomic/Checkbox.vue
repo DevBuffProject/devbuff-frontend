@@ -17,7 +17,7 @@
       </div>
       <span class="mt-px ml-2"> {{ label }} </span>
     </div>
-    <slot />
+    <slot v-bind="{ isChecked }" />
   </div>
 </template>
 

@@ -5,14 +5,35 @@
     <transition name="fade" :duration="450">
       <div
         v-if="internalActive"
-        class="fixed z-50 top-0 left-0 bottom-0 right-0 flex items-center justify-center bg-black bg-opacity-60 dark:bg-opacity-90"
+        class="
+          fixed
+          z-50
+          top-0
+          left-0
+          bottom-0
+          right-0
+          flex
+          items-center
+          justify-center
+          bg-black bg-opacity-60
+          dark:bg-opacity-90
+        "
       />
     </transition>
 
     <transition :css="false" v-on="dialogTransitionHandlers">
       <div
         v-if="internalActive"
-        class="fixed z-50 w-full top-0 bottom-0 overflow-y-auto flex optimize-transition"
+        class="
+          fixed
+          z-50
+          w-full
+          top-0
+          bottom-0
+          overflow-y-auto
+          flex
+          optimize-transition
+        "
         @click="hide"
       >
         <div
@@ -41,12 +62,12 @@
 
 <script setup>
 import { computed, defineProps, reactive, ref } from 'vue'
-import { useVModel, syncRef, biSyncRef, useScrollLock } from '@vueuse/core'
+import { useVModel, syncRef, biSyncRef } from '@vueuse/core'
+import { nullifyTransforms } from '../../core/ui/animation/utils'
 import {
   acceleratedEasing,
   deceleratedEasing,
 } from '../../core/ui/animation/easing'
-import { nullifyTransforms } from '../../core/ui/animation/utils'
 
 const props = defineProps({
   visible: { type: Boolean, default: false },
@@ -58,7 +79,7 @@ const active = useVModel(props, 'visible')
 const internalActive = ref(false)
 biSyncRef(active, internalActive)
 
-const scroll = useScrollLock(document.documentElement)
+const scroll = ref()
 syncRef(active, scroll)
 
 // states
@@ -104,7 +125,7 @@ const dialogTransitionHandlers = {
         { transform: `translate(${x}px, ${y}px) scale(0.1)`, opacity: 0 },
         { transform: '' },
       ],
-      { duration: 300, easing: 'cubic-bezier(.08,.82,.17,1)' },
+      { duration: 300, easing: `cubic-bezier(${acceleratedEasing.join(',')})` },
     )
     animation.finished.then(done)
   },
@@ -116,7 +137,7 @@ const dialogTransitionHandlers = {
         { transform: '' },
         { transform: `translate(${x}px, ${y}px) scale(0.1)`, opacity: 0 },
       ],
-      { duration: 250, easing: 'cubic-bezier(.78,.14,.15,.86)' },
+      { duration: 250, easing: `cubic-bezier(${deceleratedEasing.join(',')})` },
     )
     animation.finished.then(done)
   },

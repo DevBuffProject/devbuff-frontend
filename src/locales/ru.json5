@@ -65,6 +65,7 @@
         title: "Позиции",
         titleLanguages: "Стэк языков",
         titleTechnologies: "Стэк технологий",
+        informationNotProvided: "Создатель идеи не указал список технологий",
         titleAcceptedUsers: 'Уже в команде',
         status: {
           NONE: "Откликнуться",

@@ -44,13 +44,13 @@
       </p>
 
       <AtomicLabel
-        v-if="idea.specialists.length"
+        v-if="idea.requirements.length"
         :name="t('detail.specialist')"
         class="mt-4"
       >
         <div class="flex flex-wrap">
           <AtomicChip
-            v-for="(spec, index) in idea.specialists"
+            v-for="(spec, index) in idea.requirements"
             :key="'spec' + spec.name + index"
             :text="t(`commons.specialist.${spec.name}`, true)"
             class="mr-2 mb-2"
@@ -105,12 +105,12 @@ const slots = useSlots()
 const { t, tDefault } = useI18n('components.widget.ideas.card')
 const { getUserProfileUrl } = useUser()
 
-const languages = props.idea.specialists
+const languages = props.idea.requirements
   .flatMap((specialist) =>
     specialist.languages.map((language) => language.name),
   )
   .filter((item, index, array) => array.indexOf(item) === index)
-const technologies = props.idea.specialists
+const technologies = props.idea.requirements
   .flatMap((specialist) =>
     specialist.languages.flatMap((languages) =>
       languages.technologies.map((technology) => technology.name),

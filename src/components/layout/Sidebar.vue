@@ -2,56 +2,51 @@
   <aside>
     <nav>
       <div class="mb-8 block relative group">
-        <AppLink
-          v-if="isLoggedIn && user.id"
-          :to="{ name: 'user', params: { UUID: user.id } }"
-          class="block p-1"
-          v-slot="{ navigate }"
-          v-ripple
-        >
-          <WidgetUser :user="user" @click="navigate" class="block" />
-        </AppLink>
-        <AppLink
-          :to="{ name: 'user-edit' }"
-          :class="'p-1 absolute -left-10 top-3 text-xs rounded-full animation-opacity opacity-30 group-hover:opacity-100'"
-        >
-          <BaseButton>
-            <EditIcon />
-          </BaseButton>
-        </AppLink>
-      </div>
+        <template v-if="isLoggedIn && user.id">
+          <AppLink
+            :to="{ name: 'user', params: { UUID: user.id } }"
+            class="block p-1"
+            v-slot="{ navigate }"
+            v-ripple
+          >
+            <WidgetUser :user="user" @click="navigate" class="block" />
+          </AppLink>
+          <AppLink
+            :to="{ name: 'user-edit' }"
+            :class="'p-1 absolute -left-10 top-3 text-xs rounded-full animation-opacity opacity-30 group-hover:opacity-100'"
+          >
+            <BaseButton>
+              <EditIcon />
+            </BaseButton>
+          </AppLink>
+        </template>
+        <div v-else class="p-5 mb-5 bg-primary-500 bg-opacity-10 rounded-xl">
+          <h4 class="mt-0">{{ t('loginVia') }}</h4>
 
-      <div
-        v-if="!isLoggedIn"
-        class="p-5 mb-5 bg-primary-500 bg-opacity-10 rounded-xl"
-      >
-        <h4 class="mt-0">{{ t('loginVia') }}</h4>
-
-        <AtomicButton
-          class="w-full flex items-center justify-center"
-          v-focusable.indexOnly
-          @click="initAuth(AuthProviders.GitHub)"
-        >
-          <div class="text-white dark:text-dark-50 flex items-center">
-            <Svg class="dark:text-black" name="Github" />
-            <span class="ml-2">GitHub</span>
-          </div>
-        </AtomicButton>
-
-        <div class="mt-2 mb-2">
           <AtomicButton
             class="w-full flex items-center justify-center"
-            v-focusable.indexOnly
-            @click="initAuth(AuthProviders.GitLab)"
+            @click="initAuth(AuthProviders.GitHub)"
           >
             <div class="text-white dark:text-dark-50 flex items-center">
-              <Svg name="Gitlab" />
-              <span class="ml-2">GitLab</span>
+              <Svg class="dark:text-black" name="Github" />
+              <span class="ml-2">GitHub</span>
             </div>
           </AtomicButton>
-        </div>
 
-        <div class="mt-0">{{ t('loginReason') }}</div>
+          <div class="mt-2 mb-2">
+            <AtomicButton
+              class="w-full flex items-center justify-center"
+              @click="initAuth(AuthProviders.GitLab)"
+            >
+              <div class="text-white dark:text-dark-50 flex items-center">
+                <Svg name="Gitlab" />
+                <span class="ml-2">GitLab</span>
+              </div>
+            </AtomicButton>
+          </div>
+
+          <div class="mt-0">{{ t('loginReason') }}</div>
+        </div>
       </div>
 
       <AppLink
@@ -118,8 +113,6 @@ import { ref, computed } from 'vue'
 import { useAuth, useI18n } from '../../composes'
 import { useRouter } from '../../core/router'
 import {
-  SearchIcon,
-  DashboardIcon,
   SettingsIcon,
   ShieldIcon,
   UserIcon,

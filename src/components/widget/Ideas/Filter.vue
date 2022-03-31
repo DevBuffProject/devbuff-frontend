@@ -16,14 +16,7 @@
     />
     <div class="relative">
       <div class="absolute z-50 -top-1 right-0">
-        <AtomicButton
-          v-if="somethingSelected"
-          is-small
-          type="muted"
-          @click="reset"
-        >
-          clear
-        </AtomicButton>
+        <button v-if="somethingSelected" @click="reset">clear</button>
       </div>
 
       <div class="text-black dark:text-dark-50 flex items-center mb-4">
@@ -103,7 +96,6 @@
           v-model="state.languages"
           :value="param.value"
           v-slot="{ isChecked }"
-          v-focusable.indexOnly
           class="
             rounded-md
             focus:ring focus:ring-primary-200
@@ -141,76 +133,63 @@
 </template>
 
 <script>
-import { computed, defineComponent, watch } from 'vue'
-import { not, useVModel, whenever } from '@vueuse/core'
-import { useSkills } from '../../../composes/services'
-import { useI18n } from '../../../composes/utils'
-
 const initialFilter = {
   specialists: [],
   languages: [],
 }
+</script>
 
-export default defineComponent({
-  name: 'WidgetIdeasFilter',
-  emits: ['update:modelValue'],
-  props: {
-    modelValue: {
-      type: Object,
-      default: () => initialFilter,
-    },
-  },
-  setup(props, { emit }) {
-    const { t, tDefault } = useI18n('components.widget.ideas.filter')
-    const { specializations, skills, languages, getSkills } = useSkills()
-    const state = useVModel(props, 'modelValue', emit)
+<script setup>
+import { computed, defineProps, defineEmits, useSlots } from 'vue'
+import { not, useVModel, whenever } from '@vueuse/core'
+import { useSkills } from '../../../composes'
+import { useI18n } from '../../../composes'
 
-    const specialistSelected = computed(
-      () => state.value.specialists.length > 0,
-    )
-    const languageSelected = computed(() => state.value.languages.length > 0)
-    const somethingSelected = computed(
-      () => languageSelected.value || specialistSelected.value,
-    )
-    const specialistsOptions = computed(() =>
-      specializations.value.map((specialist) => ({
-        value: specialist,
-        name: specialist,
-      })),
-    )
-    const languagesOptions = computed(() =>
-      languages.value
-        .filter((languageSearched) =>
-          skills.value.find(
-            (language) =>
-              language.name === languageSearched &&
-              language.specializations.find((specialist) =>
-                state.value.specialists.includes(specialist.name),
-              ),
-          ),
-        )
-        .map((language) => ({
-          value: language,
-          name: language,
-        })),
-    )
-
-    const reset = () => (state.value.specialists = [])
-
-    whenever(not(specialistSelected), () => (state.value.languages = []))
-    getSkills()
-
-    return {
-      t,
-      reset,
-      tDefault,
-      state,
-      languageSelected,
-      specialistSelected,
-      somethingSelected,
-      specialistsOptions,
-      languagesOptions,
-    }
+const props = defineProps({
+  modelValue: {
+    type: Object,
+    default: () => ({ ...initialFilter }),
   },
 })
+const emit = defineEmits({
+  'update:modelValue': Boolean,
+})
+const slots = useSlots()
+
+const { t, tDefault } = useI18n('components.widget.ideas.filter')
+const { specializations, skills, languages, getSkills } = useSkills()
+const state = useVModel(props, 'modelValue', emit)
+
+const specialistSelected = computed(() => state.value.specialists.length > 0)
+const languageSelected = computed(() => state.value.languages.length > 0)
+const somethingSelected = computed(
+  () => languageSelected.value || specialistSelected.value,
+)
+const specialistsOptions = computed(() =>
+  specializations.value.map((specialist) => ({
+    value: specialist,
+    name: specialist,
+  })),
+)
+const languagesOptions = computed(() =>
+  languages.value
+    .filter((languageSearched) =>
+      skills.value.find(
+        (language) =>
+          language.name === languageSearched &&
+          language.specializations.find((specialist) =>
+            state.value.specialists.includes(specialist.name),
+          ),
+      ),
+    )
+    .map((language) => ({
+      value: language,
+      name: language,
+    })),
+)
+
+const reset = () => (state.value.specialists = [])
+
+whenever(not(specialistSelected), () => (state.value.languages = []))
+getSkills()
 </script>

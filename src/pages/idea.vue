@@ -42,11 +42,6 @@
             </template>
 
             <div class="flex flex-col items-start -mx-4 text-xs">
-              <BaseButton type="danger" class="w-full pt-2 px-4">
-                <StopIcon />
-                Stop company
-              </BaseButton>
-
               <BaseButton
                 type="danger"
                 class="w-full pt-2 px-4"
@@ -89,12 +84,24 @@
                     :key="`language-${language}-${specialist.id}`"
                   >
                     <AtomicChip
-                      :text="language"
+                      :text="
+                        tDefault(
+                          `commons.languages.${language}`,
+                          language,
+                          true,
+                        )
+                      "
                       class="mb-2 mr-1"
                       type="auto"
                     />
                   </div>
                 </div>
+              </AtomicLabel>
+              <AtomicLabel
+                v-if="languagesForSpecialist(specialist.id).length === 0"
+                class="mt-4"
+                :name="t('positions.informationNotProvided')"
+              >
               </AtomicLabel>
               <AtomicLabel
                 v-if="frameworksForSpecialist(specialist.id).length > 0"
@@ -172,8 +179,8 @@
 
 <script>
 import { defineComponent } from 'vue'
-import { useIdea, useUser, useSso, useI18n } from '../composes'
-import { useTimeAgo, useTitle } from '@vueuse/core'
+import { useIdea, useUser, useSso, useI18n, useTimeAgoUtils } from '../composes'
+import { useTitle } from '@vueuse/core'
 import { useRouter } from '../core/router'
 
 export default defineComponent({
@@ -195,7 +202,7 @@ export default defineComponent({
       changeStatusIdea,
     } = useIdea(props.id)
     const { ssoData, getSsoData } = useSso()
-    const { t } = useI18n('pages.idea')
+    const { t, tDefault } = useI18n('pages.idea')
     const { getUserProfileUrl, getUser, user } = useUser()
 
     const send = (specialistId) => {
@@ -225,7 +232,7 @@ export default defineComponent({
     await getSsoData()
 
     const isOwnerIdea = user.value.id === idea.value.ownerIdea.id
-    const publishedAgo = useTimeAgo(idea.value.lastUpdateDate)
+    const publishedAgo = useTimeAgoUtils(idea.value.lastUpdateDate)
 
     useTitle(`${idea.value.name} - DevBuff`)
 
@@ -235,6 +242,7 @@ export default defineComponent({
       isOwnerIdea,
       publishedAgo,
       t,
+      tDefault,
       send,
       deleteIdeaProcess,
       changeStatusIdea,
