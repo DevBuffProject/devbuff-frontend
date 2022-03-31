@@ -32,7 +32,6 @@
       </teleport>
     </transition>
   </UseOnline>
-
   <LayoutHeader class="sticky top-0 z-50" />
 
   <div class="py-6">
@@ -40,8 +39,8 @@
       <LayoutSidebar
         class="h-min col-span-2 hidden lg:block sticky top-23 z-50"
       />
-
       <div class="col-span-8">
+        <AtomicDialog v-model="isAccessDenied"> asfasf </AtomicDialog>
         <router-view :route="mainRoute" v-slot="{ Component, route }">
           <template v-if="Component">
             <suspense>
@@ -93,18 +92,32 @@
 </template>
 
 <script setup>
-import { computed, onErrorCaptured, ref } from 'vue'
+import { computed, onErrorCaptured, ref, watch } from 'vue'
 import { useTitle } from '@vueuse/core'
 import { useRouter } from './core/router'
 import { useI18n } from './composes'
+import AccessDeniedError from './components/error/AccessDeniedError'
 
 const error = ref(false)
+const isAccessDenied = ref(true)
+
 onErrorCaptured((err, instance) => {
   error.value = err
+
+  if (err instanceof AccessDeniedError) {
+    isAccessDenied.value = true
+  }
   return false
 })
-useTitle('DefBuff')
+useTitle('DevBuff')
 const { t, tDefault } = useI18n('breadcrumbs')
 const { mainRoute, dialogRoute, isDialogRouteLoading, ...router } = useRouter()
 const back = router.backToMainRoute
+
+watch(isAccessDenied, (value) => {
+  if (!value) {
+    console.log('asfa')
+    back()
+  }
+})
 </script>

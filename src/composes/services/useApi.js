@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useCookies } from '@vueuse/integrations'
 import { ref, shallowRef } from 'vue'
 import { progress } from '../../core/ui/LoadingIndicator'
+import AccessDeniedError from '../../components/error/AccessDeniedError'
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL
 const cookies = useCookies()
@@ -55,7 +56,13 @@ export const useApi = (config = {}) => {
         error.value = false
         return response
       })
-      .catch((err) => (error.value = err))
+      .catch((err) => {
+        error.value = err
+        const responseCode = err.response?.status
+        if ([401, 403].includes(responseCode)) {
+          throw new AccessDeniedError()
+        }
+      })
       .finally(() => {
         isLoading.value = false
         uploadProgress.value = 0

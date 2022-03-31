@@ -7,14 +7,10 @@
     :leave="{ opacity: 0 }"
     :enter="{ opacity: 1 }"
   >
-    <div
-      class="relative z-50 w-full max-h-screen"
-      style="overflow: auto; overflow: overlay"
-    >
+    <div class="relative z-50 w-full max-h-screen" style="overflow: auto">
       <div
         class="w-full py-10 mx-auto relative"
         :style="{ 'max-width': maxWidth }"
-        v-bind="attrs"
       >
         <div
           :class="'bg-white dark:bg-dark-900 shadow-xl rounded-2xl overflow-hidden p-4 z-50'"
@@ -57,37 +53,48 @@
           >
             <CloseIcon />
           </BaseButton>
-
-          <slot />
+          <div class="pt-9">
+            <slot />
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import { useAttrs, defineProps, defineEmits, toRefs } from 'vue'
+<script>
+import { defineComponent } from 'vue'
 import { useMotions } from '@vueuse/motion'
+export default defineComponent({
+  name: 'Dialog',
+  props: {
+    maxWidth: {
+      type: String,
+      default: '800px',
+    },
+    visible: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: ['close', 'update:visible'],
+  setup(props, { emit }) {
+    const close = async () => {
+      await leaveTransition()
+      emit('close')
+      emit('update:visible', false)
+    }
 
-const attrs = useAttrs()
-const emit = defineEmits(['close', 'update:visible'])
-const props = defineProps({
-  visible: { type: Boolean, default: false },
-  maxWidth: { type: String, default: '800px' },
+    const leaveTransition = async () => {
+      const { windowTransition, overlayTransition } = useMotions()
+      await Promise.all([
+        overlayTransition.apply('leave'),
+        windowTransition.apply('leave'),
+      ])
+    }
+    return {
+      close,
+    }
+  },
 })
-const { visible, maxWidth } = toRefs(props)
-
-const close = async () => {
-  await leaveTransition()
-  emit('close')
-  emit('update:visible', false)
-}
-
-const leaveTransition = async () => {
-  const { windowTransition, overlayTransition } = useMotions()
-  await Promise.all([
-    overlayTransition.apply('leave'),
-    windowTransition.apply('leave'),
-  ])
-}
 </script>
