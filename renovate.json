@@ -1,4 +1,3 @@
-
 {
   "extends": [
     ":dependencyDashboard",
@@ -18,9 +17,15 @@
   ],
   "packageRules": [
     {
-      "updateTypes": ["minor", "patch", "pin", "digest"],
+      "updateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
       "automerge": true,
       "branchName": "develop"
     }
-  ]
+  ],
+  "baseBranches": ["develop"]
 }

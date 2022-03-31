@@ -47,7 +47,7 @@ import { useMainRoute } from '../core/router'
 
 export default defineComponent({
   async setup() {
-    useTitle('Explore ideas - Devbuff')
+    useTitle('Explore ideas - DevBuff')
 
     const router = useRouter()
     const filterQueryReactive = (name, defaultValue) =>
@@ -73,11 +73,19 @@ export default defineComponent({
     const specialists = filterQueryReactive('specialists')
     const languages = filterQueryReactive('languages')
     const filter = reactive({ page, specialists, languages, sortBy })
-    const throttledGetIdeas = useThrottleFn(
-      async () => await getIdeas(filter),
-      500,
-    )
+    const throttledGetIdeas = useThrottleFn(async () => {
+      await getIdeas(filter)
+    }, 500)
 
+    watch(
+      () => filter.page,
+      (newPage, oldPage) => {
+        if (oldPage === newPage && oldPage !== 1) {
+          filter.page = 1
+        }
+      },
+      { deep: true },
+    )
     // TODO: reactify function
     watch(filter, throttledGetIdeas)
 
