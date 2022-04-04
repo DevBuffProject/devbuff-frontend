@@ -26,7 +26,7 @@ export const useIdeas = () => {
   const userIdeas = ref([])
   const getUserIdeas = async (UUID) => {
     userIdeas.value = []
-    const response = await request(UUID ? `/ideas/user/${UUID}` : '/idea/self')
+    const response = await request(UUID ? `/ideas/user/${UUID}` : '/ideas/self')
     userIdeas.value = response.data
     return response
   }
