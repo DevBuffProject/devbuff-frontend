@@ -6,7 +6,7 @@ export const useFiles = () => {
   const uploadUserPhoto = async (file) => {
     const data = new FormData()
     data.append('image', file, file.fileName)
-    return await request('photo/profile', { method: 'put', data })
+    return await request('files/avatar', { method: 'put', data })
   }
 
   const uploadUserImage = async (file) => {
