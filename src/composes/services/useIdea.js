@@ -13,32 +13,32 @@ export const useIdea = (id) => {
   const idea = ref({})
   const publishedAgo = useTimeAgo(new Date(idea.value.lastUpdateDate))
   const getIdea = async (uuid = id) => {
-    const { data } = await request(`idea/${uuid}`)
+    const { data } = await request(`ideas/${uuid}`)
     set(idea, data)
     return data
   }
 
   const pendingUsers = ref()
   const getPendingUsers = async (uuid = id) => {
-    const response = await request(`/idea/pending/${uuid}`)
+    const response = await request(`/ideas/pending/${uuid}`)
     pendingUsers.value = response.data
     return response
   }
 
   const statusPositions = ref([])
   const getStatusPositions = async (uuid = id) => {
-    const { data } = await request(`/idea/${uuid}/statusPositions`)
+    const { data } = await request(`/ideas/${uuid}/statusPositions`)
     statusPositions.value = data
     return data
   }
 
   const joinToIdea = async (uuidIdea = id, uuidSpecialist) => {
-    await request(`/idea/join/${uuidIdea}/${uuidSpecialist}`, {
+    await request(`/ideas/join/${uuidIdea}/${uuidSpecialist}`, {
       method: 'put',
     })
   }
   const changeStatusIdea = async (uuid = id, status) => {
-    await request(`/idea/${uuid}/status`, {
+    await request(`/ideas/${uuid}/status`, {
       method: 'PATCH',
       data: { status: status },
     })
@@ -52,13 +52,13 @@ export const useIdea = (id) => {
   }
   const approveUser = async (uuidIdea = id, uuidSpecialisation, uuidUser) => {
     await request(
-      `/idea/approve/${uuidIdea}/${uuidSpecialisation}/${uuidUser}`,
+      `/ideas/approve/${uuidIdea}/${uuidSpecialisation}/${uuidUser}`,
       { method: 'PUT' },
     )
   }
 
   const deleteIdea = async (uuid = id) => {
-    await request(`/idea/${uuid}`, {
+    await request(`/ideas/${uuid}`, {
       method: 'DELETE',
     })
 
@@ -76,7 +76,7 @@ export const useIdea = (id) => {
         typeof data[key] === 'object' ? JSON.stringify(data[key]) : data[key],
       )
     }
-    const response = await request(`/idea/`, {
+    const response = await request(`/ideas/`, {
       method: 'POST',
       data: formData,
     })
@@ -87,7 +87,7 @@ export const useIdea = (id) => {
   }
 
   const updateIdea = async (uuid, data) => {
-    await request(`/idea/${uuid}`, {
+    await request(`/ideas/${uuid}`, {
       method: 'PUT',
       data: data,
     })
