@@ -16,7 +16,7 @@ export const useUser = () => {
     return rest
   }
 
-  const getUserProfileUrl = (uuid) => `${BASE_URL}/photo/profile/${uuid}`
+  const getUserProfileUrl = (uuid) => `${BASE_URL}/files/avatar/${uuid}`
 
   return {
     user,
