@@ -4,7 +4,7 @@ export const useSkillManager = () => {
   const { request, error, ...rest } = useApi()
 
   const updateLanguage = async (language, insert = true) => {
-    await request(`/skill/manager/language`, {
+    await request(`/skills/manager/language`, {
       indicator: false,
       method: insert ? 'patch' : 'delete',
       data: {
@@ -14,7 +14,7 @@ export const useSkillManager = () => {
   }
 
   const updateSpecialist = async (specialist, insert = true) => {
-    await request(`/skill/manager/specialist`, {
+    await request(`/skills/manager/specialist`, {
       indicator: false,
       method: insert ? 'patch' : 'delete',
       data: {
@@ -24,7 +24,7 @@ export const useSkillManager = () => {
   }
 
   const updateFramework = async (framework, insert = true) => {
-    await request(`/skill/manager/framework`, {
+    await request(`/skills/manager/framework`, {
       indicator: false,
       method: insert ? 'patch' : 'delete',
       data: {
@@ -33,7 +33,7 @@ export const useSkillManager = () => {
     })
   }
   const assignSpecialist = async (language, specialist, isAssign = true) => {
-    await request(`/skill/manager/tree/specialist`, {
+    await request(`/skills/manager/tree/specialist`, {
       indicator: false,
       method: isAssign ? 'patch' : 'delete',
       data: {
@@ -49,7 +49,7 @@ export const useSkillManager = () => {
     framework,
     isAssign = true,
   ) => {
-    await request(`/skill/manager/tree/framework`, {
+    await request(`/skills/manager/tree/framework`, {
       indicator: false,
       method: isAssign ? 'patch' : 'delete',
       data: {
@@ -61,7 +61,7 @@ export const useSkillManager = () => {
   }
 
   const getData = async () => {
-    return await request(`/skill/manager/data`, {
+    return await request(`/skills/manager/data`, {
       indicator: false,
     })
   }
