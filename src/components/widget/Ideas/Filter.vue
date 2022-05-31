@@ -6,11 +6,11 @@
       :values="[
         {
           title: t('commons.date', true),
-          value: 'date',
+          value: 'DATE',
         },
         {
           title: t('commons.lastUpdate', true),
-          value: 'lastUpdate',
+          value: 'LAST_UPDATE',
         },
       ]"
     />
