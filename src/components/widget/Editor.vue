@@ -39,7 +39,7 @@ class UploadAdapter {
     try {
       const { data } = await uploadUserImage(file)
       return {
-        default: `${import.meta.env.VITE_API_BASE_URL}/image/${data.imagePath}`,
+        default: `${import.meta.env.VITE_API_BASE_URL}/files${data.imagePath}`,
       }
     } catch (e) {
       console.error(e)
