@@ -69,7 +69,7 @@ export default defineComponent({
     )
 
     const page = filterQueryReactive('page', 1)
-    const sortBy = filterQueryReactive('sortBy', 'lastUpdate')
+    const sortBy = filterQueryReactive('sortBy', 'LAST_UPDATE')
     const specialists = filterQueryReactive('specialists')
     const languages = filterQueryReactive('languages')
     const filter = reactive({ page, specialists, languages, sortBy })
