@@ -6,7 +6,7 @@ export const useIdeas = () => {
 
   const idea = ref({})
   const getIdea = async (uuid) => {
-    const response = await request(`idea/${uuid}`)
+    const response = await request(`ideas/${uuid}`)
     idea.value = response.data
     return response
   }
@@ -18,7 +18,7 @@ export const useIdeas = () => {
     Object.keys(finalParams).forEach((param) =>
       query.append(param, finalParams[param]),
     )
-    const response = await request(`/idea/?${query}`, { method: 'get' })
+    const response = await request(`/ideas/?${query}`, { method: 'get' })
     ideas.value = response.data
     return response
   }
@@ -26,7 +26,7 @@ export const useIdeas = () => {
   const userIdeas = ref([])
   const getUserIdeas = async (UUID) => {
     userIdeas.value = []
-    const response = await request(UUID ? `/idea/user/${UUID}` : '/idea/self')
+    const response = await request(UUID ? `/ideas/user/${UUID}` : '/ideas/self')
     userIdeas.value = response.data
     return response
   }

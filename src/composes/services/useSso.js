@@ -6,7 +6,7 @@ const ssoData = ref({})
 
 export const useSso = () => {
   const getSsoData = async () => {
-    const response = await request('comment/sso')
+    const response = await request('comments/sso')
     ssoData.value = response.data
     return response.data
   }

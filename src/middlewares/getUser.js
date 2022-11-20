@@ -15,7 +15,7 @@ export default async () => {
     const { data: user } = await getUser()
     state.value.user = {
       ...user,
-      avatar: `${import.meta.env.VITE_API_BASE_URL}/photo/profile/${user.id}`,
+      avatar: `${import.meta.env.VITE_API_BASE_URL}/files/avatar/${user.id}`,
     }
   } catch (e) {
     state.value.user = {}
