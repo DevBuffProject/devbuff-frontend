@@ -6,17 +6,17 @@ const pendingIdeas = ref([])
 
 export const useModeration = () => {
   const getPendingIdeas = async () => {
-    const data = await request('idea/moderator/waiting')
+    const data = await request('ideas/moderator/waiting')
     pendingIdeas.value = data.data
   }
 
   const approveIdea = async (uuid) => {
-    await request(`idea/moderator/submit/${uuid}`)
+    await request(`ideas/moderator/submit/${uuid}`)
     deleteIdeaFromRef(uuid)
   }
 
   const deleteIdea = async (uuid) => {
-    await request(`idea/moderator/delete/${uuid}`)
+    await request(`ideas/moderator/delete/${uuid}`)
     deleteIdeaFromRef(uuid)
   }
 
